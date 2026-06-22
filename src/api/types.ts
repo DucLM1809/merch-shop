@@ -21,8 +21,26 @@ export interface Product {
   skus?: SKU[]
 }
 
+export interface Game {
+  id: string
+  slug: string
+  name: string
+  publisherId: string
+}
+
+export interface Publisher {
+  id: string
+  slug: string
+  name: string
+  logoUrl?: string
+  accentColor: string
+  games: Game[]
+}
+
 export interface ProductFilters {
+  publisher?: string
   game?: string
+  gameSlug?: string
   team?: string
   character?: string
 }

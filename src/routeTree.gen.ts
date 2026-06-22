@@ -9,38 +9,64 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PublisherSlugRouteImport } from './routes/$publisherSlug'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PublisherSlugGameSlugRouteImport } from './routes/$publisherSlug.$gameSlug'
 
+const PublisherSlugRoute = PublisherSlugRouteImport.update({
+  id: '/$publisherSlug',
+  path: '/$publisherSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PublisherSlugGameSlugRoute = PublisherSlugGameSlugRouteImport.update({
+  id: '/$gameSlug',
+  path: '/$gameSlug',
+  getParentRoute: () => PublisherSlugRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$publisherSlug': typeof PublisherSlugRouteWithChildren
+  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$publisherSlug': typeof PublisherSlugRouteWithChildren
+  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$publisherSlug': typeof PublisherSlugRouteWithChildren
+  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/$publisherSlug' | '/$publisherSlug/$gameSlug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/$publisherSlug' | '/$publisherSlug/$gameSlug'
+  id: '__root__' | '/' | '/$publisherSlug' | '/$publisherSlug/$gameSlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PublisherSlugRoute: typeof PublisherSlugRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/$publisherSlug': {
+      id: '/$publisherSlug'
+      path: '/$publisherSlug'
+      fullPath: '/$publisherSlug'
+      preLoaderRoute: typeof PublisherSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +74,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$publisherSlug/$gameSlug': {
+      id: '/$publisherSlug/$gameSlug'
+      path: '/$gameSlug'
+      fullPath: '/$publisherSlug/$gameSlug'
+      preLoaderRoute: typeof PublisherSlugGameSlugRouteImport
+      parentRoute: typeof PublisherSlugRoute
+    }
   }
 }
 
+interface PublisherSlugRouteChildren {
+  PublisherSlugGameSlugRoute: typeof PublisherSlugGameSlugRoute
+}
+
+const PublisherSlugRouteChildren: PublisherSlugRouteChildren = {
+  PublisherSlugGameSlugRoute: PublisherSlugGameSlugRoute,
+}
+
+const PublisherSlugRouteWithChildren = PublisherSlugRoute._addFileChildren(
+  PublisherSlugRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PublisherSlugRoute: PublisherSlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

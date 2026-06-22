@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Product, ProductFilters } from './types'
+import type { Product, ProductFilters, Publisher } from './types'
 
 export const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000'
 
@@ -30,4 +30,10 @@ export const client = {
 
   getProduct: (slug: string): Promise<Product> =>
     wrap(http.get<Product>(`/products/${slug}`).then((r) => r.data)),
+
+  getPublishers: (): Promise<Publisher[]> =>
+    wrap(http.get<Publisher[]>('/publishers').then((r) => r.data)),
+
+  getPublisher: (slug: string): Promise<Publisher> =>
+    wrap(http.get<Publisher>(`/publishers/${slug}`).then((r) => r.data)),
 }

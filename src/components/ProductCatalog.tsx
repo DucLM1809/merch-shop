@@ -10,11 +10,16 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { client } from '../api/client'
+import type { ProductFilters } from '../api/types'
 
-export function ProductCatalog() {
+interface Props {
+  filters?: ProductFilters
+}
+
+export function ProductCatalog({ filters }: Props = {}) {
   const { data: products, isLoading, isError } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => client.getProducts(),
+    queryKey: ['products', filters],
+    queryFn: () => client.getProducts(filters),
   })
 
   if (isLoading) {
