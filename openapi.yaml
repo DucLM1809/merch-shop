@@ -1,0 +1,80 @@
+openapi: "3.1.0"
+info:
+  title: Merch Shop API
+  version: "1.0.0"
+paths:
+  /products:
+    get:
+      operationId: listProducts
+      parameters:
+        - name: game
+          in: query
+          schema: { type: string }
+        - name: team
+          in: query
+          schema: { type: string }
+        - name: character
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: List of Products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+  /products/{slug}:
+    get:
+      operationId: getProduct
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: A Product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Not found
+components:
+  schemas:
+    Product:
+      type: object
+      required: [id, slug, name, publisherId, gameId, price]
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        name: { type: string }
+        description: { type: string }
+        imageUrl: { type: string }
+        price: { type: number }
+        publisherId: { type: string }
+        gameId: { type: string }
+        teamId: { type: string }
+        characterId: { type: string }
+        skus:
+          type: array
+          items:
+            $ref: "#/components/schemas/SKU"
+    SKU:
+      type: object
+      required: [id, price, available]
+      properties:
+        id: { type: string }
+        price: { type: number }
+        available: { type: boolean }
+        size: { type: string }
+        color: { type: string }
+        edition: { type: string }
+    ProductFilters:
+      type: object
+      properties:
+        game: { type: string }
+        team: { type: string }
+        character: { type: string }
