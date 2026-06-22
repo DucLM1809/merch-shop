@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { Box, Flex, Heading, Skeleton } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import { client } from '../api/client'
 import { ProductCatalog } from './ProductCatalog'
 import { PublisherNav } from './PublisherNav'
+import { GamePageView } from './ui/GamePageView'
 
 interface Props {
   publisherSlug: string
@@ -20,20 +21,16 @@ export function GamePage({ publisherSlug, gameSlug }: Props) {
   return (
     <Flex>
       <PublisherNav activePublisherSlug={publisherSlug} activeGameSlug={gameSlug} />
-      <Box flex={1}>
-        <Box
-          p={8}
-          pb={4}
-          style={{ '--accent': publisher?.accentColor } as React.CSSProperties}
-          borderBottom="1px solid"
-          borderColor="gray.700"
-        >
-          {isLoading ? (
-            <Skeleton h="8" w="48" borderRadius="md" />
-          ) : (
-            <Heading color="white">{game?.name ?? gameSlug}</Heading>
-          )}
-        </Box>
+      <Box
+        flex={1}
+        style={{ '--accent': publisher?.accentColor } as React.CSSProperties}
+      >
+        <GamePageView
+          gameName={game?.name ?? gameSlug}
+          publisherName={publisher?.name}
+          accentColor={publisher?.accentColor}
+          isLoading={isLoading}
+        />
         <ProductCatalog filters={{ gameSlug }} />
       </Box>
     </Flex>

@@ -35,6 +35,7 @@ const products: Product[] = [
     gameId: 'lol',
     teamId: 't1',
     characterId: 'azir',
+    imageUrl: 'https://picsum.photos/seed/faker-jersey/400/400',
   },
   {
     id: '2',
@@ -43,6 +44,7 @@ const products: Product[] = [
     price: 79.99,
     publisherId: 'riot',
     gameId: 'lol',
+    imageUrl: 'https://picsum.photos/seed/lol-hoodie/400/400',
   },
   {
     id: '3',
@@ -51,6 +53,7 @@ const products: Product[] = [
     price: 54.99,
     publisherId: 'riot',
     gameId: 'val',
+    imageUrl: 'https://picsum.photos/seed/valorant-jersey/400/400',
   },
   {
     id: '4',
@@ -59,6 +62,7 @@ const products: Product[] = [
     price: 49.99,
     publisherId: 'valve',
     gameId: 'cs2',
+    imageUrl: 'https://picsum.photos/seed/cs2-jersey/400/400',
   },
 ]
 

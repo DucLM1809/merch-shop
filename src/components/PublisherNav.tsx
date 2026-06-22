@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { Box, Skeleton, VStack, chakra } from '@chakra-ui/react'
+import { chakra } from '@chakra-ui/react'
 import { Link } from '@tanstack/react-router'
 import { client } from '../api/client'
+import { PublisherNavView } from './ui/PublisherNavView'
+import type { ReactNode } from 'react'
 
 const NavLink = chakra(Link)
 
@@ -16,69 +18,67 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
     queryFn: () => client.getPublishers(),
   })
 
-  if (isLoading) {
+  function renderLink(
+    to: string,
+    params: Record<string, string>,
+    children: ReactNode,
+    ariaCurrent?: 'page' | undefined,
+  ): ReactNode {
+    const isActive = ariaCurrent === 'page'
+    const isGame = 'gameSlug' in params
+
+    if (isGame) {
+      return (
+        <NavLink
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          to={to as any}
+          params={params}
+          display="block"
+          px={3}
+          py={1}
+          borderRadius="md"
+          fontSize="sm"
+          textDecoration="none"
+          transition="background 0.15s, color 0.15s"
+          color={isActive ? 'white' : 'gray.500'}
+          bg={isActive ? 'gray.800' : 'transparent'}
+          fontWeight={isActive ? '500' : '400'}
+          _hover={{ color: 'gray.200', bg: 'gray.800' }}
+          aria-current={ariaCurrent}
+        >
+          {children}
+        </NavLink>
+      )
+    }
+
     return (
-      <Box w="52" p={4}>
-        <VStack gap={2} align="stretch">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} h="6" borderRadius="md" />
-          ))}
-        </VStack>
-      </Box>
+      <NavLink
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        to={to as any}
+        params={params}
+        display="block"
+        px={3}
+        py={1.5}
+        borderRadius="md"
+        textDecoration="none"
+        transition="background 0.15s, color 0.15s"
+        color={isActive ? 'white' : 'gray.400'}
+        bg={isActive ? 'gray.800' : 'transparent'}
+        _hover={{ color: 'white', bg: 'gray.800' }}
+        aria-current={ariaCurrent}
+      >
+        {children}
+      </NavLink>
     )
   }
 
   return (
-    <Box as="nav" w="52" p={4} borderRight="1px solid" borderColor="gray.700" minH="100vh">
-      <VStack gap={1} align="stretch">
-        {publishers?.map((publisher) => {
-          const isActivePublisher = activePublisherSlug === publisher.slug
-          return (
-            <Box key={publisher.id}>
-              <NavLink
-                to="/$publisherSlug"
-                params={{ publisherSlug: publisher.slug }}
-                display="block"
-                px={3}
-                py={2}
-                borderRadius="md"
-                fontWeight="semibold"
-                textDecoration="none"
-                color={isActivePublisher ? 'white' : 'gray.400'}
-                bg={isActivePublisher ? 'gray.700' : 'transparent'}
-                _hover={{ color: 'white', bg: 'gray.800' }}
-                aria-current={isActivePublisher ? 'page' : undefined}
-              >
-                {publisher.name}
-              </NavLink>
-              <VStack gap={0} align="stretch" pl={3}>
-                {publisher.games.map((game) => {
-                  const isActiveGame = isActivePublisher && activeGameSlug === game.slug
-                  return (
-                    <NavLink
-                      key={game.id}
-                      to="/$publisherSlug/$gameSlug"
-                      params={{ publisherSlug: publisher.slug, gameSlug: game.slug }}
-                      display="block"
-                      px={3}
-                      py={1}
-                      borderRadius="md"
-                      fontSize="sm"
-                      textDecoration="none"
-                      color={isActiveGame ? 'white' : 'gray.500'}
-                      bg={isActiveGame ? 'gray.700' : 'transparent'}
-                      _hover={{ color: 'gray.200', bg: 'gray.800' }}
-                      aria-current={isActiveGame ? 'page' : undefined}
-                    >
-                      {game.name}
-                    </NavLink>
-                  )
-                })}
-              </VStack>
-            </Box>
-          )
-        })}
-      </VStack>
-    </Box>
+    <PublisherNavView
+      publishers={publishers}
+      isLoading={isLoading}
+      activePublisherSlug={activePublisherSlug}
+      activeGameSlug={activeGameSlug}
+      renderLink={renderLink}
+    />
   )
 }

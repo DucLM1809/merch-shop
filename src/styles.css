@@ -1,4 +1,4 @@
-
+@import '@fontsource-variable/geist';
 
 * {
   box-sizing: border-box;
@@ -13,4 +13,3 @@ body,
 body {
   margin: 0;
 }
-
