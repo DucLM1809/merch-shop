@@ -10,7 +10,7 @@ import tailwindcss from '@tailwindcss/vite'
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   test: {
-    environment: 'node',
+    environment: 'jsdom',
     setupFiles: ['./src/test-setup.ts'],
   },
   plugins: [
