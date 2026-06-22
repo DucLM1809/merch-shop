@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   HeadContent,
   Scripts,
@@ -41,6 +42,14 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      import('../mocks/browser').then(({ worker }) =>
+        worker.start({ onUnhandledRequest: 'bypass' }),
+      )
+    }
+  }, [])
+
   return (
     <html lang="en">
       <head>
