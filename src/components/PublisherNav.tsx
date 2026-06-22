@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { Box, Skeleton, Text, VStack } from '@chakra-ui/react'
+import { Box, Skeleton, VStack, chakra } from '@chakra-ui/react'
+import { Link } from '@tanstack/react-router'
 import { client } from '../api/client'
+
+const NavLink = chakra(Link)
 
 interface Props {
   activePublisherSlug?: string
@@ -28,49 +31,53 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
   return (
     <Box as="nav" w="52" p={4} borderRight="1px solid" borderColor="gray.700" minH="100vh">
       <VStack gap={1} align="stretch">
-        {publishers?.map((publisher) => (
-          <Box key={publisher.id}>
-            <Text
-              as="a"
-              href={`/${publisher.slug}`}
-              display="block"
-              px={3}
-              py={2}
-              borderRadius="md"
-              fontWeight="semibold"
-              color={activePublisherSlug === publisher.slug ? 'white' : 'gray.400'}
-              bg={activePublisherSlug === publisher.slug ? 'gray.700' : 'transparent'}
-              _hover={{ color: 'white', bg: 'gray.800' }}
-              aria-current={activePublisherSlug === publisher.slug ? 'page' : undefined}
-            >
-              {publisher.name}
-            </Text>
-            <VStack gap={0} align="stretch" pl={3}>
-              {publisher.games.map((game) => {
-                const isActiveGame =
-                  activePublisherSlug === publisher.slug && activeGameSlug === game.slug
-                return (
-                  <Text
-                    key={game.id}
-                    as="a"
-                    href={`/${publisher.slug}/${game.slug}`}
-                    display="block"
-                    px={3}
-                    py={1}
-                    borderRadius="md"
-                    fontSize="sm"
-                    color={isActiveGame ? 'white' : 'gray.500'}
-                    bg={isActiveGame ? 'gray.700' : 'transparent'}
-                    _hover={{ color: 'gray.200', bg: 'gray.800' }}
-                    aria-current={isActiveGame ? 'page' : undefined}
-                  >
-                    {game.name}
-                  </Text>
-                )
-              })}
-            </VStack>
-          </Box>
-        ))}
+        {publishers?.map((publisher) => {
+          const isActivePublisher = activePublisherSlug === publisher.slug
+          return (
+            <Box key={publisher.id}>
+              <NavLink
+                to="/$publisherSlug"
+                params={{ publisherSlug: publisher.slug }}
+                display="block"
+                px={3}
+                py={2}
+                borderRadius="md"
+                fontWeight="semibold"
+                textDecoration="none"
+                color={isActivePublisher ? 'white' : 'gray.400'}
+                bg={isActivePublisher ? 'gray.700' : 'transparent'}
+                _hover={{ color: 'white', bg: 'gray.800' }}
+                aria-current={isActivePublisher ? 'page' : undefined}
+              >
+                {publisher.name}
+              </NavLink>
+              <VStack gap={0} align="stretch" pl={3}>
+                {publisher.games.map((game) => {
+                  const isActiveGame = isActivePublisher && activeGameSlug === game.slug
+                  return (
+                    <NavLink
+                      key={game.id}
+                      to="/$publisherSlug/$gameSlug"
+                      params={{ publisherSlug: publisher.slug, gameSlug: game.slug }}
+                      display="block"
+                      px={3}
+                      py={1}
+                      borderRadius="md"
+                      fontSize="sm"
+                      textDecoration="none"
+                      color={isActiveGame ? 'white' : 'gray.500'}
+                      bg={isActiveGame ? 'gray.700' : 'transparent'}
+                      _hover={{ color: 'gray.200', bg: 'gray.800' }}
+                      aria-current={isActiveGame ? 'page' : undefined}
+                    >
+                      {game.name}
+                    </NavLink>
+                  )
+                })}
+              </VStack>
+            </Box>
+          )
+        })}
       </VStack>
     </Box>
   )
