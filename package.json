@@ -13,9 +13,9 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.36.0",
     "@faker-js/faker": "^10.3.0",
     "@t3-oss/env-core": "^0.13.10",
-    "@tailwindcss/vite": "^4.1.18",
     "@tanstack/match-sorter-utils": "latest",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-form": "latest",
@@ -33,12 +33,10 @@
     "lucide-react": "^0.545.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "tailwindcss": "^4.1.18",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@rolldown/plugin-babel": "^0.2.3",
-    "@tailwindcss/typography": "^0.5.16",
     "@tanstack/devtools-event-client": "latest",
     "@tanstack/devtools-vite": "latest",
     "@tanstack/router-cli": "^1.132.0",

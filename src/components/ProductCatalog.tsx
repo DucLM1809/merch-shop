@@ -1,4 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
+import {
+  Box,
+  Heading,
+  Image,
+  LinkBox,
+  LinkOverlay,
+  SimpleGrid,
+  Skeleton,
+  Text,
+} from '@chakra-ui/react'
 import { client } from '../api/client'
 
 export function ProductCatalog() {
@@ -9,49 +19,62 @@ export function ProductCatalog() {
 
   if (isLoading) {
     return (
-      <div className="p-8">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <Box p={8}>
+        <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} gap={6}>
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-64 animate-pulse rounded-lg bg-gray-800" />
+            <Skeleton key={i} h="64" borderRadius="lg" />
           ))}
-        </div>
-      </div>
+        </SimpleGrid>
+      </Box>
     )
   }
 
   if (isError) {
     return (
-      <div className="p-8">
-        <p className="text-red-400">Failed to load products. Please try again.</p>
-      </div>
+      <Box p={8}>
+        <Text color="red.400">Failed to load products. Please try again.</Text>
+      </Box>
     )
   }
 
   return (
-    <div className="p-8">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <Box p={8}>
+      <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} gap={6}>
         {products?.map((product) => (
-          <a
+          <LinkBox
             key={product.id}
-            href={`/products/${product.slug}`}
-            className="group rounded-lg border border-gray-700 bg-gray-900 p-4 transition hover:border-gray-500"
+            as="article"
+            borderRadius="lg"
+            border="1px solid"
+            borderColor="gray.700"
+            bg="gray.900"
+            p={4}
+            transition="border-color 0.2s"
+            _hover={{ borderColor: 'gray.500' }}
           >
-            <div className="mb-4 h-48 rounded bg-gray-800">
+            <Box mb={4} h="48" borderRadius="md" bg="gray.800">
               {product.imageUrl && (
-                <img
+                <Image
                   src={product.imageUrl}
                   alt={product.name}
-                  className="h-full w-full rounded object-cover"
+                  h="full"
+                  w="full"
+                  borderRadius="md"
+                  objectFit="cover"
                 />
               )}
-            </div>
-            <h2 className="font-semibold text-white group-hover:text-gray-200">
-              {product.name}
-            </h2>
-            <p className="mt-1 text-gray-400">${product.price.toFixed(2)}</p>
-          </a>
+            </Box>
+            <LinkOverlay href={`/products/${product.slug}`}>
+              <Heading size="sm" color="white">
+                {product.name}
+              </Heading>
+            </LinkOverlay>
+            <Text mt={1} color="gray.400">
+              ${product.price.toFixed(2)}
+            </Text>
+          </LinkBox>
         ))}
-      </div>
-    </div>
+      </SimpleGrid>
+    </Box>
   )
 }

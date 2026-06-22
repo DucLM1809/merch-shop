@@ -4,6 +4,7 @@ import {
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
+import { ChakraProvider, defaultSystem } from '@chakra-ui/react'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
@@ -51,12 +52,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   }, [])
 
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <head>
         <HeadContent />
       </head>
       <body>
-        {children}
+        <ChakraProvider value={defaultSystem}>
+          {children}
+        </ChakraProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',
