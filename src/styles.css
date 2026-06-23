@@ -12,4 +12,6 @@ body,
 
 body {
   margin: 0;
+  background-color: var(--chakra-colors-bg);
+  color: var(--chakra-colors-fg);
 }
