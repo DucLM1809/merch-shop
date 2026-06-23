@@ -10,6 +10,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import { GlobalNav } from '../components/GlobalNav'
 
 import appCss from '../styles.css?url'
 
@@ -59,6 +60,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <ChakraProvider value={system}>
+          <GlobalNav />
           {children}
         </ChakraProvider>
         {!import.meta.env.VITEST && (

@@ -15,6 +15,7 @@ export interface ProductDetailViewProps {
   product: Product | undefined
   isLoading: boolean
   isError: boolean
+  onAddToCart?: (sku: SKU) => void
 }
 
 function uniqueValues(skus: SKU[], key: keyof SKU): string[] {
@@ -54,7 +55,7 @@ function DimButton({
   )
 }
 
-export function ProductDetailView({ product, isLoading, isError }: ProductDetailViewProps) {
+export function ProductDetailView({ product, isLoading, isError, onAddToCart }: ProductDetailViewProps) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
   const [selectedEdition, setSelectedEdition] = useState<string | null>(null)
@@ -191,6 +192,7 @@ export function ProductDetailView({ product, isLoading, isError }: ProductDetail
         colorPalette={canAddToCart ? 'green' : 'gray'}
         disabled={!canAddToCart}
         aria-disabled={!canAddToCart}
+        onClick={() => selectedSku && onAddToCart?.(selectedSku)}
       >
         Add to Cart
       </Button>

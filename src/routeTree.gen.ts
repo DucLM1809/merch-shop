@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as PublisherSlugRouteImport } from './routes/$publisherSlug'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PublisherSlugIndexRouteImport } from './routes/$publisherSlug.index'
@@ -16,6 +17,11 @@ import { Route as PublisherSlugGameSlugRouteImport } from './routes/$publisherSl
 import { Route as PublisherSlugGameSlugIndexRouteImport } from './routes/$publisherSlug.$gameSlug.index'
 import { Route as PublisherSlugGameSlugProductsProductSlugRouteImport } from './routes/$publisherSlug.$gameSlug.products.$productSlug'
 
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublisherSlugRoute = PublisherSlugRouteImport.update({
   id: '/$publisherSlug',
   path: '/$publisherSlug',
@@ -52,6 +58,7 @@ const PublisherSlugGameSlugProductsProductSlugRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$publisherSlug': typeof PublisherSlugRouteWithChildren
+  '/cart': typeof CartRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
   '/$publisherSlug/': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
   '/$publisherSlug': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugIndexRoute
   '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$publisherSlug': typeof PublisherSlugRouteWithChildren
+  '/cart': typeof CartRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
   '/$publisherSlug/': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$publisherSlug'
+    | '/cart'
     | '/$publisherSlug/$gameSlug'
     | '/$publisherSlug/'
     | '/$publisherSlug/$gameSlug/'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cart'
     | '/$publisherSlug'
     | '/$publisherSlug/$gameSlug'
     | '/$publisherSlug/$gameSlug/products/$productSlug'
@@ -91,6 +102,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$publisherSlug'
+    | '/cart'
     | '/$publisherSlug/$gameSlug'
     | '/$publisherSlug/'
     | '/$publisherSlug/$gameSlug/'
@@ -100,10 +112,18 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PublisherSlugRoute: typeof PublisherSlugRouteWithChildren
+  CartRoute: typeof CartRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$publisherSlug': {
       id: '/$publisherSlug'
       path: '/$publisherSlug'
@@ -182,6 +202,7 @@ const PublisherSlugRouteWithChildren = PublisherSlugRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublisherSlugRoute: PublisherSlugRouteWithChildren,
+  CartRoute: CartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
