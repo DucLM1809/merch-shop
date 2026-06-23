@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "merch_shop",
+  "project_id": "78ac6725-1ec8-48e1-8a46-5d87883b90f7"
+}
