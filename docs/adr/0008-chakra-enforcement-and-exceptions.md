@@ -5,7 +5,9 @@ ADR 0007 established Chakra UI v3 as the design system. This ADR records how tha
 ## Enforcement
 
 ESLint `no-restricted-elements` bans raw HTML elements that have direct Chakra equivalents:
-`div`, `span`, `p`, `button`, `a`, `h1`–`h6`, `ul`, `ol`, `li`, `img`.
+`div`, `span`, `p`, `button`, `a`, `h1`–`h6`, `ul`, `ol`, `li`, `img`.outside
+
+The `/chakra-ui-builder` skill is run before any new features are implemented.
 
 The `/chakra-ui-refactor` skill is run before merging UI changes to catch subtler issues (wrong v3 prop names, palette tokens instead of semantic tokens, v2 patterns) that lint cannot express.
 
