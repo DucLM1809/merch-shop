@@ -1,0 +1,1 @@
+{"id":"int-5bfffebf","kind":"field_change","created_at":"2026-06-23T07:16:36.270461Z","actor":"admin","issue_id":"merch-shop-1782195867196-8-ca1bfbec","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Cart implemented: store, /cart route, GlobalNav badge, Add to Cart wired. 44/44 tests pass."}}
