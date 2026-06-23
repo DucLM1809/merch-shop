@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Heading, IconButton, Text } from '@chakra-ui/react'
+import { Link } from '@tanstack/react-router'
 import type { CartItem } from '../../store/cart'
 import { getSubtotal } from '../../store/cart'
 
@@ -14,7 +15,7 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
       <Box p={8} textAlign="center">
         <Text color="gray.400" fontSize="lg">Your cart is empty</Text>
         <Button mt={4} variant="outline" asChild>
-          <a href="/">Continue Shopping</a>
+          <Link to="/">Continue Shopping</Link>
         </Button>
       </Box>
     )
