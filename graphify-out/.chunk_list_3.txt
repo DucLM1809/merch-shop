@@ -1,0 +1,3 @@
+/Users/admin/Documents/merch-shop/.claude/skills/handoff/SKILL.md
+/Users/admin/Documents/merch-shop/.claude/skills/to-issues/SKILL.md
+/Users/admin/Documents/merch-shop/.claude/skills/to-prd/SKILL.md
