@@ -40,9 +40,9 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
           fontSize="sm"
           textDecoration="none"
           transition="background 0.15s, color 0.15s"
-          color={isActive ? 'white' : 'gray.500'}
-          bg={isActive ? 'gray.800' : 'transparent'}
-          fontWeight={isActive ? '500' : '400'}
+          color={isActive ? 'blue.300' : 'gray.500'}
+          bg={isActive ? 'blue.950' : 'transparent'}
+          fontWeight={isActive ? '600' : '400'}
           _hover={{ color: 'gray.200', bg: 'gray.800' }}
           aria-current={ariaCurrent}
         >
@@ -64,6 +64,8 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
         transition="background 0.15s, color 0.15s"
         color={isActive ? 'white' : 'gray.400'}
         bg={isActive ? 'gray.800' : 'transparent'}
+        borderLeft={isActive ? '2px solid' : '2px solid transparent'}
+        borderColor={isActive ? 'blue.500' : 'transparent'}
         _hover={{ color: 'white', bg: 'gray.800' }}
         aria-current={ariaCurrent}
       >

@@ -16,6 +16,7 @@ export interface Product {
   price: number
   publisherId: string
   publisherSlug: string
+  accentColor?: string
   gameId: string
   gameSlug: string
   teamId?: string

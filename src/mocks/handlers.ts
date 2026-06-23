@@ -19,7 +19,7 @@ interface RawProduct {
 function enrich(p: RawProduct) {
   const game = games.find((g) => g.id === p.gameId)!
   const publisher = publishers.find((pub) => pub.id === p.publisherId)!
-  return { ...p, gameSlug: game.slug, publisherSlug: publisher.slug }
+  return { ...p, gameSlug: game.slug, publisherSlug: publisher.slug, accentColor: publisher.accentColor }
 }
 
 const games: Game[] = [

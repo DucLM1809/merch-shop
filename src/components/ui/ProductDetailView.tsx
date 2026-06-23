@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import {
   Box,
   Button,
+  Flex,
   Heading,
   Image,
   Skeleton,
@@ -42,10 +43,11 @@ function DimButton({
       <Button
         size="sm"
         variant={selected ? 'solid' : 'outline'}
+        colorPalette={selected ? 'blue' : 'gray'}
         disabled={!available}
         aria-pressed={selected}
         aria-disabled={!available}
-        opacity={!available ? 0.35 : 1}
+        opacity={!available ? 0.3 : 1}
         textDecoration={!available ? 'line-through' : 'none'}
         onClick={() => available && onToggle()}
       >
@@ -81,11 +83,19 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
 
   if (isLoading) {
     return (
-      <Box p={8} maxW="4xl" mx="auto">
-        <Skeleton h="96" borderRadius="xl" mb={6} />
-        <Skeleton h="8" w="64" mb={3} />
-        <Skeleton h="4" w="full" mb={2} />
-        <Skeleton h="4" w="3/4" />
+      <Box p={8} maxW="5xl" mx="auto">
+        <Flex gap={8} direction={{ base: 'column', md: 'row' }}>
+          <Box flex={{ base: '1', md: '0 0 52%' }}>
+            <Skeleton h="96" borderRadius="xl" />
+          </Box>
+          <Box flex="1">
+            <Skeleton h="10" w="3/4" mb={4} />
+            <Skeleton h="4" w="full" mb={2} />
+            <Skeleton h="4" w="2/3" mb={6} />
+            <Skeleton h="8" w="28" mb={8} />
+            <Skeleton h="12" w="full" />
+          </Box>
+        </Flex>
       </Box>
     )
   }
@@ -99,103 +109,175 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
   }
 
   const canAddToCart = selectedSku?.available === true
+  const accent = product.accentColor ?? '#0094e0'
 
   return (
-    <Box p={8} maxW="4xl" mx="auto">
-      {product.imageUrl && (
-        <Box borderRadius="xl" overflow="hidden" mb={6} bg="gray.900" h="96">
-          <Image src={product.imageUrl} alt={product.name} h="full" w="full" objectFit="cover" />
-        </Box>
-      )}
-
-      <Heading as="h1" size="xl" color="white" mb={2}>
-        {product.name}
-      </Heading>
-
-      {product.description && (
-        <Text color="gray.400" mb={4}>
-          {product.description}
-        </Text>
-      )}
-
-      <Text
-        data-testid="product-price"
-        color="white"
-        fontSize="2xl"
-        fontWeight="bold"
-        mb={6}
-      >
-        ${displayPrice?.toFixed(2)}
-      </Text>
-
-      {sizes.length > 0 && (
-        <Box mb={4}>
-          <Text color="gray.400" fontSize="sm" mb={2} textTransform="uppercase" letterSpacing="wider">
-            Size
-          </Text>
-          <Wrap>
-            {sizes.map((size) => (
-              <DimButton
-                key={size}
-                label={size}
-                available={isOptionAvailable(skus, 'size', size)}
-                selected={selectedSize === size}
-                onToggle={() => setSelectedSize(selectedSize === size ? null : size)}
+    <Box p={{ base: 6, md: 8 }} maxW="5xl" mx="auto">
+      <Flex gap={8} direction={{ base: 'column', md: 'row' }} align="flex-start">
+        {/* Image */}
+        <Box flex={{ base: '1', md: '0 0 52%' }}>
+          {product.imageUrl ? (
+            <Box
+              borderRadius="xl"
+              overflow="hidden"
+              bg="gray.900"
+              h={{ base: '72', md: '96' }}
+              position="relative"
+              style={{ boxShadow: `0 0 0 1px ${accent}30, 0 24px 64px rgba(0,0,0,0.6)` }}
+            >
+              <Image src={product.imageUrl} alt={product.name} h="full" w="full" objectFit="cover" />
+              <Box
+                position="absolute"
+                bottom={0}
+                left={0}
+                right={0}
+                h="40%"
+                pointerEvents="none"
+                style={{ background: 'linear-gradient(to top, rgba(8,8,12,0.7), transparent)' }}
               />
-            ))}
-          </Wrap>
+            </Box>
+          ) : (
+            <Box
+              borderRadius="xl"
+              bg="gray.900"
+              h={{ base: '72', md: '96' }}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              border="1px solid"
+              borderColor="gray.800"
+            >
+              <Text color="gray.600" fontSize="sm" textTransform="uppercase" letterSpacing="wider">
+                No image
+              </Text>
+            </Box>
+          )}
         </Box>
-      )}
 
-      {colors.length > 0 && (
-        <Box mb={4}>
-          <Text color="gray.400" fontSize="sm" mb={2} textTransform="uppercase" letterSpacing="wider">
-            Color
+        {/* Details */}
+        <Box flex="1" minW={0} pt={{ base: 0, md: 2 }}>
+          <Box
+            h="3px"
+            w="40px"
+            borderRadius="full"
+            mb={4}
+            style={{ background: accent }}
+          />
+
+          <Heading as="h1" size="2xl" color="white" mb={2} fontWeight="800" letterSpacing="-0.03em" lineHeight="1.05">
+            {product.name}
+          </Heading>
+
+          {product.description && (
+            <Text color="gray.400" mb={5} fontSize="sm" lineHeight="relaxed">
+              {product.description}
+            </Text>
+          )}
+
+          <Text
+            data-testid="product-price"
+            color="white"
+            fontSize="3xl"
+            fontWeight="800"
+            mb={6}
+            letterSpacing="-0.03em"
+          >
+            ${displayPrice?.toFixed(2)}
           </Text>
-          <Wrap>
-            {colors.map((color) => (
-              <DimButton
-                key={color}
-                label={color}
-                available={isOptionAvailable(skus, 'color', color)}
-                selected={selectedColor === color}
-                onToggle={() => setSelectedColor(selectedColor === color ? null : color)}
-              />
-            ))}
-          </Wrap>
-        </Box>
-      )}
 
-      {editions.length > 0 && (
-        <Box mb={4}>
-          <Text color="gray.400" fontSize="sm" mb={2} textTransform="uppercase" letterSpacing="wider">
-            Edition
-          </Text>
-          <Wrap>
-            {editions.map((edition) => (
-              <DimButton
-                key={edition}
-                label={edition}
-                available={isOptionAvailable(skus, 'edition', edition)}
-                selected={selectedEdition === edition}
-                onToggle={() => setSelectedEdition(selectedEdition === edition ? null : edition)}
-              />
-            ))}
-          </Wrap>
-        </Box>
-      )}
+          {sizes.length > 0 && (
+            <Box mb={5}>
+              <Text
+                color="gray.400"
+                fontSize="xs"
+                mb={2}
+                textTransform="uppercase"
+                letterSpacing="0.1em"
+                fontWeight="700"
+              >
+                Size
+              </Text>
+              <Wrap>
+                {sizes.map((size) => (
+                  <DimButton
+                    key={size}
+                    label={size}
+                    available={isOptionAvailable(skus, 'size', size)}
+                    selected={selectedSize === size}
+                    onToggle={() => setSelectedSize(selectedSize === size ? null : size)}
+                  />
+                ))}
+              </Wrap>
+            </Box>
+          )}
 
-      <Button
-        size="lg"
-        w="full"
-        mt={4}
-        colorPalette={canAddToCart ? 'green' : 'gray'}
-        disabled={!canAddToCart}
-        aria-disabled={!canAddToCart}
-        onClick={() => selectedSku && onAddToCart?.(selectedSku)}
-      >
-        Add to Cart
-      </Button>
+          {colors.length > 0 && (
+            <Box mb={5}>
+              <Text
+                color="gray.400"
+                fontSize="xs"
+                mb={2}
+                textTransform="uppercase"
+                letterSpacing="0.1em"
+                fontWeight="700"
+              >
+                Color
+              </Text>
+              <Wrap>
+                {colors.map((color) => (
+                  <DimButton
+                    key={color}
+                    label={color}
+                    available={isOptionAvailable(skus, 'color', color)}
+                    selected={selectedColor === color}
+                    onToggle={() => setSelectedColor(selectedColor === color ? null : color)}
+                  />
+                ))}
+              </Wrap>
+            </Box>
+          )}
+
+          {editions.length > 0 && (
+            <Box mb={5}>
+              <Text
+                color="gray.400"
+                fontSize="xs"
+                mb={2}
+                textTransform="uppercase"
+                letterSpacing="0.1em"
+                fontWeight="700"
+              >
+                Edition
+              </Text>
+              <Wrap>
+                {editions.map((edition) => (
+                  <DimButton
+                    key={edition}
+                    label={edition}
+                    available={isOptionAvailable(skus, 'edition', edition)}
+                    selected={selectedEdition === edition}
+                    onToggle={() => setSelectedEdition(selectedEdition === edition ? null : edition)}
+                  />
+                ))}
+              </Wrap>
+            </Box>
+          )}
+
+          <Button
+            size="lg"
+            w="full"
+            mt={6}
+            colorPalette={canAddToCart ? 'blue' : 'gray'}
+            disabled={!canAddToCart}
+            aria-disabled={!canAddToCart}
+            fontWeight="700"
+            letterSpacing="0.02em"
+            onClick={() => selectedSku && onAddToCart?.(selectedSku)}
+          >
+            Add to Cart
+          </Button>
+        </Box>
+      </Flex>
     </Box>
   )
 }

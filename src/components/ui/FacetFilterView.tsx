@@ -67,28 +67,37 @@ function FacetGroup({ label, items, selected, onChange }: FacetGroupProps) {
   if (!items.length) return null
 
   return (
-    <Box mb={6}>
+    <Box mb={7}>
       <Text
-        fontSize="xs"
-        fontWeight="700"
-        color="gray.500"
+        fontSize="10px"
+        fontWeight="800"
+        color="gray.600"
         textTransform="uppercase"
-        letterSpacing="wider"
+        letterSpacing="0.12em"
         mb={3}
       >
         {label}
       </Text>
-      <Stack gap={2}>
+      <Stack gap={1.5}>
         {items.map((item) => (
           <Checkbox.Root
             key={item.id}
+            colorPalette="blue"
             checked={selected === item.id}
             onCheckedChange={() => onChange(selected === item.id ? undefined : item.id)}
           >
             <Checkbox.HiddenInput aria-label={item.label} />
-            <Checkbox.Control />
+            <Checkbox.Control
+              borderColor="gray.700"
+              borderRadius="sm"
+            />
             <Checkbox.Label>
-              <Text fontSize="xs" color={selected === item.id ? 'white' : 'gray.400'} fontWeight="500">
+              <Text
+                fontSize="xs"
+                color={selected === item.id ? 'white' : 'gray.400'}
+                fontWeight={selected === item.id ? '600' : '400'}
+                transition="color 0.1s, font-weight 0.1s"
+              >
                 {item.label}
               </Text>
             </Checkbox.Label>

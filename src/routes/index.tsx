@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { z } from 'zod'
-import { Box, Heading, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import { ProductCatalog } from '../components/ProductCatalog'
 import { FacetFilter } from '../components/FacetFilter'
 
@@ -20,12 +20,46 @@ function HomePage() {
 
   return (
     <Box minH="100dvh" display="flex" flexDirection="column">
-      <Box px={8} pt={8} pb={4} borderBottom="1px solid" borderColor="gray.700">
-        <Heading size="xl" color="white" fontWeight="700" letterSpacing="-0.02em">
-          All Products
-        </Heading>
-        <Text color="gray.500" fontSize="sm" mt={1}>
-          Browse the full merch catalog
+      <Box
+        px={8}
+        pt={8}
+        pb={6}
+        borderBottom="1px solid"
+        borderColor="gray.800"
+        position="relative"
+        overflow="hidden"
+      >
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          bottom={0}
+          w="3px"
+          style={{ background: 'linear-gradient(to bottom, #0094e0, transparent)' }}
+        />
+        <Flex align="baseline" gap={3} pl={4}>
+          <Heading
+            size="2xl"
+            color="white"
+            fontWeight="800"
+            letterSpacing="-0.03em"
+            lineHeight="1"
+          >
+            All Products
+          </Heading>
+          <Text
+            fontSize="xs"
+            color="blue.400"
+            fontWeight="700"
+            textTransform="uppercase"
+            letterSpacing="0.1em"
+            mt={1}
+          >
+            Official Merch
+          </Text>
+        </Flex>
+        <Text color="gray.500" fontSize="sm" mt={2} pl={4}>
+          Gear from your favorite games and teams
         </Text>
       </Box>
       <Box display="flex" flex="1">

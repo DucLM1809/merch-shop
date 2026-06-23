@@ -24,7 +24,14 @@ export function PublisherNavView({
 }: PublisherNavViewProps) {
   if (isLoading) {
     return (
-      <Box w="56" p={4} borderRight="1px solid" borderColor="gray.700" minH="100dvh" flexShrink={0}>
+      <Box
+        w="56"
+        p={4}
+        borderRight="1px solid"
+        borderColor="gray.800"
+        minH="100dvh"
+        flexShrink={0}
+      >
         <VStack gap={3} align="stretch" pt={2}>
           {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton key={i} h="5" borderRadius="md" />
@@ -41,7 +48,7 @@ export function PublisherNavView({
       py={5}
       px={3}
       borderRight="1px solid"
-      borderColor="gray.700"
+      borderColor="gray.800"
       minH="100dvh"
       flexShrink={0}
     >
@@ -51,19 +58,21 @@ export function PublisherNavView({
           const publisherLinkChildren = (
             <HStack gap={2.5} align="center">
               <Box
-                w="1.75"
-                h="1.75"
+                w="6px"
+                h="6px"
                 borderRadius="full"
                 flexShrink={0}
-                transition="opacity 0.15s"
+                transition="opacity 0.15s, box-shadow 0.15s"
                 style={{
                   background: publisher.accentColor,
-                  opacity: isActivePublisher ? 1 : 0.45,
+                  opacity: isActivePublisher ? 1 : 0.4,
+                  boxShadow: isActivePublisher ? `0 0 8px ${publisher.accentColor}` : 'none',
                 }}
               />
               <Box
                 fontSize="sm"
-                fontWeight={isActivePublisher ? '600' : '500'}
+                fontWeight={isActivePublisher ? '700' : '500'}
+                letterSpacing={isActivePublisher ? '-0.01em' : 'normal'}
               >
                 {publisher.name}
               </Box>
@@ -71,7 +80,7 @@ export function PublisherNavView({
           )
 
           return (
-            <Box key={publisher.id} mb={1}>
+            <Box key={publisher.id} mb={0.5}>
               {renderLink(
                 '/$publisherSlug',
                 { publisherSlug: publisher.slug },
