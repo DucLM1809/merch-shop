@@ -1,11 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { GamePage } from '../components/GamePage'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/$publisherSlug/$gameSlug')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { publisherSlug, gameSlug } = Route.useParams()
-  return <GamePage publisherSlug={publisherSlug} gameSlug={gameSlug} />
+  return <Outlet />
 }

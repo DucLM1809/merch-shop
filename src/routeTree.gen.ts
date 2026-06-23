@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublisherSlugRouteImport } from './routes/$publisherSlug'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PublisherSlugIndexRouteImport } from './routes/$publisherSlug.index'
 import { Route as PublisherSlugGameSlugRouteImport } from './routes/$publisherSlug.$gameSlug'
+import { Route as PublisherSlugGameSlugIndexRouteImport } from './routes/$publisherSlug.$gameSlug.index'
+import { Route as PublisherSlugGameSlugProductsProductSlugRouteImport } from './routes/$publisherSlug.$gameSlug.products.$productSlug'
 
 const PublisherSlugRoute = PublisherSlugRouteImport.update({
   id: '/$publisherSlug',
@@ -23,34 +26,75 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PublisherSlugIndexRoute = PublisherSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PublisherSlugRoute,
+} as any)
 const PublisherSlugGameSlugRoute = PublisherSlugGameSlugRouteImport.update({
   id: '/$gameSlug',
   path: '/$gameSlug',
   getParentRoute: () => PublisherSlugRoute,
 } as any)
+const PublisherSlugGameSlugIndexRoute =
+  PublisherSlugGameSlugIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => PublisherSlugGameSlugRoute,
+  } as any)
+const PublisherSlugGameSlugProductsProductSlugRoute =
+  PublisherSlugGameSlugProductsProductSlugRouteImport.update({
+    id: '/products/$productSlug',
+    path: '/products/$productSlug',
+    getParentRoute: () => PublisherSlugGameSlugRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$publisherSlug': typeof PublisherSlugRouteWithChildren
-  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRoute
+  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
+  '/$publisherSlug/': typeof PublisherSlugIndexRoute
+  '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
+  '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$publisherSlug': typeof PublisherSlugRouteWithChildren
-  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRoute
+  '/$publisherSlug': typeof PublisherSlugIndexRoute
+  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugIndexRoute
+  '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$publisherSlug': typeof PublisherSlugRouteWithChildren
-  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRoute
+  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
+  '/$publisherSlug/': typeof PublisherSlugIndexRoute
+  '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
+  '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$publisherSlug' | '/$publisherSlug/$gameSlug'
+  fullPaths:
+    | '/'
+    | '/$publisherSlug'
+    | '/$publisherSlug/$gameSlug'
+    | '/$publisherSlug/'
+    | '/$publisherSlug/$gameSlug/'
+    | '/$publisherSlug/$gameSlug/products/$productSlug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$publisherSlug' | '/$publisherSlug/$gameSlug'
-  id: '__root__' | '/' | '/$publisherSlug' | '/$publisherSlug/$gameSlug'
+  to:
+    | '/'
+    | '/$publisherSlug'
+    | '/$publisherSlug/$gameSlug'
+    | '/$publisherSlug/$gameSlug/products/$productSlug'
+  id:
+    | '__root__'
+    | '/'
+    | '/$publisherSlug'
+    | '/$publisherSlug/$gameSlug'
+    | '/$publisherSlug/'
+    | '/$publisherSlug/$gameSlug/'
+    | '/$publisherSlug/$gameSlug/products/$productSlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -74,6 +118,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$publisherSlug/': {
+      id: '/$publisherSlug/'
+      path: '/'
+      fullPath: '/$publisherSlug/'
+      preLoaderRoute: typeof PublisherSlugIndexRouteImport
+      parentRoute: typeof PublisherSlugRoute
+    }
     '/$publisherSlug/$gameSlug': {
       id: '/$publisherSlug/$gameSlug'
       path: '/$gameSlug'
@@ -81,15 +132,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublisherSlugGameSlugRouteImport
       parentRoute: typeof PublisherSlugRoute
     }
+    '/$publisherSlug/$gameSlug/': {
+      id: '/$publisherSlug/$gameSlug/'
+      path: '/'
+      fullPath: '/$publisherSlug/$gameSlug/'
+      preLoaderRoute: typeof PublisherSlugGameSlugIndexRouteImport
+      parentRoute: typeof PublisherSlugGameSlugRoute
+    }
+    '/$publisherSlug/$gameSlug/products/$productSlug': {
+      id: '/$publisherSlug/$gameSlug/products/$productSlug'
+      path: '/products/$productSlug'
+      fullPath: '/$publisherSlug/$gameSlug/products/$productSlug'
+      preLoaderRoute: typeof PublisherSlugGameSlugProductsProductSlugRouteImport
+      parentRoute: typeof PublisherSlugGameSlugRoute
+    }
   }
 }
 
+interface PublisherSlugGameSlugRouteChildren {
+  PublisherSlugGameSlugIndexRoute: typeof PublisherSlugGameSlugIndexRoute
+  PublisherSlugGameSlugProductsProductSlugRoute: typeof PublisherSlugGameSlugProductsProductSlugRoute
+}
+
+const PublisherSlugGameSlugRouteChildren: PublisherSlugGameSlugRouteChildren = {
+  PublisherSlugGameSlugIndexRoute: PublisherSlugGameSlugIndexRoute,
+  PublisherSlugGameSlugProductsProductSlugRoute:
+    PublisherSlugGameSlugProductsProductSlugRoute,
+}
+
+const PublisherSlugGameSlugRouteWithChildren =
+  PublisherSlugGameSlugRoute._addFileChildren(
+    PublisherSlugGameSlugRouteChildren,
+  )
+
 interface PublisherSlugRouteChildren {
-  PublisherSlugGameSlugRoute: typeof PublisherSlugGameSlugRoute
+  PublisherSlugGameSlugRoute: typeof PublisherSlugGameSlugRouteWithChildren
+  PublisherSlugIndexRoute: typeof PublisherSlugIndexRoute
 }
 
 const PublisherSlugRouteChildren: PublisherSlugRouteChildren = {
-  PublisherSlugGameSlugRoute: PublisherSlugGameSlugRoute,
+  PublisherSlugGameSlugRoute: PublisherSlugGameSlugRouteWithChildren,
+  PublisherSlugIndexRoute: PublisherSlugIndexRoute,
 }
 
 const PublisherSlugRouteWithChildren = PublisherSlugRoute._addFileChildren(

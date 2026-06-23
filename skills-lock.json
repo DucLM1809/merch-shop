@@ -7,11 +7,31 @@
       "skillPath": "skills/engineering/ask-matt/SKILL.md",
       "computedHash": "f3ac3351e2a242ce2591e4f8475424d58f62db3f5786332b78f330b15312d1e0"
     },
+    "chakra-ui-builder": {
+      "source": "chakra-ui/chakra-ui",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/chakra-ui-builder/SKILL.md",
+      "computedHash": "b60b9f098afb4464df10f625bb8635e9567969d99f8b10012e1305ca988906bb"
+    },
+    "chakra-ui-refactor": {
+      "source": "chakra-ui/chakra-ui",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/chakra-ui-refactor/SKILL.md",
+      "computedHash": "3ff3aa78fdff4ea9f1b5e950e64c49c2cf428d78b4304bcc769898dd10db668b"
+    },
     "codebase-design": {
       "source": "mattpocock/skills",
       "sourceType": "github",
       "skillPath": "skills/engineering/codebase-design/SKILL.md",
       "computedHash": "2426dc4accf1a85dedfb560edb3a877ec8828b7375ea08c970df2b6c900a2a22"
+    },
+    "design-taste-frontend": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/taste-skill/SKILL.md",
+      "computedHash": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
     },
     "diagnosing-bugs": {
       "source": "mattpocock/skills",
@@ -60,6 +80,12 @@
       "sourceType": "github",
       "skillPath": "skills/engineering/prototype/SKILL.md",
       "computedHash": "40ff56e36bb13b5a9a16903efd6c78a02690ba430e10a8d1a65559100b77f475"
+    },
+    "redesign-existing-projects": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/redesign-skill/SKILL.md",
+      "computedHash": "b405eee0e0e80fc243f731d9aa368bca307e356db7e6157d27101d369dac6726"
     },
     "setup-matt-pocock-skills": {
       "source": "mattpocock/skills",

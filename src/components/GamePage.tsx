@@ -31,7 +31,10 @@ export function GamePage({ publisherSlug, gameSlug }: Props) {
           accentColor={publisher?.accentColor}
           isLoading={isLoading}
         />
-        <ProductCatalog filters={{ gameSlug }} />
+        <ProductCatalog
+          filters={{ gameSlug }}
+          getProductHref={(p) => `/${publisherSlug}/${gameSlug}/products/${p.slug}`}
+        />
       </Box>
     </Flex>
   )

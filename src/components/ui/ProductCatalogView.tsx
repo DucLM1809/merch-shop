@@ -14,9 +14,11 @@ export interface ProductCatalogViewProps {
   products: Product[] | undefined
   isLoading: boolean
   isError: boolean
+  getProductHref?: (product: Product) => string
 }
 
-export function ProductCatalogView({ products, isLoading, isError }: ProductCatalogViewProps) {
+export function ProductCatalogView({ products, isLoading, isError, getProductHref }: ProductCatalogViewProps) {
+  const productHref = getProductHref ?? ((p: Product) => `/products/${p.slug}`)
   if (isLoading) {
     return (
       <Box p={8}>
@@ -85,7 +87,7 @@ export function ProductCatalogView({ products, isLoading, isError }: ProductCata
               )}
             </Box>
             <Box p={4} pt={3}>
-              <LinkOverlay href={`/products/${product.slug}`}>
+              <LinkOverlay href={productHref(product)}>
                 <Heading size="sm" color="white" fontWeight="600" lineHeight="snug" mb={1}>
                   {product.name}
                 </Heading>
