@@ -6,7 +6,7 @@ import { client, BASE_URL } from './client'
 describe('API client', () => {
   it('fetches product list', async () => {
     const products = await client.getProducts()
-    expect(products).toHaveLength(4)
+    expect(products).toHaveLength(6)
     expect(products[0]).toMatchObject({
       id: expect.any(String),
       name: expect.any(String),

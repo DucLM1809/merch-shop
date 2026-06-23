@@ -45,7 +45,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    if (import.meta.env.DEV) {
+    if (import.meta.env.DEV && 'serviceWorker' in navigator) {
       import('../mocks/browser').then(({ worker }) =>
         worker.start({ onUnhandledRequest: 'bypass' }),
       )
@@ -61,18 +61,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <ChakraProvider value={system}>
           {children}
         </ChakraProvider>
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            TanStackQueryDevtools,
-          ]}
-        />
+        {!import.meta.env.VITEST && (
+          <TanStackDevtools
+            config={{
+              position: 'bottom-right',
+            }}
+            plugins={[
+              {
+                name: 'Tanstack Router',
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+              TanStackQueryDevtools,
+            ]}
+          />
+        )}
         <Scripts />
       </body>
     </html>

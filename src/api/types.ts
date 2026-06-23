@@ -37,6 +37,20 @@ export interface Publisher {
   games: Game[]
 }
 
+export interface Team {
+  id: string
+  slug: string
+  name: string
+  gameId: string
+}
+
+export interface Character {
+  id: string
+  slug: string
+  name: string
+  gameId: string
+}
+
 export interface ProductFilters {
   publisher?: string
   game?: string

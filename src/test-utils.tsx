@@ -1,6 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react'
-import { RouterContextProvider, createMemoryHistory, createRouter } from '@tanstack/react-router'
+import {
+  RouterContextProvider,
+  RouterProvider,
+  createMemoryHistory,
+  createRouter,
+} from '@tanstack/react-router'
 import { render } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import { routeTree } from './routeTree.gen'
@@ -21,4 +26,28 @@ export function renderWithProviders(ui: ReactElement) {
       </ChakraProvider>
     </RouterContextProvider>,
   )
+}
+
+/** Render the full route tree at the given path (default: '/'). */
+export function renderRoute(path = '/') {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  })
+  const history = createMemoryHistory({ initialEntries: [path] })
+  const router = createRouter({
+    routeTree,
+    context: { queryClient },
+    history,
+  })
+  return {
+    ...render(
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider value={defaultSystem}>
+          <RouterProvider router={router} />
+        </ChakraProvider>
+      </QueryClientProvider>,
+    ),
+    router,
+    queryClient,
+  }
 }

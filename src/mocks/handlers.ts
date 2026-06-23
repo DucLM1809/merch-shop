@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import type { Product, Publisher, Game } from '../api/types'
+import type { Product, Publisher, Game, Team, Character } from '../api/types'
 import { BASE_URL } from '../api/client'
 
 const games: Game[] = [
@@ -23,6 +23,17 @@ export const publishers: Publisher[] = [
     accentColor: '#1a9fff',
     games: games.filter((g) => g.publisherId === 'valve'),
   },
+]
+
+export const teams: Team[] = [
+  { id: 't1', slug: 't1', name: 'T1', gameId: 'lol' },
+  { id: 'c9', slug: 'cloud9', name: 'Cloud9', gameId: 'lol' },
+  { id: 'navi', slug: 'navi', name: 'NAVI', gameId: 'cs2' },
+]
+
+export const characters: Character[] = [
+  { id: 'azir', slug: 'azir', name: 'Azir', gameId: 'lol' },
+  { id: 'jett', slug: 'jett', name: 'Jett', gameId: 'val' },
 ]
 
 const products: Product[] = [
@@ -62,7 +73,28 @@ const products: Product[] = [
     price: 49.99,
     publisherId: 'valve',
     gameId: 'cs2',
+    teamId: 'navi',
     imageUrl: 'https://picsum.photos/seed/cs2-jersey/400/400',
+  },
+  {
+    id: '5',
+    slug: 'c9-jersey',
+    name: 'Cloud9 Jersey',
+    price: 54.99,
+    publisherId: 'riot',
+    gameId: 'lol',
+    teamId: 'c9',
+    imageUrl: 'https://picsum.photos/seed/c9-jersey/400/400',
+  },
+  {
+    id: '6',
+    slug: 'jett-hoodie',
+    name: 'Jett Hoodie',
+    price: 69.99,
+    publisherId: 'riot',
+    gameId: 'val',
+    characterId: 'jett',
+    imageUrl: 'https://picsum.photos/seed/jett-hoodie/400/400',
   },
 ]
 
@@ -73,6 +105,20 @@ export const handlers = [
     const pub = publishers.find((p) => p.slug === params.slug)
     if (!pub) return new HttpResponse(null, { status: 404 })
     return HttpResponse.json(pub)
+  }),
+
+  http.get(`${BASE_URL}/teams`, ({ request }) => {
+    const url = new URL(request.url)
+    const gameId = url.searchParams.get('game')
+    const filtered = gameId ? teams.filter((t) => t.gameId === gameId) : teams
+    return HttpResponse.json(filtered)
+  }),
+
+  http.get(`${BASE_URL}/characters`, ({ request }) => {
+    const url = new URL(request.url)
+    const gameId = url.searchParams.get('game')
+    const filtered = gameId ? characters.filter((c) => c.gameId === gameId) : characters
+    return HttpResponse.json(filtered)
   }),
 
   http.get(`${BASE_URL}/products`, ({ request }) => {
