@@ -1,6 +1,26 @@
 import { http, HttpResponse } from 'msw'
-import type { Product, Publisher, Game, Team, Character } from '../api/types'
+import type { Publisher, Game, Team, Character } from '../api/types'
 import { BASE_URL } from '../api/client'
+
+interface RawProduct {
+  id: string
+  slug: string
+  name: string
+  description?: string
+  imageUrl?: string
+  price: number
+  publisherId: string
+  gameId: string
+  teamId?: string
+  characterId?: string
+  skus?: { id: string; size?: string; color?: string; edition?: string; price: number; available: boolean }[]
+}
+
+function enrich(p: RawProduct) {
+  const game = games.find((g) => g.id === p.gameId)!
+  const publisher = publishers.find((pub) => pub.id === p.publisherId)!
+  return { ...p, gameSlug: game.slug, publisherSlug: publisher.slug }
+}
 
 const games: Game[] = [
   { id: 'lol', slug: 'league-of-legends', name: 'League of Legends', publisherId: 'riot' },
@@ -36,7 +56,7 @@ export const characters: Character[] = [
   { id: 'jett', slug: 'jett', name: 'Jett', gameId: 'val' },
 ]
 
-const products: Product[] = [
+const products: RawProduct[] = [
   {
     id: '1',
     slug: 'faker-jersey',
@@ -147,12 +167,12 @@ export const handlers = [
         (!team || p.teamId === team) &&
         (!character || p.characterId === character),
     )
-    return HttpResponse.json(filtered)
+    return HttpResponse.json(filtered.map(enrich))
   }),
 
   http.get(`${BASE_URL}/products/:slug`, ({ params }) => {
     const product = products.find((p) => p.slug === params.slug)
     if (!product) return new HttpResponse(null, { status: 404 })
-    return HttpResponse.json(product)
+    return HttpResponse.json(enrich(product))
   }),
 ]

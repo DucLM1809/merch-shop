@@ -9,7 +9,9 @@ const sampleProducts: Product[] = [
     name: 'Faker Jersey',
     price: 59.99,
     publisherId: 'riot',
+    publisherSlug: 'riot',
     gameId: 'lol',
+    gameSlug: 'league-of-legends',
     imageUrl: 'https://picsum.photos/seed/faker-jersey/400/400',
   },
   {
@@ -18,7 +20,9 @@ const sampleProducts: Product[] = [
     name: 'League of Legends Hoodie',
     price: 79.99,
     publisherId: 'riot',
+    publisherSlug: 'riot',
     gameId: 'lol',
+    gameSlug: 'league-of-legends',
     imageUrl: 'https://picsum.photos/seed/lol-hoodie/400/400',
   },
   {
@@ -27,7 +31,9 @@ const sampleProducts: Product[] = [
     name: 'Valorant Team Jersey',
     price: 54.99,
     publisherId: 'riot',
+    publisherSlug: 'riot',
     gameId: 'val',
+    gameSlug: 'valorant',
     imageUrl: 'https://picsum.photos/seed/valorant-jersey/400/400',
   },
   {
@@ -36,7 +42,9 @@ const sampleProducts: Product[] = [
     name: 'CS2 Team Jersey',
     price: 49.99,
     publisherId: 'valve',
+    publisherSlug: 'valve',
     gameId: 'cs2',
+    gameSlug: 'cs2',
     imageUrl: 'https://picsum.photos/seed/cs2-jersey/400/400',
   },
 ]

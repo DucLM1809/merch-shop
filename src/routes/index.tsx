@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { z } from 'zod'
 import { Box, Heading, Text } from '@chakra-ui/react'
 import { ProductCatalog } from '../components/ProductCatalog'
@@ -31,7 +31,17 @@ function HomePage() {
       <Box display="flex" flex="1">
         <FacetFilter />
         <Box flex="1" minW={0}>
-          <ProductCatalog filters={{ game, team, character }} />
+          <ProductCatalog
+            filters={{ game, team, character }}
+            renderLink={(p, children) => (
+              <Link
+                to="/$publisherSlug/$gameSlug/products/$productSlug"
+                params={{ publisherSlug: p.publisherSlug, gameSlug: p.gameSlug, productSlug: p.slug }}
+              >
+                {children}
+              </Link>
+            )}
+          />
         </Box>
       </Box>
     </Box>

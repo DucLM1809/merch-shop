@@ -25,6 +25,35 @@ function isOptionAvailable(skus: SKU[], key: keyof SKU, value: string): boolean 
   return skus.some((s) => s[key] === value && s.available)
 }
 
+function DimButton({
+  label,
+  available,
+  selected,
+  onToggle,
+}: {
+  label: string
+  available: boolean
+  selected: boolean
+  onToggle: () => void
+}) {
+  return (
+    <WrapItem>
+      <Button
+        size="sm"
+        variant={selected ? 'solid' : 'outline'}
+        disabled={!available}
+        aria-pressed={selected}
+        aria-disabled={!available}
+        opacity={!available ? 0.35 : 1}
+        textDecoration={!available ? 'line-through' : 'none'}
+        onClick={() => available && onToggle()}
+      >
+        {label}
+      </Button>
+    </WrapItem>
+  )
+}
+
 export function ProductDetailView({ product, isLoading, isError }: ProductDetailViewProps) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
@@ -69,33 +98,6 @@ export function ProductDetailView({ product, isLoading, isError }: ProductDetail
   }
 
   const canAddToCart = selectedSku?.available === true
-
-  const DimButton = ({
-    label,
-    available,
-    selected,
-    onToggle,
-  }: {
-    label: string
-    available: boolean
-    selected: boolean
-    onToggle: () => void
-  }) => (
-    <WrapItem>
-      <Button
-        size="sm"
-        variant={selected ? 'solid' : 'outline'}
-        disabled={!available}
-        aria-pressed={selected}
-        aria-disabled={!available}
-        opacity={!available ? 0.35 : 1}
-        textDecoration={!available ? 'line-through' : 'none'}
-        onClick={() => available && onToggle()}
-      >
-        {label}
-      </Button>
-    </WrapItem>
-  )
 
   return (
     <Box p={8} maxW="4xl" mx="auto">
@@ -186,7 +188,7 @@ export function ProductDetailView({ product, isLoading, isError }: ProductDetail
         size="lg"
         w="full"
         mt={4}
-        colorScheme={canAddToCart ? 'green' : 'gray'}
+        colorPalette={canAddToCart ? 'green' : 'gray'}
         disabled={!canAddToCart}
         aria-disabled={!canAddToCart}
       >

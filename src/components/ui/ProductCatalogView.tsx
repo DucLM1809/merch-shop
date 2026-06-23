@@ -1,5 +1,7 @@
+import { type ReactNode } from 'react'
 import {
   Box,
+  Flex,
   Heading,
   Image,
   LinkBox,
@@ -14,11 +16,10 @@ export interface ProductCatalogViewProps {
   products: Product[] | undefined
   isLoading: boolean
   isError: boolean
-  getProductHref?: (product: Product) => string
+  renderLink?: (product: Product, children: ReactNode) => ReactNode
 }
 
-export function ProductCatalogView({ products, isLoading, isError, getProductHref }: ProductCatalogViewProps) {
-  const productHref = getProductHref ?? ((p: Product) => `/products/${p.slug}`)
+export function ProductCatalogView({ products, isLoading, isError, renderLink }: ProductCatalogViewProps) {
   if (isLoading) {
     return (
       <Box p={8}>
@@ -52,53 +53,81 @@ export function ProductCatalogView({ products, isLoading, isError, getProductHre
     <Box p={8}>
       <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} gap={5}>
         {products.map((product) => (
-          <LinkBox
-            key={product.id}
-            as="article"
-            borderRadius="xl"
-            bg="gray.900"
-            overflow="hidden"
-            transition="transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s"
-            _hover={{
-              transform: 'translateY(-3px)',
-              boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
-            }}
-          >
-            <Box h="56" bg="gray.800" overflow="hidden" position="relative">
-              {product.imageUrl ? (
-                <Image
-                  src={product.imageUrl}
-                  alt={product.name}
-                  h="full"
-                  w="full"
-                  objectFit="cover"
-                />
-              ) : (
-                <Box
-                  h="full"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Text color="gray.600" fontSize="xs" letterSpacing="wider" textTransform="uppercase">
-                    No image
-                  </Text>
-                </Box>
-              )}
-            </Box>
-            <Box p={4} pt={3}>
-              <LinkOverlay href={productHref(product)}>
-                <Heading size="sm" color="white" fontWeight="600" lineHeight="snug" mb={1}>
-                  {product.name}
-                </Heading>
-              </LinkOverlay>
-              <Text color="gray.300" fontWeight="600" fontSize="sm">
-                ${product.price.toFixed(2)}
-              </Text>
-            </Box>
-          </LinkBox>
+          <ProductCard key={product.id} product={product} renderLink={renderLink} />
         ))}
       </SimpleGrid>
+    </Box>
+  )
+}
+
+function ProductCard({
+  product,
+  renderLink,
+}: {
+  product: Product
+  renderLink?: (product: Product, children: ReactNode) => ReactNode
+}) {
+  const imageSection = (
+    <Box h="56" bg="gray.800" overflow="hidden" position="relative">
+      {product.imageUrl ? (
+        <Image src={product.imageUrl} alt={product.name} h="full" w="full" objectFit="cover" />
+      ) : (
+        <Flex h="full" align="center" justify="center">
+          <Text color="gray.600" fontSize="xs" letterSpacing="wider" textTransform="uppercase">
+            No image
+          </Text>
+        </Flex>
+      )}
+    </Box>
+  )
+
+  const heading = (
+    <Heading size="sm" color="white" fontWeight="600" lineHeight="snug" mb={1}>
+      {product.name}
+    </Heading>
+  )
+
+  const priceText = (
+    <Text color="gray.300" fontWeight="600" fontSize="sm">
+      ${product.price.toFixed(2)}
+    </Text>
+  )
+
+  if (renderLink) {
+    return (
+      <LinkBox
+        as="article"
+        borderRadius="xl"
+        bg="gray.900"
+        overflow="hidden"
+        transition="transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s"
+        _hover={{ transform: 'translateY(-3px)', boxShadow: '0 12px 32px rgba(0,0,0,0.5)' }}
+      >
+        {imageSection}
+        <Box p={4} pt={3}>
+          <LinkOverlay asChild>
+            {renderLink(product, heading)}
+          </LinkOverlay>
+          {priceText}
+        </Box>
+      </LinkBox>
+    )
+  }
+
+  return (
+    <Box
+      as="article"
+      borderRadius="xl"
+      bg="gray.900"
+      overflow="hidden"
+      transition="transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s"
+      _hover={{ transform: 'translateY(-3px)', boxShadow: '0 12px 32px rgba(0,0,0,0.5)' }}
+    >
+      {imageSection}
+      <Box p={4} pt={3}>
+        {heading}
+        {priceText}
+      </Box>
     </Box>
   )
 }

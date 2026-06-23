@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Box, Flex } from '@chakra-ui/react'
+import { Link } from '@tanstack/react-router'
 import { client } from '../api/client'
 import { ProductCatalog } from './ProductCatalog'
 import { PublisherNav } from './PublisherNav'
@@ -33,7 +34,14 @@ export function GamePage({ publisherSlug, gameSlug }: Props) {
         />
         <ProductCatalog
           filters={{ gameSlug }}
-          getProductHref={(p) => `/${publisherSlug}/${gameSlug}/products/${p.slug}`}
+          renderLink={(p, children) => (
+            <Link
+              to="/$publisherSlug/$gameSlug/products/$productSlug"
+              params={{ publisherSlug, gameSlug, productSlug: p.slug }}
+            >
+              {children}
+            </Link>
+          )}
         />
       </Box>
     </Flex>

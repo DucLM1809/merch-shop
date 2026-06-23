@@ -1,4 +1,4 @@
-import { Box, Checkbox, Heading, Stack, Text } from '@chakra-ui/react'
+import { Box, Checkbox, Stack, Text } from '@chakra-ui/react'
 import type { Character, Game, Team } from '../../api/types'
 
 export interface FacetFilterViewProps {
@@ -88,9 +88,9 @@ function FacetGroup({ label, items, selected, onChange }: FacetGroupProps) {
             <Checkbox.HiddenInput aria-label={item.label} />
             <Checkbox.Control />
             <Checkbox.Label>
-              <Heading size="xs" color={selected === item.id ? 'white' : 'gray.400'} fontWeight="500">
+              <Text fontSize="xs" color={selected === item.id ? 'white' : 'gray.400'} fontWeight="500">
                 {item.label}
-              </Heading>
+              </Text>
             </Checkbox.Label>
           </Checkbox.Root>
         ))}

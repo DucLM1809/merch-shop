@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Skeleton, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, HStack, Skeleton, Text } from '@chakra-ui/react'
 import type { Publisher } from '../../api/types'
 
 export interface PublisherPageViewProps {
@@ -31,13 +31,12 @@ export function PublisherPageView({ publisher, isLoading }: PublisherPageViewPro
         </HStack>
       ) : (
         <HStack gap={3}>
-          <Box
+          <Flex
             w={10}
             h={10}
             borderRadius="md"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
+            align="center"
+            justify="center"
             fontWeight="700"
             fontSize="lg"
             color="white"
@@ -46,7 +45,7 @@ export function PublisherPageView({ publisher, isLoading }: PublisherPageViewPro
             aria-hidden
           >
             {publisher?.name[0]}
-          </Box>
+          </Flex>
           <Box>
             <Heading size="lg" color="white" lineHeight="tight">
               {publisher?.name}

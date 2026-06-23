@@ -15,7 +15,9 @@ export interface Product {
   imageUrl?: string
   price: number
   publisherId: string
+  publisherSlug: string
   gameId: string
+  gameSlug: string
   teamId?: string
   characterId?: string
   skus?: SKU[]

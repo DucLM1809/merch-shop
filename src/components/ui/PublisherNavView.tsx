@@ -51,8 +51,8 @@ export function PublisherNavView({
           const publisherLinkChildren = (
             <HStack gap={2.5} align="center">
               <Box
-                w="7px"
-                h="7px"
+                w="1.75"
+                h="1.75"
                 borderRadius="full"
                 flexShrink={0}
                 transition="opacity 0.15s"
