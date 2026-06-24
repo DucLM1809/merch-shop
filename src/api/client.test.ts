@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import { http, HttpResponse } from 'msw'
 import { server } from '../mocks/server'
 import { client, BASE_URL } from './client'
@@ -34,5 +34,46 @@ describe('API client', () => {
       name: 'ApiError',
       status: 500,
     })
+  })
+})
+
+describe('API client - Bearer token', () => {
+  afterEach(() => {
+    delete (window as any).Clerk
+  })
+
+  it('attaches Bearer token when window.Clerk session is active', async () => {
+    const mockToken = 'test-clerk-token-xyz'
+    let capturedAuth: string | null = null
+
+    ;(window as any).Clerk = {
+      session: { getToken: vi.fn().mockResolvedValue(mockToken) },
+    }
+
+    server.use(
+      http.get(`${BASE_URL}/products`, ({ request }) => {
+        capturedAuth = request.headers.get('Authorization')
+        return HttpResponse.json([])
+      }),
+    )
+
+    await client.getProducts()
+
+    expect(capturedAuth).toBe(`Bearer ${mockToken}`)
+  })
+
+  it('sends request without Authorization header when not signed in', async () => {
+    let capturedAuth: string | null = 'not-set'
+
+    server.use(
+      http.get(`${BASE_URL}/products`, ({ request }) => {
+        capturedAuth = request.headers.get('Authorization')
+        return HttpResponse.json([])
+      }),
+    )
+
+    await client.getProducts()
+
+    expect(capturedAuth).toBeNull()
   })
 })

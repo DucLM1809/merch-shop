@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { renderRoute } from '../test-utils'
 
 // Mock Clerk — provide both signed-in and signed-out states
@@ -8,8 +8,12 @@ vi.mock('@clerk/react', () => ({
   useAuth: vi.fn(),
   useUser: vi.fn(),
   useClerk: vi.fn(() => ({ signOut: vi.fn() })),
-  SignIn: () => <div data-testid="clerk-sign-in">Sign In Form</div>,
-  SignUp: () => <div data-testid="clerk-sign-up">Sign Up Form</div>,
+  SignIn: ({ fallbackRedirectUrl }: { fallbackRedirectUrl?: string }) => (
+    <div data-testid="clerk-sign-in" data-redirect-url={fallbackRedirectUrl ?? ''}>Sign In Form</div>
+  ),
+  SignUp: ({ fallbackRedirectUrl }: { fallbackRedirectUrl?: string }) => (
+    <div data-testid="clerk-sign-up" data-redirect-url={fallbackRedirectUrl ?? ''}>Sign Up Form</div>
+  ),
 }))
 
 import { useAuth, useUser } from '@clerk/react'
@@ -60,6 +64,28 @@ describe('/sign-in route', () => {
 
     expect(await screen.findByTestId('clerk-sign-in')).toBeInTheDocument()
   })
+
+  it('passes fallbackRedirectUrl=/ to SignIn', async () => {
+    mockUseAuth.mockReturnValue({ isSignedIn: false })
+    mockUseUser.mockReturnValue({ user: null })
+
+    renderRoute('/sign-in')
+
+    expect(await screen.findByTestId('clerk-sign-in')).toHaveAttribute('data-redirect-url', '/')
+  })
+
+  it('redirects to / when already signed in', async () => {
+    mockUseAuth.mockReturnValue({ isSignedIn: true })
+    mockUseUser.mockReturnValue({
+      user: { firstName: 'Faker', emailAddresses: [{ emailAddress: 'faker@t1.gg' }] },
+    })
+
+    const { router } = renderRoute('/sign-in')
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe('/')
+    })
+  })
 })
 
 describe('/sign-up route', () => {
@@ -70,5 +96,27 @@ describe('/sign-up route', () => {
     renderRoute('/sign-up')
 
     expect(await screen.findByTestId('clerk-sign-up')).toBeInTheDocument()
+  })
+
+  it('passes fallbackRedirectUrl=/ to SignUp', async () => {
+    mockUseAuth.mockReturnValue({ isSignedIn: false })
+    mockUseUser.mockReturnValue({ user: null })
+
+    renderRoute('/sign-up')
+
+    expect(await screen.findByTestId('clerk-sign-up')).toHaveAttribute('data-redirect-url', '/')
+  })
+
+  it('redirects to / when already signed in', async () => {
+    mockUseAuth.mockReturnValue({ isSignedIn: true })
+    mockUseUser.mockReturnValue({
+      user: { firstName: 'Faker', emailAddresses: [{ emailAddress: 'faker@t1.gg' }] },
+    })
+
+    const { router } = renderRoute('/sign-up')
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe('/')
+    })
   })
 })
