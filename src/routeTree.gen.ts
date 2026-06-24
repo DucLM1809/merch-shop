@@ -17,6 +17,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as PublisherSlugRouteImport } from './routes/$publisherSlug'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PublisherSlugIndexRouteImport } from './routes/$publisherSlug.index'
+import { Route as AccountOrdersRouteImport } from './routes/account.orders'
 import { Route as PublisherSlugGameSlugRouteImport } from './routes/$publisherSlug.$gameSlug'
 import { Route as PublisherSlugGameSlugIndexRouteImport } from './routes/$publisherSlug.$gameSlug.index'
 import { Route as PublisherSlugGameSlugProductsProductSlugRouteImport } from './routes/$publisherSlug.$gameSlug.products.$productSlug'
@@ -61,6 +62,11 @@ const PublisherSlugIndexRoute = PublisherSlugIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublisherSlugRoute,
 } as any)
+const AccountOrdersRoute = AccountOrdersRouteImport.update({
+  id: '/account/orders',
+  path: '/account/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublisherSlugGameSlugRoute = PublisherSlugGameSlugRouteImport.update({
   id: '/$gameSlug',
   path: '/$gameSlug',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
+  '/account/orders': typeof AccountOrdersRoute
   '/$publisherSlug/': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
   '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/order-confirmation': typeof OrderConfirmationRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
+  '/account/orders': typeof AccountOrdersRoute
   '/$publisherSlug': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugIndexRoute
   '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
+  '/account/orders': typeof AccountOrdersRoute
   '/$publisherSlug/': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
   '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/$publisherSlug/$gameSlug'
+    | '/account/orders'
     | '/$publisherSlug/'
     | '/$publisherSlug/$gameSlug/'
     | '/$publisherSlug/$gameSlug/products/$productSlug'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/order-confirmation'
     | '/sign-in'
     | '/sign-up'
+    | '/account/orders'
     | '/$publisherSlug'
     | '/$publisherSlug/$gameSlug'
     | '/$publisherSlug/$gameSlug/products/$productSlug'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/$publisherSlug/$gameSlug'
+    | '/account/orders'
     | '/$publisherSlug/'
     | '/$publisherSlug/$gameSlug/'
     | '/$publisherSlug/$gameSlug/products/$productSlug'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   OrderConfirmationRoute: typeof OrderConfirmationRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
+  AccountOrdersRoute: typeof AccountOrdersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -224,6 +237,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$publisherSlug/'
       preLoaderRoute: typeof PublisherSlugIndexRouteImport
       parentRoute: typeof PublisherSlugRoute
+    }
+    '/account/orders': {
+      id: '/account/orders'
+      path: '/account/orders'
+      fullPath: '/account/orders'
+      preLoaderRoute: typeof AccountOrdersRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/$publisherSlug/$gameSlug': {
       id: '/$publisherSlug/$gameSlug'
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrderConfirmationRoute: OrderConfirmationRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
+  AccountOrdersRoute: AccountOrdersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

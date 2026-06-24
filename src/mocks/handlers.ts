@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import type { Publisher, Game, Team, Character, CreateOrderResponse } from '../api/types'
+import type { Publisher, Game, Team, Character, CreateOrderResponse, Order } from '../api/types'
 import { BASE_URL } from '../api/client'
 
 interface RawProduct {
@@ -183,4 +183,6 @@ export const handlers = [
     }
     return HttpResponse.json(response, { status: 201 })
   }),
+
+  http.get(`${BASE_URL}/orders`, (): Response => HttpResponse.json([] as Order[])),
 ]
