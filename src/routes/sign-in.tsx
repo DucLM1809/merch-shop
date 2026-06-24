@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { SignIn, useAuth } from '@clerk/react'
-import { Flex } from '@chakra-ui/react'
 import { useEffect } from 'react'
+import { AuthPageView } from '../components/ui/AuthPageView'
 
 export const Route = createFileRoute('/sign-in')({
   component: SignInPage,
@@ -18,8 +18,8 @@ function SignInPage() {
   if (isSignedIn) return null
 
   return (
-    <Flex justify="center" align="center" minH="80vh">
+    <AuthPageView>
       <SignIn routing="path" path="/sign-in" fallbackRedirectUrl="/" />
-    </Flex>
+    </AuthPageView>
   )
 }
