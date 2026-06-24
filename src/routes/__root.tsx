@@ -5,12 +5,14 @@ import {
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 import { ChakraProvider } from '@chakra-ui/react'
+import { ClerkProvider } from '@clerk/react'
 import { system } from '../theme'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import { GlobalNav } from '../components/GlobalNav'
+import { env } from '../env'
 
 import appCss from '../styles.css?url'
 
@@ -59,10 +61,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ChakraProvider value={system}>
-          <GlobalNav />
-          {children}
-        </ChakraProvider>
+        <ClerkProvider publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY ?? ''}>
+          <ChakraProvider value={system}>
+            <GlobalNav />
+            {children}
+          </ChakraProvider>
+        </ClerkProvider>
         {!import.meta.env.VITEST && (
           <TanStackDevtools
             config={{

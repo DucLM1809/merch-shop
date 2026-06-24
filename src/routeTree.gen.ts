@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignUpRouteImport } from './routes/sign-up'
+import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as PublisherSlugRouteImport } from './routes/$publisherSlug'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +19,16 @@ import { Route as PublisherSlugGameSlugRouteImport } from './routes/$publisherSl
 import { Route as PublisherSlugGameSlugIndexRouteImport } from './routes/$publisherSlug.$gameSlug.index'
 import { Route as PublisherSlugGameSlugProductsProductSlugRouteImport } from './routes/$publisherSlug.$gameSlug.products.$productSlug'
 
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CartRoute = CartRouteImport.update({
   id: '/cart',
   path: '/cart',
@@ -59,6 +71,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$publisherSlug': typeof PublisherSlugRouteWithChildren
   '/cart': typeof CartRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
   '/$publisherSlug/': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
@@ -67,6 +81,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/$publisherSlug': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugIndexRoute
   '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
@@ -76,6 +92,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$publisherSlug': typeof PublisherSlugRouteWithChildren
   '/cart': typeof CartRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
   '/$publisherSlug/': typeof PublisherSlugIndexRoute
   '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
@@ -87,6 +105,8 @@ export interface FileRouteTypes {
     | '/'
     | '/$publisherSlug'
     | '/cart'
+    | '/sign-in'
+    | '/sign-up'
     | '/$publisherSlug/$gameSlug'
     | '/$publisherSlug/'
     | '/$publisherSlug/$gameSlug/'
@@ -95,6 +115,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cart'
+    | '/sign-in'
+    | '/sign-up'
     | '/$publisherSlug'
     | '/$publisherSlug/$gameSlug'
     | '/$publisherSlug/$gameSlug/products/$productSlug'
@@ -103,6 +125,8 @@ export interface FileRouteTypes {
     | '/'
     | '/$publisherSlug'
     | '/cart'
+    | '/sign-in'
+    | '/sign-up'
     | '/$publisherSlug/$gameSlug'
     | '/$publisherSlug/'
     | '/$publisherSlug/$gameSlug/'
@@ -113,10 +137,26 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PublisherSlugRoute: typeof PublisherSlugRouteWithChildren
   CartRoute: typeof CartRoute
+  SignInRoute: typeof SignInRoute
+  SignUpRoute: typeof SignUpRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cart': {
       id: '/cart'
       path: '/cart'
@@ -203,6 +243,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublisherSlugRoute: PublisherSlugRouteWithChildren,
   CartRoute: CartRoute,
+  SignInRoute: SignInRoute,
+  SignUpRoute: SignUpRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

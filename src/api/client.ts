@@ -5,6 +5,19 @@ export const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000'
 
 const http = axios.create({ baseURL: BASE_URL })
 
+// Attach Clerk session token when available (no-op in tests / unauthenticated)
+http.interceptors.request.use(async (config) => {
+  if (typeof window !== 'undefined' && (window as any).Clerk?.session) {
+    try {
+      const token = await (window as any).Clerk.session.getToken()
+      if (token) config.headers.Authorization = `Bearer ${token}`
+    } catch {
+      // session expired or unavailable — proceed without token
+    }
+  }
+  return config
+})
+
 export class ApiError extends Error {
   constructor(
     public readonly status: number,
