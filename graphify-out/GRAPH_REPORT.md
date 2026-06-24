@@ -1,12 +1,18 @@
-# Graph Report - .  (2026-06-23)
+# Graph Report - merch-shop  (2026-06-24)
 
 ## Corpus Check
-- Corpus is ~8,360 words - fits in a single context window. You may not need a graph.
+- 59 files · ~10,836 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 193 nodes · 349 edges · 10 communities (9 shown, 1 thin omitted)
+- 229 nodes · 417 edges · 11 communities
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `4c2acec8`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - [[_COMMUNITY_Route Definitions|Route Definitions]]
@@ -19,91 +25,99 @@
 - [[_COMMUNITY_App Shell & Theme|App Shell & Theme]]
 - [[_COMMUNITY_Product Detail View|Product Detail View]]
 - [[_COMMUNITY_Environment Config|Environment Config]]
+- [[_COMMUNITY_Community 10|Community 10]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Product` - 9 edges
-2. `FileRoutesByPath` - 9 edges
-3. `client` - 8 edges
+1. `FileRoutesByPath` - 13 edges
+2. `client` - 9 edges
+3. `Product` - 9 edges
 4. `Publisher` - 7 edges
 5. `publishers` - 6 edges
-6. `Team` - 5 edges
-7. `Character` - 5 edges
-8. `ProductCatalog()` - 5 edges
-9. `updateQuantity()` - 5 edges
-10. `renderWithProviders()` - 5 edges
+6. `clearCart()` - 6 edges
+7. `renderRoute()` - 6 edges
+8. `Team` - 5 edges
+9. `Character` - 5 edges
+10. `ProductCatalog()` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `ProductCatalogViewProps` --references--> `Product`  [EXTRACTED]
-  src/components/ui/ProductCatalogView.tsx → src/api/types.ts
-- `ProductDetailViewProps` --references--> `Product`  [EXTRACTED]
-  src/components/ui/ProductDetailView.tsx → src/api/types.ts
 - `PublisherNavViewProps` --references--> `Publisher`  [EXTRACTED]
   src/components/ui/PublisherNavView.tsx → src/api/types.ts
 - `PublisherPageViewProps` --references--> `Publisher`  [EXTRACTED]
   src/components/ui/PublisherPageView.tsx → src/api/types.ts
-- `ProductDetailViewProps` --references--> `SKU`  [EXTRACTED]
+- `ProductCatalogViewProps` --references--> `Product`  [EXTRACTED]
+  src/components/ui/ProductCatalogView.tsx → src/api/types.ts
+- `ProductDetailViewProps` --references--> `Product`  [EXTRACTED]
   src/components/ui/ProductDetailView.tsx → src/api/types.ts
+- `CheckoutForm()` --calls--> `clearCart()`  [EXTRACTED]
+  src/components/CheckoutPage.tsx → src/store/cart.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (10 total, 1 thin omitted)
+## Communities (11 total, 0 thin omitted)
 
 ### Community 0 - "Route Definitions"
-Cohesion: 0.08
-Nodes (31): Route, Route, Route, Route, Route, Route, Route, Route (+23 more)
+Cohesion: 0.06
+Nodes (36): CartPage(), Route, Route, Route, Route, Route, Route, Route (+28 more)
 
 ### Community 1 - "API Client & Types"
-Cohesion: 0.12
-Nodes (20): ApiError, client, http, Character, Game, Product, ProductFilters, Team (+12 more)
+Cohesion: 0.18
+Nodes (12): Product, ProductFilters, Props, ProductCatalogView(), ProductCatalogViewProps, Default, Empty, Loading (+4 more)
 
 ### Community 2 - "Test Mocks & Handlers"
-Cohesion: 0.10
-Nodes (19): Publisher, worker, characters, games, handlers, products, publishers, RawProduct (+11 more)
+Cohesion: 0.20
+Nodes (8): PublisherNavView(), PublisherNavViewProps, Default, GameActive, Loading, meta, PublisherActive, Story
 
 ### Community 3 - "Cart & Product Detail"
-Cohesion: 0.15
-Nodes (16): CartPage(), ProductDetail(), Props, addToCart(), CartItem, CartState, cartStore, clearCart() (+8 more)
+Cohesion: 0.11
+Nodes (20): ShippingAddress, CheckoutForm(), CheckoutPage(), FieldErrors, stripePromise, Route, mockConfirmCardPayment, mockStripe (+12 more)
 
 ### Community 4 - "Game & Publisher Nav"
-Cohesion: 0.13
-Nodes (13): GamePage(), Props, NavLink, Props, PublisherNav(), renderRoute(), renderWithProviders(), GamePageView() (+5 more)
+Cohesion: 0.16
+Nodes (11): publishers, Loaded, Loading, meta, Story, PublisherPageView(), PublisherPageViewProps, Loaded (+3 more)
 
 ### Community 5 - "Catalog & Filters"
-Cohesion: 0.13
-Nodes (12): FacetFilter(), ProductCatalog(), filterSearch, FacetFilterView(), characters, games, GameSelected, MultipleActive (+4 more)
+Cohesion: 0.12
+Nodes (14): client, FacetFilter(), ProductCatalog(), filterSearch, Route, FacetFilterView(), characters, games (+6 more)
 
 ### Community 6 - "Publisher Page Views"
-Cohesion: 0.21
-Nodes (7): Props, PublisherPage(), PublisherPageView(), Loaded, Loading, meta, Story
+Cohesion: 0.60
+Nodes (3): OrderConfirmationPage(), Route, searchSchema
 
 ### Community 7 - "App Shell & Theme"
-Cohesion: 0.32
-Nodes (3): GlobalNav(), MyRouterContext, system
+Cohesion: 0.27
+Nodes (4): GlobalNav(), MyRouterContext, env, system
 
 ### Community 8 - "Product Detail View"
-Cohesion: 0.33
-Nodes (3): SKU, ProductDetailView(), ProductDetailViewProps
+Cohesion: 0.19
+Nodes (7): SKU, ProductDetail(), Props, Route, formatVariant(), ProductDetailView(), ProductDetailViewProps
+
+### Community 9 - "Environment Config"
+Cohesion: 0.11
+Nodes (20): ApiError, http, Character, CreateOrderRequest, CreateOrderResponse, Game, Order, OrderLine (+12 more)
+
+### Community 10 - "Community 10"
+Cohesion: 0.11
+Nodes (13): GamePage(), Props, NavLink, Props, PublisherNav(), Props, PublisherPage(), mockUseAuth (+5 more)
 
 ## Knowledge Gaps
-- **65 isolated node(s):** `http`, `Props`, `Props`, `NavLink`, `Props` (+60 more)
+- **77 isolated node(s):** `http`, `OrderLine`, `Order`, `stripePromise`, `FieldErrors` (+72 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Product` connect `API Client & Types` to `Product Detail View`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
-- **Why does `client` connect `API Client & Types` to `Test Mocks & Handlers`, `Cart & Product Detail`, `Game & Publisher Nav`, `Catalog & Filters`, `Publisher Page Views`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
-- **Why does `publishers` connect `Test Mocks & Handlers` to `Game & Publisher Nav`, `Publisher Page Views`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
-- **What connects `http`, `Props`, `Props` to the rest of the system?**
-  _65 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `client` connect `Catalog & Filters` to `API Client & Types`, `Cart & Product Detail`, `Product Detail View`, `Environment Config`, `Community 10`?**
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
+- **Why does `publishers` connect `Game & Publisher Nav` to `Environment Config`, `Test Mocks & Handlers`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+- **Why does `Product` connect `API Client & Types` to `Product Detail View`, `Environment Config`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
+- **What connects `http`, `OrderLine`, `Order` to the rest of the system?**
+  _77 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Route Definitions` be split into smaller, more focused modules?**
-  _Cohesion score 0.07681365576102418 - nodes in this community are weakly interconnected._
-- **Should `API Client & Types` be split into smaller, more focused modules?**
-  _Cohesion score 0.11954022988505747 - nodes in this community are weakly interconnected._
-- **Should `Test Mocks & Handlers` be split into smaller, more focused modules?**
-  _Cohesion score 0.0960591133004926 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05939716312056738 - nodes in this community are weakly interconnected._
+- **Should `Cart & Product Detail` be split into smaller, more focused modules?**
+  _Cohesion score 0.11290322580645161 - nodes in this community are weakly interconnected._
+- **Should `Catalog & Filters` be split into smaller, more focused modules?**
+  _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._

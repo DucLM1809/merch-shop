@@ -61,3 +61,40 @@ export interface ProductFilters {
   team?: string
   character?: string
 }
+
+export interface ShippingAddress {
+  fullName: string
+  email: string
+  line1: string
+  line2?: string
+  city: string
+  state: string
+  postalCode: string
+  country: string
+}
+
+export interface OrderLine {
+  skuId: string
+  productName: string
+  variant: string
+  price: number
+  quantity: number
+}
+
+export interface CreateOrderRequest {
+  shipping: ShippingAddress
+  lines: OrderLine[]
+}
+
+export interface CreateOrderResponse {
+  orderId: string
+  clientSecret: string
+}
+
+export interface Order {
+  id: string
+  lines: OrderLine[]
+  shipping: ShippingAddress
+  total: number
+  createdAt: string
+}

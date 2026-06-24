@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Character, Product, ProductFilters, Publisher, Team } from './types'
+import type { Character, CreateOrderRequest, CreateOrderResponse, Product, ProductFilters, Publisher, Team } from './types'
 
 export const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000'
 
@@ -55,4 +55,7 @@ export const client = {
 
   getCharacters: (): Promise<Character[]> =>
     wrap(http.get<Character[]>('/characters').then((r) => r.data)),
+
+  createOrder: (body: CreateOrderRequest): Promise<CreateOrderResponse> =>
+    wrap(http.post<CreateOrderResponse>('/orders', body).then((r) => r.data)),
 }

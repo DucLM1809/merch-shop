@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import type { Publisher, Game, Team, Character } from '../api/types'
+import type { Publisher, Game, Team, Character, CreateOrderResponse } from '../api/types'
 import { BASE_URL } from '../api/client'
 
 interface RawProduct {
@@ -174,5 +174,13 @@ export const handlers = [
     const product = products.find((p) => p.slug === params.slug)
     if (!product) return new HttpResponse(null, { status: 404 })
     return HttpResponse.json(enrich(product))
+  }),
+
+  http.post(`${BASE_URL}/orders`, () => {
+    const response: CreateOrderResponse = {
+      orderId: 'ord_test_123',
+      clientSecret: 'pi_test_secret_abc',
+    }
+    return HttpResponse.json(response, { status: 201 })
   }),
 ]

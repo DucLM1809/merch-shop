@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as OrderConfirmationRouteImport } from './routes/order-confirmation'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as PublisherSlugRouteImport } from './routes/$publisherSlug'
 import { Route as IndexRouteImport } from './routes/index'
@@ -27,6 +29,16 @@ const SignUpRoute = SignUpRouteImport.update({
 const SignInRoute = SignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderConfirmationRoute = OrderConfirmationRouteImport.update({
+  id: '/order-confirmation',
+  path: '/order-confirmation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CartRoute = CartRouteImport.update({
@@ -71,6 +83,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$publisherSlug': typeof PublisherSlugRouteWithChildren
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
@@ -81,6 +95,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/$publisherSlug': typeof PublisherSlugIndexRoute
@@ -92,6 +108,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$publisherSlug': typeof PublisherSlugRouteWithChildren
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
@@ -105,6 +123,8 @@ export interface FileRouteTypes {
     | '/'
     | '/$publisherSlug'
     | '/cart'
+    | '/checkout'
+    | '/order-confirmation'
     | '/sign-in'
     | '/sign-up'
     | '/$publisherSlug/$gameSlug'
@@ -115,6 +135,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cart'
+    | '/checkout'
+    | '/order-confirmation'
     | '/sign-in'
     | '/sign-up'
     | '/$publisherSlug'
@@ -125,6 +147,8 @@ export interface FileRouteTypes {
     | '/'
     | '/$publisherSlug'
     | '/cart'
+    | '/checkout'
+    | '/order-confirmation'
     | '/sign-in'
     | '/sign-up'
     | '/$publisherSlug/$gameSlug'
@@ -137,6 +161,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PublisherSlugRoute: typeof PublisherSlugRouteWithChildren
   CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
+  OrderConfirmationRoute: typeof OrderConfirmationRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
 }
@@ -155,6 +181,20 @@ declare module '@tanstack/react-router' {
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order-confirmation': {
+      id: '/order-confirmation'
+      path: '/order-confirmation'
+      fullPath: '/order-confirmation'
+      preLoaderRoute: typeof OrderConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cart': {
@@ -243,6 +283,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublisherSlugRoute: PublisherSlugRouteWithChildren,
   CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
+  OrderConfirmationRoute: OrderConfirmationRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
 }

@@ -134,8 +134,9 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
         colorPalette="blue"
         fontWeight="700"
         letterSpacing="0.02em"
+        asChild
       >
-        Proceed to Checkout
+        <Link to="/checkout">Proceed to Checkout</Link>
       </Button>
     </Box>
   )

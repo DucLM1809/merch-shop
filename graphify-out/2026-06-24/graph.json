@@ -20,7 +20,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_client",
-      "community": 9,
+      "community": 6,
       "norm_label": "client.ts"
     },
     {
@@ -30,7 +30,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "api_client_http",
-      "community": 9,
+      "community": 6,
       "norm_label": "http"
     },
     {
@@ -40,7 +40,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "api_client_apierror",
-      "community": 9,
+      "community": 6,
       "norm_label": "apierror"
     },
     {
@@ -50,7 +50,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "api_client_apierror_constructor",
-      "community": 9,
+      "community": 6,
       "norm_label": ".constructor()"
     },
     {
@@ -60,7 +60,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "api_client_wrap",
-      "community": 9,
+      "community": 6,
       "norm_label": "wrap()"
     },
     {
@@ -70,7 +70,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "api_client_client",
-      "community": 5,
+      "community": 6,
       "norm_label": "client"
     },
     {
@@ -120,7 +120,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "api_types_publisher",
-      "community": 9,
+      "community": 2,
       "norm_label": "publisher"
     },
     {
@@ -150,58 +150,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "api_types_productfilters",
-      "community": 1,
+      "community": 6,
       "norm_label": "productfilters"
-    },
-    {
-      "label": "ShippingAddress",
-      "file_type": "code",
-      "source_file": "src/api/types.ts",
-      "source_location": "L65",
-      "_origin": "ast",
-      "id": "api_types_shippingaddress",
-      "community": 3,
-      "norm_label": "shippingaddress"
-    },
-    {
-      "label": "OrderLine",
-      "file_type": "code",
-      "source_file": "src/api/types.ts",
-      "source_location": "L76",
-      "_origin": "ast",
-      "id": "api_types_orderline",
-      "community": 9,
-      "norm_label": "orderline"
-    },
-    {
-      "label": "CreateOrderRequest",
-      "file_type": "code",
-      "source_file": "src/api/types.ts",
-      "source_location": "L84",
-      "_origin": "ast",
-      "id": "api_types_createorderrequest",
-      "community": 9,
-      "norm_label": "createorderrequest"
-    },
-    {
-      "label": "CreateOrderResponse",
-      "file_type": "code",
-      "source_file": "src/api/types.ts",
-      "source_location": "L89",
-      "_origin": "ast",
-      "id": "api_types_createorderresponse",
-      "community": 9,
-      "norm_label": "createorderresponse"
-    },
-    {
-      "label": "Order",
-      "file_type": "code",
-      "source_file": "src/api/types.ts",
-      "source_location": "L94",
-      "_origin": "ast",
-      "id": "api_types_order",
-      "community": 9,
-      "norm_label": "order"
     },
     {
       "label": "CartPage.tsx",
@@ -224,83 +174,13 @@
       "norm_label": "cartpage()"
     },
     {
-      "label": "CheckoutPage.tsx",
-      "file_type": "code",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_checkoutpage",
-      "community": 3,
-      "norm_label": "checkoutpage.tsx"
-    },
-    {
-      "label": "stripePromise",
-      "file_type": "code",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "components_checkoutpage_stripepromise",
-      "community": 3,
-      "norm_label": "stripepromise"
-    },
-    {
-      "label": "FieldErrors",
-      "file_type": "code",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L13",
-      "_origin": "ast",
-      "id": "components_checkoutpage_fielderrors",
-      "community": 3,
-      "norm_label": "fielderrors"
-    },
-    {
-      "label": "validate()",
-      "file_type": "code",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "components_checkoutpage_validate",
-      "community": 3,
-      "norm_label": "validate()"
-    },
-    {
-      "label": "CheckoutForm()",
-      "file_type": "code",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L35",
-      "_origin": "ast",
-      "id": "components_checkoutpage_checkoutform",
-      "community": 3,
-      "norm_label": "checkoutform()"
-    },
-    {
-      "label": "FieldRow()",
-      "file_type": "code",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L170",
-      "_origin": "ast",
-      "id": "components_checkoutpage_fieldrow",
-      "community": 3,
-      "norm_label": "fieldrow()"
-    },
-    {
-      "label": "CheckoutPage()",
-      "file_type": "code",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L191",
-      "_origin": "ast",
-      "id": "components_checkoutpage_checkoutpage",
-      "community": 3,
-      "norm_label": "checkoutpage()"
-    },
-    {
       "label": "FacetFilter.tsx",
       "file_type": "code",
       "source_file": "src/components/FacetFilter.tsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_facetfilter",
-      "community": 5,
+      "community": 6,
       "norm_label": "facetfilter.tsx"
     },
     {
@@ -310,7 +190,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_facetfilter_facetfilter",
-      "community": 5,
+      "community": 6,
       "norm_label": "facetfilter()"
     },
     {
@@ -320,7 +200,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_gamepage",
-      "community": 10,
+      "community": 6,
       "norm_label": "gamepage.tsx"
     },
     {
@@ -330,7 +210,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_gamepage_props",
-      "community": 10,
+      "community": 6,
       "norm_label": "props"
     },
     {
@@ -340,7 +220,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "components_gamepage_gamepage",
-      "community": 10,
+      "community": 0,
       "norm_label": "gamepage()"
     },
     {
@@ -364,33 +244,13 @@
       "norm_label": "globalnav()"
     },
     {
-      "label": "OrderConfirmationPage.tsx",
-      "file_type": "code",
-      "source_file": "src/components/OrderConfirmationPage.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_orderconfirmationpage",
-      "community": 6,
-      "norm_label": "orderconfirmationpage.tsx"
-    },
-    {
-      "label": "OrderConfirmationPage()",
-      "file_type": "code",
-      "source_file": "src/components/OrderConfirmationPage.tsx",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "components_orderconfirmationpage_orderconfirmationpage",
-      "community": 6,
-      "norm_label": "orderconfirmationpage()"
-    },
-    {
       "label": "ProductCatalog.tsx",
       "file_type": "code",
       "source_file": "src/components/ProductCatalog.tsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_productcatalog",
-      "community": 1,
+      "community": 6,
       "norm_label": "productcatalog.tsx"
     },
     {
@@ -400,7 +260,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_productcatalog_props",
-      "community": 1,
+      "community": 6,
       "norm_label": "props"
     },
     {
@@ -410,7 +270,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "components_productcatalog_productcatalog",
-      "community": 5,
+      "community": 6,
       "norm_label": "productcatalog()"
     },
     {
@@ -460,7 +320,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_publishernav",
-      "community": 10,
+      "community": 6,
       "norm_label": "publishernav.tsx"
     },
     {
@@ -470,7 +330,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_publishernav_navlink",
-      "community": 10,
+      "community": 6,
       "norm_label": "navlink"
     },
     {
@@ -480,7 +340,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "components_publishernav_props",
-      "community": 10,
+      "community": 6,
       "norm_label": "props"
     },
     {
@@ -490,7 +350,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_publishernav_publishernav",
-      "community": 10,
+      "community": 6,
       "norm_label": "publishernav()"
     },
     {
@@ -500,7 +360,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_publisherpage",
-      "community": 10,
+      "community": 6,
       "norm_label": "publisherpage.tsx"
     },
     {
@@ -510,7 +370,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_publisherpage_props",
-      "community": 10,
+      "community": 6,
       "norm_label": "props"
     },
     {
@@ -520,7 +380,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "components_publisherpage_publisherpage",
-      "community": 10,
+      "community": 0,
       "norm_label": "publisherpage()"
     },
     {
@@ -750,7 +610,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_gamepageview_test",
-      "community": 10,
+      "community": 4,
       "norm_label": "gamepageview.test.tsx"
     },
     {
@@ -760,7 +620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_gamepageview",
-      "community": 10,
+      "community": 4,
       "norm_label": "gamepageview.tsx"
     },
     {
@@ -770,7 +630,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "ui_gamepageview_gamepageviewprops",
-      "community": 10,
+      "community": 4,
       "norm_label": "gamepageviewprops"
     },
     {
@@ -780,7 +640,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "ui_gamepageview_gamepageview",
-      "community": 10,
+      "community": 4,
       "norm_label": "gamepageview()"
     },
     {
@@ -1090,7 +950,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_publisherpageview_stories",
-      "community": 4,
+      "community": 2,
       "norm_label": "publisherpageview.stories.tsx"
     },
     {
@@ -1100,7 +960,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "ui_publisherpageview_stories_meta",
-      "community": 4,
+      "community": 2,
       "norm_label": "meta"
     },
     {
@@ -1110,7 +970,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "ui_publisherpageview_stories_story",
-      "community": 4,
+      "community": 2,
       "norm_label": "story"
     },
     {
@@ -1120,7 +980,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "ui_publisherpageview_stories_loading",
-      "community": 4,
+      "community": 2,
       "norm_label": "loading"
     },
     {
@@ -1130,7 +990,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "ui_publisherpageview_stories_loaded",
-      "community": 4,
+      "community": 2,
       "norm_label": "loaded"
     },
     {
@@ -1140,7 +1000,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_publisherpageview_test",
-      "community": 4,
+      "community": 10,
       "norm_label": "publisherpageview.test.tsx"
     },
     {
@@ -1150,7 +1010,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_publisherpageview",
-      "community": 4,
+      "community": 2,
       "norm_label": "publisherpageview.tsx"
     },
     {
@@ -1160,7 +1020,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "ui_publisherpageview_publisherpageviewprops",
-      "community": 4,
+      "community": 2,
       "norm_label": "publisherpageviewprops"
     },
     {
@@ -1170,7 +1030,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "ui_publisherpageview_publisherpageview",
-      "community": 4,
+      "community": 2,
       "norm_label": "publisherpageview()"
     },
     {
@@ -1210,7 +1070,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tanstack_query_root_provider",
-      "community": 0,
+      "community": 10,
       "norm_label": "root-provider.tsx"
     },
     {
@@ -1220,7 +1080,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "tanstack_query_root_provider_getcontext",
-      "community": 0,
+      "community": 10,
       "norm_label": "getcontext()"
     },
     {
@@ -1230,7 +1090,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "tanstack_query_root_provider_tanstackqueryprovider",
-      "community": 0,
+      "community": 10,
       "norm_label": "tanstackqueryprovider()"
     },
     {
@@ -1300,7 +1160,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "mocks_handlers_publishers",
-      "community": 4,
+      "community": 2,
       "norm_label": "publishers"
     },
     {
@@ -1377,7 +1237,7 @@
       "label": "SignUpRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L24",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "src_routetree_gen_signuproute",
       "community": 0,
@@ -1387,37 +1247,17 @@
       "label": "SignInRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L29",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "src_routetree_gen_signinroute",
       "community": 0,
       "norm_label": "signinroute"
     },
     {
-      "label": "OrderConfirmationRoute",
-      "file_type": "code",
-      "source_file": "src/routeTree.gen.ts",
-      "source_location": "L34",
-      "_origin": "ast",
-      "id": "src_routetree_gen_orderconfirmationroute",
-      "community": 0,
-      "norm_label": "orderconfirmationroute"
-    },
-    {
-      "label": "CheckoutRoute",
-      "file_type": "code",
-      "source_file": "src/routeTree.gen.ts",
-      "source_location": "L39",
-      "_origin": "ast",
-      "id": "src_routetree_gen_checkoutroute",
-      "community": 0,
-      "norm_label": "checkoutroute"
-    },
-    {
       "label": "CartRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L44",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "src_routetree_gen_cartroute",
       "community": 0,
@@ -1427,7 +1267,7 @@
       "label": "PublisherSlugRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L49",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "src_routetree_gen_publisherslugroute",
       "community": 0,
@@ -1437,7 +1277,7 @@
       "label": "IndexRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L54",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "src_routetree_gen_indexroute",
       "community": 0,
@@ -1447,7 +1287,7 @@
       "label": "PublisherSlugIndexRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L59",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "src_routetree_gen_publisherslugindexroute",
       "community": 0,
@@ -1457,7 +1297,7 @@
       "label": "PublisherSlugGameSlugRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L64",
+      "source_location": "L52",
       "_origin": "ast",
       "id": "src_routetree_gen_publishersluggameslugroute",
       "community": 0,
@@ -1467,7 +1307,7 @@
       "label": "PublisherSlugGameSlugIndexRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L69",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "src_routetree_gen_publishersluggameslugindexroute",
       "community": 0,
@@ -1477,7 +1317,7 @@
       "label": "PublisherSlugGameSlugProductsProductSlugRoute",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L75",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "src_routetree_gen_publishersluggameslugproductsproductslugroute",
       "community": 0,
@@ -1487,7 +1327,7 @@
       "label": "FileRoutesByFullPath",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L82",
+      "source_location": "L70",
       "_origin": "ast",
       "id": "src_routetree_gen_fileroutesbyfullpath",
       "community": 0,
@@ -1497,7 +1337,7 @@
       "label": "FileRoutesByTo",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L95",
+      "source_location": "L81",
       "_origin": "ast",
       "id": "src_routetree_gen_fileroutesbyto",
       "community": 0,
@@ -1507,7 +1347,7 @@
       "label": "FileRoutesById",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L106",
+      "source_location": "L90",
       "_origin": "ast",
       "id": "src_routetree_gen_fileroutesbyid",
       "community": 0,
@@ -1517,7 +1357,7 @@
       "label": "FileRouteTypes",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L120",
+      "source_location": "L102",
       "_origin": "ast",
       "id": "src_routetree_gen_fileroutetypes",
       "community": 0,
@@ -1527,7 +1367,7 @@
       "label": "RootRouteChildren",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L160",
+      "source_location": "L136",
       "_origin": "ast",
       "id": "src_routetree_gen_rootroutechildren",
       "community": 0,
@@ -1537,7 +1377,7 @@
       "label": "FileRoutesByPath",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L171",
+      "source_location": "L145",
       "_origin": "ast",
       "id": "src_routetree_gen_fileroutesbypath",
       "community": 0,
@@ -1547,7 +1387,7 @@
       "label": "PublisherSlugGameSlugRouteChildren",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L252",
+      "source_location": "L212",
       "_origin": "ast",
       "id": "src_routetree_gen_publishersluggameslugroutechildren",
       "community": 0,
@@ -1557,7 +1397,7 @@
       "label": "PublisherSlugGameSlugRouteWithChildren",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L263",
+      "source_location": "L223",
       "_origin": "ast",
       "id": "src_routetree_gen_publishersluggameslugroutewithchildren",
       "community": 0,
@@ -1567,7 +1407,7 @@
       "label": "PublisherSlugRouteChildren",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L268",
+      "source_location": "L228",
       "_origin": "ast",
       "id": "src_routetree_gen_publisherslugroutechildren",
       "community": 0,
@@ -1577,7 +1417,7 @@
       "label": "PublisherSlugRouteWithChildren",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L278",
+      "source_location": "L238",
       "_origin": "ast",
       "id": "src_routetree_gen_publisherslugroutewithchildren",
       "community": 0,
@@ -1587,20 +1427,20 @@
       "label": "routeTree",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L291",
+      "source_location": "L249",
       "_origin": "ast",
       "id": "src_routetree_gen_routetree",
-      "community": 0,
+      "community": 10,
       "norm_label": "routetree"
     },
     {
       "label": "Register",
       "file_type": "code",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L298",
+      "source_location": "L256",
       "_origin": "ast",
       "id": "src_routetree_gen_register",
-      "community": 0,
+      "community": 10,
       "norm_label": "register"
     },
     {
@@ -1610,7 +1450,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_router",
-      "community": 0,
+      "community": 10,
       "norm_label": "router.tsx"
     },
     {
@@ -1620,7 +1460,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_router_getrouter",
-      "community": 0,
+      "community": 10,
       "norm_label": "getrouter()"
     },
     {
@@ -1630,7 +1470,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_router_register",
-      "community": 0,
+      "community": 10,
       "norm_label": "register"
     },
     {
@@ -1640,7 +1480,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "routes_publisherslug_gameslug_index",
-      "community": 10,
+      "community": 0,
       "norm_label": "$publisherslug.$gameslug.index.tsx"
     },
     {
@@ -1660,7 +1500,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "routes_publisherslug_gameslug_index_routecomponent",
-      "community": 10,
+      "community": 0,
       "norm_label": "routecomponent()"
     },
     {
@@ -1740,7 +1580,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "routes_publisherslug_index",
-      "community": 10,
+      "community": 0,
       "norm_label": "$publisherslug.index.tsx"
     },
     {
@@ -1760,7 +1600,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "routes_publisherslug_index_routecomponent",
-      "community": 10,
+      "community": 0,
       "norm_label": "routecomponent()"
     },
     {
@@ -1864,66 +1704,6 @@
       "norm_label": "route"
     },
     {
-      "label": "checkout.test.tsx",
-      "file_type": "code",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "routes_checkout_test",
-      "community": 3,
-      "norm_label": "checkout.test.tsx"
-    },
-    {
-      "label": "mockConfirmCardPayment",
-      "file_type": "code",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "routes_checkout_test_mockconfirmcardpayment",
-      "community": 3,
-      "norm_label": "mockconfirmcardpayment"
-    },
-    {
-      "label": "mockStripe",
-      "file_type": "code",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "id": "routes_checkout_test_mockstripe",
-      "community": 3,
-      "norm_label": "mockstripe"
-    },
-    {
-      "label": "fillShippingForm()",
-      "file_type": "code",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L24",
-      "_origin": "ast",
-      "id": "routes_checkout_test_fillshippingform",
-      "community": 3,
-      "norm_label": "fillshippingform()"
-    },
-    {
-      "label": "checkout.tsx",
-      "file_type": "code",
-      "source_file": "src/routes/checkout.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "routes_checkout",
-      "community": 3,
-      "norm_label": "checkout.tsx"
-    },
-    {
-      "label": "Route",
-      "file_type": "code",
-      "source_file": "src/routes/checkout.tsx",
-      "source_location": "L4",
-      "_origin": "ast",
-      "id": "routes_checkout_route",
-      "community": 3,
-      "norm_label": "route"
-    },
-    {
       "label": "index.test.tsx",
       "file_type": "code",
       "source_file": "src/routes/index.test.tsx",
@@ -1940,7 +1720,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "routes_index",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.tsx"
     },
     {
@@ -1950,7 +1730,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "routes_index_filtersearch",
-      "community": 5,
+      "community": 6,
       "norm_label": "filtersearch"
     },
     {
@@ -1960,7 +1740,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "routes_index_route",
-      "community": 5,
+      "community": 0,
       "norm_label": "route"
     },
     {
@@ -1970,38 +1750,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "routes_index_homepage",
-      "community": 5,
+      "community": 6,
       "norm_label": "homepage()"
-    },
-    {
-      "label": "order-confirmation.tsx",
-      "file_type": "code",
-      "source_file": "src/routes/order-confirmation.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "routes_order_confirmation",
-      "community": 6,
-      "norm_label": "order-confirmation.tsx"
-    },
-    {
-      "label": "searchSchema",
-      "file_type": "code",
-      "source_file": "src/routes/order-confirmation.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "routes_order_confirmation_searchschema",
-      "community": 6,
-      "norm_label": "searchschema"
-    },
-    {
-      "label": "Route",
-      "file_type": "code",
-      "source_file": "src/routes/order-confirmation.tsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "id": "routes_order_confirmation_route",
-      "community": 6,
-      "norm_label": "route"
     },
     {
       "label": "sign-in.test.tsx",
@@ -2408,28 +2158,6 @@
       "source_file": "src/api/client.ts",
       "source_location": "L2",
       "weight": 1.0,
-      "source": "api_client",
-      "target": "api_types_createorderrequest",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/api/client.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "api_client",
-      "target": "api_types_createorderresponse",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/api/client.ts",
-      "source_location": "L2",
-      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "api_client",
       "target": "api_types_product"
@@ -2466,17 +2194,6 @@
       "confidence_score": 1.0,
       "source": "api_client",
       "target": "api_types_team"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "api_client",
-      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -2569,17 +2286,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "api_client_client",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/FacetFilter.tsx",
       "source_location": "L3",
       "weight": 1.0,
@@ -2656,51 +2362,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/api/types.ts",
-      "source_location": "L84",
-      "weight": 1.0,
-      "source": "api_types",
-      "target": "api_types_createorderrequest",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/api/types.ts",
-      "source_location": "L89",
-      "weight": 1.0,
-      "source": "api_types",
-      "target": "api_types_createorderresponse",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/api/types.ts",
       "source_location": "L27",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "api_types",
       "target": "api_types_game"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/api/types.ts",
-      "source_location": "L94",
-      "weight": 1.0,
-      "source": "api_types",
-      "target": "api_types_order",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/api/types.ts",
-      "source_location": "L76",
-      "weight": 1.0,
-      "source": "api_types",
-      "target": "api_types_orderline",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -2736,16 +2402,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/api/types.ts",
-      "source_location": "L65",
-      "weight": 1.0,
-      "source": "api_types",
-      "target": "api_types_shippingaddress",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/api/types.ts",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -2761,17 +2417,6 @@
       "confidence_score": 1.0,
       "source": "api_types",
       "target": "api_types_team"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "api_types",
-      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -3159,39 +2804,6 @@
       "target": "api_types_productfilters"
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "api_types_shippingaddress",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "api_types_createorderrequest",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/mocks/handlers.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "mocks_handlers",
-      "target": "api_types_createorderresponse",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/CartPage.tsx",
@@ -3288,132 +2900,6 @@
       "confidence_score": 1.0,
       "source": "routes_cart",
       "target": "components_cartpage_cartpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "components_checkoutpage_checkoutform",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L191",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "components_checkoutpage_checkoutpage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "components_checkoutpage_fielderrors",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L170",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "components_checkoutpage_fieldrow",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "components_checkoutpage_stripepromise",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "components_checkoutpage_validate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "store_cart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "store_cart_cartstore",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_checkoutpage",
-      "target": "store_cart_clearcart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "routes_checkout",
-      "target": "components_checkoutpage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/CheckoutPage.tsx",
-      "source_location": "L90",
-      "weight": 1.0,
-      "source": "components_checkoutpage_checkoutform",
-      "target": "store_cart_clearcart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "routes_checkout",
-      "target": "components_checkoutpage_checkoutpage",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3630,71 +3116,6 @@
       "confidence_score": 1.0,
       "source": "routes_root",
       "target": "components_globalnav_globalnav"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/OrderConfirmationPage.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_orderconfirmationpage",
-      "target": "components_orderconfirmationpage_orderconfirmationpage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/OrderConfirmationPage.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "components_orderconfirmationpage",
-      "target": "routes_order_confirmation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/OrderConfirmationPage.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "components_orderconfirmationpage",
-      "target": "routes_order_confirmation_route",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/OrderConfirmationPage.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_orderconfirmationpage",
-      "target": "store_cart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/OrderConfirmationPage.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_orderconfirmationpage",
-      "target": "store_cart_cartitem",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/order-confirmation.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "routes_order_confirmation",
-      "target": "components_orderconfirmationpage_orderconfirmationpage",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4975,9 +4396,9 @@
       "source_file": "src/routes/__root.tsx",
       "source_location": "L15",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_root",
-      "target": "src_env"
+      "target": "src_env",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4996,9 +4417,9 @@
       "source_file": "src/routes/__root.tsx",
       "source_location": "L15",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_root",
-      "target": "src_env_env"
+      "target": "src_env_env",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -5279,28 +4700,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "src_routetree_gen",
-      "target": "routes_checkout",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routeTree.gen.ts",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "src_routetree_gen",
-      "target": "routes_checkout_route",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routeTree.gen.ts",
       "source_location": "L14",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -5317,28 +4716,6 @@
       "confidence_score": 1.0,
       "source": "src_routetree_gen",
       "target": "routes_index_route"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routeTree.gen.ts",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "src_routetree_gen",
-      "target": "routes_order_confirmation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routeTree.gen.ts",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "src_routetree_gen",
-      "target": "routes_order_confirmation_route",
-      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -5479,9 +4856,9 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "routes_sign_in"
+      "target": "routes_sign_in",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -5490,9 +4867,9 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "routes_sign_in_route"
+      "target": "routes_sign_in_route",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -5501,9 +4878,9 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L12",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "routes_sign_up"
+      "target": "routes_sign_up",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -5512,9 +4889,9 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L12",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "routes_sign_up_route"
+      "target": "routes_sign_up_route",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -5536,16 +4913,6 @@
       "confidence_score": 1.0,
       "source": "src_routetree_gen",
       "target": "src_routetree_gen_cartroute"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routeTree.gen.ts",
-      "source_location": "L39",
-      "weight": 1.0,
-      "source": "src_routetree_gen",
-      "target": "src_routetree_gen_checkoutroute",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -5606,16 +4973,6 @@
       "confidence_score": 1.0,
       "source": "src_routetree_gen",
       "target": "src_routetree_gen_indexroute"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routeTree.gen.ts",
-      "source_location": "L34",
-      "weight": 1.0,
-      "source": "src_routetree_gen",
-      "target": "src_routetree_gen_orderconfirmationroute",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -5743,9 +5100,9 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L27",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_signinroute"
+      "target": "src_routetree_gen_signinroute",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -5753,9 +5110,9 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L22",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_signuproute"
+      "target": "src_routetree_gen_signuproute",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -5795,33 +5152,11 @@
       "context": "field",
       "confidence": "EXTRACTED",
       "source_file": "src/routeTree.gen.ts",
-      "source_location": "L193",
-      "weight": 1.0,
-      "source": "src_routetree_gen_fileroutesbypath",
-      "target": "routes_checkout_route",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routeTree.gen.ts",
       "source_location": "L134",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_routetree_gen_fileroutesbypath",
       "target": "routes_index_route"
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routeTree.gen.ts",
-      "source_location": "L186",
-      "weight": 1.0,
-      "source": "src_routetree_gen_fileroutesbypath",
-      "target": "routes_order_confirmation_route",
-      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -5896,9 +5231,9 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L153",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_routetree_gen_fileroutesbypath",
-      "target": "routes_sign_in_route"
+      "target": "routes_sign_in_route",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -5907,9 +5242,9 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L146",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_routetree_gen_fileroutesbypath",
-      "target": "routes_sign_up_route"
+      "target": "routes_sign_up_route",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -6215,101 +5550,6 @@
       "target": "routes_cart_route"
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "routes_checkout_test",
-      "target": "routes_checkout_test_fillshippingform",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "routes_checkout_test",
-      "target": "routes_checkout_test_mockconfirmcardpayment",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "routes_checkout_test",
-      "target": "routes_checkout_test_mockstripe",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "routes_checkout_test",
-      "target": "src_test_utils",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "routes_checkout_test",
-      "target": "src_test_utils_renderroute",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "routes_checkout_test",
-      "target": "store_cart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "routes_checkout_test",
-      "target": "store_cart_addtocart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.test.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "routes_checkout_test",
-      "target": "store_cart_clearcart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/checkout.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "routes_checkout",
-      "target": "routes_checkout_route",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -6375,32 +5615,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/routes/order-confirmation.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "routes_order_confirmation",
-      "target": "routes_order_confirmation_route",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/routes/order-confirmation.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "routes_order_confirmation",
-      "target": "routes_order_confirmation_searchschema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/routes/sign-in.test.tsx",
       "source_location": "L21",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_sign_in_test",
-      "target": "routes_sign_in_test_mockuseauth"
+      "target": "routes_sign_in_test_mockuseauth",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6408,9 +5628,9 @@
       "source_file": "src/routes/sign-in.test.tsx",
       "source_location": "L22",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_sign_in_test",
-      "target": "routes_sign_in_test_mockuseuser"
+      "target": "routes_sign_in_test_mockuseuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -6419,9 +5639,9 @@
       "source_file": "src/routes/sign-in.test.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_sign_in_test",
-      "target": "src_test_utils"
+      "target": "src_test_utils",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -6430,9 +5650,9 @@
       "source_file": "src/routes/sign-in.test.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_sign_in_test",
-      "target": "src_test_utils_renderroute"
+      "target": "src_test_utils_renderroute",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6440,9 +5660,9 @@
       "source_file": "src/routes/sign-in.tsx",
       "source_location": "L6",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_sign_in",
-      "target": "routes_sign_in_route"
+      "target": "routes_sign_in_route",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6450,9 +5670,9 @@
       "source_file": "src/routes/sign-in.tsx",
       "source_location": "L10",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_sign_in",
-      "target": "routes_sign_in_signinpage"
+      "target": "routes_sign_in_signinpage",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6460,9 +5680,9 @@
       "source_file": "src/routes/sign-up.tsx",
       "source_location": "L6",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_sign_up",
-      "target": "routes_sign_up_route"
+      "target": "routes_sign_up_route",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -6470,9 +5690,9 @@
       "source_file": "src/routes/sign-up.tsx",
       "source_location": "L10",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_sign_up",
-      "target": "routes_sign_up_signuppage"
+      "target": "routes_sign_up_signuppage",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -6714,5 +5934,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4c2acec8b1a74a1a085417a437931d93e3375082"
+  "built_at_commit": "0fcb9f8987ad83bd364de3cb5975cbad5473add7"
 }
