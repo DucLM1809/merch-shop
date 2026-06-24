@@ -27,7 +27,7 @@ beforeEach(() => {
 
 describe('GlobalNav auth state', () => {
   it('shows sign-in and sign-up links when guest', async () => {
-    mockUseAuth.mockReturnValue({ isSignedIn: false })
+    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false })
     mockUseUser.mockReturnValue({ user: null })
 
     renderRoute('/')
@@ -39,7 +39,7 @@ describe('GlobalNav auth state', () => {
   })
 
   it('shows account menu and hides guest links when signed in', async () => {
-    mockUseAuth.mockReturnValue({ isSignedIn: true })
+    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true })
     mockUseUser.mockReturnValue({
       user: {
         firstName: 'Faker',
@@ -57,7 +57,7 @@ describe('GlobalNav auth state', () => {
 
 describe('/sign-in route', () => {
   it('renders Clerk SignIn component', async () => {
-    mockUseAuth.mockReturnValue({ isSignedIn: false })
+    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false })
     mockUseUser.mockReturnValue({ user: null })
 
     renderRoute('/sign-in')
@@ -66,7 +66,7 @@ describe('/sign-in route', () => {
   })
 
   it('passes fallbackRedirectUrl=/ to SignIn', async () => {
-    mockUseAuth.mockReturnValue({ isSignedIn: false })
+    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false })
     mockUseUser.mockReturnValue({ user: null })
 
     renderRoute('/sign-in')
@@ -75,7 +75,7 @@ describe('/sign-in route', () => {
   })
 
   it('redirects to / when already signed in', async () => {
-    mockUseAuth.mockReturnValue({ isSignedIn: true })
+    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true })
     mockUseUser.mockReturnValue({
       user: { firstName: 'Faker', emailAddresses: [{ emailAddress: 'faker@t1.gg' }] },
     })
@@ -90,7 +90,7 @@ describe('/sign-in route', () => {
 
 describe('/sign-up route', () => {
   it('renders Clerk SignUp component', async () => {
-    mockUseAuth.mockReturnValue({ isSignedIn: false })
+    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false })
     mockUseUser.mockReturnValue({ user: null })
 
     renderRoute('/sign-up')
@@ -99,7 +99,7 @@ describe('/sign-up route', () => {
   })
 
   it('passes fallbackRedirectUrl=/ to SignUp', async () => {
-    mockUseAuth.mockReturnValue({ isSignedIn: false })
+    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false })
     mockUseUser.mockReturnValue({ user: null })
 
     renderRoute('/sign-up')
@@ -108,7 +108,7 @@ describe('/sign-up route', () => {
   })
 
   it('redirects to / when already signed in', async () => {
-    mockUseAuth.mockReturnValue({ isSignedIn: true })
+    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true })
     mockUseUser.mockReturnValue({
       user: { firstName: 'Faker', emailAddresses: [{ emailAddress: 'faker@t1.gg' }] },
     })

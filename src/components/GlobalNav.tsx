@@ -7,7 +7,7 @@ import { Gamepad2, ShoppingCart, User, LogOut, LogIn, UserPlus } from 'lucide-re
 
 export function GlobalNav() {
   const itemCount = useStore(cartStore, (s) => s.items.reduce((n, i) => n + i.quantity, 0))
-  const { isSignedIn } = useAuth()
+  const { isSignedIn, isLoaded } = useAuth()
   const { user } = useUser()
   const { signOut } = useClerk()
 
@@ -84,7 +84,7 @@ export function GlobalNav() {
             </Flex>
           </Link>
 
-          {isSignedIn ? (
+          {isLoaded && isSignedIn ? (
             <Flex align="center" gap={3}>
               <Flex
                 align="center"
@@ -116,7 +116,7 @@ export function GlobalNav() {
                 </Text>
               </Box>
             </Flex>
-          ) : (
+          ) : isLoaded ? (
             <Flex align="center" gap={3} data-testid="nav-guest-links">
               <Link to="/sign-in">
                 <Flex
@@ -147,7 +147,7 @@ export function GlobalNav() {
                 </Flex>
               </Link>
             </Flex>
-          )}
+          ) : null}
         </Flex>
       </Flex>
     </Box>
