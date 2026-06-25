@@ -7,6 +7,7 @@ const http = axios.create({ baseURL: BASE_URL })
 
 // Attach Clerk session token when available (no-op in tests / unauthenticated)
 http.interceptors.request.use(async (config) => {
+  // as any: Clerk injects window.Clerk at runtime; no ambient type declaration available
   if (typeof window !== 'undefined' && (window as any).Clerk?.session) {
     try {
       const token = await (window as any).Clerk.session.getToken()

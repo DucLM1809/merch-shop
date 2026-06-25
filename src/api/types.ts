@@ -1,4 +1,4 @@
-export interface SKU {
+export type SKU = {
   id: string
   price: number
   available: boolean
@@ -7,7 +7,7 @@ export interface SKU {
   edition?: string
 }
 
-export interface Product {
+export type Product = {
   id: string
   slug: string
   name: string
@@ -24,14 +24,14 @@ export interface Product {
   skus?: SKU[]
 }
 
-export interface Game {
+export type Game = {
   id: string
   slug: string
   name: string
   publisherId: string
 }
 
-export interface Publisher {
+export type Publisher = {
   id: string
   slug: string
   name: string
@@ -40,21 +40,21 @@ export interface Publisher {
   games: Game[]
 }
 
-export interface Team {
+export type Team = {
   id: string
   slug: string
   name: string
   gameId: string
 }
 
-export interface Character {
+export type Character = {
   id: string
   slug: string
   name: string
   gameId: string
 }
 
-export interface ProductFilters {
+export type ProductFilters = {
   publisher?: string
   game?: string
   gameSlug?: string
@@ -62,7 +62,7 @@ export interface ProductFilters {
   character?: string
 }
 
-export interface ShippingAddress {
+export type ShippingAddress = {
   fullName: string
   email: string
   line1: string
@@ -73,7 +73,7 @@ export interface ShippingAddress {
   country: string
 }
 
-export interface OrderLine {
+export type OrderLine = {
   skuId: string
   productName: string
   variant: string
@@ -81,17 +81,17 @@ export interface OrderLine {
   quantity: number
 }
 
-export interface CreateOrderRequest {
+export type CreateOrderRequest = {
   shipping: ShippingAddress
   lines: OrderLine[]
 }
 
-export interface CreateOrderResponse {
+export type CreateOrderResponse = {
   orderId: string
   clientSecret: string
 }
 
-export interface Order {
+export type Order = {
   id: string
   lines: OrderLine[]
   shipping: ShippingAddress

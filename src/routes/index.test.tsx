@@ -1,7 +1,8 @@
 import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import { renderWithProviders, renderRoute } from '../test-utils'
-import { ProductCatalog } from '../components/ProductCatalog'
+
+import { ProductCatalog } from '@/modules/catalog'
 
 describe('Product catalog', () => {
   it('renders a product card for each product', async () => {

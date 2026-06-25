@@ -6,6 +6,42 @@ All UI uses Chakra UI v3 components. Raw HTML elements that have a Chakra equiva
 
 No Playwright or Cypress. Vitest is the full test surface — unit tests and `renderRoute` integration tests are both in scope and both required. Every new feature needs at least one Vitest test before merge. "Done" = Vitest passes + golden path verified in browser (or via `/verify`). See `docs/adr/0009-vitest-only-no-browser-automation.md`.
 
+## TypeScript conventions
+
+- `type` by default; `interface` only for declaration merging or complex intersections
+- `any` hard banned — use `unknown` + narrowing; `as T` only at API boundaries with a comment
+- Explicit return types required on exported functions and React components only
+- `undefined` for absence internally; `null` only at API boundaries
+- `as const` + derived union instead of enums
+- Import order: React → third-party → internal aliases → relative → `import type`, blank line between groups
+- Prettier enforced (100-char line length)
+- Blank line between JSX sibling groups; blank line between top-level declarations; two blank lines between exported functions/components in same file
+
+See `docs/adr/0010-typescript-and-query-conventions.md`.
+
+## TanStack Query conventions
+
+- Typed query key factories per domain (never raw strings)
+- `useQuery`/`useMutation` always wrapped in custom hooks — components never import from `@tanstack/react-query` directly
+- Hooks live in `src/modules/<domain>/hooks/`
+- `select` required when API response shape differs from component need
+- Global defaults: `staleTime: 60_000`, `gcTime: 300_000`; per-hook overrides for documented exceptions only
+- `error` returned from hook; component decides presentation; global `onError` only for auth expiry
+
+See `docs/adr/0010-typescript-and-query-conventions.md`.
+
+## Module structure
+
+Modular monolith. Five domains: `catalog`, `cart`, `checkout`, `orders`, `account`.
+
+Each domain: `src/modules/<domain>/hooks/`, `components/`, `types.ts`, `index.ts`.
+
+Cross-module imports only through `index.ts` barrel — deep imports across module boundaries are banned.
+
+Shared HTTP client stays in `src/api/`. Shared UI in `src/components/`. Routes in `src/routes/`. Global state in `src/store/`.
+
+See `docs/adr/0010-typescript-and-query-conventions.md`.
+
 ## Agent skills
 
 ### Issue tracker

@@ -1,6 +1,6 @@
 import { Store } from '@tanstack/react-store'
 
-export interface CartItem {
+export type CartItem = {
   skuId: string
   productId: string
   productName: string
@@ -9,7 +9,7 @@ export interface CartItem {
   quantity: number
 }
 
-interface CartState {
+type CartState = {
   items: CartItem[]
 }
 

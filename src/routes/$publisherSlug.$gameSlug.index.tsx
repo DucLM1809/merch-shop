@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { GamePage } from '../components/GamePage'
+
+import { GamePage } from '@/modules/catalog'
 
 export const Route = createFileRoute('/$publisherSlug/$gameSlug/')({
   component: RouteComponent,

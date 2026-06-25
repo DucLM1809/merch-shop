@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { z } from 'zod'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
-import { ProductCatalog } from '../components/ProductCatalog'
-import { FacetFilter } from '../components/FacetFilter'
+
+import { FacetFilter, ProductCatalog } from '@/modules/catalog'
 
 const filterSearch = z.object({
   game: z.string().optional(),

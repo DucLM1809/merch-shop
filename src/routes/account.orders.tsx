@@ -1,10 +1,11 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useAuth } from '@clerk/react'
 import { useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+
+import { useAuth } from '@clerk/react'
 import { Box, Heading, Text, VStack } from '@chakra-ui/react'
-import { client } from '../api/client'
-import type { Order } from '../api/types'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+
+import type { Order } from '@/api/types'
+import { useOrders } from '@/modules/orders'
 
 export const Route = createFileRoute('/account/orders')({
   component: AccountOrdersPage,
@@ -18,11 +19,7 @@ function AccountOrdersPage() {
     if (isLoaded && !isSignedIn) navigate({ to: '/sign-in' })
   }, [isLoaded, isSignedIn, navigate])
 
-  const { data: orders = [] } = useQuery({
-    queryKey: ['orders'],
-    queryFn: () => client.getOrders(),
-    enabled: !!isSignedIn,
-  })
+  const { data: orders = [] } = useOrders(!!isSignedIn)
 
   if (!isLoaded || !isSignedIn) return null
 

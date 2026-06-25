@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PublisherPage } from '../components/PublisherPage'
+
+import { PublisherPage } from '@/modules/catalog'
 
 export const Route = createFileRoute('/$publisherSlug/')({
   component: RouteComponent,
