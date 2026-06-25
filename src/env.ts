@@ -15,6 +15,7 @@ export const env = createEnv({
   client: {
     VITE_APP_TITLE: z.string().min(1).optional(),
     VITE_CLERK_PUBLISHABLE_KEY: z.string().min(1).optional(),
+    VITE_ENABLE_MSW: z.coerce.boolean().optional(),
   },
 
   /**
