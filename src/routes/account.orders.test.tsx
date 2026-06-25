@@ -63,7 +63,7 @@ describe('/account/orders', () => {
   it('renders two seeded orders for authenticated buyer', async () => {
     mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true })
     mockUseUser.mockReturnValue({ user: { firstName: 'Faker', emailAddresses: [{ emailAddress: 'faker@t1.gg' }] } })
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(twoOrders)))
+    server.use(http.get(`${BASE_URL}/orders/mine`, () => HttpResponse.json(twoOrders)))
 
     renderRoute('/account/orders')
 

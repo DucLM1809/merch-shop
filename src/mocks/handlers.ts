@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import type { Publisher, Game, Team, Character, CreateOrderResponse, Order } from '../api/types'
+import type { Publisher, Game, Team, Character, CreateOrderResponse, Order, ServerCart, PaymentIntentResponse } from '../api/types'
 import { BASE_URL } from '../api/client'
 
 interface RawProduct {
@@ -137,14 +137,15 @@ export const handlers = [
 
   http.get(`${BASE_URL}/teams`, ({ request }) => {
     const url = new URL(request.url)
-    const gameId = url.searchParams.get('game')
+    // accept both legacy 'game' and contract 'gameId'
+    const gameId = url.searchParams.get('gameId') ?? url.searchParams.get('game')
     const filtered = gameId ? teams.filter((t) => t.gameId === gameId) : teams
     return HttpResponse.json(filtered)
   }),
 
   http.get(`${BASE_URL}/characters`, ({ request }) => {
     const url = new URL(request.url)
-    const gameId = url.searchParams.get('game')
+    const gameId = url.searchParams.get('gameId') ?? url.searchParams.get('game')
     const filtered = gameId ? characters.filter((c) => c.gameId === gameId) : characters
     return HttpResponse.json(filtered)
   }),
@@ -152,10 +153,11 @@ export const handlers = [
   http.get(`${BASE_URL}/products`, ({ request }) => {
     const url = new URL(request.url)
     const publisher = url.searchParams.get('publisher')
-    const game = url.searchParams.get('game')
+    // accept both legacy names and contract names
+    const game = url.searchParams.get('gameId') ?? url.searchParams.get('game')
     const gameSlug = url.searchParams.get('gameSlug')
-    const team = url.searchParams.get('team')
-    const character = url.searchParams.get('character')
+    const team = url.searchParams.get('teamId') ?? url.searchParams.get('team')
+    const character = url.searchParams.get('characterId') ?? url.searchParams.get('character')
 
     const gameBySlug = gameSlug ? games.find((g) => g.slug === gameSlug) : null
 
@@ -170,12 +172,46 @@ export const handlers = [
     return HttpResponse.json(filtered.map(enrich))
   }),
 
-  http.get(`${BASE_URL}/products/:slug`, ({ params }) => {
-    const product = products.find((p) => p.slug === params.slug)
+  http.get(`${BASE_URL}/products/:id`, ({ params }) => {
+    const product = products.find((p) => p.id === params.id || p.slug === params.id)
     if (!product) return new HttpResponse(null, { status: 404 })
     return HttpResponse.json(enrich(product))
   }),
 
+  http.get(`${BASE_URL}/skus`, ({ request }) => {
+    const url = new URL(request.url)
+    const productId = url.searchParams.get('productId')
+    const product = productId ? products.find((p) => p.id === productId || p.slug === productId) : null
+    return HttpResponse.json(product?.skus ?? [])
+  }),
+
+  // --- Cart ---
+  http.get(`${BASE_URL}/cart`, () => {
+    const cart: ServerCart = { id: 'guest-cart', items: [] }
+    return HttpResponse.json(cart)
+  }),
+
+  http.post(`${BASE_URL}/cart/items`, () => {
+    const cart: ServerCart = { id: 'guest-cart', items: [] }
+    return HttpResponse.json(cart, { status: 201 })
+  }),
+
+  http.delete(`${BASE_URL}/cart/items/:skuId`, () =>
+    HttpResponse.json({ ok: true }),
+  ),
+
+  http.post(`${BASE_URL}/cart/merge`, () => {
+    const cart: ServerCart = { id: 'user-cart', items: [] }
+    return HttpResponse.json(cart, { status: 201 })
+  }),
+
+  // --- Payments ---
+  http.post(`${BASE_URL}/payments/payment-intent`, () => {
+    const response: PaymentIntentResponse = { clientSecret: 'pi_test_secret_abc' }
+    return HttpResponse.json(response, { status: 201 })
+  }),
+
+  // --- Orders ---
   http.post(`${BASE_URL}/orders`, () => {
     const response: CreateOrderResponse = {
       orderId: 'ord_test_123',
@@ -184,5 +220,11 @@ export const handlers = [
     return HttpResponse.json(response, { status: 201 })
   }),
 
+  http.get(`${BASE_URL}/orders/mine`, (): Response => HttpResponse.json([] as Order[])),
+
   http.get(`${BASE_URL}/orders`, (): Response => HttpResponse.json([] as Order[])),
+
+  http.get(`${BASE_URL}/orders/:id`, ({ params }) =>
+    new HttpResponse(null, { status: 404 }),
+  ),
 ]

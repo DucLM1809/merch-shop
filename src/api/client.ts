@@ -1,5 +1,17 @@
 import axios from 'axios'
-import type { Character, CreateOrderRequest, CreateOrderResponse, Order, Product, ProductFilters, Publisher, Team } from './types'
+import type {
+  Character,
+  CreateOrderRequest,
+  CreateOrderResponse,
+  Order,
+  PaymentIntentResponse,
+  Product,
+  ProductFilters,
+  Publisher,
+  ServerCart,
+  SKU,
+  Team,
+} from './types'
 
 export const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000'
 
@@ -39,11 +51,26 @@ function wrap<T>(promise: Promise<T>): Promise<T> {
 }
 
 export const client = {
+  // --- Catalog ---
   getProducts: (filters?: ProductFilters): Promise<Product[]> =>
-    wrap(http.get<Product[]>('/products', { params: filters }).then((r) => r.data)),
+    wrap(
+      http
+        .get<Product[]>('/products', {
+          params: {
+            // map frontend names → OpenAPI contract names
+            ...(filters?.game && { gameId: filters.game }),
+            ...(filters?.team && { teamId: filters.team }),
+            ...(filters?.character && { characterId: filters.character }),
+            // non-standard: resolved by the mock only; real API ignores them
+            ...(filters?.publisher && { publisher: filters.publisher }),
+            ...(filters?.gameSlug && { gameSlug: filters.gameSlug }),
+          },
+        })
+        .then((r) => r.data),
+    ),
 
-  getProduct: (slug: string): Promise<Product> =>
-    wrap(http.get<Product>(`/products/${slug}`).then((r) => r.data)),
+  getProduct: (id: string): Promise<Product> =>
+    wrap(http.get<Product>(`/products/${id}`).then((r) => r.data)),
 
   getPublishers: (): Promise<Publisher[]> =>
     wrap(http.get<Publisher[]>('/publishers').then((r) => r.data)),
@@ -51,15 +78,45 @@ export const client = {
   getPublisher: (slug: string): Promise<Publisher> =>
     wrap(http.get<Publisher>(`/publishers/${slug}`).then((r) => r.data)),
 
-  getTeams: (): Promise<Team[]> =>
-    wrap(http.get<Team[]>('/teams').then((r) => r.data)),
+  getTeams: (gameId?: string): Promise<Team[]> =>
+    wrap(http.get<Team[]>('/teams', { params: gameId ? { gameId } : undefined }).then((r) => r.data)),
 
-  getCharacters: (): Promise<Character[]> =>
-    wrap(http.get<Character[]>('/characters').then((r) => r.data)),
+  getCharacters: (gameId?: string): Promise<Character[]> =>
+    wrap(
+      http.get<Character[]>('/characters', { params: gameId ? { gameId } : undefined }).then((r) => r.data),
+    ),
 
+  getSkus: (productId: string): Promise<SKU[]> =>
+    wrap(http.get<SKU[]>('/skus', { params: { productId } }).then((r) => r.data)),
+
+  // --- Cart ---
+  getCart: (): Promise<ServerCart> =>
+    wrap(http.get<ServerCart>('/cart').then((r) => r.data)),
+
+  addCartItem: (skuId: string, quantity: number): Promise<ServerCart> =>
+    wrap(http.post<ServerCart>('/cart/items', { skuId, quantity }).then((r) => r.data)),
+
+  removeCartItem: (skuId: string): Promise<void> =>
+    wrap(http.delete(`/cart/items/${skuId}`).then(() => undefined)),
+
+  mergeCart: (sessionId: string): Promise<ServerCart> =>
+    wrap(http.post<ServerCart>('/cart/merge', { sessionId }).then((r) => r.data)),
+
+  // --- Payments ---
+  createPaymentIntent: (cartId: string): Promise<PaymentIntentResponse> =>
+    wrap(http.post<PaymentIntentResponse>('/payments/payment-intent', { cartId }).then((r) => r.data)),
+
+  // --- Orders ---
+  // ponytail: createOrder still uses legacy body shape; update when server cart replaces client cart
   createOrder: (body: CreateOrderRequest): Promise<CreateOrderResponse> =>
     wrap(http.post<CreateOrderResponse>('/orders', body).then((r) => r.data)),
 
-  getOrders: (): Promise<Order[]> =>
+  getMyOrders: (): Promise<Order[]> =>
+    wrap(http.get<Order[]>('/orders/mine').then((r) => r.data)),
+
+  getAdminOrders: (): Promise<Order[]> =>
     wrap(http.get<Order[]>('/orders').then((r) => r.data)),
+
+  getOrder: (id: string): Promise<Order> =>
+    wrap(http.get<Order>(`/orders/${id}`).then((r) => r.data)),
 }

@@ -1,2 +1,2 @@
 export { OrderConfirmationPage } from './components/OrderConfirmationPage'
-export { orderKeys, useOrders } from './hooks'
+export { orderKeys, useOrders, useAdminOrders, useOrder } from './hooks'

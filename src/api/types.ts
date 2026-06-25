@@ -98,3 +98,17 @@ export type Order = {
   total: number
   createdAt: string
 }
+
+export type ServerCartItem = {
+  skuId: string
+  quantity: number
+}
+
+export type ServerCart = {
+  id: string
+  items: ServerCartItem[]
+}
+
+export type PaymentIntentResponse = {
+  clientSecret: string
+}

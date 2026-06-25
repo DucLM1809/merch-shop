@@ -48,11 +48,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    if (import.meta.env.DEV && 'serviceWorker' in navigator) {
-      import('../mocks/browser').then(({ worker }) =>
-        worker.start({ onUnhandledRequest: 'bypass' }),
-      )
-    }
+    // MSW removed from dev — app calls real API at VITE_API_URL
   }, [])
 
   return (
