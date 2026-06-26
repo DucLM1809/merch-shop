@@ -299,6 +299,30 @@ export const handlers = [
     return HttpResponse.json(filtered);
   }),
 
+  http.post(`${BASE_URL}/teams`, async ({ request }) => {
+    const body = (await request.json()) as { name: string; slug: string; gameId: string };
+    const created: Team = {
+      id: `team-${Date.now()}`,
+      slug: body.slug,
+      name: body.name,
+      gameId: body.gameId,
+    };
+    return HttpResponse.json(created, { status: 201 });
+  }),
+
+  http.patch(`${BASE_URL}/teams/:id`, async ({ params, request }) => {
+    const body = (await request.json()) as { name: string; slug: string; gameId: string };
+    const existing = teams.find((t) => t.id === params.id);
+    if (!existing) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({ ...existing, ...body });
+  }),
+
+  http.delete(`${BASE_URL}/teams/:id`, ({ params }) => {
+    const exists = teams.some((t) => t.id === params.id);
+    if (!exists) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({ ok: true });
+  }),
+
   http.get(`${BASE_URL}/characters`, ({ request }) => {
     const url = new URL(request.url);
     const gameId = url.searchParams.get("gameId") ?? url.searchParams.get("game");

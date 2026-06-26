@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/api/client";
 import { catalogKeys } from "@/modules/catalog";
 
-import type { CreateGameDto, CreatePublisherDto } from "@/api/types";
+import type { CreateGameDto, CreatePublisherDto, CreateTeamDto } from "@/api/types";
 
 export function useCreatePublisher() {
   const qc = useQueryClient();
@@ -65,6 +65,36 @@ export function useDeleteGame() {
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: catalogKeys.games() });
       void qc.invalidateQueries({ queryKey: catalogKeys.publishers() });
+    },
+  });
+}
+
+export function useCreateTeam() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: CreateTeamDto) => client.createTeam(body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.teams() });
+    },
+  });
+}
+
+export function useUpdateTeam() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: CreateTeamDto }) => client.updateTeam(id, body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.teams() });
+    },
+  });
+}
+
+export function useDeleteTeam() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => client.deleteTeam(id),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.teams() });
     },
   });
 }

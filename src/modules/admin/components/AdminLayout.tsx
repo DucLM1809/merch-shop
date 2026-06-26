@@ -9,7 +9,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Orders", to: "/admin/orders", icon: ShoppingBag, live: true },
   { label: "Publishers", to: "/admin/publishers", icon: TrendingUp, live: true },
   { label: "Games", to: "/admin/games", icon: Gamepad2, live: true },
-  { label: "Teams", to: "/admin/teams", icon: Users, live: false },
+  { label: "Teams", to: "/admin/teams", icon: Users, live: true },
   { label: "Characters", to: "/admin/characters", icon: List, live: false },
   { label: "Products", to: "/admin/products", icon: Package, live: false },
   { label: "SKUs", to: "/admin/skus", icon: Tags, live: false },

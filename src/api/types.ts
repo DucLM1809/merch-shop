@@ -136,3 +136,9 @@ export type CreatePublisherDto = {
   slug: string;
   logoUrl?: string;
 };
+
+export type CreateTeamDto = {
+  name: string;
+  slug: string;
+  gameId: string;
+};

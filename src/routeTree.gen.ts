@@ -19,6 +19,7 @@ import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
 import { Route as adminAdminRouteImport } from "./routes/(admin)/admin";
 import { Route as catalogPublisherSlugIndexRouteImport } from "./routes/(catalog)/$publisherSlug.index";
 import { Route as catalogPublisherSlugGameSlugRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug";
+import { Route as adminAdminTeamsRouteImport } from "./routes/(admin)/admin.teams";
 import { Route as adminAdminPublishersRouteImport } from "./routes/(admin)/admin.publishers";
 import { Route as adminAdminOrdersRouteImport } from "./routes/(admin)/admin.orders";
 import { Route as adminAdminGamesRouteImport } from "./routes/(admin)/admin.games";
@@ -92,6 +93,13 @@ const catalogPublisherSlugGameSlugRoute = catalogPublisherSlugGameSlugRouteImpor
     getParentRoute: () => catalogPublisherSlugRoute,
   } as any)
   .lazy(() => import("./routes/(catalog)/$publisherSlug.$gameSlug.lazy").then((d) => d.Route));
+const adminAdminTeamsRoute = adminAdminTeamsRouteImport
+  .update({
+    id: "/teams",
+    path: "/teams",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.teams.lazy").then((d) => d.Route));
 const adminAdminPublishersRoute = adminAdminPublishersRouteImport
   .update({
     id: "/publishers",
@@ -155,6 +163,7 @@ export interface FileRoutesByFullPath {
   "/admin/games": typeof adminAdminGamesRoute;
   "/admin/orders": typeof adminAdminOrdersRoute;
   "/admin/publishers": typeof adminAdminPublishersRoute;
+  "/admin/teams": typeof adminAdminTeamsRoute;
   "/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugRouteWithChildren;
   "/$publisherSlug/": typeof catalogPublisherSlugIndexRoute;
   "/$publisherSlug/$gameSlug/": typeof catalogPublisherSlugGameSlugIndexRoute;
@@ -172,6 +181,7 @@ export interface FileRoutesByTo {
   "/admin/games": typeof adminAdminGamesRoute;
   "/admin/orders": typeof adminAdminOrdersRoute;
   "/admin/publishers": typeof adminAdminPublishersRoute;
+  "/admin/teams": typeof adminAdminTeamsRoute;
   "/$publisherSlug": typeof catalogPublisherSlugIndexRoute;
   "/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugIndexRoute;
   "/$publisherSlug/$gameSlug/products/$productSlug": typeof catalogPublisherSlugGameSlugProductsProductSlugRoute;
@@ -190,6 +200,7 @@ export interface FileRoutesById {
   "/(admin)/admin/games": typeof adminAdminGamesRoute;
   "/(admin)/admin/orders": typeof adminAdminOrdersRoute;
   "/(admin)/admin/publishers": typeof adminAdminPublishersRoute;
+  "/(admin)/admin/teams": typeof adminAdminTeamsRoute;
   "/(catalog)/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugRouteWithChildren;
   "/(catalog)/$publisherSlug/": typeof catalogPublisherSlugIndexRoute;
   "/(catalog)/$publisherSlug/$gameSlug/": typeof catalogPublisherSlugGameSlugIndexRoute;
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | "/admin/games"
     | "/admin/orders"
     | "/admin/publishers"
+    | "/admin/teams"
     | "/$publisherSlug/$gameSlug"
     | "/$publisherSlug/"
     | "/$publisherSlug/$gameSlug/"
@@ -227,6 +239,7 @@ export interface FileRouteTypes {
     | "/admin/games"
     | "/admin/orders"
     | "/admin/publishers"
+    | "/admin/teams"
     | "/$publisherSlug"
     | "/$publisherSlug/$gameSlug"
     | "/$publisherSlug/$gameSlug/products/$productSlug";
@@ -244,6 +257,7 @@ export interface FileRouteTypes {
     | "/(admin)/admin/games"
     | "/(admin)/admin/orders"
     | "/(admin)/admin/publishers"
+    | "/(admin)/admin/teams"
     | "/(catalog)/$publisherSlug/$gameSlug"
     | "/(catalog)/$publisherSlug/"
     | "/(catalog)/$publisherSlug/$gameSlug/"
@@ -334,6 +348,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof catalogPublisherSlugGameSlugRouteImport;
       parentRoute: typeof catalogPublisherSlugRoute;
     };
+    "/(admin)/admin/teams": {
+      id: "/(admin)/admin/teams";
+      path: "/teams";
+      fullPath: "/admin/teams";
+      preLoaderRoute: typeof adminAdminTeamsRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
     "/(admin)/admin/publishers": {
       id: "/(admin)/admin/publishers";
       path: "/publishers";
@@ -383,12 +404,14 @@ interface adminAdminRouteChildren {
   adminAdminGamesRoute: typeof adminAdminGamesRoute;
   adminAdminOrdersRoute: typeof adminAdminOrdersRoute;
   adminAdminPublishersRoute: typeof adminAdminPublishersRoute;
+  adminAdminTeamsRoute: typeof adminAdminTeamsRoute;
 }
 
 const adminAdminRouteChildren: adminAdminRouteChildren = {
   adminAdminGamesRoute: adminAdminGamesRoute,
   adminAdminOrdersRoute: adminAdminOrdersRoute,
   adminAdminPublishersRoute: adminAdminPublishersRoute,
+  adminAdminTeamsRoute: adminAdminTeamsRoute,
 };
 
 const adminAdminRouteWithChildren = adminAdminRoute._addFileChildren(adminAdminRouteChildren);

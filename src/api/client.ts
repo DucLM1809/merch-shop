@@ -5,6 +5,7 @@ import type {
   CreateOrderRequest,
   CreateOrderResponse,
   CreatePublisherDto,
+  CreateTeamDto,
   Game,
   Order,
   OrderStatus,
@@ -106,6 +107,15 @@ export const client = {
     wrap(
       http.get<Team[]>("/teams", { params: gameId ? { gameId } : undefined }).then((r) => r.data)
     ),
+
+  createTeam: (body: CreateTeamDto): Promise<Team> =>
+    wrap(http.post<Team>("/teams", body).then((r) => r.data)),
+
+  updateTeam: (id: string, body: CreateTeamDto): Promise<Team> =>
+    wrap(http.patch<Team>(`/teams/${id}`, body).then((r) => r.data)),
+
+  deleteTeam: (id: string): Promise<void> =>
+    wrap(http.delete(`/teams/${id}`).then(() => undefined)),
 
   getCharacters: (gameId?: string): Promise<Character[]> =>
     wrap(
