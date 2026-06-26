@@ -31,6 +31,12 @@ export type Game = {
   publisherId: string;
 };
 
+export type CreateGameDto = {
+  name: string;
+  slug: string;
+  publisherId: string;
+};
+
 export type Publisher = {
   id: string;
   slug: string;

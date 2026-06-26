@@ -1,9 +1,11 @@
 import axios from "axios";
 import type {
   Character,
+  CreateGameDto,
   CreateOrderRequest,
   CreateOrderResponse,
   CreatePublisherDto,
+  Game,
   Order,
   OrderStatus,
   PaymentIntentResponse,
@@ -79,6 +81,17 @@ export const client = {
 
   getPublisher: (slug: string): Promise<Publisher> =>
     wrap(http.get<Publisher>(`/publishers/${slug}`).then((r) => r.data)),
+
+  getGames: (): Promise<Game[]> => wrap(http.get<Game[]>("/games").then((r) => r.data)),
+
+  createGame: (body: CreateGameDto): Promise<Game> =>
+    wrap(http.post<Game>("/games", body).then((r) => r.data)),
+
+  updateGame: (id: string, body: CreateGameDto): Promise<Game> =>
+    wrap(http.patch<Game>(`/games/${id}`, body).then((r) => r.data)),
+
+  deleteGame: (id: string): Promise<void> =>
+    wrap(http.delete(`/games/${id}`).then(() => undefined)),
 
   createPublisher: (body: CreatePublisherDto): Promise<Publisher> =>
     wrap(http.post<Publisher>("/publishers", body).then((r) => r.data)),

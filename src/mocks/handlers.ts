@@ -265,6 +265,32 @@ export const handlers = [
     return HttpResponse.json({ ok: true });
   }),
 
+  http.get(`${BASE_URL}/games`, () => HttpResponse.json(games)),
+
+  http.post(`${BASE_URL}/games`, async ({ request }) => {
+    const body = (await request.json()) as { name: string; slug: string; publisherId: string };
+    const created: Game = {
+      id: `game-${Date.now()}`,
+      slug: body.slug,
+      name: body.name,
+      publisherId: body.publisherId,
+    };
+    return HttpResponse.json(created, { status: 201 });
+  }),
+
+  http.patch(`${BASE_URL}/games/:id`, async ({ params, request }) => {
+    const body = (await request.json()) as { name: string; slug: string; publisherId: string };
+    const existing = games.find((g) => g.id === params.id);
+    if (!existing) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({ ...existing, ...body });
+  }),
+
+  http.delete(`${BASE_URL}/games/:id`, ({ params }) => {
+    const exists = games.some((g) => g.id === params.id);
+    if (!exists) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({ ok: true });
+  }),
+
   http.get(`${BASE_URL}/teams`, ({ request }) => {
     const url = new URL(request.url);
     // accept both legacy 'game' and contract 'gameId'

@@ -8,419 +8,418 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as checkoutOrderConfirmationRouteImport } from './routes/(checkout)/order-confirmation'
-import { Route as checkoutCheckoutRouteImport } from './routes/(checkout)/checkout'
-import { Route as catalogPublisherSlugRouteImport } from './routes/(catalog)/$publisherSlug'
-import { Route as cartCartRouteImport } from './routes/(cart)/cart'
-import { Route as authSignUpRouteImport } from './routes/(auth)/sign-up'
-import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
-import { Route as adminAdminRouteImport } from './routes/(admin)/admin'
-import { Route as catalogPublisherSlugIndexRouteImport } from './routes/(catalog)/$publisherSlug.index'
-import { Route as catalogPublisherSlugGameSlugRouteImport } from './routes/(catalog)/$publisherSlug.$gameSlug'
-import { Route as adminAdminPublishersRouteImport } from './routes/(admin)/admin.publishers'
-import { Route as adminAdminOrdersRouteImport } from './routes/(admin)/admin.orders'
-import { Route as accountAccountOrdersRouteImport } from './routes/(account)/account.orders'
-import { Route as catalogPublisherSlugGameSlugIndexRouteImport } from './routes/(catalog)/$publisherSlug.$gameSlug.index'
-import { Route as catalogPublisherSlugGameSlugProductsProductSlugRouteImport } from './routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as IndexRouteImport } from "./routes/index";
+import { Route as checkoutOrderConfirmationRouteImport } from "./routes/(checkout)/order-confirmation";
+import { Route as checkoutCheckoutRouteImport } from "./routes/(checkout)/checkout";
+import { Route as catalogPublisherSlugRouteImport } from "./routes/(catalog)/$publisherSlug";
+import { Route as cartCartRouteImport } from "./routes/(cart)/cart";
+import { Route as authSignUpRouteImport } from "./routes/(auth)/sign-up";
+import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
+import { Route as adminAdminRouteImport } from "./routes/(admin)/admin";
+import { Route as catalogPublisherSlugIndexRouteImport } from "./routes/(catalog)/$publisherSlug.index";
+import { Route as catalogPublisherSlugGameSlugRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug";
+import { Route as adminAdminPublishersRouteImport } from "./routes/(admin)/admin.publishers";
+import { Route as adminAdminOrdersRouteImport } from "./routes/(admin)/admin.orders";
+import { Route as adminAdminGamesRouteImport } from "./routes/(admin)/admin.games";
+import { Route as accountAccountOrdersRouteImport } from "./routes/(account)/account.orders";
+import { Route as catalogPublisherSlugGameSlugIndexRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug.index";
+import { Route as catalogPublisherSlugGameSlugProductsProductSlugRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug";
 
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
 const checkoutOrderConfirmationRoute = checkoutOrderConfirmationRouteImport
   .update({
-    id: '/(checkout)/order-confirmation',
-    path: '/order-confirmation',
+    id: "/(checkout)/order-confirmation",
+    path: "/order-confirmation",
     getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() =>
-    import('./routes/(checkout)/order-confirmation.lazy').then((d) => d.Route),
-  )
+  .lazy(() => import("./routes/(checkout)/order-confirmation.lazy").then((d) => d.Route));
 const checkoutCheckoutRoute = checkoutCheckoutRouteImport
   .update({
-    id: '/(checkout)/checkout',
-    path: '/checkout',
+    id: "/(checkout)/checkout",
+    path: "/checkout",
     getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import('./routes/(checkout)/checkout.lazy').then((d) => d.Route))
+  .lazy(() => import("./routes/(checkout)/checkout.lazy").then((d) => d.Route));
 const catalogPublisherSlugRoute = catalogPublisherSlugRouteImport
   .update({
-    id: '/(catalog)/$publisherSlug',
-    path: '/$publisherSlug',
+    id: "/(catalog)/$publisherSlug",
+    path: "/$publisherSlug",
     getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() =>
-    import('./routes/(catalog)/$publisherSlug.lazy').then((d) => d.Route),
-  )
+  .lazy(() => import("./routes/(catalog)/$publisherSlug.lazy").then((d) => d.Route));
 const cartCartRoute = cartCartRouteImport
   .update({
-    id: '/(cart)/cart',
-    path: '/cart',
+    id: "/(cart)/cart",
+    path: "/cart",
     getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import('./routes/(cart)/cart.lazy').then((d) => d.Route))
+  .lazy(() => import("./routes/(cart)/cart.lazy").then((d) => d.Route));
 const authSignUpRoute = authSignUpRouteImport
   .update({
-    id: '/(auth)/sign-up',
-    path: '/sign-up',
+    id: "/(auth)/sign-up",
+    path: "/sign-up",
     getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import('./routes/(auth)/sign-up.lazy').then((d) => d.Route))
+  .lazy(() => import("./routes/(auth)/sign-up.lazy").then((d) => d.Route));
 const authSignInRoute = authSignInRouteImport
   .update({
-    id: '/(auth)/sign-in',
-    path: '/sign-in',
+    id: "/(auth)/sign-in",
+    path: "/sign-in",
     getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import('./routes/(auth)/sign-in.lazy').then((d) => d.Route))
+  .lazy(() => import("./routes/(auth)/sign-in.lazy").then((d) => d.Route));
 const adminAdminRoute = adminAdminRouteImport.update({
-  id: '/(admin)/admin',
-  path: '/admin',
+  id: "/(admin)/admin",
+  path: "/admin",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const catalogPublisherSlugIndexRoute = catalogPublisherSlugIndexRouteImport
   .update({
-    id: '/',
-    path: '/',
+    id: "/",
+    path: "/",
     getParentRoute: () => catalogPublisherSlugRoute,
   } as any)
-  .lazy(() =>
-    import('./routes/(catalog)/$publisherSlug.index.lazy').then((d) => d.Route),
-  )
-const catalogPublisherSlugGameSlugRoute =
-  catalogPublisherSlugGameSlugRouteImport
-    .update({
-      id: '/$gameSlug',
-      path: '/$gameSlug',
-      getParentRoute: () => catalogPublisherSlugRoute,
-    } as any)
-    .lazy(() =>
-      import('./routes/(catalog)/$publisherSlug.$gameSlug.lazy').then(
-        (d) => d.Route,
-      ),
-    )
+  .lazy(() => import("./routes/(catalog)/$publisherSlug.index.lazy").then((d) => d.Route));
+const catalogPublisherSlugGameSlugRoute = catalogPublisherSlugGameSlugRouteImport
+  .update({
+    id: "/$gameSlug",
+    path: "/$gameSlug",
+    getParentRoute: () => catalogPublisherSlugRoute,
+  } as any)
+  .lazy(() => import("./routes/(catalog)/$publisherSlug.$gameSlug.lazy").then((d) => d.Route));
 const adminAdminPublishersRoute = adminAdminPublishersRouteImport
   .update({
-    id: '/publishers',
-    path: '/publishers',
+    id: "/publishers",
+    path: "/publishers",
     getParentRoute: () => adminAdminRoute,
   } as any)
-  .lazy(() =>
-    import('./routes/(admin)/admin.publishers.lazy').then((d) => d.Route),
-  )
+  .lazy(() => import("./routes/(admin)/admin.publishers.lazy").then((d) => d.Route));
 const adminAdminOrdersRoute = adminAdminOrdersRouteImport
   .update({
-    id: '/orders',
-    path: '/orders',
+    id: "/orders",
+    path: "/orders",
     getParentRoute: () => adminAdminRoute,
   } as any)
-  .lazy(() => import('./routes/(admin)/admin.orders.lazy').then((d) => d.Route))
+  .lazy(() => import("./routes/(admin)/admin.orders.lazy").then((d) => d.Route));
+const adminAdminGamesRoute = adminAdminGamesRouteImport
+  .update({
+    id: "/games",
+    path: "/games",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.games.lazy").then((d) => d.Route));
 const accountAccountOrdersRoute = accountAccountOrdersRouteImport
   .update({
-    id: '/(account)/account/orders',
-    path: '/account/orders',
+    id: "/(account)/account/orders",
+    path: "/account/orders",
     getParentRoute: () => rootRouteImport,
   } as any)
+  .lazy(() => import("./routes/(account)/account.orders.lazy").then((d) => d.Route));
+const catalogPublisherSlugGameSlugIndexRoute = catalogPublisherSlugGameSlugIndexRouteImport
+  .update({
+    id: "/",
+    path: "/",
+    getParentRoute: () => catalogPublisherSlugGameSlugRoute,
+  } as any)
   .lazy(() =>
-    import('./routes/(account)/account.orders.lazy').then((d) => d.Route),
-  )
-const catalogPublisherSlugGameSlugIndexRoute =
-  catalogPublisherSlugGameSlugIndexRouteImport
-    .update({
-      id: '/',
-      path: '/',
-      getParentRoute: () => catalogPublisherSlugGameSlugRoute,
-    } as any)
-    .lazy(() =>
-      import('./routes/(catalog)/$publisherSlug.$gameSlug.index.lazy').then(
-        (d) => d.Route,
-      ),
-    )
+    import("./routes/(catalog)/$publisherSlug.$gameSlug.index.lazy").then((d) => d.Route)
+  );
 const catalogPublisherSlugGameSlugProductsProductSlugRoute =
   catalogPublisherSlugGameSlugProductsProductSlugRouteImport
     .update({
-      id: '/products/$productSlug',
-      path: '/products/$productSlug',
+      id: "/products/$productSlug",
+      path: "/products/$productSlug",
       getParentRoute: () => catalogPublisherSlugGameSlugRoute,
     } as any)
     .lazy(() =>
-      import('./routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug.lazy').then(
-        (d) => d.Route,
-      ),
-    )
+      import("./routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug.lazy").then(
+        (d) => d.Route
+      )
+    );
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/admin': typeof adminAdminRouteWithChildren
-  '/sign-in': typeof authSignInRoute
-  '/sign-up': typeof authSignUpRoute
-  '/cart': typeof cartCartRoute
-  '/$publisherSlug': typeof catalogPublisherSlugRouteWithChildren
-  '/checkout': typeof checkoutCheckoutRoute
-  '/order-confirmation': typeof checkoutOrderConfirmationRoute
-  '/account/orders': typeof accountAccountOrdersRoute
-  '/admin/orders': typeof adminAdminOrdersRoute
-  '/admin/publishers': typeof adminAdminPublishersRoute
-  '/$publisherSlug/$gameSlug': typeof catalogPublisherSlugGameSlugRouteWithChildren
-  '/$publisherSlug/': typeof catalogPublisherSlugIndexRoute
-  '/$publisherSlug/$gameSlug/': typeof catalogPublisherSlugGameSlugIndexRoute
-  '/$publisherSlug/$gameSlug/products/$productSlug': typeof catalogPublisherSlugGameSlugProductsProductSlugRoute
+  "/": typeof IndexRoute;
+  "/admin": typeof adminAdminRouteWithChildren;
+  "/sign-in": typeof authSignInRoute;
+  "/sign-up": typeof authSignUpRoute;
+  "/cart": typeof cartCartRoute;
+  "/$publisherSlug": typeof catalogPublisherSlugRouteWithChildren;
+  "/checkout": typeof checkoutCheckoutRoute;
+  "/order-confirmation": typeof checkoutOrderConfirmationRoute;
+  "/account/orders": typeof accountAccountOrdersRoute;
+  "/admin/games": typeof adminAdminGamesRoute;
+  "/admin/orders": typeof adminAdminOrdersRoute;
+  "/admin/publishers": typeof adminAdminPublishersRoute;
+  "/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugRouteWithChildren;
+  "/$publisherSlug/": typeof catalogPublisherSlugIndexRoute;
+  "/$publisherSlug/$gameSlug/": typeof catalogPublisherSlugGameSlugIndexRoute;
+  "/$publisherSlug/$gameSlug/products/$productSlug": typeof catalogPublisherSlugGameSlugProductsProductSlugRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/admin': typeof adminAdminRouteWithChildren
-  '/sign-in': typeof authSignInRoute
-  '/sign-up': typeof authSignUpRoute
-  '/cart': typeof cartCartRoute
-  '/checkout': typeof checkoutCheckoutRoute
-  '/order-confirmation': typeof checkoutOrderConfirmationRoute
-  '/account/orders': typeof accountAccountOrdersRoute
-  '/admin/orders': typeof adminAdminOrdersRoute
-  '/admin/publishers': typeof adminAdminPublishersRoute
-  '/$publisherSlug': typeof catalogPublisherSlugIndexRoute
-  '/$publisherSlug/$gameSlug': typeof catalogPublisherSlugGameSlugIndexRoute
-  '/$publisherSlug/$gameSlug/products/$productSlug': typeof catalogPublisherSlugGameSlugProductsProductSlugRoute
+  "/": typeof IndexRoute;
+  "/admin": typeof adminAdminRouteWithChildren;
+  "/sign-in": typeof authSignInRoute;
+  "/sign-up": typeof authSignUpRoute;
+  "/cart": typeof cartCartRoute;
+  "/checkout": typeof checkoutCheckoutRoute;
+  "/order-confirmation": typeof checkoutOrderConfirmationRoute;
+  "/account/orders": typeof accountAccountOrdersRoute;
+  "/admin/games": typeof adminAdminGamesRoute;
+  "/admin/orders": typeof adminAdminOrdersRoute;
+  "/admin/publishers": typeof adminAdminPublishersRoute;
+  "/$publisherSlug": typeof catalogPublisherSlugIndexRoute;
+  "/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugIndexRoute;
+  "/$publisherSlug/$gameSlug/products/$productSlug": typeof catalogPublisherSlugGameSlugProductsProductSlugRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/(admin)/admin': typeof adminAdminRouteWithChildren
-  '/(auth)/sign-in': typeof authSignInRoute
-  '/(auth)/sign-up': typeof authSignUpRoute
-  '/(cart)/cart': typeof cartCartRoute
-  '/(catalog)/$publisherSlug': typeof catalogPublisherSlugRouteWithChildren
-  '/(checkout)/checkout': typeof checkoutCheckoutRoute
-  '/(checkout)/order-confirmation': typeof checkoutOrderConfirmationRoute
-  '/(account)/account/orders': typeof accountAccountOrdersRoute
-  '/(admin)/admin/orders': typeof adminAdminOrdersRoute
-  '/(admin)/admin/publishers': typeof adminAdminPublishersRoute
-  '/(catalog)/$publisherSlug/$gameSlug': typeof catalogPublisherSlugGameSlugRouteWithChildren
-  '/(catalog)/$publisherSlug/': typeof catalogPublisherSlugIndexRoute
-  '/(catalog)/$publisherSlug/$gameSlug/': typeof catalogPublisherSlugGameSlugIndexRoute
-  '/(catalog)/$publisherSlug/$gameSlug/products/$productSlug': typeof catalogPublisherSlugGameSlugProductsProductSlugRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/(admin)/admin": typeof adminAdminRouteWithChildren;
+  "/(auth)/sign-in": typeof authSignInRoute;
+  "/(auth)/sign-up": typeof authSignUpRoute;
+  "/(cart)/cart": typeof cartCartRoute;
+  "/(catalog)/$publisherSlug": typeof catalogPublisherSlugRouteWithChildren;
+  "/(checkout)/checkout": typeof checkoutCheckoutRoute;
+  "/(checkout)/order-confirmation": typeof checkoutOrderConfirmationRoute;
+  "/(account)/account/orders": typeof accountAccountOrdersRoute;
+  "/(admin)/admin/games": typeof adminAdminGamesRoute;
+  "/(admin)/admin/orders": typeof adminAdminOrdersRoute;
+  "/(admin)/admin/publishers": typeof adminAdminPublishersRoute;
+  "/(catalog)/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugRouteWithChildren;
+  "/(catalog)/$publisherSlug/": typeof catalogPublisherSlugIndexRoute;
+  "/(catalog)/$publisherSlug/$gameSlug/": typeof catalogPublisherSlugGameSlugIndexRoute;
+  "/(catalog)/$publisherSlug/$gameSlug/products/$productSlug": typeof catalogPublisherSlugGameSlugProductsProductSlugRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/admin'
-    | '/sign-in'
-    | '/sign-up'
-    | '/cart'
-    | '/$publisherSlug'
-    | '/checkout'
-    | '/order-confirmation'
-    | '/account/orders'
-    | '/admin/orders'
-    | '/admin/publishers'
-    | '/$publisherSlug/$gameSlug'
-    | '/$publisherSlug/'
-    | '/$publisherSlug/$gameSlug/'
-    | '/$publisherSlug/$gameSlug/products/$productSlug'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/admin"
+    | "/sign-in"
+    | "/sign-up"
+    | "/cart"
+    | "/$publisherSlug"
+    | "/checkout"
+    | "/order-confirmation"
+    | "/account/orders"
+    | "/admin/games"
+    | "/admin/orders"
+    | "/admin/publishers"
+    | "/$publisherSlug/$gameSlug"
+    | "/$publisherSlug/"
+    | "/$publisherSlug/$gameSlug/"
+    | "/$publisherSlug/$gameSlug/products/$productSlug";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/admin'
-    | '/sign-in'
-    | '/sign-up'
-    | '/cart'
-    | '/checkout'
-    | '/order-confirmation'
-    | '/account/orders'
-    | '/admin/orders'
-    | '/admin/publishers'
-    | '/$publisherSlug'
-    | '/$publisherSlug/$gameSlug'
-    | '/$publisherSlug/$gameSlug/products/$productSlug'
+    | "/"
+    | "/admin"
+    | "/sign-in"
+    | "/sign-up"
+    | "/cart"
+    | "/checkout"
+    | "/order-confirmation"
+    | "/account/orders"
+    | "/admin/games"
+    | "/admin/orders"
+    | "/admin/publishers"
+    | "/$publisherSlug"
+    | "/$publisherSlug/$gameSlug"
+    | "/$publisherSlug/$gameSlug/products/$productSlug";
   id:
-    | '__root__'
-    | '/'
-    | '/(admin)/admin'
-    | '/(auth)/sign-in'
-    | '/(auth)/sign-up'
-    | '/(cart)/cart'
-    | '/(catalog)/$publisherSlug'
-    | '/(checkout)/checkout'
-    | '/(checkout)/order-confirmation'
-    | '/(account)/account/orders'
-    | '/(admin)/admin/orders'
-    | '/(admin)/admin/publishers'
-    | '/(catalog)/$publisherSlug/$gameSlug'
-    | '/(catalog)/$publisherSlug/'
-    | '/(catalog)/$publisherSlug/$gameSlug/'
-    | '/(catalog)/$publisherSlug/$gameSlug/products/$productSlug'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/(admin)/admin"
+    | "/(auth)/sign-in"
+    | "/(auth)/sign-up"
+    | "/(cart)/cart"
+    | "/(catalog)/$publisherSlug"
+    | "/(checkout)/checkout"
+    | "/(checkout)/order-confirmation"
+    | "/(account)/account/orders"
+    | "/(admin)/admin/games"
+    | "/(admin)/admin/orders"
+    | "/(admin)/admin/publishers"
+    | "/(catalog)/$publisherSlug/$gameSlug"
+    | "/(catalog)/$publisherSlug/"
+    | "/(catalog)/$publisherSlug/$gameSlug/"
+    | "/(catalog)/$publisherSlug/$gameSlug/products/$productSlug";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  adminAdminRoute: typeof adminAdminRouteWithChildren
-  authSignInRoute: typeof authSignInRoute
-  authSignUpRoute: typeof authSignUpRoute
-  cartCartRoute: typeof cartCartRoute
-  catalogPublisherSlugRoute: typeof catalogPublisherSlugRouteWithChildren
-  checkoutCheckoutRoute: typeof checkoutCheckoutRoute
-  checkoutOrderConfirmationRoute: typeof checkoutOrderConfirmationRoute
-  accountAccountOrdersRoute: typeof accountAccountOrdersRoute
+  IndexRoute: typeof IndexRoute;
+  adminAdminRoute: typeof adminAdminRouteWithChildren;
+  authSignInRoute: typeof authSignInRoute;
+  authSignUpRoute: typeof authSignUpRoute;
+  cartCartRoute: typeof cartCartRoute;
+  catalogPublisherSlugRoute: typeof catalogPublisherSlugRouteWithChildren;
+  checkoutCheckoutRoute: typeof checkoutCheckoutRoute;
+  checkoutOrderConfirmationRoute: typeof checkoutOrderConfirmationRoute;
+  accountAccountOrdersRoute: typeof accountAccountOrdersRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(checkout)/order-confirmation': {
-      id: '/(checkout)/order-confirmation'
-      path: '/order-confirmation'
-      fullPath: '/order-confirmation'
-      preLoaderRoute: typeof checkoutOrderConfirmationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(checkout)/checkout': {
-      id: '/(checkout)/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof checkoutCheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(catalog)/$publisherSlug': {
-      id: '/(catalog)/$publisherSlug'
-      path: '/$publisherSlug'
-      fullPath: '/$publisherSlug'
-      preLoaderRoute: typeof catalogPublisherSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(cart)/cart': {
-      id: '/(cart)/cart'
-      path: '/cart'
-      fullPath: '/cart'
-      preLoaderRoute: typeof cartCartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(auth)/sign-up': {
-      id: '/(auth)/sign-up'
-      path: '/sign-up'
-      fullPath: '/sign-up'
-      preLoaderRoute: typeof authSignUpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(auth)/sign-in': {
-      id: '/(auth)/sign-in'
-      path: '/sign-in'
-      fullPath: '/sign-in'
-      preLoaderRoute: typeof authSignInRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(admin)/admin': {
-      id: '/(admin)/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof adminAdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(catalog)/$publisherSlug/': {
-      id: '/(catalog)/$publisherSlug/'
-      path: '/'
-      fullPath: '/$publisherSlug/'
-      preLoaderRoute: typeof catalogPublisherSlugIndexRouteImport
-      parentRoute: typeof catalogPublisherSlugRoute
-    }
-    '/(catalog)/$publisherSlug/$gameSlug': {
-      id: '/(catalog)/$publisherSlug/$gameSlug'
-      path: '/$gameSlug'
-      fullPath: '/$publisherSlug/$gameSlug'
-      preLoaderRoute: typeof catalogPublisherSlugGameSlugRouteImport
-      parentRoute: typeof catalogPublisherSlugRoute
-    }
-    '/(admin)/admin/publishers': {
-      id: '/(admin)/admin/publishers'
-      path: '/publishers'
-      fullPath: '/admin/publishers'
-      preLoaderRoute: typeof adminAdminPublishersRouteImport
-      parentRoute: typeof adminAdminRoute
-    }
-    '/(admin)/admin/orders': {
-      id: '/(admin)/admin/orders'
-      path: '/orders'
-      fullPath: '/admin/orders'
-      preLoaderRoute: typeof adminAdminOrdersRouteImport
-      parentRoute: typeof adminAdminRoute
-    }
-    '/(account)/account/orders': {
-      id: '/(account)/account/orders'
-      path: '/account/orders'
-      fullPath: '/account/orders'
-      preLoaderRoute: typeof accountAccountOrdersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(catalog)/$publisherSlug/$gameSlug/': {
-      id: '/(catalog)/$publisherSlug/$gameSlug/'
-      path: '/'
-      fullPath: '/$publisherSlug/$gameSlug/'
-      preLoaderRoute: typeof catalogPublisherSlugGameSlugIndexRouteImport
-      parentRoute: typeof catalogPublisherSlugGameSlugRoute
-    }
-    '/(catalog)/$publisherSlug/$gameSlug/products/$productSlug': {
-      id: '/(catalog)/$publisherSlug/$gameSlug/products/$productSlug'
-      path: '/products/$productSlug'
-      fullPath: '/$publisherSlug/$gameSlug/products/$productSlug'
-      preLoaderRoute: typeof catalogPublisherSlugGameSlugProductsProductSlugRouteImport
-      parentRoute: typeof catalogPublisherSlugGameSlugRoute
-    }
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(checkout)/order-confirmation": {
+      id: "/(checkout)/order-confirmation";
+      path: "/order-confirmation";
+      fullPath: "/order-confirmation";
+      preLoaderRoute: typeof checkoutOrderConfirmationRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(checkout)/checkout": {
+      id: "/(checkout)/checkout";
+      path: "/checkout";
+      fullPath: "/checkout";
+      preLoaderRoute: typeof checkoutCheckoutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(catalog)/$publisherSlug": {
+      id: "/(catalog)/$publisherSlug";
+      path: "/$publisherSlug";
+      fullPath: "/$publisherSlug";
+      preLoaderRoute: typeof catalogPublisherSlugRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(cart)/cart": {
+      id: "/(cart)/cart";
+      path: "/cart";
+      fullPath: "/cart";
+      preLoaderRoute: typeof cartCartRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(auth)/sign-up": {
+      id: "/(auth)/sign-up";
+      path: "/sign-up";
+      fullPath: "/sign-up";
+      preLoaderRoute: typeof authSignUpRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(auth)/sign-in": {
+      id: "/(auth)/sign-in";
+      path: "/sign-in";
+      fullPath: "/sign-in";
+      preLoaderRoute: typeof authSignInRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(admin)/admin": {
+      id: "/(admin)/admin";
+      path: "/admin";
+      fullPath: "/admin";
+      preLoaderRoute: typeof adminAdminRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(catalog)/$publisherSlug/": {
+      id: "/(catalog)/$publisherSlug/";
+      path: "/";
+      fullPath: "/$publisherSlug/";
+      preLoaderRoute: typeof catalogPublisherSlugIndexRouteImport;
+      parentRoute: typeof catalogPublisherSlugRoute;
+    };
+    "/(catalog)/$publisherSlug/$gameSlug": {
+      id: "/(catalog)/$publisherSlug/$gameSlug";
+      path: "/$gameSlug";
+      fullPath: "/$publisherSlug/$gameSlug";
+      preLoaderRoute: typeof catalogPublisherSlugGameSlugRouteImport;
+      parentRoute: typeof catalogPublisherSlugRoute;
+    };
+    "/(admin)/admin/publishers": {
+      id: "/(admin)/admin/publishers";
+      path: "/publishers";
+      fullPath: "/admin/publishers";
+      preLoaderRoute: typeof adminAdminPublishersRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(admin)/admin/orders": {
+      id: "/(admin)/admin/orders";
+      path: "/orders";
+      fullPath: "/admin/orders";
+      preLoaderRoute: typeof adminAdminOrdersRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(admin)/admin/games": {
+      id: "/(admin)/admin/games";
+      path: "/games";
+      fullPath: "/admin/games";
+      preLoaderRoute: typeof adminAdminGamesRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(account)/account/orders": {
+      id: "/(account)/account/orders";
+      path: "/account/orders";
+      fullPath: "/account/orders";
+      preLoaderRoute: typeof accountAccountOrdersRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(catalog)/$publisherSlug/$gameSlug/": {
+      id: "/(catalog)/$publisherSlug/$gameSlug/";
+      path: "/";
+      fullPath: "/$publisherSlug/$gameSlug/";
+      preLoaderRoute: typeof catalogPublisherSlugGameSlugIndexRouteImport;
+      parentRoute: typeof catalogPublisherSlugGameSlugRoute;
+    };
+    "/(catalog)/$publisherSlug/$gameSlug/products/$productSlug": {
+      id: "/(catalog)/$publisherSlug/$gameSlug/products/$productSlug";
+      path: "/products/$productSlug";
+      fullPath: "/$publisherSlug/$gameSlug/products/$productSlug";
+      preLoaderRoute: typeof catalogPublisherSlugGameSlugProductsProductSlugRouteImport;
+      parentRoute: typeof catalogPublisherSlugGameSlugRoute;
+    };
   }
 }
 
 interface adminAdminRouteChildren {
-  adminAdminOrdersRoute: typeof adminAdminOrdersRoute
-  adminAdminPublishersRoute: typeof adminAdminPublishersRoute
+  adminAdminGamesRoute: typeof adminAdminGamesRoute;
+  adminAdminOrdersRoute: typeof adminAdminOrdersRoute;
+  adminAdminPublishersRoute: typeof adminAdminPublishersRoute;
 }
 
 const adminAdminRouteChildren: adminAdminRouteChildren = {
+  adminAdminGamesRoute: adminAdminGamesRoute,
   adminAdminOrdersRoute: adminAdminOrdersRoute,
   adminAdminPublishersRoute: adminAdminPublishersRoute,
-}
+};
 
-const adminAdminRouteWithChildren = adminAdminRoute._addFileChildren(
-  adminAdminRouteChildren,
-)
+const adminAdminRouteWithChildren = adminAdminRoute._addFileChildren(adminAdminRouteChildren);
 
 interface catalogPublisherSlugGameSlugRouteChildren {
-  catalogPublisherSlugGameSlugIndexRoute: typeof catalogPublisherSlugGameSlugIndexRoute
-  catalogPublisherSlugGameSlugProductsProductSlugRoute: typeof catalogPublisherSlugGameSlugProductsProductSlugRoute
+  catalogPublisherSlugGameSlugIndexRoute: typeof catalogPublisherSlugGameSlugIndexRoute;
+  catalogPublisherSlugGameSlugProductsProductSlugRoute: typeof catalogPublisherSlugGameSlugProductsProductSlugRoute;
 }
 
-const catalogPublisherSlugGameSlugRouteChildren: catalogPublisherSlugGameSlugRouteChildren =
-  {
-    catalogPublisherSlugGameSlugIndexRoute:
-      catalogPublisherSlugGameSlugIndexRoute,
-    catalogPublisherSlugGameSlugProductsProductSlugRoute:
-      catalogPublisherSlugGameSlugProductsProductSlugRoute,
-  }
+const catalogPublisherSlugGameSlugRouteChildren: catalogPublisherSlugGameSlugRouteChildren = {
+  catalogPublisherSlugGameSlugIndexRoute: catalogPublisherSlugGameSlugIndexRoute,
+  catalogPublisherSlugGameSlugProductsProductSlugRoute:
+    catalogPublisherSlugGameSlugProductsProductSlugRoute,
+};
 
 const catalogPublisherSlugGameSlugRouteWithChildren =
-  catalogPublisherSlugGameSlugRoute._addFileChildren(
-    catalogPublisherSlugGameSlugRouteChildren,
-  )
+  catalogPublisherSlugGameSlugRoute._addFileChildren(catalogPublisherSlugGameSlugRouteChildren);
 
 interface catalogPublisherSlugRouteChildren {
-  catalogPublisherSlugGameSlugRoute: typeof catalogPublisherSlugGameSlugRouteWithChildren
-  catalogPublisherSlugIndexRoute: typeof catalogPublisherSlugIndexRoute
+  catalogPublisherSlugGameSlugRoute: typeof catalogPublisherSlugGameSlugRouteWithChildren;
+  catalogPublisherSlugIndexRoute: typeof catalogPublisherSlugIndexRoute;
 }
 
 const catalogPublisherSlugRouteChildren: catalogPublisherSlugRouteChildren = {
-  catalogPublisherSlugGameSlugRoute:
-    catalogPublisherSlugGameSlugRouteWithChildren,
+  catalogPublisherSlugGameSlugRoute: catalogPublisherSlugGameSlugRouteWithChildren,
   catalogPublisherSlugIndexRoute: catalogPublisherSlugIndexRoute,
-}
+};
 
-const catalogPublisherSlugRouteWithChildren =
-  catalogPublisherSlugRoute._addFileChildren(catalogPublisherSlugRouteChildren)
+const catalogPublisherSlugRouteWithChildren = catalogPublisherSlugRoute._addFileChildren(
+  catalogPublisherSlugRouteChildren
+);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -432,16 +431,16 @@ const rootRouteChildren: RootRouteChildren = {
   checkoutCheckoutRoute: checkoutCheckoutRoute,
   checkoutOrderConfirmationRoute: checkoutOrderConfirmationRoute,
   accountAccountOrdersRoute: accountAccountOrdersRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
+import type { getRouter } from "./router.tsx";
+import type { createStart } from "@tanstack/react-start";
+declare module "@tanstack/react-start" {
   interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
+    ssr: true;
+    router: Awaited<ReturnType<typeof getRouter>>;
   }
 }
