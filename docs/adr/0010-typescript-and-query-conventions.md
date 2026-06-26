@@ -25,8 +25,8 @@ Explicit return types are required on all exported functions and React component
 Use `as const` objects with a derived union type instead:
 
 ```ts
-const ORDER_STATUS = { pending: 'pending', shipped: 'shipped' } as const
-type OrderStatus = typeof ORDER_STATUS[keyof typeof ORDER_STATUS]
+const ORDER_STATUS = { pending: "pending", shipped: "shipped" } as const;
+type OrderStatus = (typeof ORDER_STATUS)[keyof typeof ORDER_STATUS];
 ```
 
 Enums produce surprising runtime reverse-mapping and cannot be tree-shaken cleanly.
@@ -58,10 +58,10 @@ Every domain uses a typed key factory. Keys are never raw strings or ad-hoc arra
 
 ```ts
 export const orderKeys = {
-  all: ['orders'] as const,
-  list: () => [...orderKeys.all, 'list'] as const,
-  detail: (id: string) => [...orderKeys.all, 'detail', id] as const,
-}
+  all: ["orders"] as const,
+  list: () => [...orderKeys.all, "list"] as const,
+  detail: (id: string) => [...orderKeys.all, "detail", id] as const,
+};
 ```
 
 ### Custom hooks wrapping
@@ -86,6 +86,7 @@ defaultOptions: {
 ```
 
 Override per-hook only for documented exceptions:
+
 - Real-time data (e.g. cart): `staleTime: 0`
 - Static reference data (e.g. catalog facets): `staleTime: Infinity`
 
@@ -112,8 +113,18 @@ src/
   api/             ← shared HTTP client and base types (cross-domain)
   components/      ← shared/cross-domain UI components
   routes/          ← TanStack Router route tree
+    __root.tsx     ← app shell (eager)
+    index.tsx      ← home route config; index.lazy.tsx has the component
+    (auth)/        ← sign-in, sign-up
+    (catalog)/     ← publisher / game / product routes
+    (cart)/
+    (checkout)/    ← checkout + order-confirmation
+    (account)/     ← account.orders
+    (admin)/       ← admin layout guard (eager) + publishers/orders children
   store/           ← global Zustand store
 ```
+
+`(group)/` directories are TanStack Router organizational groups — they do not add URL segments. Every route splits into `routeName.tsx` (config: `validateSearch`, loaders, `beforeLoad`) and `routeName.lazy.tsx` (component, code-split). Layout routes with auth guards stay in the config file and are not lazy-split. Test files colocate with their route file inside the same group directory.
 
 Cross-module imports must go through the domain's `index.ts` barrel. Deep imports (`import { x } from '@/modules/orders/hooks/useOrders'`) across module boundaries are banned.
 

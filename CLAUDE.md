@@ -38,7 +38,7 @@ Each domain: `src/modules/<domain>/hooks/`, `components/`, `types.ts`, `index.ts
 
 Cross-module imports only through `index.ts` barrel — deep imports across module boundaries are banned.
 
-Shared HTTP client stays in `src/api/`. Shared UI in `src/components/`. Routes in `src/routes/`. Global state in `src/store/`.
+Shared HTTP client stays in `src/api/`. Shared UI in `src/components/`. Routes in `src/routes/` — organized into `(group)/` directories by domain: `(auth)`, `(catalog)`, `(cart)`, `(checkout)`, `(account)`, `(admin)`. `__root.tsx` and `index.tsx` stay at root. Each route splits into `routeName.tsx` (config/loaders) and `routeName.lazy.tsx` (component, code-split). Auth-guard layout routes stay unsplit. Test files colocate inside the group directory. Global state in `src/store/`.
 
 See `docs/adr/0010-typescript-and-query-conventions.md`.
 
@@ -61,6 +61,7 @@ Single-context repo — one `CONTEXT.md` and `docs/adr/` at root. See `docs/agen
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
 
 Rules:
+
 - For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
 - If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
 - Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
