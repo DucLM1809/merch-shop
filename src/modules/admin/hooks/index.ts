@@ -6,7 +6,9 @@ import { catalogKeys } from "@/modules/catalog";
 import type {
   CreateCharacterDto,
   CreateGameDto,
+  CreateProductDto,
   CreatePublisherDto,
+  CreateSkuDto,
   CreateTeamDto,
 } from "@/api/types";
 
@@ -131,6 +133,68 @@ export function useDeleteCharacter() {
     mutationFn: (id: string) => client.deleteCharacter(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: catalogKeys.characters() });
+    },
+  });
+}
+
+export function useCreateProduct() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: CreateProductDto) => client.createProduct(body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+    },
+  });
+}
+
+export function useUpdateProduct() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: CreateProductDto }) =>
+      client.updateProduct(id, body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+    },
+  });
+}
+
+export function useDeleteProduct() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => client.deleteProduct(id),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+    },
+  });
+}
+
+export function useCreateSku() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: CreateSkuDto) => client.createSku(body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+    },
+  });
+}
+
+export function useSetSkuAvailability() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, available }: { id: string; available: boolean }) =>
+      client.setSkuAvailability(id, available),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+    },
+  });
+}
+
+export function useDeleteSku() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => client.deleteSku(id),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
     },
   });
 }

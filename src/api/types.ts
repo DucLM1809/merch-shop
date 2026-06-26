@@ -60,6 +60,26 @@ export type Character = {
   gameId: string;
 };
 
+export type CreateSkuDto = {
+  productId: string;
+  price: number;
+  size?: string;
+  color?: string;
+  edition?: string;
+};
+
+export type CreateProductDto = {
+  name: string;
+  slug: string;
+  description?: string;
+  imageUrl?: string;
+  price: number;
+  publisherId: string;
+  gameId: string;
+  teamId?: string;
+  characterId?: string;
+};
+
 export type ProductFilters = {
   publisher?: string;
   game?: string;

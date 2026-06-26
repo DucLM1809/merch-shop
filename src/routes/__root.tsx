@@ -1,59 +1,55 @@
-import { useEffect } from 'react'
-import {
-  HeadContent,
-  Scripts,
-  createRootRouteWithContext,
-} from '@tanstack/react-router'
-import { ChakraProvider } from '@chakra-ui/react'
-import { ClerkProvider } from '@clerk/react'
-import { system } from '../theme'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import { useEffect } from "react";
+import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
+import { ChakraProvider } from "@chakra-ui/react";
+import { ClerkProvider } from "@clerk/react";
+import { system } from "../theme";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { TanStackDevtools } from "@tanstack/react-devtools";
 
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-import { GlobalNav } from '../components/GlobalNav'
-import { env } from '../env'
+import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
+import { GlobalNav } from "../components/GlobalNav";
+import { env } from "../env";
 
-import appCss from '../styles.css?url'
+import appCss from "../styles.css?url";
 
-import type { QueryClient } from '@tanstack/react-query'
+import type { QueryClient } from "@tanstack/react-query";
 
 interface MyRouterContext {
-  queryClient: QueryClient
+  queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
       {
-        charSet: 'utf-8',
+        charSet: "utf-8",
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
       },
       {
-        title: 'Merch Shop',
+        title: "Merch Shop",
       },
     ],
     links: [
       {
-        rel: 'stylesheet',
+        rel: "stylesheet",
         href: appCss,
       },
     ],
   }),
   shellComponent: RootDocument,
-})
+});
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (env.VITE_ENABLE_MSW) {
-      import('../mocks/browser').then(({ worker }) =>
-        worker.start({ onUnhandledRequest: 'bypass' }),
-      )
+      import("../mocks/browser")
+        .then(({ worker }) => worker.start({ onUnhandledRequest: "bypass" }))
+        .catch(() => {});
     }
-  }, [])
+  }, []);
 
   return (
     <html lang="en" className="dark">
@@ -61,7 +57,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ClerkProvider publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY ?? ''}>
+        <ClerkProvider publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY ?? ""}>
           <ChakraProvider value={system}>
             <GlobalNav />
             {children}
@@ -70,11 +66,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         {!import.meta.env.VITEST && (
           <TanStackDevtools
             config={{
-              position: 'bottom-right',
+              position: "bottom-right",
             }}
             plugins={[
               {
-                name: 'Tanstack Router',
+                name: "Tanstack Router",
                 render: <TanStackRouterDevtoolsPanel />,
               },
               TanStackQueryDevtools,
@@ -84,5 +80,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  )
+  );
 }

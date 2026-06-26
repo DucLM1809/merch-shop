@@ -382,6 +382,53 @@ export const handlers = [
     return HttpResponse.json(enrich(product));
   }),
 
+  http.post(`${BASE_URL}/products`, async ({ request }) => {
+    const body = (await request.json()) as RawProduct;
+    const created: RawProduct = { id: `product-${Date.now()}`, ...body };
+    return HttpResponse.json(enrich(created), { status: 201 });
+  }),
+
+  http.patch(`${BASE_URL}/products/:id`, async ({ params, request }) => {
+    const body = (await request.json()) as Partial<RawProduct>;
+    const existing = products.find((p) => p.id === params.id);
+    if (!existing) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json(enrich({ ...existing, ...body }));
+  }),
+
+  http.delete(`${BASE_URL}/products/:id`, ({ params }) => {
+    const exists = products.some((p) => p.id === params.id);
+    if (!exists) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({ ok: true });
+  }),
+
+  http.post(`${BASE_URL}/skus`, async ({ request }) => {
+    const body = (await request.json()) as {
+      productId: string;
+      price: number;
+      size?: string;
+      color?: string;
+      edition?: string;
+    };
+    return HttpResponse.json(
+      {
+        id: `sku-${Date.now()}`,
+        price: body.price,
+        available: true,
+        size: body.size,
+        color: body.color,
+        edition: body.edition,
+      },
+      { status: 201 }
+    );
+  }),
+
+  http.patch(`${BASE_URL}/skus/:id/availability`, async ({ params, request }) => {
+    const body = (await request.json()) as { available: boolean };
+    return HttpResponse.json({ id: params.id, price: 0, available: body.available });
+  }),
+
+  http.delete(`${BASE_URL}/skus/:id`, () => HttpResponse.json({ ok: true })),
+
   http.get(`${BASE_URL}/skus`, ({ request }) => {
     const url = new URL(request.url);
     const productId = url.searchParams.get("productId");

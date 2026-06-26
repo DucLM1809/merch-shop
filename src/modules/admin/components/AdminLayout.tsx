@@ -11,8 +11,8 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Games", to: "/admin/games", icon: Gamepad2, live: true },
   { label: "Teams", to: "/admin/teams", icon: Users, live: true },
   { label: "Characters", to: "/admin/characters", icon: List, live: true },
-  { label: "Products", to: "/admin/products", icon: Package, live: false },
-  { label: "SKUs", to: "/admin/skus", icon: Tags, live: false },
+  { label: "Products", to: "/admin/products", icon: Package, live: true },
+  { label: "SKUs", to: "/admin/skus", icon: Tags, live: true },
 ];
 
 type Props = { children: ReactNode };

@@ -4,8 +4,10 @@ import type {
   CreateGameDto,
   CreateOrderRequest,
   CreateOrderResponse,
+  CreateProductDto,
   CreatePublisherDto,
   CreateCharacterDto,
+  CreateSkuDto,
   CreateTeamDto,
   Game,
   Order,
@@ -134,8 +136,25 @@ export const client = {
   deleteCharacter: (id: string): Promise<void> =>
     wrap(http.delete(`/characters/${id}`).then(() => undefined)),
 
+  createProduct: (body: CreateProductDto): Promise<Product> =>
+    wrap(http.post<Product>("/products", body).then((r) => r.data)),
+
+  updateProduct: (id: string, body: CreateProductDto): Promise<Product> =>
+    wrap(http.patch<Product>(`/products/${id}`, body).then((r) => r.data)),
+
+  deleteProduct: (id: string): Promise<void> =>
+    wrap(http.delete(`/products/${id}`).then(() => undefined)),
+
   getSkus: (productId: string): Promise<SKU[]> =>
     wrap(http.get<SKU[]>("/skus", { params: { productId } }).then((r) => r.data)),
+
+  createSku: (body: CreateSkuDto): Promise<SKU> =>
+    wrap(http.post<SKU>("/skus", body).then((r) => r.data)),
+
+  setSkuAvailability: (id: string, available: boolean): Promise<SKU> =>
+    wrap(http.patch<SKU>(`/skus/${id}/availability`, { available }).then((r) => r.data)),
+
+  deleteSku: (id: string): Promise<void> => wrap(http.delete(`/skus/${id}`).then(() => undefined)),
 
   // --- Cart ---
   getCart: (): Promise<ServerCart> => wrap(http.get<ServerCart>("/cart").then((r) => r.data)),
