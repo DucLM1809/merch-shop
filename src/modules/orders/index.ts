@@ -1,2 +1,2 @@
-export { OrderConfirmationPage } from './components/OrderConfirmationPage'
-export { orderKeys, useOrders, useAdminOrders, useOrder } from './hooks'
+export { OrderConfirmationPage } from "./components/OrderConfirmationPage";
+export { orderKeys, useOrders, useAdminOrders, useOrder, useUpdateOrderStatus } from "./hooks";

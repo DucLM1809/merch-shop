@@ -91,8 +91,20 @@ export type CreateOrderResponse = {
   clientSecret: string;
 };
 
+export const ORDER_STATUSES = [
+  "pending",
+  "processing",
+  "shipped",
+  "delivered",
+  "cancelled",
+  "refunded",
+] as const;
+
+export type OrderStatus = (typeof ORDER_STATUSES)[number];
+
 export type Order = {
   id: string;
+  status: OrderStatus;
   lines: OrderLine[];
   shipping: ShippingAddress;
   total: number;

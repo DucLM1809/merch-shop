@@ -5,6 +5,7 @@ import type {
   CreateOrderResponse,
   CreatePublisherDto,
   Order,
+  OrderStatus,
   PaymentIntentResponse,
   Product,
   ProductFilters,
@@ -132,4 +133,7 @@ export const client = {
 
   getOrder: (id: string): Promise<Order> =>
     wrap(http.get<Order>(`/orders/${id}`).then((r) => r.data)),
+
+  updateOrderStatus: (id: string, status: OrderStatus): Promise<Order> =>
+    wrap(http.patch<Order>(`/orders/${id}/status`, { status }).then((r) => r.data)),
 };

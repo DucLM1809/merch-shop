@@ -708,6 +708,35 @@ paths:
         "404":
           description: Not found
 
+  /orders/{id}/status:
+    patch:
+      tags: [orders]
+      summary: Update order status (admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [pending, processing, shipped, delivered, cancelled, refunded]
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not found
+
   # --- Payments ---
   /payments/payment-intent:
     post:
