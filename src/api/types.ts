@@ -142,3 +142,9 @@ export type CreateTeamDto = {
   slug: string;
   gameId: string;
 };
+
+export type CreateCharacterDto = {
+  name: string;
+  slug: string;
+  gameId: string;
+};

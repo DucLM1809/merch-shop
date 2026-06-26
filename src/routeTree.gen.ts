@@ -23,6 +23,7 @@ import { Route as adminAdminTeamsRouteImport } from "./routes/(admin)/admin.team
 import { Route as adminAdminPublishersRouteImport } from "./routes/(admin)/admin.publishers";
 import { Route as adminAdminOrdersRouteImport } from "./routes/(admin)/admin.orders";
 import { Route as adminAdminGamesRouteImport } from "./routes/(admin)/admin.games";
+import { Route as adminAdminCharactersRouteImport } from "./routes/(admin)/admin.characters";
 import { Route as accountAccountOrdersRouteImport } from "./routes/(account)/account.orders";
 import { Route as catalogPublisherSlugGameSlugIndexRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug.index";
 import { Route as catalogPublisherSlugGameSlugProductsProductSlugRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug";
@@ -121,6 +122,13 @@ const adminAdminGamesRoute = adminAdminGamesRouteImport
     getParentRoute: () => adminAdminRoute,
   } as any)
   .lazy(() => import("./routes/(admin)/admin.games.lazy").then((d) => d.Route));
+const adminAdminCharactersRoute = adminAdminCharactersRouteImport
+  .update({
+    id: "/characters",
+    path: "/characters",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.characters.lazy").then((d) => d.Route));
 const accountAccountOrdersRoute = accountAccountOrdersRouteImport
   .update({
     id: "/(account)/account/orders",
@@ -160,6 +168,7 @@ export interface FileRoutesByFullPath {
   "/checkout": typeof checkoutCheckoutRoute;
   "/order-confirmation": typeof checkoutOrderConfirmationRoute;
   "/account/orders": typeof accountAccountOrdersRoute;
+  "/admin/characters": typeof adminAdminCharactersRoute;
   "/admin/games": typeof adminAdminGamesRoute;
   "/admin/orders": typeof adminAdminOrdersRoute;
   "/admin/publishers": typeof adminAdminPublishersRoute;
@@ -178,6 +187,7 @@ export interface FileRoutesByTo {
   "/checkout": typeof checkoutCheckoutRoute;
   "/order-confirmation": typeof checkoutOrderConfirmationRoute;
   "/account/orders": typeof accountAccountOrdersRoute;
+  "/admin/characters": typeof adminAdminCharactersRoute;
   "/admin/games": typeof adminAdminGamesRoute;
   "/admin/orders": typeof adminAdminOrdersRoute;
   "/admin/publishers": typeof adminAdminPublishersRoute;
@@ -197,6 +207,7 @@ export interface FileRoutesById {
   "/(checkout)/checkout": typeof checkoutCheckoutRoute;
   "/(checkout)/order-confirmation": typeof checkoutOrderConfirmationRoute;
   "/(account)/account/orders": typeof accountAccountOrdersRoute;
+  "/(admin)/admin/characters": typeof adminAdminCharactersRoute;
   "/(admin)/admin/games": typeof adminAdminGamesRoute;
   "/(admin)/admin/orders": typeof adminAdminOrdersRoute;
   "/(admin)/admin/publishers": typeof adminAdminPublishersRoute;
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | "/checkout"
     | "/order-confirmation"
     | "/account/orders"
+    | "/admin/characters"
     | "/admin/games"
     | "/admin/orders"
     | "/admin/publishers"
@@ -236,6 +248,7 @@ export interface FileRouteTypes {
     | "/checkout"
     | "/order-confirmation"
     | "/account/orders"
+    | "/admin/characters"
     | "/admin/games"
     | "/admin/orders"
     | "/admin/publishers"
@@ -254,6 +267,7 @@ export interface FileRouteTypes {
     | "/(checkout)/checkout"
     | "/(checkout)/order-confirmation"
     | "/(account)/account/orders"
+    | "/(admin)/admin/characters"
     | "/(admin)/admin/games"
     | "/(admin)/admin/orders"
     | "/(admin)/admin/publishers"
@@ -376,6 +390,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof adminAdminGamesRouteImport;
       parentRoute: typeof adminAdminRoute;
     };
+    "/(admin)/admin/characters": {
+      id: "/(admin)/admin/characters";
+      path: "/characters";
+      fullPath: "/admin/characters";
+      preLoaderRoute: typeof adminAdminCharactersRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
     "/(account)/account/orders": {
       id: "/(account)/account/orders";
       path: "/account/orders";
@@ -401,6 +422,7 @@ declare module "@tanstack/react-router" {
 }
 
 interface adminAdminRouteChildren {
+  adminAdminCharactersRoute: typeof adminAdminCharactersRoute;
   adminAdminGamesRoute: typeof adminAdminGamesRoute;
   adminAdminOrdersRoute: typeof adminAdminOrdersRoute;
   adminAdminPublishersRoute: typeof adminAdminPublishersRoute;
@@ -408,6 +430,7 @@ interface adminAdminRouteChildren {
 }
 
 const adminAdminRouteChildren: adminAdminRouteChildren = {
+  adminAdminCharactersRoute: adminAdminCharactersRoute,
   adminAdminGamesRoute: adminAdminGamesRoute,
   adminAdminOrdersRoute: adminAdminOrdersRoute,
   adminAdminPublishersRoute: adminAdminPublishersRoute,

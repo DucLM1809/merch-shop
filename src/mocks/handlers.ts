@@ -330,6 +330,30 @@ export const handlers = [
     return HttpResponse.json(filtered);
   }),
 
+  http.post(`${BASE_URL}/characters`, async ({ request }) => {
+    const body = (await request.json()) as { name: string; slug: string; gameId: string };
+    const created: Character = {
+      id: `char-${Date.now()}`,
+      slug: body.slug,
+      name: body.name,
+      gameId: body.gameId,
+    };
+    return HttpResponse.json(created, { status: 201 });
+  }),
+
+  http.patch(`${BASE_URL}/characters/:id`, async ({ params, request }) => {
+    const body = (await request.json()) as { name: string; slug: string; gameId: string };
+    const existing = characters.find((c) => c.id === params.id);
+    if (!existing) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({ ...existing, ...body });
+  }),
+
+  http.delete(`${BASE_URL}/characters/:id`, ({ params }) => {
+    const exists = characters.some((c) => c.id === params.id);
+    if (!exists) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({ ok: true });
+  }),
+
   http.get(`${BASE_URL}/products`, ({ request }) => {
     const url = new URL(request.url);
     const publisher = url.searchParams.get("publisher");

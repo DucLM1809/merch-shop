@@ -3,7 +3,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/api/client";
 import { catalogKeys } from "@/modules/catalog";
 
-import type { CreateGameDto, CreatePublisherDto, CreateTeamDto } from "@/api/types";
+import type {
+  CreateCharacterDto,
+  CreateGameDto,
+  CreatePublisherDto,
+  CreateTeamDto,
+} from "@/api/types";
 
 export function useCreatePublisher() {
   const qc = useQueryClient();
@@ -95,6 +100,37 @@ export function useDeleteTeam() {
     mutationFn: (id: string) => client.deleteTeam(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: catalogKeys.teams() });
+    },
+  });
+}
+
+export function useCreateCharacter() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: CreateCharacterDto) => client.createCharacter(body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.characters() });
+    },
+  });
+}
+
+export function useUpdateCharacter() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: CreateCharacterDto }) =>
+      client.updateCharacter(id, body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.characters() });
+    },
+  });
+}
+
+export function useDeleteCharacter() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => client.deleteCharacter(id),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.characters() });
     },
   });
 }
