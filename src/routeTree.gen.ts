@@ -8,316 +8,384 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as SignUpRouteImport } from './routes/sign-up'
-import { Route as SignInRouteImport } from './routes/sign-in'
-import { Route as OrderConfirmationRouteImport } from './routes/order-confirmation'
-import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as CartRouteImport } from './routes/cart'
-import { Route as PublisherSlugRouteImport } from './routes/$publisherSlug'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as PublisherSlugIndexRouteImport } from './routes/$publisherSlug.index'
-import { Route as AccountOrdersRouteImport } from './routes/account.orders'
-import { Route as PublisherSlugGameSlugRouteImport } from './routes/$publisherSlug.$gameSlug'
-import { Route as PublisherSlugGameSlugIndexRouteImport } from './routes/$publisherSlug.$gameSlug.index'
-import { Route as PublisherSlugGameSlugProductsProductSlugRouteImport } from './routes/$publisherSlug.$gameSlug.products.$productSlug'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as SignUpRouteImport } from "./routes/sign-up";
+import { Route as SignInRouteImport } from "./routes/sign-in";
+import { Route as OrderConfirmationRouteImport } from "./routes/order-confirmation";
+import { Route as CheckoutRouteImport } from "./routes/checkout";
+import { Route as CartRouteImport } from "./routes/cart";
+import { Route as AdminRouteImport } from "./routes/admin";
+import { Route as PublisherSlugRouteImport } from "./routes/$publisherSlug";
+import { Route as IndexRouteImport } from "./routes/index";
+import { Route as PublisherSlugIndexRouteImport } from "./routes/$publisherSlug.index";
+import { Route as AdminPublishersRouteImport } from "./routes/admin.publishers";
+import { Route as AdminOrdersRouteImport } from "./routes/admin.orders";
+import { Route as AccountOrdersRouteImport } from "./routes/account.orders";
+import { Route as PublisherSlugGameSlugRouteImport } from "./routes/$publisherSlug.$gameSlug";
+import { Route as PublisherSlugGameSlugIndexRouteImport } from "./routes/$publisherSlug.$gameSlug.index";
+import { Route as PublisherSlugGameSlugProductsProductSlugRouteImport } from "./routes/$publisherSlug.$gameSlug.products.$productSlug";
 
 const SignUpRoute = SignUpRouteImport.update({
-  id: '/sign-up',
-  path: '/sign-up',
+  id: "/sign-up",
+  path: "/sign-up",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const SignInRoute = SignInRouteImport.update({
-  id: '/sign-in',
-  path: '/sign-in',
+  id: "/sign-in",
+  path: "/sign-in",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const OrderConfirmationRoute = OrderConfirmationRouteImport.update({
-  id: '/order-confirmation',
-  path: '/order-confirmation',
+  id: "/order-confirmation",
+  path: "/order-confirmation",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
+  id: "/checkout",
+  path: "/checkout",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const CartRoute = CartRouteImport.update({
-  id: '/cart',
-  path: '/cart',
+  id: "/cart",
+  path: "/cart",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
+const AdminRoute = AdminRouteImport.update({
+  id: "/admin",
+  path: "/admin",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const PublisherSlugRoute = PublisherSlugRouteImport.update({
-  id: '/$publisherSlug',
-  path: '/$publisherSlug',
+  id: "/$publisherSlug",
+  path: "/$publisherSlug",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const PublisherSlugIndexRoute = PublisherSlugIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => PublisherSlugRoute,
-} as any)
+} as any);
+const AdminPublishersRoute = AdminPublishersRouteImport.update({
+  id: "/publishers",
+  path: "/publishers",
+  getParentRoute: () => AdminRoute,
+} as any);
+const AdminOrdersRoute = AdminOrdersRouteImport.update({
+  id: "/orders",
+  path: "/orders",
+  getParentRoute: () => AdminRoute,
+} as any);
 const AccountOrdersRoute = AccountOrdersRouteImport.update({
-  id: '/account/orders',
-  path: '/account/orders',
+  id: "/account/orders",
+  path: "/account/orders",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const PublisherSlugGameSlugRoute = PublisherSlugGameSlugRouteImport.update({
-  id: '/$gameSlug',
-  path: '/$gameSlug',
+  id: "/$gameSlug",
+  path: "/$gameSlug",
   getParentRoute: () => PublisherSlugRoute,
-} as any)
-const PublisherSlugGameSlugIndexRoute =
-  PublisherSlugGameSlugIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => PublisherSlugGameSlugRoute,
-  } as any)
+} as any);
+const PublisherSlugGameSlugIndexRoute = PublisherSlugGameSlugIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => PublisherSlugGameSlugRoute,
+} as any);
 const PublisherSlugGameSlugProductsProductSlugRoute =
   PublisherSlugGameSlugProductsProductSlugRouteImport.update({
-    id: '/products/$productSlug',
-    path: '/products/$productSlug',
+    id: "/products/$productSlug",
+    path: "/products/$productSlug",
     getParentRoute: () => PublisherSlugGameSlugRoute,
-  } as any)
+  } as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/$publisherSlug': typeof PublisherSlugRouteWithChildren
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/order-confirmation': typeof OrderConfirmationRoute
-  '/sign-in': typeof SignInRoute
-  '/sign-up': typeof SignUpRoute
-  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
-  '/account/orders': typeof AccountOrdersRoute
-  '/$publisherSlug/': typeof PublisherSlugIndexRoute
-  '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
-  '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
+  "/": typeof IndexRoute;
+  "/$publisherSlug": typeof PublisherSlugRouteWithChildren;
+  "/admin": typeof AdminRouteWithChildren;
+  "/cart": typeof CartRoute;
+  "/checkout": typeof CheckoutRoute;
+  "/order-confirmation": typeof OrderConfirmationRoute;
+  "/sign-in": typeof SignInRoute;
+  "/sign-up": typeof SignUpRoute;
+  "/$publisherSlug/$gameSlug": typeof PublisherSlugGameSlugRouteWithChildren;
+  "/account/orders": typeof AccountOrdersRoute;
+  "/admin/orders": typeof AdminOrdersRoute;
+  "/admin/publishers": typeof AdminPublishersRoute;
+  "/$publisherSlug/": typeof PublisherSlugIndexRoute;
+  "/$publisherSlug/$gameSlug/": typeof PublisherSlugGameSlugIndexRoute;
+  "/$publisherSlug/$gameSlug/products/$productSlug": typeof PublisherSlugGameSlugProductsProductSlugRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/order-confirmation': typeof OrderConfirmationRoute
-  '/sign-in': typeof SignInRoute
-  '/sign-up': typeof SignUpRoute
-  '/account/orders': typeof AccountOrdersRoute
-  '/$publisherSlug': typeof PublisherSlugIndexRoute
-  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugIndexRoute
-  '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
+  "/": typeof IndexRoute;
+  "/admin": typeof AdminRouteWithChildren;
+  "/cart": typeof CartRoute;
+  "/checkout": typeof CheckoutRoute;
+  "/order-confirmation": typeof OrderConfirmationRoute;
+  "/sign-in": typeof SignInRoute;
+  "/sign-up": typeof SignUpRoute;
+  "/account/orders": typeof AccountOrdersRoute;
+  "/admin/orders": typeof AdminOrdersRoute;
+  "/admin/publishers": typeof AdminPublishersRoute;
+  "/$publisherSlug": typeof PublisherSlugIndexRoute;
+  "/$publisherSlug/$gameSlug": typeof PublisherSlugGameSlugIndexRoute;
+  "/$publisherSlug/$gameSlug/products/$productSlug": typeof PublisherSlugGameSlugProductsProductSlugRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/$publisherSlug': typeof PublisherSlugRouteWithChildren
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/order-confirmation': typeof OrderConfirmationRoute
-  '/sign-in': typeof SignInRoute
-  '/sign-up': typeof SignUpRoute
-  '/$publisherSlug/$gameSlug': typeof PublisherSlugGameSlugRouteWithChildren
-  '/account/orders': typeof AccountOrdersRoute
-  '/$publisherSlug/': typeof PublisherSlugIndexRoute
-  '/$publisherSlug/$gameSlug/': typeof PublisherSlugGameSlugIndexRoute
-  '/$publisherSlug/$gameSlug/products/$productSlug': typeof PublisherSlugGameSlugProductsProductSlugRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/$publisherSlug": typeof PublisherSlugRouteWithChildren;
+  "/admin": typeof AdminRouteWithChildren;
+  "/cart": typeof CartRoute;
+  "/checkout": typeof CheckoutRoute;
+  "/order-confirmation": typeof OrderConfirmationRoute;
+  "/sign-in": typeof SignInRoute;
+  "/sign-up": typeof SignUpRoute;
+  "/$publisherSlug/$gameSlug": typeof PublisherSlugGameSlugRouteWithChildren;
+  "/account/orders": typeof AccountOrdersRoute;
+  "/admin/orders": typeof AdminOrdersRoute;
+  "/admin/publishers": typeof AdminPublishersRoute;
+  "/$publisherSlug/": typeof PublisherSlugIndexRoute;
+  "/$publisherSlug/$gameSlug/": typeof PublisherSlugGameSlugIndexRoute;
+  "/$publisherSlug/$gameSlug/products/$productSlug": typeof PublisherSlugGameSlugProductsProductSlugRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/$publisherSlug'
-    | '/cart'
-    | '/checkout'
-    | '/order-confirmation'
-    | '/sign-in'
-    | '/sign-up'
-    | '/$publisherSlug/$gameSlug'
-    | '/account/orders'
-    | '/$publisherSlug/'
-    | '/$publisherSlug/$gameSlug/'
-    | '/$publisherSlug/$gameSlug/products/$productSlug'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/$publisherSlug"
+    | "/admin"
+    | "/cart"
+    | "/checkout"
+    | "/order-confirmation"
+    | "/sign-in"
+    | "/sign-up"
+    | "/$publisherSlug/$gameSlug"
+    | "/account/orders"
+    | "/admin/orders"
+    | "/admin/publishers"
+    | "/$publisherSlug/"
+    | "/$publisherSlug/$gameSlug/"
+    | "/$publisherSlug/$gameSlug/products/$productSlug";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/cart'
-    | '/checkout'
-    | '/order-confirmation'
-    | '/sign-in'
-    | '/sign-up'
-    | '/account/orders'
-    | '/$publisherSlug'
-    | '/$publisherSlug/$gameSlug'
-    | '/$publisherSlug/$gameSlug/products/$productSlug'
+    | "/"
+    | "/admin"
+    | "/cart"
+    | "/checkout"
+    | "/order-confirmation"
+    | "/sign-in"
+    | "/sign-up"
+    | "/account/orders"
+    | "/admin/orders"
+    | "/admin/publishers"
+    | "/$publisherSlug"
+    | "/$publisherSlug/$gameSlug"
+    | "/$publisherSlug/$gameSlug/products/$productSlug";
   id:
-    | '__root__'
-    | '/'
-    | '/$publisherSlug'
-    | '/cart'
-    | '/checkout'
-    | '/order-confirmation'
-    | '/sign-in'
-    | '/sign-up'
-    | '/$publisherSlug/$gameSlug'
-    | '/account/orders'
-    | '/$publisherSlug/'
-    | '/$publisherSlug/$gameSlug/'
-    | '/$publisherSlug/$gameSlug/products/$productSlug'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/$publisherSlug"
+    | "/admin"
+    | "/cart"
+    | "/checkout"
+    | "/order-confirmation"
+    | "/sign-in"
+    | "/sign-up"
+    | "/$publisherSlug/$gameSlug"
+    | "/account/orders"
+    | "/admin/orders"
+    | "/admin/publishers"
+    | "/$publisherSlug/"
+    | "/$publisherSlug/$gameSlug/"
+    | "/$publisherSlug/$gameSlug/products/$productSlug";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PublisherSlugRoute: typeof PublisherSlugRouteWithChildren
-  CartRoute: typeof CartRoute
-  CheckoutRoute: typeof CheckoutRoute
-  OrderConfirmationRoute: typeof OrderConfirmationRoute
-  SignInRoute: typeof SignInRoute
-  SignUpRoute: typeof SignUpRoute
-  AccountOrdersRoute: typeof AccountOrdersRoute
+  IndexRoute: typeof IndexRoute;
+  PublisherSlugRoute: typeof PublisherSlugRouteWithChildren;
+  AdminRoute: typeof AdminRouteWithChildren;
+  CartRoute: typeof CartRoute;
+  CheckoutRoute: typeof CheckoutRoute;
+  OrderConfirmationRoute: typeof OrderConfirmationRoute;
+  SignInRoute: typeof SignInRoute;
+  SignUpRoute: typeof SignUpRoute;
+  AccountOrdersRoute: typeof AccountOrdersRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/sign-up': {
-      id: '/sign-up'
-      path: '/sign-up'
-      fullPath: '/sign-up'
-      preLoaderRoute: typeof SignUpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sign-in': {
-      id: '/sign-in'
-      path: '/sign-in'
-      fullPath: '/sign-in'
-      preLoaderRoute: typeof SignInRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/order-confirmation': {
-      id: '/order-confirmation'
-      path: '/order-confirmation'
-      fullPath: '/order-confirmation'
-      preLoaderRoute: typeof OrderConfirmationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cart': {
-      id: '/cart'
-      path: '/cart'
-      fullPath: '/cart'
-      preLoaderRoute: typeof CartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$publisherSlug': {
-      id: '/$publisherSlug'
-      path: '/$publisherSlug'
-      fullPath: '/$publisherSlug'
-      preLoaderRoute: typeof PublisherSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$publisherSlug/': {
-      id: '/$publisherSlug/'
-      path: '/'
-      fullPath: '/$publisherSlug/'
-      preLoaderRoute: typeof PublisherSlugIndexRouteImport
-      parentRoute: typeof PublisherSlugRoute
-    }
-    '/account/orders': {
-      id: '/account/orders'
-      path: '/account/orders'
-      fullPath: '/account/orders'
-      preLoaderRoute: typeof AccountOrdersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$publisherSlug/$gameSlug': {
-      id: '/$publisherSlug/$gameSlug'
-      path: '/$gameSlug'
-      fullPath: '/$publisherSlug/$gameSlug'
-      preLoaderRoute: typeof PublisherSlugGameSlugRouteImport
-      parentRoute: typeof PublisherSlugRoute
-    }
-    '/$publisherSlug/$gameSlug/': {
-      id: '/$publisherSlug/$gameSlug/'
-      path: '/'
-      fullPath: '/$publisherSlug/$gameSlug/'
-      preLoaderRoute: typeof PublisherSlugGameSlugIndexRouteImport
-      parentRoute: typeof PublisherSlugGameSlugRoute
-    }
-    '/$publisherSlug/$gameSlug/products/$productSlug': {
-      id: '/$publisherSlug/$gameSlug/products/$productSlug'
-      path: '/products/$productSlug'
-      fullPath: '/$publisherSlug/$gameSlug/products/$productSlug'
-      preLoaderRoute: typeof PublisherSlugGameSlugProductsProductSlugRouteImport
-      parentRoute: typeof PublisherSlugGameSlugRoute
-    }
+    "/sign-up": {
+      id: "/sign-up";
+      path: "/sign-up";
+      fullPath: "/sign-up";
+      preLoaderRoute: typeof SignUpRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/sign-in": {
+      id: "/sign-in";
+      path: "/sign-in";
+      fullPath: "/sign-in";
+      preLoaderRoute: typeof SignInRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/order-confirmation": {
+      id: "/order-confirmation";
+      path: "/order-confirmation";
+      fullPath: "/order-confirmation";
+      preLoaderRoute: typeof OrderConfirmationRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/checkout": {
+      id: "/checkout";
+      path: "/checkout";
+      fullPath: "/checkout";
+      preLoaderRoute: typeof CheckoutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/cart": {
+      id: "/cart";
+      path: "/cart";
+      fullPath: "/cart";
+      preLoaderRoute: typeof CartRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/admin": {
+      id: "/admin";
+      path: "/admin";
+      fullPath: "/admin";
+      preLoaderRoute: typeof AdminRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/$publisherSlug": {
+      id: "/$publisherSlug";
+      path: "/$publisherSlug";
+      fullPath: "/$publisherSlug";
+      preLoaderRoute: typeof PublisherSlugRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/$publisherSlug/": {
+      id: "/$publisherSlug/";
+      path: "/";
+      fullPath: "/$publisherSlug/";
+      preLoaderRoute: typeof PublisherSlugIndexRouteImport;
+      parentRoute: typeof PublisherSlugRoute;
+    };
+    "/admin/publishers": {
+      id: "/admin/publishers";
+      path: "/publishers";
+      fullPath: "/admin/publishers";
+      preLoaderRoute: typeof AdminPublishersRouteImport;
+      parentRoute: typeof AdminRoute;
+    };
+    "/admin/orders": {
+      id: "/admin/orders";
+      path: "/orders";
+      fullPath: "/admin/orders";
+      preLoaderRoute: typeof AdminOrdersRouteImport;
+      parentRoute: typeof AdminRoute;
+    };
+    "/account/orders": {
+      id: "/account/orders";
+      path: "/account/orders";
+      fullPath: "/account/orders";
+      preLoaderRoute: typeof AccountOrdersRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/$publisherSlug/$gameSlug": {
+      id: "/$publisherSlug/$gameSlug";
+      path: "/$gameSlug";
+      fullPath: "/$publisherSlug/$gameSlug";
+      preLoaderRoute: typeof PublisherSlugGameSlugRouteImport;
+      parentRoute: typeof PublisherSlugRoute;
+    };
+    "/$publisherSlug/$gameSlug/": {
+      id: "/$publisherSlug/$gameSlug/";
+      path: "/";
+      fullPath: "/$publisherSlug/$gameSlug/";
+      preLoaderRoute: typeof PublisherSlugGameSlugIndexRouteImport;
+      parentRoute: typeof PublisherSlugGameSlugRoute;
+    };
+    "/$publisherSlug/$gameSlug/products/$productSlug": {
+      id: "/$publisherSlug/$gameSlug/products/$productSlug";
+      path: "/products/$productSlug";
+      fullPath: "/$publisherSlug/$gameSlug/products/$productSlug";
+      preLoaderRoute: typeof PublisherSlugGameSlugProductsProductSlugRouteImport;
+      parentRoute: typeof PublisherSlugGameSlugRoute;
+    };
   }
 }
 
 interface PublisherSlugGameSlugRouteChildren {
-  PublisherSlugGameSlugIndexRoute: typeof PublisherSlugGameSlugIndexRoute
-  PublisherSlugGameSlugProductsProductSlugRoute: typeof PublisherSlugGameSlugProductsProductSlugRoute
+  PublisherSlugGameSlugIndexRoute: typeof PublisherSlugGameSlugIndexRoute;
+  PublisherSlugGameSlugProductsProductSlugRoute: typeof PublisherSlugGameSlugProductsProductSlugRoute;
 }
 
 const PublisherSlugGameSlugRouteChildren: PublisherSlugGameSlugRouteChildren = {
   PublisherSlugGameSlugIndexRoute: PublisherSlugGameSlugIndexRoute,
-  PublisherSlugGameSlugProductsProductSlugRoute:
-    PublisherSlugGameSlugProductsProductSlugRoute,
-}
+  PublisherSlugGameSlugProductsProductSlugRoute: PublisherSlugGameSlugProductsProductSlugRoute,
+};
 
-const PublisherSlugGameSlugRouteWithChildren =
-  PublisherSlugGameSlugRoute._addFileChildren(
-    PublisherSlugGameSlugRouteChildren,
-  )
+const PublisherSlugGameSlugRouteWithChildren = PublisherSlugGameSlugRoute._addFileChildren(
+  PublisherSlugGameSlugRouteChildren
+);
 
 interface PublisherSlugRouteChildren {
-  PublisherSlugGameSlugRoute: typeof PublisherSlugGameSlugRouteWithChildren
-  PublisherSlugIndexRoute: typeof PublisherSlugIndexRoute
+  PublisherSlugGameSlugRoute: typeof PublisherSlugGameSlugRouteWithChildren;
+  PublisherSlugIndexRoute: typeof PublisherSlugIndexRoute;
 }
 
 const PublisherSlugRouteChildren: PublisherSlugRouteChildren = {
   PublisherSlugGameSlugRoute: PublisherSlugGameSlugRouteWithChildren,
   PublisherSlugIndexRoute: PublisherSlugIndexRoute,
-}
+};
 
 const PublisherSlugRouteWithChildren = PublisherSlugRoute._addFileChildren(
-  PublisherSlugRouteChildren,
-)
+  PublisherSlugRouteChildren
+);
+
+interface AdminRouteChildren {
+  AdminOrdersRoute: typeof AdminOrdersRoute;
+  AdminPublishersRoute: typeof AdminPublishersRoute;
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminOrdersRoute: AdminOrdersRoute,
+  AdminPublishersRoute: AdminPublishersRoute,
+};
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublisherSlugRoute: PublisherSlugRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
   OrderConfirmationRoute: OrderConfirmationRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
   AccountOrdersRoute: AccountOrdersRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
+import type { getRouter } from "./router.tsx";
+import type { createStart } from "@tanstack/react-start";
+declare module "@tanstack/react-start" {
   interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
+    ssr: true;
+    router: Awaited<ReturnType<typeof getRouter>>;
   }
 }
