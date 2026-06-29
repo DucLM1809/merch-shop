@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
 import {
   Box,
   Button,
@@ -14,29 +18,37 @@ import {
 } from "@chakra-ui/react";
 
 import { useCharacters, useGames, useProducts, usePublishers, useTeams } from "@/modules/catalog";
+import { FormField } from "@/components/FormField";
 
 import { useCreateProduct, useDeleteProduct, useUpdateProduct } from "../hooks";
 
 import type { CreateProductDto, Product } from "@/api/types";
 
-type FormState = {
-  name: string;
-  slug: string;
-  description: string;
-  imageUrl: string;
-  price: string;
-  publisherId: string;
-  gameId: string;
-  teamId: string;
-  characterId: string;
-};
+const schema = z.object({
+  name: z.string().min(1, "Required"),
+  slug: z.string().min(1, "Required"),
+  price: z
+    .string()
+    .min(1, "Required")
+    .refine((v) => !isNaN(parseFloat(v)) && parseFloat(v) > 0, "Must be a positive number")
+    .transform((v) => parseFloat(v)),
+  description: z.string(),
+  imageUrl: z.string(),
+  publisherId: z.string().min(1, "Required"),
+  gameId: z.string().min(1, "Required"),
+  teamId: z.string(),
+  characterId: z.string(),
+});
 
-const EMPTY: FormState = {
+type FormIn = z.input<typeof schema>;
+type FormOut = z.infer<typeof schema>;
+
+const DEFAULTS: FormIn = {
   name: "",
   slug: "",
+  price: "",
   description: "",
   imageUrl: "",
-  price: "",
   publisherId: "",
   gameId: "",
   teamId: "",
@@ -55,22 +67,40 @@ export function AdminProductsView(): React.JSX.Element {
   const del = useDeleteProduct();
 
   const [mode, setMode] = useState<"idle" | "create" | { edit: Product }>("idle");
-  const [form, setForm] = useState<FormState>(EMPTY);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<FormIn, unknown, FormOut>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+    defaultValues: DEFAULTS,
+  });
+
+  const [watchPublisherId, watchGameId, watchTeamId, watchCharacterId] = watch([
+    "publisherId",
+    "gameId",
+    "teamId",
+    "characterId",
+  ]);
 
   function openCreate() {
     setMode("create");
-    setForm(EMPTY);
+    reset(DEFAULTS);
   }
 
   function openEdit(product: Product) {
     setMode({ edit: product });
-    setForm({
+    reset({
       name: product.name,
       slug: product.slug,
+      price: String(product.price),
       description: product.description ?? "",
       imageUrl: product.imageUrl ?? "",
-      price: String(product.price),
       publisherId: product.publisherId,
       gameId: product.gameId,
       teamId: product.teamId ?? "",
@@ -81,20 +111,20 @@ export function AdminProductsView(): React.JSX.Element {
 
   function cancel() {
     setMode("idle");
-    setForm(EMPTY);
+    reset(DEFAULTS);
   }
 
-  async function submit() {
+  async function onSubmit(data: FormOut) {
     const dto: CreateProductDto = {
-      name: form.name.trim(),
-      slug: form.slug.trim(),
-      price: parseFloat(form.price),
-      publisherId: form.publisherId,
-      gameId: form.gameId,
-      ...(form.description.trim() && { description: form.description.trim() }),
-      ...(form.imageUrl.trim() && { imageUrl: form.imageUrl.trim() }),
-      ...(form.teamId && { teamId: form.teamId }),
-      ...(form.characterId && { characterId: form.characterId }),
+      name: data.name.trim(),
+      slug: data.slug.trim(),
+      price: data.price,
+      publisherId: data.publisherId,
+      gameId: data.gameId,
+      ...(data.description.trim() && { description: data.description.trim() }),
+      ...(data.imageUrl.trim() && { imageUrl: data.imageUrl.trim() }),
+      ...(data.teamId && { teamId: data.teamId }),
+      ...(data.characterId && { characterId: data.characterId }),
     };
     if (typeof mode === "object") {
       await update.mutateAsync({ id: mode.edit.id, body: dto });
@@ -105,13 +135,6 @@ export function AdminProductsView(): React.JSX.Element {
   }
 
   const isPending = create.isPending || update.isPending;
-  const isValid =
-    !!form.name.trim() &&
-    !!form.slug.trim() &&
-    !!form.price &&
-    !isNaN(parseFloat(form.price)) &&
-    !!form.publisherId &&
-    !!form.gameId;
 
   const selectStyle = {
     bg: "gray.800",
@@ -151,81 +174,94 @@ export function AdminProductsView(): React.JSX.Element {
           </Text>
 
           <VStack gap={3} align="stretch">
-            <Input
-              placeholder="Name"
-              value={form.name}
-              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <Input
-              placeholder="Slug (e.g. jinx-hoodie)"
-              value={form.slug}
-              onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <Input
-              placeholder="Price (e.g. 29.99)"
-              value={form.price}
-              onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <Input
-              placeholder="Description (optional)"
-              value={form.description}
-              onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <Input
-              placeholder="Image URL (optional)"
-              value={form.imageUrl}
-              onChange={(e) => setForm((f) => ({ ...f, imageUrl: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
+            <FormField error={errors.name}>
+              <Input
+                placeholder="Name"
+                {...register("name")}
+                bg="gray.800"
+                borderColor="gray.700"
+                color="white"
+              />
+            </FormField>
+
+            <FormField error={errors.slug}>
+              <Input
+                placeholder="Slug (e.g. jinx-hoodie)"
+                {...register("slug")}
+                bg="gray.800"
+                borderColor="gray.700"
+                color="white"
+              />
+            </FormField>
+
+            <FormField error={errors.price}>
+              <Input
+                placeholder="Price (e.g. 29.99)"
+                {...register("price")}
+                bg="gray.800"
+                borderColor="gray.700"
+                color="white"
+              />
+            </FormField>
+
+            <FormField error={errors.description}>
+              <Input
+                placeholder="Description (optional)"
+                {...register("description")}
+                bg="gray.800"
+                borderColor="gray.700"
+                color="white"
+              />
+            </FormField>
+
+            <FormField error={errors.imageUrl}>
+              <Input
+                placeholder="Image URL (optional)"
+                {...register("imageUrl")}
+                bg="gray.800"
+                borderColor="gray.700"
+                color="white"
+              />
+            </FormField>
+
+            <FormField error={errors.publisherId}>
+              <NativeSelectRoot unstyled>
+                <NativeSelectField
+                  {...register("publisherId")}
+                  color={watchPublisherId ? "white" : "gray.500"}
+                  {...selectStyle}
+                >
+                  <option value="">Publisher…</option>
+                  {publishers.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name}
+                    </option>
+                  ))}
+                </NativeSelectField>
+              </NativeSelectRoot>
+            </FormField>
+
+            <FormField error={errors.gameId}>
+              <NativeSelectRoot unstyled>
+                <NativeSelectField
+                  {...register("gameId")}
+                  color={watchGameId ? "white" : "gray.500"}
+                  {...selectStyle}
+                >
+                  <option value="">Game…</option>
+                  {games.map((g) => (
+                    <option key={g.id} value={g.id}>
+                      {g.name}
+                    </option>
+                  ))}
+                </NativeSelectField>
+              </NativeSelectRoot>
+            </FormField>
+
             <NativeSelectRoot unstyled>
               <NativeSelectField
-                value={form.publisherId}
-                onChange={(e) => setForm((f) => ({ ...f, publisherId: e.target.value }))}
-                color={form.publisherId ? "white" : "gray.500"}
-                {...selectStyle}
-              >
-                <option value="">Publisher…</option>
-                {publishers.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </NativeSelectField>
-            </NativeSelectRoot>
-            <NativeSelectRoot unstyled>
-              <NativeSelectField
-                value={form.gameId}
-                onChange={(e) => setForm((f) => ({ ...f, gameId: e.target.value }))}
-                color={form.gameId ? "white" : "gray.500"}
-                {...selectStyle}
-              >
-                <option value="">Game…</option>
-                {games.map((g) => (
-                  <option key={g.id} value={g.id}>
-                    {g.name}
-                  </option>
-                ))}
-              </NativeSelectField>
-            </NativeSelectRoot>
-            <NativeSelectRoot unstyled>
-              <NativeSelectField
-                value={form.teamId}
-                onChange={(e) => setForm((f) => ({ ...f, teamId: e.target.value }))}
-                color={form.teamId ? "white" : "gray.500"}
+                {...register("teamId")}
+                color={watchTeamId ? "white" : "gray.500"}
                 {...selectStyle}
               >
                 <option value="">Team (optional)…</option>
@@ -236,11 +272,11 @@ export function AdminProductsView(): React.JSX.Element {
                 ))}
               </NativeSelectField>
             </NativeSelectRoot>
+
             <NativeSelectRoot unstyled>
               <NativeSelectField
-                value={form.characterId}
-                onChange={(e) => setForm((f) => ({ ...f, characterId: e.target.value }))}
-                color={form.characterId ? "white" : "gray.500"}
+                {...register("characterId")}
+                color={watchCharacterId ? "white" : "gray.500"}
                 {...selectStyle}
               >
                 <option value="">Character (optional)…</option>
@@ -259,9 +295,8 @@ export function AdminProductsView(): React.JSX.Element {
               <Button
                 size="sm"
                 colorPalette="blue"
-                onClick={() => void submit()}
+                onClick={() => void handleSubmit(onSubmit)()}
                 loading={isPending}
-                disabled={!isValid}
               >
                 Save
               </Button>
