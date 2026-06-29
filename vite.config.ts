@@ -31,7 +31,7 @@ const config = defineConfig({
         test: {
           name: "unit",
           environment: "jsdom",
-          setupFiles: ["./src/test-setup.ts"],
+          setupFiles: ["./src/test-setup.tsx"],
         },
       },
       {

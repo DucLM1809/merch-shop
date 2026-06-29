@@ -8,30 +8,11 @@ import { BASE_URL } from "../../api/client";
 
 import type { Product, SKU } from "../../api/types";
 
-vi.mock("@clerk/react", () => ({
-  ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  useAuth: vi.fn(),
-  useUser: vi.fn(),
-  useClerk: vi.fn(() => ({ signOut: vi.fn() })),
-  SignIn: () => <div data-testid="clerk-sign-in">Sign In Form</div>,
-  SignUp: () => <div data-testid="clerk-sign-up">Sign Up Form</div>,
-}));
-
 import { useAuth, useUser } from "@clerk/react";
-const mockUseAuth = useAuth as ReturnType<typeof vi.fn>;
-const mockUseUser = useUser as ReturnType<typeof vi.fn>;
+import { adminUser, buyerUser } from "../../mocks/fixtures";
 
-const adminUser = {
-  firstName: "Admin",
-  emailAddresses: [{ emailAddress: "admin@test.com" }],
-  publicMetadata: { role: "admin" },
-};
-
-const buyerUser = {
-  firstName: "Buyer",
-  emailAddresses: [{ emailAddress: "buyer@test.com" }],
-  publicMetadata: { role: "buyer" },
-};
+const mockUseAuth = vi.mocked(useAuth);
+const mockUseUser = vi.mocked(useUser);
 
 const twoSkus: SKU[] = [
   { id: "sku-1", price: 49.99, available: true, size: "M", color: "Black" },

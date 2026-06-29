@@ -2,28 +2,11 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import { renderRoute } from "../../test-utils";
 
-// Mock Clerk — provide both signed-in and signed-out states
-vi.mock("@clerk/react", () => ({
-  ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  useAuth: vi.fn(),
-  useUser: vi.fn(),
-  useClerk: vi.fn(() => ({ signOut: vi.fn() })),
-  SignIn: ({ fallbackRedirectUrl }: { fallbackRedirectUrl?: string }) => (
-    <div data-testid="clerk-sign-in" data-redirect-url={fallbackRedirectUrl ?? ""}>
-      Sign In Form
-    </div>
-  ),
-  SignUp: ({ fallbackRedirectUrl }: { fallbackRedirectUrl?: string }) => (
-    <div data-testid="clerk-sign-up" data-redirect-url={fallbackRedirectUrl ?? ""}>
-      Sign Up Form
-    </div>
-  ),
-}));
-
 import { useAuth, useUser } from "@clerk/react";
+import { fakerUser } from "../../mocks/fixtures";
 
-const mockUseAuth = useAuth as ReturnType<typeof vi.fn>;
-const mockUseUser = useUser as ReturnType<typeof vi.fn>;
+const mockUseAuth = vi.mocked(useAuth);
+const mockUseUser = vi.mocked(useUser);
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -44,12 +27,7 @@ describe("GlobalNav auth state", () => {
 
   it("shows account menu and hides guest links when signed in", async () => {
     mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({
-      user: {
-        firstName: "Faker",
-        emailAddresses: [{ emailAddress: "faker@t1.gg" }],
-      },
-    });
+    mockUseUser.mockReturnValue({ user: fakerUser });
 
     renderRoute("/");
 

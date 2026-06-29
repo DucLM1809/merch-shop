@@ -6,18 +6,11 @@ import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
 import type { Order } from "../../api/types";
 
-vi.mock("@clerk/react", () => ({
-  ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  useAuth: vi.fn(),
-  useUser: vi.fn(),
-  useClerk: vi.fn(() => ({ signOut: vi.fn() })),
-  SignIn: () => <div data-testid="clerk-sign-in">Sign In Form</div>,
-  SignUp: () => <div data-testid="clerk-sign-up">Sign Up Form</div>,
-}));
-
 import { useAuth, useUser } from "@clerk/react";
-const mockUseAuth = useAuth as ReturnType<typeof vi.fn>;
-const mockUseUser = useUser as ReturnType<typeof vi.fn>;
+import { fakerUser } from "../../mocks/fixtures";
+
+const mockUseAuth = vi.mocked(useAuth);
+const mockUseUser = vi.mocked(useUser);
 
 const twoOrders: Order[] = [
   {
@@ -85,7 +78,7 @@ describe("/account/orders", () => {
   it("renders two seeded orders for authenticated buyer", async () => {
     mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
     mockUseUser.mockReturnValue({
-      user: { firstName: "Faker", emailAddresses: [{ emailAddress: "faker@t1.gg" }] },
+      user: fakerUser,
     });
     server.use(http.get(`${BASE_URL}/orders/mine`, () => HttpResponse.json(twoOrders)));
 
@@ -100,7 +93,7 @@ describe("/account/orders", () => {
   it("shows empty state when buyer has no orders", async () => {
     mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
     mockUseUser.mockReturnValue({
-      user: { firstName: "Faker", emailAddresses: [{ emailAddress: "faker@t1.gg" }] },
+      user: fakerUser,
     });
 
     renderRoute("/account/orders");

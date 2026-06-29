@@ -4,7 +4,7 @@ All UI uses Chakra UI v3 components. Raw HTML elements that have a Chakra equiva
 
 ## Testing conventions
 
-No Playwright or Cypress. Vitest is the full test surface — unit tests and `renderRoute` integration tests are both in scope and both required. Every new feature needs at least one Vitest test before merge. "Done" = Vitest passes + golden path verified in browser (or via `/verify`). See `docs/adr/0009-vitest-only-no-browser-automation.md`.
+Vitest is the mandatory test surface — unit tests and `renderRoute` integration tests are both required. Every new feature needs at least one Vitest test before merge. "Done" = Vitest passes + golden path verified in browser (or via `/verify`). Playwright is an optional supplement, written manually at lowest priority only when an issue is labeled `needs-e2e` — never part of done criteria. No Cypress. See `docs/adr/0009-vitest-only-no-browser-automation.md`.
 
 ## TypeScript conventions
 
