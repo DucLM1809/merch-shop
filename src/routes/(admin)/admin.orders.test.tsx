@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { screen, waitFor, fireEvent } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 
 import { renderRoute } from "../../test-utils";
@@ -96,9 +97,10 @@ describe("/admin/orders", () => {
 
     renderRoute("/admin/orders");
 
-    fireEvent.click(await screen.findByText("#ord_001"));
-    expect(screen.getByText("Cancel")).toBeInTheDocument();
-    expect(screen.getByText("→ Processing")).toBeInTheDocument();
+    const user = userEvent.setup();
+    await user.click(await screen.findByText("#ord_001"));
+    expect(screen.getByRole("button", { name: /^cancel$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /→ processing/i })).toBeInTheDocument();
   });
 
   it("shows Refund button for delivered order when expanded", async () => {
@@ -106,8 +108,9 @@ describe("/admin/orders", () => {
 
     renderRoute("/admin/orders");
 
-    fireEvent.click(await screen.findByText("#ord_002"));
-    expect(screen.getByText("Refund")).toBeInTheDocument();
+    const user = userEvent.setup();
+    await user.click(await screen.findByText("#ord_002"));
+    expect(screen.getByRole("button", { name: /^refund$/i })).toBeInTheDocument();
   });
 
   it("Cancel fires PATCH /orders/:id/status with cancelled", async () => {
@@ -126,8 +129,9 @@ describe("/admin/orders", () => {
 
     renderRoute("/admin/orders");
 
-    fireEvent.click(await screen.findByText("#ord_001"));
-    fireEvent.click(screen.getByText("Cancel"));
+    const user = userEvent.setup();
+    await user.click(await screen.findByText("#ord_001"));
+    await user.click(screen.getByRole("button", { name: /^cancel$/i }));
 
     await waitFor(() => {
       expect(patchedId).toBe("ord_001");
@@ -149,8 +153,9 @@ describe("/admin/orders", () => {
 
     renderRoute("/admin/orders");
 
-    fireEvent.click(await screen.findByText("#ord_001"));
-    fireEvent.click(screen.getByText("→ Processing"));
+    const user = userEvent.setup();
+    await user.click(await screen.findByText("#ord_001"));
+    await user.click(screen.getByRole("button", { name: /→ processing/i }));
 
     await waitFor(() => expect(patchedStatus).toBe("processing"));
   });

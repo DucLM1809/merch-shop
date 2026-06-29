@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { screen, waitFor, fireEvent } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 
 import { renderRoute } from "../../test-utils";
@@ -99,12 +100,11 @@ describe("/admin/skus", () => {
 
     renderRoute("/admin/skus");
 
-    fireEvent.click(await screen.findByText("+ New SKU"));
-    fireEvent.change(screen.getByDisplayValue("Product…"), { target: { value: "p1" } });
-    fireEvent.change(screen.getByPlaceholderText("Price (e.g. 29.99)"), {
-      target: { value: "19.99" },
-    });
-    fireEvent.click(screen.getByText("Save"));
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole("button", { name: /\+ new sku/i }));
+    await user.selectOptions(screen.getByDisplayValue("Product…"), "p1");
+    await user.type(screen.getByPlaceholderText("Price (e.g. 29.99)"), "19.99");
+    await user.click(screen.getByRole("button", { name: /^save$/i }));
 
     await waitFor(() => expect(posted).toBe(true));
   });
@@ -124,8 +124,9 @@ describe("/admin/skus", () => {
 
     renderRoute("/admin/skus");
 
-    const availableBtns = await screen.findAllByText("Available");
-    fireEvent.click(availableBtns[0]);
+    const user = userEvent.setup();
+    const availableBtns = await screen.findAllByRole("button", { name: /^available$/i });
+    await user.click(availableBtns[0]);
 
     await waitFor(() => expect(patched).toBe(true));
   });
@@ -145,9 +146,10 @@ describe("/admin/skus", () => {
 
     renderRoute("/admin/skus");
 
-    const deleteBtns = await screen.findAllByText("Delete");
-    fireEvent.click(deleteBtns[0]);
-    fireEvent.click(screen.getByText("Confirm"));
+    const user = userEvent.setup();
+    const deleteBtns = await screen.findAllByRole("button", { name: /^delete$/i });
+    await user.click(deleteBtns[0]);
+    await user.click(screen.getByRole("button", { name: /^confirm$/i }));
 
     await waitFor(() => expect(deleted).toBe(true));
   });
