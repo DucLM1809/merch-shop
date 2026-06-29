@@ -1,6 +1,17 @@
 import { useState } from "react";
 
-import { Box, Button, Flex, Heading, HStack, Input, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Input,
+  NativeSelectField,
+  NativeSelectRoot,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 import { useGames, useTeams } from "@/modules/catalog";
 
@@ -99,28 +110,27 @@ export function AdminTeamsView(): React.JSX.Element {
               borderColor="gray.700"
               color="white"
             />
-            <Box
-              as="select"
-              value={form.gameId}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setForm((f) => ({ ...f, gameId: e.target.value }))
-              }
-              bg="gray.800"
-              border="1px solid"
-              borderColor="gray.700"
-              borderRadius="md"
-              color={form.gameId ? "white" : "gray.500"}
-              px={3}
-              py={2}
-              fontSize="sm"
-            >
-              <option value="">Game…</option>
-              {games.map((g) => (
-                <option key={g.id} value={g.id}>
-                  {g.name}
-                </option>
-              ))}
-            </Box>
+            <NativeSelectRoot unstyled>
+              <NativeSelectField
+                value={form.gameId}
+                onChange={(e) => setForm((f) => ({ ...f, gameId: e.target.value }))}
+                bg="gray.800"
+                border="1px solid"
+                borderColor="gray.700"
+                borderRadius="md"
+                color={form.gameId ? "white" : "gray.500"}
+                px={3}
+                py={2}
+                fontSize="sm"
+              >
+                <option value="">Game…</option>
+                {games.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}
+                  </option>
+                ))}
+              </NativeSelectField>
+            </NativeSelectRoot>
 
             <HStack justify="flex-end">
               <Button size="sm" variant="ghost" color="gray.400" onClick={cancel}>

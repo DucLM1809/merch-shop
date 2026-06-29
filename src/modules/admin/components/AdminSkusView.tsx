@@ -1,6 +1,17 @@
 import { useState } from "react";
 
-import { Box, Button, Flex, Heading, HStack, Input, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Input,
+  NativeSelectField,
+  NativeSelectRoot,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 import { useProducts } from "@/modules/catalog";
 
@@ -81,28 +92,27 @@ export function AdminSkusView(): React.JSX.Element {
           </Text>
 
           <VStack gap={3} align="stretch">
-            <Box
-              as="select"
-              value={form.productId}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setForm((f) => ({ ...f, productId: e.target.value }))
-              }
-              bg="gray.800"
-              border="1px solid"
-              borderColor="gray.700"
-              borderRadius="md"
-              color={form.productId ? "white" : "gray.500"}
-              px={3}
-              py={2}
-              fontSize="sm"
-            >
-              <option value="">Product…</option>
-              {products.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
-            </Box>
+            <NativeSelectRoot unstyled>
+              <NativeSelectField
+                value={form.productId}
+                onChange={(e) => setForm((f) => ({ ...f, productId: e.target.value }))}
+                bg="gray.800"
+                border="1px solid"
+                borderColor="gray.700"
+                borderRadius="md"
+                color={form.productId ? "white" : "gray.500"}
+                px={3}
+                py={2}
+                fontSize="sm"
+              >
+                <option value="">Product…</option>
+                {products.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </NativeSelectField>
+            </NativeSelectRoot>
             <Input
               placeholder="Price (e.g. 29.99)"
               value={form.price}

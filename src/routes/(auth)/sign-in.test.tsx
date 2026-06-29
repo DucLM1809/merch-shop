@@ -3,7 +3,13 @@ import { screen, waitFor } from "@testing-library/react";
 import { renderRoute } from "../../test-utils";
 
 import { useAuth, useUser } from "@clerk/react";
-import { fakerUser } from "../../mocks/fixtures";
+import {
+  fakerUser,
+  AUTH_SIGNED_OUT,
+  AUTH_SIGNED_IN,
+  USER_SIGNED_OUT,
+  userCtx,
+} from "../../mocks/fixtures";
 
 const mockUseAuth = vi.mocked(useAuth);
 const mockUseUser = vi.mocked(useUser);
@@ -14,8 +20,8 @@ beforeEach(() => {
 
 describe("GlobalNav auth state", () => {
   it("shows sign-in and sign-up links when guest", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
 
     renderRoute("/");
 
@@ -26,8 +32,8 @@ describe("GlobalNav auth state", () => {
   });
 
   it("shows account menu and hides guest links when signed in", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: fakerUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(fakerUser));
 
     renderRoute("/");
 
@@ -39,8 +45,8 @@ describe("GlobalNav auth state", () => {
 
 describe("/sign-in route", () => {
   it("renders Clerk SignIn component", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
 
     renderRoute("/sign-in");
 
@@ -48,8 +54,8 @@ describe("/sign-in route", () => {
   });
 
   it("passes fallbackRedirectUrl=/ to SignIn", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
 
     renderRoute("/sign-in");
 
@@ -57,10 +63,8 @@ describe("/sign-in route", () => {
   });
 
   it("redirects to / when already signed in", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({
-      user: { firstName: "Faker", emailAddresses: [{ emailAddress: "faker@t1.gg" }] },
-    });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(fakerUser));
 
     const { router } = renderRoute("/sign-in");
 
@@ -72,8 +76,8 @@ describe("/sign-in route", () => {
 
 describe("/sign-up route", () => {
   it("renders Clerk SignUp component", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
 
     renderRoute("/sign-up");
 
@@ -81,8 +85,8 @@ describe("/sign-up route", () => {
   });
 
   it("passes fallbackRedirectUrl=/ to SignUp", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
 
     renderRoute("/sign-up");
 
@@ -90,10 +94,8 @@ describe("/sign-up route", () => {
   });
 
   it("redirects to / when already signed in", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({
-      user: { firstName: "Faker", emailAddresses: [{ emailAddress: "faker@t1.gg" }] },
-    });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(fakerUser));
 
     const { router } = renderRoute("/sign-up");
 

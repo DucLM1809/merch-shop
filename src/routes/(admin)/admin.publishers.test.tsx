@@ -9,7 +9,14 @@ import { BASE_URL } from "../../api/client";
 import type { Publisher } from "../../api/types";
 
 import { useAuth, useUser } from "@clerk/react";
-import { adminUser, buyerUser } from "../../mocks/fixtures";
+import {
+  adminUser,
+  buyerUser,
+  AUTH_SIGNED_OUT,
+  AUTH_SIGNED_IN,
+  USER_SIGNED_OUT,
+  userCtx,
+} from "../../mocks/fixtures";
 
 const mockUseAuth = vi.mocked(useAuth);
 const mockUseUser = vi.mocked(useUser);
@@ -25,8 +32,8 @@ beforeEach(() => {
 
 describe("/admin/publishers", () => {
   it("redirects unauthenticated user to /sign-in", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
     const { router } = renderRoute("/admin/publishers");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/sign-in");
@@ -34,8 +41,8 @@ describe("/admin/publishers", () => {
   });
 
   it("redirects signed-in non-admin to /", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: buyerUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(buyerUser));
     const { router } = renderRoute("/admin/publishers");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
@@ -43,8 +50,8 @@ describe("/admin/publishers", () => {
   });
 
   it("renders publisher rows for admin user", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(twoPublishers)));
 
     renderRoute("/admin/publishers");
@@ -54,8 +61,8 @@ describe("/admin/publishers", () => {
   });
 
   it("shows empty state when no publishers", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json([])));
 
     renderRoute("/admin/publishers");
@@ -64,8 +71,8 @@ describe("/admin/publishers", () => {
   });
 
   it("create form fires POST /publishers", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json([])));
 
     let posted = false;
@@ -96,8 +103,8 @@ describe("/admin/publishers", () => {
   });
 
   it("edit form fires PATCH /publishers/:id", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(twoPublishers)));
 
     let patched = false;
@@ -121,8 +128,8 @@ describe("/admin/publishers", () => {
   });
 
   it("delete fires DELETE /publishers/:id", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(twoPublishers)));
 
     let deleted = false;

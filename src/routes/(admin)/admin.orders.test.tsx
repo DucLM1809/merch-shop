@@ -9,7 +9,7 @@ import { BASE_URL } from "../../api/client";
 import type { Order } from "../../api/types";
 
 import { useAuth, useUser } from "@clerk/react";
-import { adminUser } from "../../mocks/fixtures";
+import { adminUser, AUTH_SIGNED_IN, userCtx } from "../../mocks/fixtures";
 
 const mockUseAuth = vi.mocked(useAuth);
 const mockUseUser = vi.mocked(useUser);
@@ -67,8 +67,8 @@ const testOrders: Order[] = [
 
 beforeEach(() => {
   vi.clearAllMocks();
-  mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-  mockUseUser.mockReturnValue({ user: adminUser });
+  mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+  mockUseUser.mockReturnValue(userCtx(adminUser));
 });
 
 describe("/admin/orders", () => {

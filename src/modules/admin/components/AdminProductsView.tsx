@@ -1,6 +1,17 @@
 import { useState } from "react";
 
-import { Box, Button, Flex, Heading, HStack, Input, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Input,
+  NativeSelectField,
+  NativeSelectRoot,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 import { useCharacters, useGames, useProducts, usePublishers, useTeams } from "@/modules/catalog";
 
@@ -180,70 +191,66 @@ export function AdminProductsView(): React.JSX.Element {
               borderColor="gray.700"
               color="white"
             />
-            <Box
-              as="select"
-              value={form.publisherId}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setForm((f) => ({ ...f, publisherId: e.target.value }))
-              }
-              color={form.publisherId ? "white" : "gray.500"}
-              {...selectStyle}
-            >
-              <option value="">Publisher…</option>
-              {publishers.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
-            </Box>
-            <Box
-              as="select"
-              value={form.gameId}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setForm((f) => ({ ...f, gameId: e.target.value }))
-              }
-              color={form.gameId ? "white" : "gray.500"}
-              {...selectStyle}
-            >
-              <option value="">Game…</option>
-              {games.map((g) => (
-                <option key={g.id} value={g.id}>
-                  {g.name}
-                </option>
-              ))}
-            </Box>
-            <Box
-              as="select"
-              value={form.teamId}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setForm((f) => ({ ...f, teamId: e.target.value }))
-              }
-              color={form.teamId ? "white" : "gray.500"}
-              {...selectStyle}
-            >
-              <option value="">Team (optional)…</option>
-              {teams.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name}
-                </option>
-              ))}
-            </Box>
-            <Box
-              as="select"
-              value={form.characterId}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setForm((f) => ({ ...f, characterId: e.target.value }))
-              }
-              color={form.characterId ? "white" : "gray.500"}
-              {...selectStyle}
-            >
-              <option value="">Character (optional)…</option>
-              {characters.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </Box>
+            <NativeSelectRoot unstyled>
+              <NativeSelectField
+                value={form.publisherId}
+                onChange={(e) => setForm((f) => ({ ...f, publisherId: e.target.value }))}
+                color={form.publisherId ? "white" : "gray.500"}
+                {...selectStyle}
+              >
+                <option value="">Publisher…</option>
+                {publishers.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </NativeSelectField>
+            </NativeSelectRoot>
+            <NativeSelectRoot unstyled>
+              <NativeSelectField
+                value={form.gameId}
+                onChange={(e) => setForm((f) => ({ ...f, gameId: e.target.value }))}
+                color={form.gameId ? "white" : "gray.500"}
+                {...selectStyle}
+              >
+                <option value="">Game…</option>
+                {games.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}
+                  </option>
+                ))}
+              </NativeSelectField>
+            </NativeSelectRoot>
+            <NativeSelectRoot unstyled>
+              <NativeSelectField
+                value={form.teamId}
+                onChange={(e) => setForm((f) => ({ ...f, teamId: e.target.value }))}
+                color={form.teamId ? "white" : "gray.500"}
+                {...selectStyle}
+              >
+                <option value="">Team (optional)…</option>
+                {teams.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name}
+                  </option>
+                ))}
+              </NativeSelectField>
+            </NativeSelectRoot>
+            <NativeSelectRoot unstyled>
+              <NativeSelectField
+                value={form.characterId}
+                onChange={(e) => setForm((f) => ({ ...f, characterId: e.target.value }))}
+                color={form.characterId ? "white" : "gray.500"}
+                {...selectStyle}
+              >
+                <option value="">Character (optional)…</option>
+                {characters.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </NativeSelectField>
+            </NativeSelectRoot>
 
             <HStack justify="flex-end">
               <Button size="sm" variant="ghost" color="gray.400" onClick={cancel}>

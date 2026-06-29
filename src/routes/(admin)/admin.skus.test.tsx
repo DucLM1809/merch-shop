@@ -9,7 +9,14 @@ import { BASE_URL } from "../../api/client";
 import type { Product, SKU } from "../../api/types";
 
 import { useAuth, useUser } from "@clerk/react";
-import { adminUser, buyerUser } from "../../mocks/fixtures";
+import {
+  adminUser,
+  buyerUser,
+  AUTH_SIGNED_OUT,
+  AUTH_SIGNED_IN,
+  USER_SIGNED_OUT,
+  userCtx,
+} from "../../mocks/fixtures";
 
 const mockUseAuth = vi.mocked(useAuth);
 const mockUseUser = vi.mocked(useUser);
@@ -37,8 +44,8 @@ beforeEach(() => {
 
 describe("/admin/skus", () => {
   it("redirects unauthenticated user to /sign-in", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
     const { router } = renderRoute("/admin/skus");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/sign-in");
@@ -46,8 +53,8 @@ describe("/admin/skus", () => {
   });
 
   it("redirects signed-in non-admin to /", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: buyerUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(buyerUser));
     const { router } = renderRoute("/admin/skus");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
@@ -55,8 +62,8 @@ describe("/admin/skus", () => {
   });
 
   it("renders SKU rows for admin user", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([productWithSkus])));
 
     renderRoute("/admin/skus");
@@ -67,8 +74,8 @@ describe("/admin/skus", () => {
   });
 
   it("shows empty state when no SKUs", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([])));
 
     renderRoute("/admin/skus");
@@ -77,8 +84,8 @@ describe("/admin/skus", () => {
   });
 
   it("create form fires POST /skus", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([productWithSkus])));
 
     let posted = false;
@@ -103,8 +110,8 @@ describe("/admin/skus", () => {
   });
 
   it("availability toggle fires PATCH /skus/:id/availability", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([productWithSkus])));
 
     let patched = false;
@@ -124,8 +131,8 @@ describe("/admin/skus", () => {
   });
 
   it("delete fires DELETE /skus/:id", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([productWithSkus])));
 
     let deleted = false;

@@ -9,7 +9,14 @@ import { BASE_URL } from "../../api/client";
 import type { Game, Publisher } from "../../api/types";
 
 import { useAuth, useUser } from "@clerk/react";
-import { adminUser, buyerUser } from "../../mocks/fixtures";
+import {
+  adminUser,
+  buyerUser,
+  AUTH_SIGNED_OUT,
+  AUTH_SIGNED_IN,
+  USER_SIGNED_OUT,
+  userCtx,
+} from "../../mocks/fixtures";
 
 const mockUseAuth = vi.mocked(useAuth);
 const mockUseUser = vi.mocked(useUser);
@@ -30,8 +37,8 @@ beforeEach(() => {
 
 describe("/admin/games", () => {
   it("redirects unauthenticated user to /sign-in", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
     const { router } = renderRoute("/admin/games");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/sign-in");
@@ -39,8 +46,8 @@ describe("/admin/games", () => {
   });
 
   it("redirects signed-in non-admin to /", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: buyerUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(buyerUser));
     const { router } = renderRoute("/admin/games");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
@@ -48,8 +55,8 @@ describe("/admin/games", () => {
   });
 
   it("renders game rows for admin user", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(twoGames)));
 
     renderRoute("/admin/games");
@@ -59,8 +66,8 @@ describe("/admin/games", () => {
   });
 
   it("shows empty state when no games", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json([])));
 
     renderRoute("/admin/games");
@@ -69,8 +76,8 @@ describe("/admin/games", () => {
   });
 
   it("create form fires POST /games", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json([])));
 
     let posted = false;
@@ -101,8 +108,8 @@ describe("/admin/games", () => {
   });
 
   it("edit form fires PATCH /games/:id", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(twoGames)));
 
     let patched = false;
@@ -126,8 +133,8 @@ describe("/admin/games", () => {
   });
 
   it("delete fires DELETE /games/:id", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({ user: adminUser });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
     server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(twoGames)));
 
     let deleted = false;

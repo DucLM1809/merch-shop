@@ -7,7 +7,13 @@ import { BASE_URL } from "../../api/client";
 import type { Order } from "../../api/types";
 
 import { useAuth, useUser } from "@clerk/react";
-import { fakerUser } from "../../mocks/fixtures";
+import {
+  fakerUser,
+  AUTH_SIGNED_OUT,
+  AUTH_SIGNED_IN,
+  USER_SIGNED_OUT,
+  userCtx,
+} from "../../mocks/fixtures";
 
 const mockUseAuth = vi.mocked(useAuth);
 const mockUseUser = vi.mocked(useUser);
@@ -16,6 +22,7 @@ const twoOrders: Order[] = [
   {
     id: "ord-001",
     createdAt: "2024-01-15T10:00:00Z",
+    status: "pending",
     total: 119.98,
     shipping: {
       fullName: "Faker",
@@ -49,6 +56,7 @@ const twoOrders: Order[] = [
       postalCode: "00000",
       country: "KR",
     },
+    status: "pending",
     lines: [
       {
         skuId: "lol-hoodie-m",
@@ -67,8 +75,8 @@ beforeEach(() => {
 
 describe("/account/orders", () => {
   it("redirects guest to /sign-in", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: false });
-    mockUseUser.mockReturnValue({ user: null });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
+    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
     const { router } = renderRoute("/account/orders");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/sign-in");
@@ -76,10 +84,8 @@ describe("/account/orders", () => {
   });
 
   it("renders two seeded orders for authenticated buyer", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({
-      user: fakerUser,
-    });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(fakerUser));
     server.use(http.get(`${BASE_URL}/orders/mine`, () => HttpResponse.json(twoOrders)));
 
     renderRoute("/account/orders");
@@ -91,10 +97,8 @@ describe("/account/orders", () => {
   });
 
   it("shows empty state when buyer has no orders", async () => {
-    mockUseAuth.mockReturnValue({ isLoaded: true, isSignedIn: true });
-    mockUseUser.mockReturnValue({
-      user: fakerUser,
-    });
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(fakerUser));
 
     renderRoute("/account/orders");
 

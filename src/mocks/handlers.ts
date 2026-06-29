@@ -384,7 +384,7 @@ export const handlers = [
 
   http.post(`${BASE_URL}/products`, async ({ request }) => {
     const body = (await request.json()) as RawProduct;
-    const created: RawProduct = { id: `product-${Date.now()}`, ...body };
+    const created: RawProduct = { ...body, id: `product-${Date.now()}` };
     return HttpResponse.json(enrich(created), { status: 201 });
   }),
 
