@@ -1,6 +1,6 @@
 ## UI conventions
 
-All UI uses Chakra UI v3 components. Raw HTML elements that have a Chakra equivalent are banned (`div`→`Box`, `button`→`Button`, `img`→`Image`, etc.). Elements with no Chakra equivalent (`form`, `table`, `tr`, `td`, etc.) use `Box as="form"`. The `style={{}}` prop is allowed only for dynamic runtime values (e.g. API-supplied accent colors) that cannot be expressed as Chakra tokens. Run `/chakra-ui-refactor` before merging UI changes. See `docs/adr/0008-chakra-enforcement-and-exceptions.md`.
+All UI uses Chakra UI v3 components. Raw HTML elements that have a Chakra equivalent are banned (`div`→`Box`, `button`→`Button`, `img`→`Image`, etc.). Elements with no Chakra equivalent (`form`, `table`, `tr`, `td`, etc.) use `Box as="form"`. No inline CSS — the `style={{}}` prop is banned except for dynamic runtime values (e.g. API-supplied accent colors) that cannot be expressed as Chakra tokens; use Chakra style props or tokens instead. Run `/chakra-ui-refactor` before merging UI changes. See `docs/adr/0008-chakra-enforcement-and-exceptions.md`.
 
 ## Testing conventions
 
@@ -16,6 +16,7 @@ Vitest is the mandatory test surface — unit tests and `renderRoute` integratio
 - Import order: React → third-party → internal aliases → relative → `import type`, blank line between groups
 - Prettier enforced (100-char line length)
 - Blank line between JSX sibling groups; blank line between top-level declarations; two blank lines between exported functions/components in same file
+- No inline functions in JSX props — extract event handlers and callbacks to named `const` declarations at component scope (e.g. `const handleClick = () => ...`, not `onClick={() => ...}`); exception: trivial one-liner `useMemo`/`useCallback` deps where extraction adds no clarity
 
 See `docs/adr/0010-typescript-and-query-conventions.md`.
 

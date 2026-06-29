@@ -136,6 +136,8 @@ export function AdminProductsView(): React.JSX.Element {
 
   const isPending = create.isPending || update.isPending;
 
+  const handleSave = () => void handleSubmit(onSubmit)();
+
   const selectStyle = {
     bg: "gray.800",
     border: "1px solid",
@@ -292,12 +294,7 @@ export function AdminProductsView(): React.JSX.Element {
               <Button size="sm" variant="ghost" color="gray.400" onClick={cancel}>
                 Cancel
               </Button>
-              <Button
-                size="sm"
-                colorPalette="blue"
-                onClick={() => void handleSubmit(onSubmit)()}
-                loading={isPending}
-              >
+              <Button size="sm" colorPalette="blue" onClick={handleSave} loading={isPending}>
                 Save
               </Button>
             </HStack>
@@ -342,6 +339,11 @@ export function AdminProductsView(): React.JSX.Element {
           {products.map((product, i) => {
             const publisher = publishers.find((p) => p.id === product.publisherId);
             const game = games.find((g) => g.id === product.gameId);
+            const handleEdit = () => openEdit(product);
+            const handleDeleteStart = () => setConfirmDelete(product.id);
+            const handleDeleteCancel = () => setConfirmDelete(null);
+            const handleDeleteConfirm = () =>
+              void del.mutateAsync(product.id).then(() => setConfirmDelete(null));
             return (
               <Flex
                 key={product.id}
@@ -373,7 +375,7 @@ export function AdminProductsView(): React.JSX.Element {
                     variant="ghost"
                     color="gray.400"
                     _hover={{ color: "white" }}
-                    onClick={() => openEdit(product)}
+                    onClick={handleEdit}
                   >
                     Edit
                   </Button>
@@ -384,9 +386,7 @@ export function AdminProductsView(): React.JSX.Element {
                         size="xs"
                         colorPalette="red"
                         loading={del.isPending}
-                        onClick={() =>
-                          void del.mutateAsync(product.id).then(() => setConfirmDelete(null))
-                        }
+                        onClick={handleDeleteConfirm}
                       >
                         Confirm
                       </Button>
@@ -394,7 +394,7 @@ export function AdminProductsView(): React.JSX.Element {
                         size="xs"
                         variant="ghost"
                         color="gray.500"
-                        onClick={() => setConfirmDelete(null)}
+                        onClick={handleDeleteCancel}
                       >
                         ✕
                       </Button>
@@ -405,7 +405,7 @@ export function AdminProductsView(): React.JSX.Element {
                       variant="ghost"
                       color="gray.600"
                       _hover={{ color: "red.400" }}
-                      onClick={() => setConfirmDelete(product.id)}
+                      onClick={handleDeleteStart}
                     >
                       Delete
                     </Button>

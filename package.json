@@ -21,6 +21,7 @@
     "@clerk/react": "^6.10.4",
     "@faker-js/faker": "^10.3.0",
     "@fontsource-variable/geist": "^5.2.9",
+    "@hookform/resolvers": "^5.4.0",
     "@stripe/react-stripe-js": "^6.6.0",
     "@stripe/stripe-js": "^9.8.0",
     "@t3-oss/env-core": "^0.13.10",
@@ -41,6 +42,7 @@
     "lucide-react": "^0.545.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.80.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
