@@ -25,6 +25,14 @@ const config = defineConfig({
     }),
   ],
   test: {
+    coverage: {
+      provider: "v8",
+      exclude: ["**/*.test.{ts,tsx}", "**/mocks/**", "src/routeTree.gen.ts", "src/test-setup.tsx"],
+      thresholds: {
+        branches: 75,
+        lines: 80,
+      },
+    },
     projects: [
       {
         extends: true,
