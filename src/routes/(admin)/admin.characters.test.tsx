@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { screen, waitFor, fireEvent } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 
 import { renderRoute } from "../../test-utils";
@@ -91,13 +92,12 @@ describe("/admin/characters", () => {
 
     renderRoute("/admin/characters");
 
-    fireEvent.click(await screen.findByText("+ New Character"));
-    fireEvent.change(screen.getByPlaceholderText("Name"), { target: { value: "Jinx" } });
-    fireEvent.change(screen.getByPlaceholderText("Slug (e.g. jinx)"), {
-      target: { value: "jinx" },
-    });
-    fireEvent.change(screen.getByDisplayValue("Game…"), { target: { value: "lol" } });
-    fireEvent.click(screen.getByText("Save"));
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole("button", { name: /\+ new character/i }));
+    await user.type(screen.getByPlaceholderText("Name"), "Jinx");
+    await user.type(screen.getByPlaceholderText("Slug (e.g. jinx)"), "jinx");
+    await user.selectOptions(screen.getByDisplayValue("Game…"), "lol");
+    await user.click(screen.getByRole("button", { name: /^save$/i }));
 
     await waitFor(() => expect(posted).toBe(true));
   });
@@ -117,10 +117,13 @@ describe("/admin/characters", () => {
 
     renderRoute("/admin/characters");
 
-    const editBtns = await screen.findAllByText("Edit");
-    fireEvent.click(editBtns[0]);
-    fireEvent.change(screen.getByDisplayValue("Jinx"), { target: { value: "Jinx Updated" } });
-    fireEvent.click(screen.getByText("Save"));
+    const user = userEvent.setup();
+    const editBtns = await screen.findAllByRole("button", { name: /^edit$/i });
+    await user.click(editBtns[0]);
+    const nameInput = screen.getByDisplayValue("Jinx");
+    await user.clear(nameInput);
+    await user.type(nameInput, "Jinx Updated");
+    await user.click(screen.getByRole("button", { name: /^save$/i }));
 
     await waitFor(() => expect(patched).toBe(true));
   });
@@ -140,9 +143,10 @@ describe("/admin/characters", () => {
 
     renderRoute("/admin/characters");
 
-    const deleteBtns = await screen.findAllByText("Delete");
-    fireEvent.click(deleteBtns[0]);
-    fireEvent.click(screen.getByText("Confirm"));
+    const user = userEvent.setup();
+    const deleteBtns = await screen.findAllByRole("button", { name: /^delete$/i });
+    await user.click(deleteBtns[0]);
+    await user.click(screen.getByRole("button", { name: /^confirm$/i }));
 
     await waitFor(() => expect(deleted).toBe(true));
   });
