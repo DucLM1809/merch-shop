@@ -25,3 +25,5 @@ graphify-out/cost.json        # local only
 
 # bv (beads viewer) local config and caches
 .bv/
+
+coverage/

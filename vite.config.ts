@@ -29,7 +29,7 @@ const config = defineConfig({
       provider: "v8",
       exclude: ["**/*.test.{ts,tsx}", "**/mocks/**", "src/routeTree.gen.ts", "src/test-setup.tsx"],
       thresholds: {
-        branches: 75,
+        branches: 80,
         lines: 80,
       },
     },

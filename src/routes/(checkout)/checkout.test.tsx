@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { screen, fireEvent } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { renderRoute } from "../../test-utils";
 import { addToCart, clearCart } from "../../store/cart";
 
@@ -21,18 +22,14 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
-async function fillShippingForm() {
-  fireEvent.change(await screen.findByPlaceholderText("Full Name"), {
-    target: { value: "Jane Doe" },
-  });
-  fireEvent.change(screen.getByPlaceholderText("Email"), { target: { value: "jane@example.com" } });
-  fireEvent.change(screen.getByPlaceholderText("Street address"), {
-    target: { value: "123 Main St" },
-  });
-  fireEvent.change(screen.getByPlaceholderText("City"), { target: { value: "Los Angeles" } });
-  fireEvent.change(screen.getByPlaceholderText("State"), { target: { value: "CA" } });
-  fireEvent.change(screen.getByPlaceholderText("Postal code"), { target: { value: "90001" } });
-  fireEvent.change(screen.getByPlaceholderText("Country"), { target: { value: "US" } });
+async function fillShippingForm(user: ReturnType<typeof userEvent.setup>) {
+  await user.type(await screen.findByPlaceholderText("Full Name"), "Jane Doe");
+  await user.type(screen.getByPlaceholderText("Email"), "jane@example.com");
+  await user.type(screen.getByPlaceholderText("Street address"), "123 Main St");
+  await user.type(screen.getByPlaceholderText("City"), "Los Angeles");
+  await user.type(screen.getByPlaceholderText("State"), "CA");
+  await user.type(screen.getByPlaceholderText("Postal code"), "90001");
+  await user.type(screen.getByPlaceholderText("Country"), "US");
 }
 
 // ---------------------------------------------------------------------------
@@ -77,6 +74,7 @@ describe("/checkout Stripe CardElement", () => {
 // ---------------------------------------------------------------------------
 describe("/checkout successful payment", () => {
   it("submitting with valid fields navigates to confirmation page with orderId and clears cart", async () => {
+    const user = userEvent.setup();
     mockConfirmCardPayment.mockResolvedValue({ paymentIntent: { status: "succeeded" } });
 
     addToCart({
@@ -87,8 +85,8 @@ describe("/checkout successful payment", () => {
       price: 59.99,
     });
     renderRoute("/checkout");
-    await fillShippingForm();
-    fireEvent.click(screen.getByRole("button", { name: /pay/i }));
+    await fillShippingForm(user);
+    await user.click(screen.getByRole("button", { name: /pay/i }));
 
     await screen.findByText(/ord_test_123/i);
     expect(screen.getByText(/faker jersey/i)).toBeInTheDocument();
@@ -100,6 +98,7 @@ describe("/checkout successful payment", () => {
 // ---------------------------------------------------------------------------
 describe("/checkout declined card", () => {
   it("shows inline payment error without navigating away", async () => {
+    const user = userEvent.setup();
     mockConfirmCardPayment.mockResolvedValue({ error: { message: "Your card was declined." } });
 
     addToCart({
@@ -110,8 +109,8 @@ describe("/checkout declined card", () => {
       price: 59.99,
     });
     renderRoute("/checkout");
-    await fillShippingForm();
-    fireEvent.click(screen.getByRole("button", { name: /pay/i }));
+    await fillShippingForm(user);
+    await user.click(screen.getByRole("button", { name: /pay/i }));
 
     expect(await screen.findByTestId("payment-error")).toHaveTextContent("Your card was declined.");
     expect(screen.getByPlaceholderText("Full Name")).toBeInTheDocument();
@@ -124,6 +123,7 @@ describe("/checkout declined card", () => {
 // ---------------------------------------------------------------------------
 describe("/checkout shipping validation", () => {
   it("shows validation errors when required fields are empty and Pay is clicked", async () => {
+    const user = userEvent.setup();
     addToCart({
       skuId: "fj-s-black",
       productId: "1",
@@ -134,7 +134,7 @@ describe("/checkout shipping validation", () => {
     renderRoute("/checkout");
 
     const payBtn = await screen.findByRole("button", { name: /pay/i });
-    fireEvent.click(payBtn);
+    await user.click(payBtn);
 
     expect(await screen.findByText(/full name is required/i)).toBeInTheDocument();
     expect(mockConfirmCardPayment).not.toHaveBeenCalled();

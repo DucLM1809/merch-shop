@@ -1,4 +1,5 @@
-import { screen, waitFor, fireEvent } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
 import { renderRoute } from "../../test-utils";
 
@@ -31,19 +32,21 @@ describe("Product detail page", () => {
   });
 
   it("selecting a size marks it as pressed", async () => {
+    const user = userEvent.setup();
     renderRoute(PRODUCT_ROUTE);
     const sBtn = await screen.findByRole("button", { name: "S" });
-    fireEvent.click(sBtn);
+    await user.click(sBtn);
     expect(sBtn).toHaveAttribute("aria-pressed", "true");
   });
 
   it("price updates when a full SKU is selected", async () => {
+    const user = userEvent.setup();
     renderRoute(PRODUCT_ROUTE);
     // Default price shown before selection
     await screen.findByRole("button", { name: "S" });
 
-    fireEvent.click(screen.getByRole("button", { name: "S" }));
-    fireEvent.click(screen.getByRole("button", { name: "White" }));
+    await user.click(screen.getByRole("button", { name: "S" }));
+    await user.click(screen.getByRole("button", { name: "White" }));
 
     // S + White = $62.99
     await waitFor(() => {
@@ -58,11 +61,12 @@ describe("Product detail page", () => {
   });
 
   it("Add to Cart is enabled when an available SKU is fully selected", async () => {
+    const user = userEvent.setup();
     renderRoute(PRODUCT_ROUTE);
     await screen.findByRole("button", { name: "S" });
 
-    fireEvent.click(screen.getByRole("button", { name: "S" }));
-    fireEvent.click(screen.getByRole("button", { name: "Black" }));
+    await user.click(screen.getByRole("button", { name: "S" }));
+    await user.click(screen.getByRole("button", { name: "Black" }));
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /add to cart/i })).not.toBeDisabled();
@@ -70,11 +74,12 @@ describe("Product detail page", () => {
   });
 
   it("Add to Cart stays disabled when unavailable SKU is selected", async () => {
+    const user = userEvent.setup();
     renderRoute(PRODUCT_ROUTE);
     await screen.findByRole("button", { name: "M" });
 
-    fireEvent.click(screen.getByRole("button", { name: "M" }));
-    fireEvent.click(screen.getByRole("button", { name: "White" }));
+    await user.click(screen.getByRole("button", { name: "M" }));
+    await user.click(screen.getByRole("button", { name: "White" }));
 
     // M + White = unavailable
     await waitFor(() => {

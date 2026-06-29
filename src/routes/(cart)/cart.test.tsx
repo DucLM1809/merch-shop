@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { screen, fireEvent, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { renderRoute } from "../../test-utils";
 import { addToCart, clearCart, updateQuantity } from "../../store/cart";
 
@@ -38,8 +39,9 @@ describe("/cart route", () => {
     expect(subtotal).toHaveTextContent("$182.97");
 
     // Remove first item (S / Black qty 2)
+    const user = userEvent.setup();
     const removeButtons = await screen.findAllByRole("button", { name: /remove/i });
-    fireEvent.click(removeButtons[0]);
+    await user.click(removeButtons[0]);
 
     // Subtotal drops to 62.99
     await waitFor(() => {
@@ -59,8 +61,9 @@ describe("/cart route", () => {
     renderRoute("/cart");
     await screen.findByText("Faker Jersey");
 
+    const user = userEvent.setup();
     const decrementButton = await screen.findByRole("button", { name: /decrease quantity/i });
-    fireEvent.click(decrementButton);
+    await user.click(decrementButton);
 
     await screen.findByText(/your cart is empty/i);
   });
