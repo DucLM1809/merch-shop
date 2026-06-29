@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 
 import {
   Box,
@@ -21,38 +20,20 @@ import { useCharacters, useGames, useProducts, usePublishers, useTeams } from "@
 import { FormField } from "@/components/FormField";
 
 import { useCreateProduct, useDeleteProduct, useUpdateProduct } from "../hooks";
+import { schema, DEFAULTS } from "./AdminProductsView.schema";
 
 import type { CreateProductDto, Product } from "@/api/types";
+import type { FormValues } from "./AdminProductsView.schema";
 
-const schema = z.object({
-  name: z.string().min(1, "Required"),
-  slug: z.string().min(1, "Required"),
-  price: z
-    .string()
-    .min(1, "Required")
-    .refine((v) => !isNaN(parseFloat(v)) && parseFloat(v) > 0, "Must be a positive number")
-    .transform((v) => parseFloat(v)),
-  description: z.string(),
-  imageUrl: z.string(),
-  publisherId: z.string().min(1, "Required"),
-  gameId: z.string().min(1, "Required"),
-  teamId: z.string(),
-  characterId: z.string(),
-});
-
-type FormIn = z.input<typeof schema>;
-type FormOut = z.infer<typeof schema>;
-
-const DEFAULTS: FormIn = {
-  name: "",
-  slug: "",
-  price: "",
-  description: "",
-  imageUrl: "",
-  publisherId: "",
-  gameId: "",
-  teamId: "",
-  characterId: "",
+const selectStyle = {
+  bg: "gray.800",
+  border: "1px solid",
+  borderColor: "gray.700",
+  borderRadius: "md",
+  color: "white",
+  px: 3,
+  py: 2,
+  fontSize: "sm",
 };
 
 export function AdminProductsView(): React.JSX.Element {
@@ -73,20 +54,13 @@ export function AdminProductsView(): React.JSX.Element {
     register,
     handleSubmit,
     reset,
-    watch,
-    formState: { errors },
-  } = useForm<FormIn, unknown, FormOut>({
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    mode: "onChange",
+    mode: "onTouched",
     defaultValues: DEFAULTS,
   });
-
-  const [watchPublisherId, watchGameId, watchTeamId, watchCharacterId] = watch([
-    "publisherId",
-    "gameId",
-    "teamId",
-    "characterId",
-  ]);
 
   function openCreate() {
     setMode("create");
@@ -114,11 +88,11 @@ export function AdminProductsView(): React.JSX.Element {
     reset(DEFAULTS);
   }
 
-  async function onSubmit(data: FormOut) {
+  async function onSubmit(data: FormValues) {
     const dto: CreateProductDto = {
       name: data.name.trim(),
       slug: data.slug.trim(),
-      price: data.price,
+      price: parseFloat(data.price),
       publisherId: data.publisherId,
       gameId: data.gameId,
       ...(data.description.trim() && { description: data.description.trim() }),
@@ -126,27 +100,17 @@ export function AdminProductsView(): React.JSX.Element {
       ...(data.teamId && { teamId: data.teamId }),
       ...(data.characterId && { characterId: data.characterId }),
     };
-    if (typeof mode === "object") {
-      await update.mutateAsync({ id: mode.edit.id, body: dto });
-    } else {
-      await create.mutateAsync(dto);
+    try {
+      if (typeof mode === "object") {
+        await update.mutateAsync({ id: mode.edit.id, body: dto });
+      } else {
+        await create.mutateAsync(dto);
+      }
+      cancel();
+    } catch {
+      setError("root", { message: "Save failed. Please try again." });
     }
-    cancel();
   }
-
-  const isPending = create.isPending || update.isPending;
-
-  const handleSave = () => void handleSubmit(onSubmit)();
-
-  const selectStyle = {
-    bg: "gray.800",
-    border: "1px solid",
-    borderColor: "gray.700",
-    borderRadius: "md",
-    px: 3,
-    py: 2,
-    fontSize: "sm",
-  };
 
   return (
     <Box p={8}>
@@ -163,7 +127,16 @@ export function AdminProductsView(): React.JSX.Element {
       </HStack>
 
       {mode !== "idle" && (
-        <Box mb={6} p={5} bg="gray.900" borderRadius="lg" border="1px solid" borderColor="gray.700">
+        <Box
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
+          mb={6}
+          p={5}
+          bg="gray.900"
+          borderRadius="lg"
+          border="1px solid"
+          borderColor="gray.700"
+        >
           <Text
             fontSize="xs"
             fontWeight="700"
@@ -176,8 +149,9 @@ export function AdminProductsView(): React.JSX.Element {
           </Text>
 
           <VStack gap={3} align="stretch">
-            <FormField error={errors.name}>
+            <FormField name="name" label="Name" error={errors.name}>
               <Input
+                id="name"
                 placeholder="Name"
                 {...register("name")}
                 bg="gray.800"
@@ -186,8 +160,9 @@ export function AdminProductsView(): React.JSX.Element {
               />
             </FormField>
 
-            <FormField error={errors.slug}>
+            <FormField name="slug" label="Slug" error={errors.slug}>
               <Input
+                id="slug"
                 placeholder="Slug (e.g. jinx-hoodie)"
                 {...register("slug")}
                 bg="gray.800"
@@ -196,8 +171,9 @@ export function AdminProductsView(): React.JSX.Element {
               />
             </FormField>
 
-            <FormField error={errors.price}>
+            <FormField name="price" label="Price" error={errors.price}>
               <Input
+                id="price"
                 placeholder="Price (e.g. 29.99)"
                 {...register("price")}
                 bg="gray.800"
@@ -206,8 +182,9 @@ export function AdminProductsView(): React.JSX.Element {
               />
             </FormField>
 
-            <FormField error={errors.description}>
+            <FormField name="description" label="Description" error={errors.description}>
               <Input
+                id="description"
                 placeholder="Description (optional)"
                 {...register("description")}
                 bg="gray.800"
@@ -216,8 +193,9 @@ export function AdminProductsView(): React.JSX.Element {
               />
             </FormField>
 
-            <FormField error={errors.imageUrl}>
+            <FormField name="imageUrl" label="Image URL" error={errors.imageUrl}>
               <Input
+                id="imageUrl"
                 placeholder="Image URL (optional)"
                 {...register("imageUrl")}
                 bg="gray.800"
@@ -226,13 +204,9 @@ export function AdminProductsView(): React.JSX.Element {
               />
             </FormField>
 
-            <FormField error={errors.publisherId}>
+            <FormField name="publisherId" label="Publisher" error={errors.publisherId}>
               <NativeSelectRoot unstyled>
-                <NativeSelectField
-                  {...register("publisherId")}
-                  color={watchPublisherId ? "white" : "gray.500"}
-                  {...selectStyle}
-                >
+                <NativeSelectField id="publisherId" {...register("publisherId")} {...selectStyle}>
                   <option value="">Publisher…</option>
                   {publishers.map((p) => (
                     <option key={p.id} value={p.id}>
@@ -243,13 +217,9 @@ export function AdminProductsView(): React.JSX.Element {
               </NativeSelectRoot>
             </FormField>
 
-            <FormField error={errors.gameId}>
+            <FormField name="gameId" label="Game" error={errors.gameId}>
               <NativeSelectRoot unstyled>
-                <NativeSelectField
-                  {...register("gameId")}
-                  color={watchGameId ? "white" : "gray.500"}
-                  {...selectStyle}
-                >
+                <NativeSelectField id="gameId" {...register("gameId")} {...selectStyle}>
                   <option value="">Game…</option>
                   {games.map((g) => (
                     <option key={g.id} value={g.id}>
@@ -261,11 +231,7 @@ export function AdminProductsView(): React.JSX.Element {
             </FormField>
 
             <NativeSelectRoot unstyled>
-              <NativeSelectField
-                {...register("teamId")}
-                color={watchTeamId ? "white" : "gray.500"}
-                {...selectStyle}
-              >
+              <NativeSelectField {...register("teamId")} {...selectStyle}>
                 <option value="">Team (optional)…</option>
                 {teams.map((t) => (
                   <option key={t.id} value={t.id}>
@@ -276,11 +242,7 @@ export function AdminProductsView(): React.JSX.Element {
             </NativeSelectRoot>
 
             <NativeSelectRoot unstyled>
-              <NativeSelectField
-                {...register("characterId")}
-                color={watchCharacterId ? "white" : "gray.500"}
-                {...selectStyle}
-              >
+              <NativeSelectField {...register("characterId")} {...selectStyle}>
                 <option value="">Character (optional)…</option>
                 {characters.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -290,11 +252,17 @@ export function AdminProductsView(): React.JSX.Element {
               </NativeSelectField>
             </NativeSelectRoot>
 
+            {errors.root && (
+              <Text color="red.400" fontSize="sm">
+                {errors.root.message}
+              </Text>
+            )}
+
             <HStack justify="flex-end">
-              <Button size="sm" variant="ghost" color="gray.400" onClick={cancel}>
+              <Button size="sm" variant="ghost" color="gray.400" type="button" onClick={cancel}>
                 Cancel
               </Button>
-              <Button size="sm" colorPalette="blue" onClick={handleSave} loading={isPending}>
+              <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
                 Save
               </Button>
             </HStack>

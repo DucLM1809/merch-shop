@@ -20,6 +20,12 @@ Vitest is the mandatory test surface — unit tests and `renderRoute` integratio
 
 See `docs/adr/0010-typescript-and-query-conventions.md`.
 
+## Form conventions
+
+Schema in co-located `ComponentName.schema.ts` exporting `schema`, `FormValues`, `DEFAULTS`. No Zod transforms — coerce in `onSubmit`. `mode: "onTouched"`. Always `<Box as="form" onSubmit={handleSubmit(onSubmit)}>` + `<Button type="submit">`. Loading state via `formState.isSubmitting`. Server errors via `setError("root")`. `register()` for native inputs, `Controller` for composites. `watch()` only for reactive derived state. `FormField` renders `<label htmlFor={name}>`.
+
+See `docs/adr/0012-rhf-zod-form-conventions.md`.
+
 ## TanStack Query conventions
 
 - Typed query key factories per domain (never raw strings)
