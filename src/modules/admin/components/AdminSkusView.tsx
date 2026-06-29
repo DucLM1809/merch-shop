@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Box,
   Button,
@@ -13,23 +16,17 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
+import { FormField } from "@/components/FormField";
 import { useProducts } from "@/modules/catalog";
 
 import { useCreateSku, useDeleteSku, useSetSkuAvailability } from "../hooks";
 
+import { schema, DEFAULTS } from "./AdminSkusView.schema";
+
+import type { FormValues } from "./AdminSkusView.schema";
 import type { CreateSkuDto, Product, SKU } from "@/api/types";
 
 type EnrichedSku = SKU & { productId: string; productName: string };
-
-type FormState = {
-  productId: string;
-  price: string;
-  size: string;
-  color: string;
-  edition: string;
-};
-
-const EMPTY: FormState = { productId: "", price: "", size: "", color: "", edition: "" };
 
 export function AdminSkusView(): React.JSX.Element {
   const { data: products = [], isLoading, error } = useProducts();
@@ -38,31 +35,52 @@ export function AdminSkusView(): React.JSX.Element {
   const del = useDeleteSku();
 
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState<FormState>(EMPTY);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: DEFAULTS,
+    mode: "onTouched",
+  });
 
   const allSkus: EnrichedSku[] = products.flatMap((p: Product) =>
     (p.skus ?? []).map((s) => ({ ...s, productId: p.id, productName: p.name }))
   );
 
+  const handleShowForm = () => setShowForm(true);
+
   function cancel() {
     setShowForm(false);
-    setForm(EMPTY);
+    reset();
   }
 
-  async function submit() {
+  async function onSubmit(data: FormValues) {
     const dto: CreateSkuDto = {
-      productId: form.productId,
-      price: parseFloat(form.price),
-      ...(form.size.trim() && { size: form.size.trim() }),
-      ...(form.color.trim() && { color: form.color.trim() }),
-      ...(form.edition.trim() && { edition: form.edition.trim() }),
+      productId: data.productId,
+      price: data.price,
+      ...(data.size.trim() && { size: data.size.trim() }),
+      ...(data.color.trim() && { color: data.color.trim() }),
+      ...(data.edition.trim() && { edition: data.edition.trim() }),
     };
     await create.mutateAsync(dto);
     cancel();
   }
 
-  const isValid = !!form.productId && !!form.price && !isNaN(parseFloat(form.price));
+  const selectStyle = {
+    bg: "gray.800",
+    border: "1px solid",
+    borderColor: "gray.700",
+    borderRadius: "md",
+    color: "white",
+    px: 3,
+    py: 2,
+    fontSize: "sm",
+  } as const;
 
   return (
     <Box p={8}>
@@ -72,7 +90,7 @@ export function AdminSkusView(): React.JSX.Element {
         </Heading>
 
         {!showForm && (
-          <Button size="sm" colorPalette="blue" onClick={() => setShowForm(true)}>
+          <Button size="sm" colorPalette="blue" onClick={handleShowForm}>
             + New SKU
           </Button>
         )}
@@ -91,76 +109,75 @@ export function AdminSkusView(): React.JSX.Element {
             New SKU
           </Text>
 
-          <VStack gap={3} align="stretch">
-            <NativeSelectRoot unstyled>
-              <NativeSelectField
-                value={form.productId}
-                onChange={(e) => setForm((f) => ({ ...f, productId: e.target.value }))}
-                bg="gray.800"
-                border="1px solid"
-                borderColor="gray.700"
-                borderRadius="md"
-                color={form.productId ? "white" : "gray.500"}
-                px={3}
-                py={2}
-                fontSize="sm"
-              >
-                <option value="">Product…</option>
-                {products.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </NativeSelectField>
-            </NativeSelectRoot>
-            <Input
-              placeholder="Price (e.g. 29.99)"
-              value={form.price}
-              onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <Input
-              placeholder="Size (optional, e.g. M)"
-              value={form.size}
-              onChange={(e) => setForm((f) => ({ ...f, size: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <Input
-              placeholder="Color (optional)"
-              value={form.color}
-              onChange={(e) => setForm((f) => ({ ...f, color: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <Input
-              placeholder="Edition (optional)"
-              value={form.edition}
-              onChange={(e) => setForm((f) => ({ ...f, edition: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
+          <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+            <VStack gap={3} align="stretch">
+              <FormField name="productId" label="Product" error={errors.productId}>
+                <NativeSelectRoot unstyled>
+                  <NativeSelectField id="productId" {...register("productId")} {...selectStyle}>
+                    <option value="">Product…</option>
+                    {products.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.name}
+                      </option>
+                    ))}
+                  </NativeSelectField>
+                </NativeSelectRoot>
+              </FormField>
 
-            <HStack justify="flex-end">
-              <Button size="sm" variant="ghost" color="gray.400" onClick={cancel}>
-                Cancel
-              </Button>
-              <Button
-                size="sm"
-                colorPalette="blue"
-                onClick={() => void submit()}
-                loading={create.isPending}
-                disabled={!isValid}
-              >
-                Save
-              </Button>
-            </HStack>
-          </VStack>
+              <FormField name="price" label="Price" error={errors.price}>
+                <Input
+                  id="price"
+                  placeholder="Price (e.g. 29.99)"
+                  {...register("price")}
+                  bg="gray.800"
+                  borderColor="gray.700"
+                  color="white"
+                />
+              </FormField>
+
+              <FormField name="size" label="Size" error={errors.size}>
+                <Input
+                  id="size"
+                  placeholder="Size (optional, e.g. M)"
+                  {...register("size")}
+                  bg="gray.800"
+                  borderColor="gray.700"
+                  color="white"
+                />
+              </FormField>
+
+              <FormField name="color" label="Color" error={errors.color}>
+                <Input
+                  id="color"
+                  placeholder="Color (optional)"
+                  {...register("color")}
+                  bg="gray.800"
+                  borderColor="gray.700"
+                  color="white"
+                />
+              </FormField>
+
+              <FormField name="edition" label="Edition" error={errors.edition}>
+                <Input
+                  id="edition"
+                  placeholder="Edition (optional)"
+                  {...register("edition")}
+                  bg="gray.800"
+                  borderColor="gray.700"
+                  color="white"
+                />
+              </FormField>
+
+              <HStack justify="flex-end">
+                <Button size="sm" variant="ghost" color="gray.400" onClick={cancel}>
+                  Cancel
+                </Button>
+                <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
+                  Save
+                </Button>
+              </HStack>
+            </VStack>
+          </Box>
         </Box>
       )}
 
