@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { screen, waitFor, fireEvent } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 
 import { renderRoute } from "../../test-utils";
@@ -127,17 +128,14 @@ describe("/admin/products", () => {
 
     renderRoute("/admin/products");
 
-    fireEvent.click(await screen.findByText("+ New Product"));
-    fireEvent.change(screen.getByPlaceholderText("Name"), { target: { value: "Jinx Hoodie" } });
-    fireEvent.change(screen.getByPlaceholderText("Slug (e.g. jinx-hoodie)"), {
-      target: { value: "jinx-hoodie" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("Price (e.g. 29.99)"), {
-      target: { value: "49.99" },
-    });
-    fireEvent.change(screen.getByDisplayValue("Publisher…"), { target: { value: "riot" } });
-    fireEvent.change(screen.getByDisplayValue("Game…"), { target: { value: "lol" } });
-    fireEvent.click(screen.getByText("Save"));
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole("button", { name: /\+ new product/i }));
+    await user.type(screen.getByPlaceholderText("Name"), "Jinx Hoodie");
+    await user.type(screen.getByPlaceholderText("Slug (e.g. jinx-hoodie)"), "jinx-hoodie");
+    await user.type(screen.getByPlaceholderText("Price (e.g. 29.99)"), "49.99");
+    await user.selectOptions(screen.getByDisplayValue("Publisher…"), "riot");
+    await user.selectOptions(screen.getByDisplayValue("Game…"), "lol");
+    await user.click(screen.getByRole("button", { name: /^save$/i }));
 
     await waitFor(() => expect(posted).toBe(true));
   });
@@ -157,12 +155,13 @@ describe("/admin/products", () => {
 
     renderRoute("/admin/products");
 
-    const editBtns = await screen.findAllByText("Edit");
-    fireEvent.click(editBtns[0]);
-    fireEvent.change(screen.getByDisplayValue("Jinx Hoodie"), {
-      target: { value: "Jinx Hoodie Updated" },
-    });
-    fireEvent.click(screen.getByText("Save"));
+    const user = userEvent.setup();
+    const editBtns = await screen.findAllByRole("button", { name: /^edit$/i });
+    await user.click(editBtns[0]);
+    const nameInput = screen.getByDisplayValue("Jinx Hoodie");
+    await user.clear(nameInput);
+    await user.type(nameInput, "Jinx Hoodie Updated");
+    await user.click(screen.getByRole("button", { name: /^save$/i }));
 
     await waitFor(() => expect(patched).toBe(true));
   });
@@ -182,9 +181,10 @@ describe("/admin/products", () => {
 
     renderRoute("/admin/products");
 
-    const deleteBtns = await screen.findAllByText("Delete");
-    fireEvent.click(deleteBtns[0]);
-    fireEvent.click(screen.getByText("Confirm"));
+    const user = userEvent.setup();
+    const deleteBtns = await screen.findAllByRole("button", { name: /^delete$/i });
+    await user.click(deleteBtns[0]);
+    await user.click(screen.getByRole("button", { name: /^confirm$/i }));
 
     await waitFor(() => expect(deleted).toBe(true));
   });
