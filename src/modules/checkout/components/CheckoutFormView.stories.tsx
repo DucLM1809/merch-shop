@@ -1,66 +1,59 @@
-import type { Meta, StoryObj } from '@storybook/tanstack-react'
-import { fn } from 'storybook/test'
-import { Input } from '@chakra-ui/react'
-import { CheckoutFormView } from './CheckoutFormView'
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { fn } from "storybook/test";
+import { Input } from "@chakra-ui/react";
+import type { UseFormRegister } from "react-hook-form";
 
-const filledFields = {
-  fullName: 'Jane Doe',
-  email: 'jane@example.com',
-  line1: '123 Main St',
-  city: 'Los Angeles',
-  state: 'CA',
-  postalCode: '90001',
-  country: 'US',
-}
+import { CheckoutFormView } from "./CheckoutFormView";
+import type { FormValues } from "./CheckoutFormView.schema";
+
+const mockRegister = ((name: string) => ({
+  name,
+  ref: fn(),
+  onChange: fn(),
+  onBlur: fn(),
+})) as unknown as UseFormRegister<FormValues>;
 
 const meta = {
   component: CheckoutFormView,
-  parameters: { layout: 'padded' },
+  parameters: { layout: "padded" },
   args: {
-    fields: {},
+    register: mockRegister,
     errors: {},
     paymentError: null,
-    submitting: false,
+    isSubmitting: false,
     total: 59.99,
-    onFieldChange: fn(),
     onSubmit: fn(),
     cardSlot: <Input placeholder="Card number (mock)" readOnly />,
   },
-} satisfies Meta<typeof CheckoutFormView>
+} satisfies Meta<typeof CheckoutFormView>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Empty: Story = {}
-
-export const FilledOut: Story = {
-  args: { fields: filledFields },
-}
+export const Empty: Story = {};
 
 export const ValidationErrors: Story = {
   args: {
     errors: {
-      fullName: 'Full name is required',
-      email: 'Email is required',
-      line1: 'Address is required',
-      city: 'City is required',
-      state: 'State is required',
-      postalCode: 'Postal code is required',
-      country: 'Country is required',
+      fullName: { type: "required", message: "Full name is required" },
+      email: { type: "required", message: "Email is required" },
+      line1: { type: "required", message: "Address is required" },
+      city: { type: "required", message: "City is required" },
+      state: { type: "required", message: "State is required" },
+      postalCode: { type: "required", message: "Postal code is required" },
+      country: { type: "required", message: "Country is required" },
     },
   },
-}
+};
 
 export const PaymentDeclined: Story = {
   args: {
-    fields: filledFields,
-    paymentError: 'Your card was declined.',
+    paymentError: "Your card was declined.",
   },
-}
+};
 
 export const Submitting: Story = {
   args: {
-    fields: filledFields,
-    submitting: true,
+    isSubmitting: true,
   },
-}
+};

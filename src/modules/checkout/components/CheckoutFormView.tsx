@@ -1,48 +1,29 @@
 import { Box, Button, Flex, Heading, Input, Text, VStack } from "@chakra-ui/react";
-
 import type { JSX, ReactNode } from "react";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
 
 import { FormField } from "@/components/FormField";
-import type { ShippingAddress } from "@/api/types";
-
-export type FieldErrors = {
-  fullName?: string;
-  email?: string;
-  line1?: string;
-  city?: string;
-  state?: string;
-  postalCode?: string;
-  country?: string;
-};
+import type { FormValues } from "./CheckoutFormView.schema";
 
 type Props = {
-  fields: Partial<ShippingAddress>;
-  errors: FieldErrors;
+  register: UseFormRegister<FormValues>;
+  errors: FieldErrors<FormValues>;
   paymentError: string | null;
-  submitting: boolean;
+  isSubmitting: boolean;
   total: number;
-  onFieldChange: (name: keyof ShippingAddress, value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
   cardSlot: ReactNode;
 };
 
 export function CheckoutFormView({
-  fields,
+  register,
   errors,
   paymentError,
-  submitting,
+  isSubmitting,
   total,
-  onFieldChange,
   onSubmit,
   cardSlot,
 }: Props): JSX.Element {
-  function field(name: keyof ShippingAddress) {
-    return {
-      value: fields[name] ?? "",
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => onFieldChange(name, e.target.value),
-    };
-  }
-
   return (
     <Box as="form" onSubmit={onSubmit}>
       <VStack gap={4} align="stretch">
@@ -60,30 +41,30 @@ export function CheckoutFormView({
           Shipping
         </Heading>
 
-        <FormField label="Full Name" error={errors.fullName}>
-          <Input placeholder="Full Name" {...field("fullName")} />
+        <FormField name="fullName" label="Full Name" error={errors.fullName}>
+          <Input id="fullName" placeholder="Full Name" {...register("fullName")} />
         </FormField>
-        <FormField label="Email" error={errors.email}>
-          <Input placeholder="Email" type="email" {...field("email")} />
+        <FormField name="email" label="Email" error={errors.email}>
+          <Input id="email" placeholder="Email" type="email" {...register("email")} />
         </FormField>
-        <FormField label="Address" error={errors.line1}>
-          <Input placeholder="Street address" {...field("line1")} />
+        <FormField name="line1" label="Address" error={errors.line1}>
+          <Input id="line1" placeholder="Street address" {...register("line1")} />
         </FormField>
-        <Input placeholder="Apartment, suite, etc. (optional)" {...field("line2")} />
+        <Input placeholder="Apartment, suite, etc. (optional)" {...register("line2")} />
         <Flex gap={3}>
-          <FormField label="City" error={errors.city} flex="1">
-            <Input placeholder="City" {...field("city")} />
+          <FormField name="city" label="City" error={errors.city} flex="1">
+            <Input id="city" placeholder="City" {...register("city")} />
           </FormField>
-          <FormField label="State" error={errors.state} flex="1">
-            <Input placeholder="State" {...field("state")} />
+          <FormField name="state" label="State" error={errors.state} flex="1">
+            <Input id="state" placeholder="State" {...register("state")} />
           </FormField>
         </Flex>
         <Flex gap={3}>
-          <FormField label="Postal Code" error={errors.postalCode} flex="1">
-            <Input placeholder="Postal code" {...field("postalCode")} />
+          <FormField name="postalCode" label="Postal Code" error={errors.postalCode} flex="1">
+            <Input id="postalCode" placeholder="Postal code" {...register("postalCode")} />
           </FormField>
-          <FormField label="Country" error={errors.country} flex="1">
-            <Input placeholder="Country" {...field("country")} />
+          <FormField name="country" label="Country" error={errors.country} flex="1">
+            <Input id="country" placeholder="Country" {...register("country")} />
           </FormField>
         </Flex>
 
@@ -112,7 +93,7 @@ export function CheckoutFormView({
           colorPalette="blue"
           size="lg"
           fontWeight="700"
-          loading={submitting}
+          loading={isSubmitting}
           mt={2}
         >
           Pay ${total.toFixed(2)}

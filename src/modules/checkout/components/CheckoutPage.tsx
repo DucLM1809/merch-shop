@@ -1,62 +1,58 @@
-import { useState } from 'react'
-import type { JSX } from 'react'
+import { useState } from "react";
+import type { JSX } from "react";
 
-import { Box } from '@chakra-ui/react'
-import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
-import { useNavigate } from '@tanstack/react-router'
-import { useStore } from '@tanstack/react-store'
+import { Box } from "@chakra-ui/react";
+import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { useNavigate } from "@tanstack/react-router";
+import { useStore } from "@tanstack/react-store";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { client } from '@/api/client'
-import type { CreateOrderRequest, ShippingAddress } from '@/api/types'
-import { cartStore, clearCart } from '@/store/cart'
-import { CheckoutFormView, type FieldErrors } from './CheckoutFormView'
+import { client } from "@/api/client";
+import type { CreateOrderRequest } from "@/api/types";
+import { cartStore, clearCart } from "@/store/cart";
+import { CheckoutFormView } from "./CheckoutFormView";
+import { schema, DEFAULTS } from "./CheckoutFormView.schema";
+import type { FormValues } from "./CheckoutFormView.schema";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ?? 'pk_test_placeholder')
-
-function validate(fields: Partial<ShippingAddress>): FieldErrors {
-  const errors: FieldErrors = {}
-  if (!fields.fullName?.trim()) errors.fullName = 'Full name is required'
-  if (!fields.email?.trim()) errors.email = 'Email is required'
-  if (!fields.line1?.trim()) errors.line1 = 'Address is required'
-  if (!fields.city?.trim()) errors.city = 'City is required'
-  if (!fields.state?.trim()) errors.state = 'State is required'
-  if (!fields.postalCode?.trim()) errors.postalCode = 'Postal code is required'
-  if (!fields.country?.trim()) errors.country = 'Country is required'
-  return errors
-}
+const stripePromise = loadStripe(
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ?? "pk_test_placeholder"
+);
 
 function CheckoutForm() {
-  const navigate = useNavigate()
-  const stripe = useStripe()
-  const elements = useElements()
-  const items = useStore(cartStore, (s) => s.items)
+  const navigate = useNavigate();
+  const stripe = useStripe();
+  const elements = useElements();
+  const items = useStore(cartStore, (s) => s.items);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
-  const [fields, setFields] = useState<Partial<ShippingAddress>>({})
-  const [errors, setErrors] = useState<FieldErrors>({})
-  const [paymentError, setPaymentError] = useState<string | null>(null)
-  const [submitting, setSubmitting] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: "onTouched",
+    defaultValues: DEFAULTS,
+  });
 
-  function handleFieldChange(name: keyof ShippingAddress, value: string): void {
-    setFields((f) => ({ ...f, [name]: value }))
-    setErrors((er) => ({ ...er, [name]: undefined }))
-  }
-
-  async function handleSubmit(e: React.FormEvent): Promise<void> {
-    e.preventDefault()
-    const errs = validate(fields)
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs)
-      return
-    }
-    if (!stripe || !elements) return
-
-    setSubmitting(true)
-    setPaymentError(null)
+  async function onSubmit(data: FormValues): Promise<void> {
+    if (!stripe || !elements) return;
+    setPaymentError(null);
 
     try {
       const body: CreateOrderRequest = {
-        shipping: fields as ShippingAddress,
+        shipping: {
+          fullName: data.fullName.trim(),
+          email: data.email.trim(),
+          line1: data.line1.trim(),
+          ...(data.line2.trim() && { line2: data.line2.trim() }),
+          city: data.city.trim(),
+          state: data.state.trim(),
+          postalCode: data.postalCode.trim(),
+          country: data.country.trim(),
+        },
         lines: items.map((i) => ({
           skuId: i.skuId,
           productName: i.productName,
@@ -64,42 +60,39 @@ function CheckoutForm() {
           price: i.price,
           quantity: i.quantity,
         })),
-      }
-      const { orderId, clientSecret } = await client.createOrder(body)
+      };
+      const { orderId, clientSecret } = await client.createOrder(body);
 
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: elements.getElement(CardElement)! },
-      })
+      });
 
       if (result.error) {
-        setPaymentError(result.error.message ?? 'Payment failed')
-        return
+        setPaymentError(result.error.message ?? "Payment failed");
+        return;
       }
 
-      clearCart()
+      clearCart();
       navigate({
-        to: '/order-confirmation',
+        to: "/order-confirmation",
         search: { orderId, items: JSON.stringify(items) },
-      })
+      });
     } catch {
-      setPaymentError('Something went wrong. Please try again.')
-    } finally {
-      setSubmitting(false)
+      setPaymentError("Something went wrong. Please try again.");
     }
   }
 
   return (
     <CheckoutFormView
-      fields={fields}
+      register={register}
       errors={errors}
       paymentError={paymentError}
-      submitting={submitting}
+      isSubmitting={isSubmitting}
       total={items.reduce((s, i) => s + i.price * i.quantity, 0)}
-      onFieldChange={handleFieldChange}
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       cardSlot={<CardElement />}
     />
-  )
+  );
 }
 
 export function CheckoutPage(): JSX.Element {
@@ -109,5 +102,5 @@ export function CheckoutPage(): JSX.Element {
         <CheckoutForm />
       </Elements>
     </Box>
-  )
+  );
 }
