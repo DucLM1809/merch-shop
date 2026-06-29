@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Box,
   Button,
@@ -14,14 +17,24 @@ import {
 } from "@chakra-ui/react";
 
 import { useCharacters, useGames } from "@/modules/catalog";
+import { FormField } from "@/components/FormField";
 
 import { useCreateCharacter, useDeleteCharacter, useUpdateCharacter } from "../hooks";
+import { schema, DEFAULTS } from "./AdminCharactersView.schema";
 
 import type { Character, CreateCharacterDto } from "@/api/types";
+import type { FormValues } from "./AdminCharactersView.schema";
 
-type FormState = { name: string; slug: string; gameId: string };
-
-const EMPTY: FormState = { name: "", slug: "", gameId: "" };
+const selectStyle = {
+  bg: "gray.800",
+  border: "1px solid",
+  borderColor: "gray.700",
+  borderRadius: "md",
+  color: "white",
+  px: 3,
+  py: 2,
+  fontSize: "sm",
+};
 
 export function AdminCharactersView(): React.JSX.Element {
   const { data: characters = [], isLoading, error } = useCharacters();
@@ -31,40 +44,53 @@ export function AdminCharactersView(): React.JSX.Element {
   const del = useDeleteCharacter();
 
   const [mode, setMode] = useState<"idle" | "create" | { edit: Character }>("idle");
-  const [form, setForm] = useState<FormState>(EMPTY);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: "onTouched",
+    defaultValues: DEFAULTS,
+  });
 
   function openCreate() {
     setMode("create");
-    setForm(EMPTY);
+    reset(DEFAULTS);
   }
 
   function openEdit(character: Character) {
     setMode({ edit: character });
-    setForm({ name: character.name, slug: character.slug, gameId: character.gameId });
+    reset({ name: character.name, slug: character.slug, gameId: character.gameId });
     setConfirmDelete(null);
   }
 
   function cancel() {
     setMode("idle");
-    setForm(EMPTY);
+    reset(DEFAULTS);
   }
 
-  async function submit() {
+  async function onSubmit(data: FormValues) {
     const dto: CreateCharacterDto = {
-      name: form.name.trim(),
-      slug: form.slug.trim(),
-      gameId: form.gameId,
+      name: data.name.trim(),
+      slug: data.slug.trim(),
+      gameId: data.gameId,
     };
-    if (typeof mode === "object") {
-      await update.mutateAsync({ id: mode.edit.id, body: dto });
-    } else {
-      await create.mutateAsync(dto);
+    try {
+      if (typeof mode === "object") {
+        await update.mutateAsync({ id: mode.edit.id, body: dto });
+      } else {
+        await create.mutateAsync(dto);
+      }
+      cancel();
+    } catch {
+      setError("root", { message: "Save failed. Please try again." });
     }
-    cancel();
   }
-
-  const isPending = create.isPending || update.isPending;
 
   return (
     <Box p={8}>
@@ -81,7 +107,16 @@ export function AdminCharactersView(): React.JSX.Element {
       </HStack>
 
       {mode !== "idle" && (
-        <Box mb={6} p={5} bg="gray.900" borderRadius="lg" border="1px solid" borderColor="gray.700">
+        <Box
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
+          mb={6}
+          p={5}
+          bg="gray.900"
+          borderRadius="lg"
+          border="1px solid"
+          borderColor="gray.700"
+        >
           <Text
             fontSize="xs"
             fontWeight="700"
@@ -94,55 +129,52 @@ export function AdminCharactersView(): React.JSX.Element {
           </Text>
 
           <VStack gap={3} align="stretch">
-            <Input
-              placeholder="Name"
-              value={form.name}
-              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <Input
-              placeholder="Slug (e.g. jinx)"
-              value={form.slug}
-              onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
-              bg="gray.800"
-              borderColor="gray.700"
-              color="white"
-            />
-            <NativeSelectRoot unstyled>
-              <NativeSelectField
-                value={form.gameId}
-                onChange={(e) => setForm((f) => ({ ...f, gameId: e.target.value }))}
+            <FormField name="name" label="Name" error={errors.name}>
+              <Input
+                id="name"
+                placeholder="Name"
+                {...register("name")}
                 bg="gray.800"
-                border="1px solid"
                 borderColor="gray.700"
-                borderRadius="md"
-                color={form.gameId ? "white" : "gray.500"}
-                px={3}
-                py={2}
-                fontSize="sm"
-              >
-                <option value="">Game…</option>
-                {games.map((g) => (
-                  <option key={g.id} value={g.id}>
-                    {g.name}
-                  </option>
-                ))}
-              </NativeSelectField>
-            </NativeSelectRoot>
+                color="white"
+              />
+            </FormField>
+
+            <FormField name="slug" label="Slug" error={errors.slug}>
+              <Input
+                id="slug"
+                placeholder="Slug (e.g. jinx)"
+                {...register("slug")}
+                bg="gray.800"
+                borderColor="gray.700"
+                color="white"
+              />
+            </FormField>
+
+            <FormField name="gameId" label="Game" error={errors.gameId}>
+              <NativeSelectRoot unstyled>
+                <NativeSelectField id="gameId" {...register("gameId")} {...selectStyle}>
+                  <option value="">Game…</option>
+                  {games.map((g) => (
+                    <option key={g.id} value={g.id}>
+                      {g.name}
+                    </option>
+                  ))}
+                </NativeSelectField>
+              </NativeSelectRoot>
+            </FormField>
+
+            {errors.root && (
+              <Text color="red.400" fontSize="sm">
+                {errors.root.message}
+              </Text>
+            )}
 
             <HStack justify="flex-end">
-              <Button size="sm" variant="ghost" color="gray.400" onClick={cancel}>
+              <Button size="sm" variant="ghost" color="gray.400" type="button" onClick={cancel}>
                 Cancel
               </Button>
-              <Button
-                size="sm"
-                colorPalette="blue"
-                onClick={() => void submit()}
-                loading={isPending}
-                disabled={!form.name.trim() || !form.slug.trim() || !form.gameId}
-              >
+              <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
                 Save
               </Button>
             </HStack>
@@ -195,6 +227,11 @@ export function AdminCharactersView(): React.JSX.Element {
 
           {characters.map((character, i) => {
             const game = games.find((g) => g.id === character.gameId);
+            const handleEdit = () => openEdit(character);
+            const handleDeleteStart = () => setConfirmDelete(character.id);
+            const handleDeleteCancel = () => setConfirmDelete(null);
+            const handleDeleteConfirm = () =>
+              void del.mutateAsync(character.id).then(() => setConfirmDelete(null));
             return (
               <Flex
                 key={character.id}
@@ -220,7 +257,7 @@ export function AdminCharactersView(): React.JSX.Element {
                     variant="ghost"
                     color="gray.400"
                     _hover={{ color: "white" }}
-                    onClick={() => openEdit(character)}
+                    onClick={handleEdit}
                   >
                     Edit
                   </Button>
@@ -231,9 +268,7 @@ export function AdminCharactersView(): React.JSX.Element {
                         size="xs"
                         colorPalette="red"
                         loading={del.isPending}
-                        onClick={() =>
-                          void del.mutateAsync(character.id).then(() => setConfirmDelete(null))
-                        }
+                        onClick={handleDeleteConfirm}
                       >
                         Confirm
                       </Button>
@@ -241,7 +276,7 @@ export function AdminCharactersView(): React.JSX.Element {
                         size="xs"
                         variant="ghost"
                         color="gray.500"
-                        onClick={() => setConfirmDelete(null)}
+                        onClick={handleDeleteCancel}
                       >
                         ✕
                       </Button>
@@ -252,7 +287,7 @@ export function AdminCharactersView(): React.JSX.Element {
                       variant="ghost"
                       color="gray.600"
                       _hover={{ color: "red.400" }}
-                      onClick={() => setConfirmDelete(character.id)}
+                      onClick={handleDeleteStart}
                     >
                       Delete
                     </Button>
