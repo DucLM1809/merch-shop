@@ -13,6 +13,7 @@ export function useCart() {
   return useQuery({
     queryKey: cartKeys.cart(),
     queryFn: () => client.getCart(),
+    select: (r) => r.data,
   });
 }
 
@@ -44,6 +45,6 @@ export function useMergeCart() {
 export function useCartSync() {
   return useMutation({
     mutationFn: (items: SyncCartItem[]) => client.syncCart(items),
-    onSuccess: (data) => setItems(data.items),
+    onSuccess: (data) => setItems(data.data.items),
   });
 }

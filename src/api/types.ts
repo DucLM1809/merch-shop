@@ -181,3 +181,7 @@ export type CreateCharacterDto = {
   slug: string;
   gameId: string;
 };
+
+export type PaginationMeta = { total: number; page: number; limit: number };
+
+export type ApiResponse<T> = { success: boolean; data: T; meta: PaginationMeta };

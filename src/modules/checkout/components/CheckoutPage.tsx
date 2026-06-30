@@ -61,7 +61,9 @@ function CheckoutForm() {
           quantity: i.quantity,
         })),
       };
-      const { orderId, clientSecret } = await client.createOrder(body);
+      const {
+        data: { orderId, clientSecret },
+      } = await client.createOrder(body);
 
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: elements.getElement(CardElement)! },

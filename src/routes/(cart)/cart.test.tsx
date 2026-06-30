@@ -7,6 +7,7 @@ import { renderRoute } from "../../test-utils";
 import { addToCart, clearCart, updateQuantity } from "../../store/cart";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 import type { SyncCartResponse } from "../../api/types";
 
 beforeEach(() => clearCart());
@@ -123,7 +124,7 @@ describe("cart merge on sign-in", () => {
             },
           ],
         };
-        return HttpResponse.json(response);
+        return HttpResponse.json(envelope(response));
       })
     );
 

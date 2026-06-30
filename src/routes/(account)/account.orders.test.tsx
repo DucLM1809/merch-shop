@@ -4,6 +4,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 import type { Order } from "../../api/types";
 
 import { useAuth, useUser } from "@clerk/react";
@@ -86,7 +87,7 @@ describe("/account/orders", () => {
   it("renders two seeded orders for authenticated buyer", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(fakerUser));
-    server.use(http.get(`${BASE_URL}/orders/mine`, () => HttpResponse.json(twoOrders)));
+    server.use(http.get(`${BASE_URL}/orders/mine`, () => HttpResponse.json(envelope(twoOrders))));
 
     renderRoute("/account/orders");
 

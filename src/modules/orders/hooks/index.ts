@@ -15,6 +15,7 @@ export function useOrders(enabled = true) {
     queryKey: orderKeys.mine(),
     queryFn: () => client.getMyOrders(),
     enabled,
+    select: (r) => r.data,
   });
   return { ...result, error: result.error };
 }
@@ -24,6 +25,7 @@ export function useAdminOrders(enabled = true) {
     queryKey: orderKeys.admin(),
     queryFn: () => client.getAdminOrders(),
     enabled,
+    select: (r) => r.data,
   });
   return { ...result, error: result.error };
 }
@@ -33,6 +35,7 @@ export function useOrder(id: string, enabled = true) {
     queryKey: orderKeys.detail(id),
     queryFn: () => client.getOrder(id),
     enabled,
+    select: (r) => r.data,
   });
 }
 

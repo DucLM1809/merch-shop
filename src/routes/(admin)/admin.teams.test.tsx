@@ -6,6 +6,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 
 import type { Game, Team } from "../../api/types";
 
@@ -33,7 +34,7 @@ const twoTeams: Team[] = [
 
 beforeEach(() => {
   vi.clearAllMocks();
-  server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(mockGames)));
+  server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(mockGames))));
 });
 
 describe("/admin/teams", () => {
@@ -58,7 +59,7 @@ describe("/admin/teams", () => {
   it("renders team rows for admin user", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(twoTeams)));
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
 
     renderRoute("/admin/teams");
 
@@ -69,7 +70,7 @@ describe("/admin/teams", () => {
   it("shows empty state when no teams", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/teams");
 
@@ -79,14 +80,14 @@ describe("/admin/teams", () => {
   it("create form fires POST /teams", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope([]))));
 
     let posted = false;
     server.use(
       http.post(`${BASE_URL}/teams`, async () => {
         posted = true;
         const created: Team = { id: "new", slug: "new-team", name: "New Team", gameId: "lol" };
-        return HttpResponse.json(created, { status: 201 });
+        return HttpResponse.json(envelope(created), { status: 201 });
       })
     );
 
@@ -105,13 +106,13 @@ describe("/admin/teams", () => {
   it("edit form fires PATCH /teams/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(twoTeams)));
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
 
     let patched = false;
     server.use(
       http.patch(`${BASE_URL}/teams/:id`, async () => {
         patched = true;
-        return HttpResponse.json(twoTeams[0]);
+        return HttpResponse.json(envelope(twoTeams[0]));
       })
     );
 
@@ -131,7 +132,7 @@ describe("/admin/teams", () => {
   it("delete fires DELETE /teams/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(twoTeams)));
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
 
     let deleted = false;
     server.use(

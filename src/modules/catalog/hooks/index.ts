@@ -19,6 +19,7 @@ export function useProducts(filters?: ProductFilters) {
   return useQuery({
     queryKey: catalogKeys.products(filters),
     queryFn: () => client.getProducts(filters),
+    select: (r) => r.data,
   });
 }
 
@@ -26,6 +27,7 @@ export function useProduct(id: string) {
   return useQuery({
     queryKey: catalogKeys.product(id),
     queryFn: () => client.getProduct(id),
+    select: (r) => r.data,
   });
 }
 
@@ -34,6 +36,7 @@ export function usePublishers() {
     queryKey: catalogKeys.publishers(),
     queryFn: () => client.getPublishers(),
     staleTime: Infinity,
+    select: (r) => r.data,
   });
 }
 
@@ -41,6 +44,7 @@ export function usePublisher(slug: string) {
   return useQuery({
     queryKey: catalogKeys.publisher(slug),
     queryFn: () => client.getPublisher(slug),
+    select: (r) => r.data,
   });
 }
 
@@ -49,6 +53,7 @@ export function useGames() {
     queryKey: catalogKeys.games(),
     queryFn: () => client.getGames(),
     staleTime: Infinity,
+    select: (r) => r.data,
   });
 }
 
@@ -57,6 +62,7 @@ export function useTeams(gameId?: string) {
     queryKey: catalogKeys.teams(gameId),
     queryFn: () => client.getTeams(gameId),
     staleTime: Infinity,
+    select: (r) => r.data,
   });
 }
 
@@ -65,6 +71,7 @@ export function useCharacters(gameId?: string) {
     queryKey: catalogKeys.characters(gameId),
     queryFn: () => client.getCharacters(gameId),
     staleTime: Infinity,
+    select: (r) => r.data,
   });
 }
 
@@ -72,5 +79,6 @@ export function useSkus(productId: string) {
   return useQuery({
     queryKey: catalogKeys.skus(productId),
     queryFn: () => client.getSkus(productId),
+    select: (r) => r.data,
   });
 }

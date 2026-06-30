@@ -6,6 +6,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 
 import type { Character, Game } from "../../api/types";
 
@@ -33,7 +34,7 @@ const twoCharacters: Character[] = [
 
 beforeEach(() => {
   vi.clearAllMocks();
-  server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(mockGames)));
+  server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(mockGames))));
 });
 
 describe("/admin/characters", () => {
@@ -58,7 +59,9 @@ describe("/admin/characters", () => {
   it("renders character rows for admin user", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/characters`, () => HttpResponse.json(twoCharacters)));
+    server.use(
+      http.get(`${BASE_URL}/characters`, () => HttpResponse.json(envelope(twoCharacters)))
+    );
 
     renderRoute("/admin/characters");
 
@@ -69,7 +72,7 @@ describe("/admin/characters", () => {
   it("shows empty state when no characters", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/characters`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/characters`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/characters");
 
@@ -79,14 +82,14 @@ describe("/admin/characters", () => {
   it("create form fires POST /characters", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/characters`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/characters`, () => HttpResponse.json(envelope([]))));
 
     let posted = false;
     server.use(
       http.post(`${BASE_URL}/characters`, async () => {
         posted = true;
         const created: Character = { id: "new", slug: "jinx", name: "Jinx", gameId: "lol" };
-        return HttpResponse.json(created, { status: 201 });
+        return HttpResponse.json(envelope(created), { status: 201 });
       })
     );
 
@@ -105,13 +108,15 @@ describe("/admin/characters", () => {
   it("edit form fires PATCH /characters/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/characters`, () => HttpResponse.json(twoCharacters)));
+    server.use(
+      http.get(`${BASE_URL}/characters`, () => HttpResponse.json(envelope(twoCharacters)))
+    );
 
     let patched = false;
     server.use(
       http.patch(`${BASE_URL}/characters/:id`, async () => {
         patched = true;
-        return HttpResponse.json(twoCharacters[0]);
+        return HttpResponse.json(envelope(twoCharacters[0]));
       })
     );
 
@@ -131,7 +136,9 @@ describe("/admin/characters", () => {
   it("delete fires DELETE /characters/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/characters`, () => HttpResponse.json(twoCharacters)));
+    server.use(
+      http.get(`${BASE_URL}/characters`, () => HttpResponse.json(envelope(twoCharacters)))
+    );
 
     let deleted = false;
     server.use(

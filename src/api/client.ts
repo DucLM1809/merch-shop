@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 import type {
+  ApiResponse,
   Character,
   CreateGameDto,
   CreateOrderRequest,
@@ -60,137 +61,148 @@ function wrap<T>(promise: Promise<T>): Promise<T> {
   });
 }
 
+function wrapEnvelope<T>(promise: Promise<AxiosResponse<ApiResponse<T>>>): Promise<ApiResponse<T>> {
+  return wrap(
+    promise.then((r) => {
+      if (!r.data.success) throw new ApiError(0, "Request failed");
+      return r.data;
+    })
+  );
+}
+
 export const client = {
   // --- Catalog ---
-  getProducts: (filters?: ProductFilters): Promise<Product[]> =>
-    wrap(
-      http
-        .get<Product[]>("/products", {
-          params: {
-            // map frontend names → OpenAPI contract names
-            ...(filters?.game && { gameId: filters.game }),
-            ...(filters?.team && { teamId: filters.team }),
-            ...(filters?.character && { characterId: filters.character }),
-            // non-standard: resolved by the mock only; real API ignores them
-            ...(filters?.publisher && { publisher: filters.publisher }),
-            ...(filters?.gameSlug && { gameSlug: filters.gameSlug }),
-          },
-        })
-        .then((r) => r.data)
+  getProducts: (filters?: ProductFilters): Promise<ApiResponse<Product[]>> =>
+    wrapEnvelope(
+      http.get<ApiResponse<Product[]>>("/products", {
+        params: {
+          // map frontend names → OpenAPI contract names
+          ...(filters?.game && { gameId: filters.game }),
+          ...(filters?.team && { teamId: filters.team }),
+          ...(filters?.character && { characterId: filters.character }),
+          // non-standard: resolved by the mock only; real API ignores them
+          ...(filters?.publisher && { publisher: filters.publisher }),
+          ...(filters?.gameSlug && { gameSlug: filters.gameSlug }),
+        },
+      })
     ),
 
-  getProduct: (id: string): Promise<Product> =>
-    wrap(http.get<Product>(`/products/${id}`).then((r) => r.data)),
+  getProduct: (id: string): Promise<ApiResponse<Product>> =>
+    wrapEnvelope(http.get<ApiResponse<Product>>(`/products/${id}`)),
 
-  getPublishers: (): Promise<Publisher[]> =>
-    wrap(http.get<Publisher[]>("/publishers").then((r) => r.data)),
+  getPublishers: (): Promise<ApiResponse<Publisher[]>> =>
+    wrapEnvelope(http.get<ApiResponse<Publisher[]>>("/publishers")),
 
-  getPublisher: (slug: string): Promise<Publisher> =>
-    wrap(http.get<Publisher>(`/publishers/${slug}`).then((r) => r.data)),
+  getPublisher: (slug: string): Promise<ApiResponse<Publisher>> =>
+    wrapEnvelope(http.get<ApiResponse<Publisher>>(`/publishers/${slug}`)),
 
-  getGames: (): Promise<Game[]> => wrap(http.get<Game[]>("/games").then((r) => r.data)),
+  getGames: (): Promise<ApiResponse<Game[]>> =>
+    wrapEnvelope(http.get<ApiResponse<Game[]>>("/games")),
 
-  createGame: (body: CreateGameDto): Promise<Game> =>
-    wrap(http.post<Game>("/games", body).then((r) => r.data)),
+  createGame: (body: CreateGameDto): Promise<ApiResponse<Game>> =>
+    wrapEnvelope(http.post<ApiResponse<Game>>("/games", body)),
 
-  updateGame: (id: string, body: CreateGameDto): Promise<Game> =>
-    wrap(http.patch<Game>(`/games/${id}`, body).then((r) => r.data)),
+  updateGame: (id: string, body: CreateGameDto): Promise<ApiResponse<Game>> =>
+    wrapEnvelope(http.patch<ApiResponse<Game>>(`/games/${id}`, body)),
 
   deleteGame: (id: string): Promise<void> =>
     wrap(http.delete(`/games/${id}`).then(() => undefined)),
 
-  createPublisher: (body: CreatePublisherDto): Promise<Publisher> =>
-    wrap(http.post<Publisher>("/publishers", body).then((r) => r.data)),
+  createPublisher: (body: CreatePublisherDto): Promise<ApiResponse<Publisher>> =>
+    wrapEnvelope(http.post<ApiResponse<Publisher>>("/publishers", body)),
 
-  updatePublisher: (id: string, body: CreatePublisherDto): Promise<Publisher> =>
-    wrap(http.patch<Publisher>(`/publishers/${id}`, body).then((r) => r.data)),
+  updatePublisher: (id: string, body: CreatePublisherDto): Promise<ApiResponse<Publisher>> =>
+    wrapEnvelope(http.patch<ApiResponse<Publisher>>(`/publishers/${id}`, body)),
 
   deletePublisher: (id: string): Promise<void> =>
     wrap(http.delete(`/publishers/${id}`).then(() => undefined)),
 
-  getTeams: (gameId?: string): Promise<Team[]> =>
-    wrap(
-      http.get<Team[]>("/teams", { params: gameId ? { gameId } : undefined }).then((r) => r.data)
+  getTeams: (gameId?: string): Promise<ApiResponse<Team[]>> =>
+    wrapEnvelope(
+      http.get<ApiResponse<Team[]>>("/teams", { params: gameId ? { gameId } : undefined })
     ),
 
-  createTeam: (body: CreateTeamDto): Promise<Team> =>
-    wrap(http.post<Team>("/teams", body).then((r) => r.data)),
+  createTeam: (body: CreateTeamDto): Promise<ApiResponse<Team>> =>
+    wrapEnvelope(http.post<ApiResponse<Team>>("/teams", body)),
 
-  updateTeam: (id: string, body: CreateTeamDto): Promise<Team> =>
-    wrap(http.patch<Team>(`/teams/${id}`, body).then((r) => r.data)),
+  updateTeam: (id: string, body: CreateTeamDto): Promise<ApiResponse<Team>> =>
+    wrapEnvelope(http.patch<ApiResponse<Team>>(`/teams/${id}`, body)),
 
   deleteTeam: (id: string): Promise<void> =>
     wrap(http.delete(`/teams/${id}`).then(() => undefined)),
 
-  getCharacters: (gameId?: string): Promise<Character[]> =>
-    wrap(
-      http
-        .get<Character[]>("/characters", { params: gameId ? { gameId } : undefined })
-        .then((r) => r.data)
+  getCharacters: (gameId?: string): Promise<ApiResponse<Character[]>> =>
+    wrapEnvelope(
+      http.get<ApiResponse<Character[]>>("/characters", {
+        params: gameId ? { gameId } : undefined,
+      })
     ),
 
-  createCharacter: (body: CreateCharacterDto): Promise<Character> =>
-    wrap(http.post<Character>("/characters", body).then((r) => r.data)),
+  createCharacter: (body: CreateCharacterDto): Promise<ApiResponse<Character>> =>
+    wrapEnvelope(http.post<ApiResponse<Character>>("/characters", body)),
 
-  updateCharacter: (id: string, body: CreateCharacterDto): Promise<Character> =>
-    wrap(http.patch<Character>(`/characters/${id}`, body).then((r) => r.data)),
+  updateCharacter: (id: string, body: CreateCharacterDto): Promise<ApiResponse<Character>> =>
+    wrapEnvelope(http.patch<ApiResponse<Character>>(`/characters/${id}`, body)),
 
   deleteCharacter: (id: string): Promise<void> =>
     wrap(http.delete(`/characters/${id}`).then(() => undefined)),
 
-  createProduct: (body: CreateProductDto): Promise<Product> =>
-    wrap(http.post<Product>("/products", body).then((r) => r.data)),
+  createProduct: (body: CreateProductDto): Promise<ApiResponse<Product>> =>
+    wrapEnvelope(http.post<ApiResponse<Product>>("/products", body)),
 
-  updateProduct: (id: string, body: CreateProductDto): Promise<Product> =>
-    wrap(http.patch<Product>(`/products/${id}`, body).then((r) => r.data)),
+  updateProduct: (id: string, body: CreateProductDto): Promise<ApiResponse<Product>> =>
+    wrapEnvelope(http.patch<ApiResponse<Product>>(`/products/${id}`, body)),
 
   deleteProduct: (id: string): Promise<void> =>
     wrap(http.delete(`/products/${id}`).then(() => undefined)),
 
-  getSkus: (productId: string): Promise<SKU[]> =>
-    wrap(http.get<SKU[]>("/skus", { params: { productId } }).then((r) => r.data)),
+  getSkus: (productId: string): Promise<ApiResponse<SKU[]>> =>
+    wrapEnvelope(http.get<ApiResponse<SKU[]>>("/skus", { params: { productId } })),
 
-  createSku: (body: CreateSkuDto): Promise<SKU> =>
-    wrap(http.post<SKU>("/skus", body).then((r) => r.data)),
+  createSku: (body: CreateSkuDto): Promise<ApiResponse<SKU>> =>
+    wrapEnvelope(http.post<ApiResponse<SKU>>("/skus", body)),
 
-  setSkuAvailability: (id: string, available: boolean): Promise<SKU> =>
-    wrap(http.patch<SKU>(`/skus/${id}/availability`, { available }).then((r) => r.data)),
+  setSkuAvailability: (id: string, available: boolean): Promise<ApiResponse<SKU>> =>
+    wrapEnvelope(http.patch<ApiResponse<SKU>>(`/skus/${id}/availability`, { available })),
 
   deleteSku: (id: string): Promise<void> => wrap(http.delete(`/skus/${id}`).then(() => undefined)),
 
   // --- Cart ---
-  getCart: (): Promise<ServerCart> => wrap(http.get<ServerCart>("/cart").then((r) => r.data)),
+  getCart: (): Promise<ApiResponse<ServerCart>> =>
+    wrapEnvelope(http.get<ApiResponse<ServerCart>>("/cart")),
 
-  addCartItem: (skuId: string, quantity: number): Promise<ServerCart> =>
-    wrap(http.post<ServerCart>("/cart/items", { skuId, quantity }).then((r) => r.data)),
+  addCartItem: (skuId: string, quantity: number): Promise<ApiResponse<ServerCart>> =>
+    wrapEnvelope(http.post<ApiResponse<ServerCart>>("/cart/items", { skuId, quantity })),
 
   removeCartItem: (skuId: string): Promise<void> =>
     wrap(http.delete(`/cart/items/${skuId}`).then(() => undefined)),
 
-  mergeCart: (sessionId: string): Promise<ServerCart> =>
-    wrap(http.post<ServerCart>("/cart/merge", { sessionId }).then((r) => r.data)),
+  mergeCart: (sessionId: string): Promise<ApiResponse<ServerCart>> =>
+    wrapEnvelope(http.post<ApiResponse<ServerCart>>("/cart/merge", { sessionId })),
 
-  syncCart: (items: SyncCartItem[]): Promise<SyncCartResponse> =>
-    wrap(http.post<SyncCartResponse>("/cart/sync", { items }).then((r) => r.data)),
+  syncCart: (items: SyncCartItem[]): Promise<ApiResponse<SyncCartResponse>> =>
+    wrapEnvelope(http.post<ApiResponse<SyncCartResponse>>("/cart/sync", { items })),
 
   // --- Payments ---
-  createPaymentIntent: (cartId: string): Promise<PaymentIntentResponse> =>
-    wrap(
-      http.post<PaymentIntentResponse>("/payments/payment-intent", { cartId }).then((r) => r.data)
+  createPaymentIntent: (cartId: string): Promise<ApiResponse<PaymentIntentResponse>> =>
+    wrapEnvelope(
+      http.post<ApiResponse<PaymentIntentResponse>>("/payments/payment-intent", { cartId })
     ),
 
   // --- Orders ---
   // ponytail: createOrder still uses legacy body shape; update when server cart replaces client cart
-  createOrder: (body: CreateOrderRequest): Promise<CreateOrderResponse> =>
-    wrap(http.post<CreateOrderResponse>("/orders", body).then((r) => r.data)),
+  createOrder: (body: CreateOrderRequest): Promise<ApiResponse<CreateOrderResponse>> =>
+    wrapEnvelope(http.post<ApiResponse<CreateOrderResponse>>("/orders", body)),
 
-  getMyOrders: (): Promise<Order[]> => wrap(http.get<Order[]>("/orders/mine").then((r) => r.data)),
+  getMyOrders: (): Promise<ApiResponse<Order[]>> =>
+    wrapEnvelope(http.get<ApiResponse<Order[]>>("/orders/mine")),
 
-  getAdminOrders: (): Promise<Order[]> => wrap(http.get<Order[]>("/orders").then((r) => r.data)),
+  getAdminOrders: (): Promise<ApiResponse<Order[]>> =>
+    wrapEnvelope(http.get<ApiResponse<Order[]>>("/orders")),
 
-  getOrder: (id: string): Promise<Order> =>
-    wrap(http.get<Order>(`/orders/${id}`).then((r) => r.data)),
+  getOrder: (id: string): Promise<ApiResponse<Order>> =>
+    wrapEnvelope(http.get<ApiResponse<Order>>(`/orders/${id}`)),
 
-  updateOrderStatus: (id: string, status: OrderStatus): Promise<Order> =>
-    wrap(http.patch<Order>(`/orders/${id}/status`, { status }).then((r) => r.data)),
+  updateOrderStatus: (id: string, status: OrderStatus): Promise<ApiResponse<Order>> =>
+    wrapEnvelope(http.patch<ApiResponse<Order>>(`/orders/${id}/status`, { status })),
 };

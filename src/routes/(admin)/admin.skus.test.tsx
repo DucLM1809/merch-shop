@@ -6,6 +6,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 
 import type { Product, SKU } from "../../api/types";
 
@@ -65,7 +66,9 @@ describe("/admin/skus", () => {
   it("renders SKU rows for admin user", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([productWithSkus])));
+    server.use(
+      http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
+    );
 
     renderRoute("/admin/skus");
 
@@ -77,7 +80,7 @@ describe("/admin/skus", () => {
   it("shows empty state when no SKUs", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/skus");
 
@@ -87,14 +90,16 @@ describe("/admin/skus", () => {
   it("create form fires POST /skus", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([productWithSkus])));
+    server.use(
+      http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
+    );
 
     let posted = false;
     server.use(
       http.post(`${BASE_URL}/skus`, async () => {
         posted = true;
         const created: SKU = { id: "new-sku", price: 19.99, available: true, size: "S" };
-        return HttpResponse.json(created, { status: 201 });
+        return HttpResponse.json(envelope(created), { status: 201 });
       })
     );
 
@@ -112,13 +117,15 @@ describe("/admin/skus", () => {
   it("availability toggle fires PATCH /skus/:id/availability", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([productWithSkus])));
+    server.use(
+      http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
+    );
 
     let patched = false;
     server.use(
       http.patch(`${BASE_URL}/skus/:id/availability`, async () => {
         patched = true;
-        return HttpResponse.json({ id: "sku-1", price: 49.99, available: false });
+        return HttpResponse.json(envelope({ id: "sku-1", price: 49.99, available: false }));
       })
     );
 
@@ -134,7 +141,9 @@ describe("/admin/skus", () => {
   it("delete fires DELETE /skus/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([productWithSkus])));
+    server.use(
+      http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
+    );
 
     let deleted = false;
     server.use(

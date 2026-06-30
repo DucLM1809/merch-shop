@@ -6,6 +6,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 
 import type { Product, Publisher, Game } from "../../api/types";
 
@@ -56,10 +57,10 @@ const twoProducts: Product[] = [
 beforeEach(() => {
   vi.clearAllMocks();
   server.use(
-    http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(mockPublishers)),
-    http.get(`${BASE_URL}/games`, () => HttpResponse.json(mockGames)),
-    http.get(`${BASE_URL}/teams`, () => HttpResponse.json([])),
-    http.get(`${BASE_URL}/characters`, () => HttpResponse.json([]))
+    http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(mockPublishers))),
+    http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(mockGames))),
+    http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope([]))),
+    http.get(`${BASE_URL}/characters`, () => HttpResponse.json(envelope([])))
   );
 });
 
@@ -85,7 +86,7 @@ describe("/admin/products", () => {
   it("renders product rows for admin user", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(twoProducts)));
+    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope(twoProducts))));
 
     renderRoute("/admin/products");
 
@@ -96,7 +97,7 @@ describe("/admin/products", () => {
   it("shows empty state when no products", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/products");
 
@@ -106,7 +107,7 @@ describe("/admin/products", () => {
   it("create form fires POST /products", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));
 
     let posted = false;
     server.use(
@@ -122,7 +123,7 @@ describe("/admin/products", () => {
           gameId: "lol",
           gameSlug: "league-of-legends",
         };
-        return HttpResponse.json(created, { status: 201 });
+        return HttpResponse.json(envelope(created), { status: 201 });
       })
     );
 
@@ -143,13 +144,13 @@ describe("/admin/products", () => {
   it("edit form fires PATCH /products/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(twoProducts)));
+    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope(twoProducts))));
 
     let patched = false;
     server.use(
       http.patch(`${BASE_URL}/products/:id`, async () => {
         patched = true;
-        return HttpResponse.json(twoProducts[0]);
+        return HttpResponse.json(envelope(twoProducts[0]));
       })
     );
 
@@ -169,7 +170,7 @@ describe("/admin/products", () => {
   it("delete fires DELETE /products/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(twoProducts)));
+    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope(twoProducts))));
 
     let deleted = false;
     server.use(

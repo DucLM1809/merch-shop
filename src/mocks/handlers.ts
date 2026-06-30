@@ -46,6 +46,14 @@ function enrich(p: RawProduct) {
   };
 }
 
+export function envelope<T>(data: T) {
+  return {
+    success: true,
+    data,
+    meta: { total: Array.isArray(data) ? data.length : 1, page: 1, limit: 20 },
+  };
+}
+
 const games: Game[] = [
   { id: "lol", slug: "league-of-legends", name: "League of Legends", publisherId: "riot" },
   { id: "val", slug: "valorant", name: "Valorant", publisherId: "riot" },
@@ -233,12 +241,12 @@ export const mockOrders: Order[] = [
 ];
 
 export const handlers = [
-  http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(publishers)),
+  http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(publishers))),
 
   http.get(`${BASE_URL}/publishers/:slug`, ({ params }) => {
     const pub = publishers.find((p) => p.slug === params.slug);
     if (!pub) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json(pub);
+    return HttpResponse.json(envelope(pub));
   }),
 
   http.post(`${BASE_URL}/publishers`, async ({ request }) => {
@@ -251,14 +259,14 @@ export const handlers = [
       games: [],
       ...(body.logoUrl && { logoUrl: body.logoUrl }),
     };
-    return HttpResponse.json(created, { status: 201 });
+    return HttpResponse.json(envelope(created), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/publishers/:id`, async ({ params, request }) => {
     const body = (await request.json()) as { name: string; slug: string; logoUrl?: string };
     const existing = publishers.find((p) => p.id === params.id);
     if (!existing) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json({ ...existing, ...body });
+    return HttpResponse.json(envelope({ ...existing, ...body }));
   }),
 
   http.delete(`${BASE_URL}/publishers/:id`, ({ params }) => {
@@ -267,7 +275,7 @@ export const handlers = [
     return HttpResponse.json({ ok: true });
   }),
 
-  http.get(`${BASE_URL}/games`, () => HttpResponse.json(games)),
+  http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(games))),
 
   http.post(`${BASE_URL}/games`, async ({ request }) => {
     const body = (await request.json()) as { name: string; slug: string; publisherId: string };
@@ -277,14 +285,14 @@ export const handlers = [
       name: body.name,
       publisherId: body.publisherId,
     };
-    return HttpResponse.json(created, { status: 201 });
+    return HttpResponse.json(envelope(created), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/games/:id`, async ({ params, request }) => {
     const body = (await request.json()) as { name: string; slug: string; publisherId: string };
     const existing = games.find((g) => g.id === params.id);
     if (!existing) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json({ ...existing, ...body });
+    return HttpResponse.json(envelope({ ...existing, ...body }));
   }),
 
   http.delete(`${BASE_URL}/games/:id`, ({ params }) => {
@@ -298,7 +306,7 @@ export const handlers = [
     // accept both legacy 'game' and contract 'gameId'
     const gameId = url.searchParams.get("gameId") ?? url.searchParams.get("game");
     const filtered = gameId ? teams.filter((t) => t.gameId === gameId) : teams;
-    return HttpResponse.json(filtered);
+    return HttpResponse.json(envelope(filtered));
   }),
 
   http.post(`${BASE_URL}/teams`, async ({ request }) => {
@@ -309,14 +317,14 @@ export const handlers = [
       name: body.name,
       gameId: body.gameId,
     };
-    return HttpResponse.json(created, { status: 201 });
+    return HttpResponse.json(envelope(created), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/teams/:id`, async ({ params, request }) => {
     const body = (await request.json()) as { name: string; slug: string; gameId: string };
     const existing = teams.find((t) => t.id === params.id);
     if (!existing) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json({ ...existing, ...body });
+    return HttpResponse.json(envelope({ ...existing, ...body }));
   }),
 
   http.delete(`${BASE_URL}/teams/:id`, ({ params }) => {
@@ -329,7 +337,7 @@ export const handlers = [
     const url = new URL(request.url);
     const gameId = url.searchParams.get("gameId") ?? url.searchParams.get("game");
     const filtered = gameId ? characters.filter((c) => c.gameId === gameId) : characters;
-    return HttpResponse.json(filtered);
+    return HttpResponse.json(envelope(filtered));
   }),
 
   http.post(`${BASE_URL}/characters`, async ({ request }) => {
@@ -340,14 +348,14 @@ export const handlers = [
       name: body.name,
       gameId: body.gameId,
     };
-    return HttpResponse.json(created, { status: 201 });
+    return HttpResponse.json(envelope(created), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/characters/:id`, async ({ params, request }) => {
     const body = (await request.json()) as { name: string; slug: string; gameId: string };
     const existing = characters.find((c) => c.id === params.id);
     if (!existing) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json({ ...existing, ...body });
+    return HttpResponse.json(envelope({ ...existing, ...body }));
   }),
 
   http.delete(`${BASE_URL}/characters/:id`, ({ params }) => {
@@ -375,26 +383,26 @@ export const handlers = [
         (!team || p.teamId === team) &&
         (!character || p.characterId === character)
     );
-    return HttpResponse.json(filtered.map(enrich));
+    return HttpResponse.json(envelope(filtered.map(enrich)));
   }),
 
   http.get(`${BASE_URL}/products/:id`, ({ params }) => {
     const product = products.find((p) => p.id === params.id || p.slug === params.id);
     if (!product) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json(enrich(product));
+    return HttpResponse.json(envelope(enrich(product)));
   }),
 
   http.post(`${BASE_URL}/products`, async ({ request }) => {
     const body = (await request.json()) as RawProduct;
     const created: RawProduct = { ...body, id: `product-${Date.now()}` };
-    return HttpResponse.json(enrich(created), { status: 201 });
+    return HttpResponse.json(envelope(enrich(created)), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/products/:id`, async ({ params, request }) => {
     const body = (await request.json()) as Partial<RawProduct>;
     const existing = products.find((p) => p.id === params.id);
     if (!existing) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json(enrich({ ...existing, ...body }));
+    return HttpResponse.json(envelope(enrich({ ...existing, ...body })));
   }),
 
   http.delete(`${BASE_URL}/products/:id`, ({ params }) => {
@@ -412,21 +420,21 @@ export const handlers = [
       edition?: string;
     };
     return HttpResponse.json(
-      {
+      envelope({
         id: `sku-${Date.now()}`,
         price: body.price,
         available: true,
         size: body.size,
         color: body.color,
         edition: body.edition,
-      },
+      }),
       { status: 201 }
     );
   }),
 
   http.patch(`${BASE_URL}/skus/:id/availability`, async ({ params, request }) => {
     const body = (await request.json()) as { available: boolean };
-    return HttpResponse.json({ id: params.id, price: 0, available: body.available });
+    return HttpResponse.json(envelope({ id: params.id, price: 0, available: body.available }));
   }),
 
   http.delete(`${BASE_URL}/skus/:id`, () => HttpResponse.json({ ok: true })),
@@ -437,37 +445,37 @@ export const handlers = [
     const product = productId
       ? products.find((p) => p.id === productId || p.slug === productId)
       : null;
-    return HttpResponse.json(product?.skus ?? []);
+    return HttpResponse.json(envelope(product?.skus ?? []));
   }),
 
   // --- Cart ---
   http.get(`${BASE_URL}/cart`, () => {
     const cart: ServerCart = { id: "guest-cart", items: [] };
-    return HttpResponse.json(cart);
+    return HttpResponse.json(envelope(cart));
   }),
 
   http.post(`${BASE_URL}/cart/items`, () => {
     const cart: ServerCart = { id: "guest-cart", items: [] };
-    return HttpResponse.json(cart, { status: 201 });
+    return HttpResponse.json(envelope(cart), { status: 201 });
   }),
 
   http.delete(`${BASE_URL}/cart/items/:skuId`, () => HttpResponse.json({ ok: true })),
 
   http.post(`${BASE_URL}/cart/merge`, () => {
     const cart: ServerCart = { id: "user-cart", items: [] };
-    return HttpResponse.json(cart, { status: 201 });
+    return HttpResponse.json(envelope(cart), { status: 201 });
   }),
 
   http.post(`${BASE_URL}/cart/sync`, async ({ request }) => {
     const { items } = (await request.json()) as { items: SyncCartItem[] };
     const response: SyncCartResponse = { items };
-    return HttpResponse.json(response);
+    return HttpResponse.json(envelope(response));
   }),
 
   // --- Payments ---
   http.post(`${BASE_URL}/payments/payment-intent`, () => {
     const response: PaymentIntentResponse = { clientSecret: "pi_test_secret_abc" };
-    return HttpResponse.json(response, { status: 201 });
+    return HttpResponse.json(envelope(response), { status: 201 });
   }),
 
   // --- Orders ---
@@ -476,17 +484,17 @@ export const handlers = [
       orderId: "ord_test_123",
       clientSecret: "pi_test_secret_abc",
     };
-    return HttpResponse.json(response, { status: 201 });
+    return HttpResponse.json(envelope(response), { status: 201 });
   }),
 
-  http.get(`${BASE_URL}/orders/mine`, (): Response => HttpResponse.json([] as Order[])),
+  http.get(`${BASE_URL}/orders/mine`, (): Response => HttpResponse.json(envelope([] as Order[]))),
 
-  http.get(`${BASE_URL}/orders`, (): Response => HttpResponse.json(mockOrders)),
+  http.get(`${BASE_URL}/orders`, (): Response => HttpResponse.json(envelope(mockOrders))),
 
   http.get(`${BASE_URL}/orders/:id`, ({ params }) => {
     const order = mockOrders.find((o) => o.id === params.id);
     if (!order) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json(order);
+    return HttpResponse.json(envelope(order));
   }),
 
   http.patch(`${BASE_URL}/orders/:id/status`, async ({ params, request }) => {
@@ -494,6 +502,6 @@ export const handlers = [
     const order = mockOrders.find((o) => o.id === params.id);
     if (!order) return new HttpResponse(null, { status: 404 });
     order.status = body.status;
-    return HttpResponse.json(order);
+    return HttpResponse.json(envelope(order));
   }),
 ];

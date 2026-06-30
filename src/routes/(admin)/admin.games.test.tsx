@@ -6,6 +6,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 
 import type { Game, Publisher } from "../../api/types";
 
@@ -33,7 +34,7 @@ const twoGames: Game[] = [
 
 beforeEach(() => {
   vi.clearAllMocks();
-  server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(mockPublishers)));
+  server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(mockPublishers))));
 });
 
 describe("/admin/games", () => {
@@ -58,7 +59,7 @@ describe("/admin/games", () => {
   it("renders game rows for admin user", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(twoGames)));
+    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(twoGames))));
 
     renderRoute("/admin/games");
 
@@ -69,7 +70,7 @@ describe("/admin/games", () => {
   it("shows empty state when no games", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/games");
 
@@ -79,7 +80,7 @@ describe("/admin/games", () => {
   it("create form fires POST /games", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope([]))));
 
     let posted = false;
     server.use(
@@ -91,7 +92,7 @@ describe("/admin/games", () => {
           name: "New Game",
           publisherId: "riot",
         };
-        return HttpResponse.json(created, { status: 201 });
+        return HttpResponse.json(envelope(created), { status: 201 });
       })
     );
 
@@ -110,13 +111,13 @@ describe("/admin/games", () => {
   it("edit form fires PATCH /games/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(twoGames)));
+    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(twoGames))));
 
     let patched = false;
     server.use(
       http.patch(`${BASE_URL}/games/:id`, async () => {
         patched = true;
-        return HttpResponse.json(twoGames[0]);
+        return HttpResponse.json(envelope(twoGames[0]));
       })
     );
 
@@ -136,7 +137,7 @@ describe("/admin/games", () => {
   it("delete fires DELETE /games/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(twoGames)));
+    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(twoGames))));
 
     let deleted = false;
     server.use(

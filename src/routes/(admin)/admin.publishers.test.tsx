@@ -6,6 +6,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 
 import type { Publisher } from "../../api/types";
 
@@ -53,7 +54,9 @@ describe("/admin/publishers", () => {
   it("renders publisher rows for admin user", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(twoPublishers)));
+    server.use(
+      http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(twoPublishers)))
+    );
 
     renderRoute("/admin/publishers");
 
@@ -64,7 +67,7 @@ describe("/admin/publishers", () => {
   it("shows empty state when no publishers", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/publishers");
 
@@ -74,7 +77,7 @@ describe("/admin/publishers", () => {
   it("create form fires POST /publishers", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope([]))));
 
     let posted = false;
     server.use(
@@ -87,7 +90,7 @@ describe("/admin/publishers", () => {
           accentColor: "#000",
           games: [],
         };
-        return HttpResponse.json(created, { status: 201 });
+        return HttpResponse.json(envelope(created), { status: 201 });
       })
     );
 
@@ -105,13 +108,15 @@ describe("/admin/publishers", () => {
   it("edit form fires PATCH /publishers/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(twoPublishers)));
+    server.use(
+      http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(twoPublishers)))
+    );
 
     let patched = false;
     server.use(
       http.patch(`${BASE_URL}/publishers/:id`, async () => {
         patched = true;
-        return HttpResponse.json(twoPublishers[0]);
+        return HttpResponse.json(envelope(twoPublishers[0]));
       })
     );
 
@@ -131,7 +136,9 @@ describe("/admin/publishers", () => {
   it("delete fires DELETE /publishers/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));
-    server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(twoPublishers)));
+    server.use(
+      http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(twoPublishers)))
+    );
 
     let deleted = false;
     server.use(

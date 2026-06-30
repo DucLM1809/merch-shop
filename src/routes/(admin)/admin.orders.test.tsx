@@ -6,6 +6,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
+import { envelope } from "../../mocks/handlers";
 
 import type { Order } from "../../api/types";
 
@@ -74,7 +75,7 @@ beforeEach(() => {
 
 describe("/admin/orders", () => {
   it("renders order rows with status badges", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(testOrders)));
+    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
 
     renderRoute("/admin/orders");
 
@@ -85,7 +86,7 @@ describe("/admin/orders", () => {
   });
 
   it("shows empty state when no orders", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json([])));
+    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/orders");
 
@@ -93,7 +94,7 @@ describe("/admin/orders", () => {
   });
 
   it("shows Cancel button for pending order when expanded", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(testOrders)));
+    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
 
     renderRoute("/admin/orders");
 
@@ -104,7 +105,7 @@ describe("/admin/orders", () => {
   });
 
   it("shows Refund button for delivered order when expanded", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(testOrders)));
+    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
 
     renderRoute("/admin/orders");
 
@@ -114,7 +115,7 @@ describe("/admin/orders", () => {
   });
 
   it("Cancel fires PATCH /orders/:id/status with cancelled", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(testOrders)));
+    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
 
     let patchedStatus: string | null = null;
     let patchedId: string | null = null;
@@ -123,7 +124,7 @@ describe("/admin/orders", () => {
         const body = (await request.json()) as { status: string };
         patchedId = params.id as string;
         patchedStatus = body.status;
-        return HttpResponse.json({ ...testOrders[0], status: body.status });
+        return HttpResponse.json(envelope({ ...testOrders[0], status: body.status }));
       })
     );
 
@@ -140,14 +141,14 @@ describe("/admin/orders", () => {
   });
 
   it("→ Processing fires PATCH with processing status", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(testOrders)));
+    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
 
     let patchedStatus: string | null = null;
     server.use(
       http.patch(`${BASE_URL}/orders/:id/status`, async ({ request }) => {
         const body = (await request.json()) as { status: string };
         patchedStatus = body.status;
-        return HttpResponse.json({ ...testOrders[0], status: body.status });
+        return HttpResponse.json(envelope({ ...testOrders[0], status: body.status }));
       })
     );
 
