@@ -8,6 +8,8 @@ import type {
   Order,
   OrderStatus,
   ServerCart,
+  SyncCartItem,
+  SyncCartResponse,
   PaymentIntentResponse,
 } from "../api/types";
 import { BASE_URL } from "../api/client";
@@ -454,6 +456,12 @@ export const handlers = [
   http.post(`${BASE_URL}/cart/merge`, () => {
     const cart: ServerCart = { id: "user-cart", items: [] };
     return HttpResponse.json(cart, { status: 201 });
+  }),
+
+  http.post(`${BASE_URL}/cart/sync`, async ({ request }) => {
+    const { items } = (await request.json()) as { items: SyncCartItem[] };
+    const response: SyncCartResponse = { items };
+    return HttpResponse.json(response);
   }),
 
   // --- Payments ---

@@ -18,6 +18,8 @@ import type {
   Publisher,
   ServerCart,
   SKU,
+  SyncCartItem,
+  SyncCartResponse,
   Team,
 } from "./types";
 
@@ -167,6 +169,9 @@ export const client = {
 
   mergeCart: (sessionId: string): Promise<ServerCart> =>
     wrap(http.post<ServerCart>("/cart/merge", { sessionId }).then((r) => r.data)),
+
+  syncCart: (items: SyncCartItem[]): Promise<SyncCartResponse> =>
+    wrap(http.post<SyncCartResponse>("/cart/sync", { items }).then((r) => r.data)),
 
   // --- Payments ---
   createPaymentIntent: (cartId: string): Promise<PaymentIntentResponse> =>

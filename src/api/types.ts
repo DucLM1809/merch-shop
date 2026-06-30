@@ -147,6 +147,19 @@ export type ServerCart = {
   items: ServerCartItem[];
 };
 
+export type SyncCartItem = {
+  skuId: string;
+  productId: string;
+  productName: string;
+  variant: string;
+  price: number;
+  quantity: number;
+};
+
+export type SyncCartResponse = {
+  items: SyncCartItem[];
+};
+
 export type PaymentIntentResponse = {
   clientSecret: string;
 };

@@ -1,8 +1,13 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { http, HttpResponse } from "msw";
+import { useAuth } from "@clerk/react";
 import { renderRoute } from "../../test-utils";
 import { addToCart, clearCart, updateQuantity } from "../../store/cart";
+import { server } from "../../mocks/server";
+import { BASE_URL } from "../../api/client";
+import type { SyncCartResponse } from "../../api/types";
 
 beforeEach(() => clearCart());
 
@@ -49,6 +54,22 @@ describe("/cart route", () => {
     });
   });
 
+  it("clears sessionStorage guest cart after successful sync", async () => {
+    vi.mocked(useAuth).mockReturnValue({ isLoaded: true, isSignedIn: true } as ReturnType<
+      typeof useAuth
+    >);
+    addToCart({
+      skuId: "fj-s-black",
+      productId: "1",
+      productName: "Faker Jersey",
+      variant: "S / Black",
+      price: 59.99,
+    });
+
+    renderRoute("/cart");
+    await screen.findByText("Faker Jersey");
+  });
+
   it("decrementing quantity to 0 removes item", async () => {
     addToCart({
       skuId: "fj-s-black",
@@ -66,5 +87,83 @@ describe("/cart route", () => {
     await user.click(decrementButton);
 
     await screen.findByText(/your cart is empty/i);
+  });
+});
+
+describe("cart merge on sign-in", () => {
+  it("merges guest cart with server cart when isSignedIn becomes true", async () => {
+    addToCart({
+      skuId: "fj-s-black",
+      productId: "1",
+      productName: "Faker Jersey",
+      variant: "S / Black",
+      price: 59.99,
+    });
+
+    // Server returns: fj-s-black qty 3 (merged) + fj-m-white qty 1 (server-only)
+    server.use(
+      http.post(`${BASE_URL}/cart/sync`, () => {
+        const response: SyncCartResponse = {
+          items: [
+            {
+              skuId: "fj-s-black",
+              productId: "1",
+              productName: "Faker Jersey",
+              variant: "S / Black",
+              price: 59.99,
+              quantity: 3,
+            },
+            {
+              skuId: "fj-m-white",
+              productId: "1",
+              productName: "Faker Jersey",
+              variant: "M / White",
+              price: 62.99,
+              quantity: 1,
+            },
+          ],
+        };
+        return HttpResponse.json(response);
+      })
+    );
+
+    vi.mocked(useAuth).mockReturnValue({ isLoaded: true, isSignedIn: true } as ReturnType<
+      typeof useAuth
+    >);
+
+    renderRoute("/cart");
+
+    // Both SKUs visible after merge
+    await waitFor(() => {
+      const rows = screen.getAllByText("Faker Jersey");
+      expect(rows).toHaveLength(2);
+    });
+
+    // Subtotal: 59.99×3 + 62.99×1 = 242.96
+    const subtotal = await screen.findByTestId("cart-subtotal");
+    expect(subtotal).toHaveTextContent("$242.96");
+  });
+
+  it("preserves guest cart items when sync endpoint returns an error", async () => {
+    addToCart({
+      skuId: "fj-s-black",
+      productId: "1",
+      productName: "Faker Jersey",
+      variant: "S / Black",
+      price: 59.99,
+    });
+
+    server.use(http.post(`${BASE_URL}/cart/sync`, () => new HttpResponse(null, { status: 500 })));
+
+    vi.mocked(useAuth).mockReturnValue({ isLoaded: true, isSignedIn: true } as ReturnType<
+      typeof useAuth
+    >);
+
+    renderRoute("/cart");
+
+    // Guest item still present
+    await screen.findByText("Faker Jersey");
+    // Error banner surfaced
+    await screen.findByText(/cart sync failed/i);
   });
 });

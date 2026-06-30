@@ -1,71 +1,90 @@
-import { Store } from '@tanstack/react-store'
+import { Store } from "@tanstack/react-store";
 
 export type CartItem = {
-  skuId: string
-  productId: string
-  productName: string
-  variant: string
-  price: number
-  quantity: number
-}
+  skuId: string;
+  productId: string;
+  productName: string;
+  variant: string;
+  price: number;
+  quantity: number;
+};
 
 type CartState = {
-  items: CartItem[]
-}
+  items: CartItem[];
+};
 
-const STORAGE_KEY = 'merch-cart'
+const STORAGE_KEY = "merch-cart";
 
 function load(): CartState {
   try {
-    const raw = sessionStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : { items: [] }
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : { items: [] };
   } catch {
-    return { items: [] }
+    return { items: [] };
   }
 }
 
-export const cartStore = new Store<CartState>(load())
+export const cartStore = new Store<CartState>(load());
 
 cartStore.subscribe(() => {
   try {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(cartStore.state))
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(cartStore.state));
   } catch {
     // sessionStorage unavailable (SSR / private browsing quota)
   }
-})
+});
 
-export function addToCart(item: Omit<CartItem, 'quantity'>) {
+export function addToCart(item: Omit<CartItem, "quantity">) {
   cartStore.setState((s) => {
-    const existing = s.items.find((i) => i.skuId === item.skuId)
+    const existing = s.items.find((i) => i.skuId === item.skuId);
     if (existing) {
-      return { items: s.items.map((i) => i.skuId === item.skuId ? { ...i, quantity: i.quantity + 1 } : i) }
+      return {
+        items: s.items.map((i) =>
+          i.skuId === item.skuId ? { ...i, quantity: i.quantity + 1 } : i
+        ),
+      };
     }
-    return { items: [...s.items, { ...item, quantity: 1 }] }
-  })
+    return { items: [...s.items, { ...item, quantity: 1 }] };
+  });
 }
 
 export function updateQuantity(skuId: string, quantity: number) {
   if (quantity <= 0) {
-    removeFromCart(skuId)
-    return
+    removeFromCart(skuId);
+    return;
   }
   cartStore.setState((s) => ({
-    items: s.items.map((i) => i.skuId === skuId ? { ...i, quantity } : i),
-  }))
+    items: s.items.map((i) => (i.skuId === skuId ? { ...i, quantity } : i)),
+  }));
 }
 
 export function removeFromCart(skuId: string) {
-  cartStore.setState((s) => ({ items: s.items.filter((i) => i.skuId !== skuId) }))
+  cartStore.setState((s) => ({ items: s.items.filter((i) => i.skuId !== skuId) }));
 }
 
 export function clearCart() {
-  cartStore.setState(() => ({ items: [] }))
+  cartStore.setState(() => ({ items: [] }));
+}
+
+export function setItems(items: CartItem[]) {
+  cartStore.setState(() => ({ items }));
+}
+
+export function mergeItems(guest: CartItem[], server: CartItem[]): CartItem[] {
+  const merged = guest.map((g) => {
+    const s = server.find((i) => i.skuId === g.skuId);
+    return s ? { ...g, quantity: g.quantity + s.quantity } : g;
+  });
+  server.forEach((s) => {
+    if (!guest.some((g) => g.skuId === s.skuId)) merged.push(s);
+  });
+  return merged;
 }
 
 export function getSubtotal(items: CartItem[]) {
-  return items.reduce((sum, i) => sum + i.price * i.quantity, 0)
+  return items.reduce((sum, i) => sum + i.price * i.quantity, 0);
 }
 
 export function formatVariant(size?: string, color?: string, edition?: string) {
-  return [size, color, edition].filter(Boolean).join(' / ')
+  return [size, color, edition].filter(Boolean).join(" / ");
 }
