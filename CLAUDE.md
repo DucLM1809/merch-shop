@@ -20,6 +20,13 @@ Vitest is the mandatory test surface — unit tests and `renderRoute` integratio
 
 See `docs/adr/0010-typescript-and-query-conventions.md`.
 
+## Lodash conventions
+
+- Import individual functions only — never `import _ from 'lodash'` or `import * from 'lodash'`
+- Prefix every lodash import with `_` to signal it's a lodash util: `import _keyBy from 'lodash/keyBy'`
+- Don't use lodash for anything native JS handles cleanly: no `_map`, `_filter`, `_reduce`, `_forEach`, `_includes`, `_find` — use `Array.prototype` methods instead
+- Reach for lodash only when it genuinely simplifies: deep merge/clone, grouping, key-mapping, debounce/throttle, chunk/zip, etc.
+
 ## Form conventions
 
 Schema in co-located `ComponentName.schema.ts` exporting `schema`, `FormValues`, `DEFAULTS`. No Zod transforms — coerce in `onSubmit`. `mode: "onTouched"`. Always `<Box as="form" onSubmit={handleSubmit(onSubmit)}>` + `<Button type="submit">`. Loading state via `formState.isSubmitting`. Server errors via `setError("root")`. `register()` for native inputs, `Controller` for composites. `watch()` only for reactive derived state. `FormField` renders `<label htmlFor={name}>`.

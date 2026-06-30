@@ -1,7 +1,7 @@
 import { Store } from "@tanstack/react-store";
-import keyBy from "lodash/keyBy";
-import mergeWith from "lodash/mergeWith";
-import values from "lodash/values";
+import _keyBy from "lodash/keyBy";
+import _mergeWith from "lodash/mergeWith";
+import _values from "lodash/values";
 
 export type CartItem = {
   skuId: string;
@@ -74,10 +74,10 @@ export function setItems(items: CartItem[]) {
 }
 
 export function mergeItems(guest: CartItem[], server: CartItem[]): CartItem[] {
-  return values(
-    mergeWith(
-      keyBy(server, "skuId"),
-      keyBy(guest, "skuId"),
+  return _values(
+    _mergeWith(
+      _keyBy(server, "skuId"),
+      _keyBy(guest, "skuId"),
       (s: CartItem | undefined, g: CartItem) =>
         s ? { ...g, quantity: g.quantity + s.quantity } : undefined
     )
