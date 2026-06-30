@@ -1,4 +1,7 @@
 import { Store } from "@tanstack/react-store";
+import keyBy from "lodash/keyBy";
+import mergeWith from "lodash/mergeWith";
+import values from "lodash/values";
 
 export type CartItem = {
   skuId: string;
@@ -71,14 +74,14 @@ export function setItems(items: CartItem[]) {
 }
 
 export function mergeItems(guest: CartItem[], server: CartItem[]): CartItem[] {
-  const merged = guest.map((g) => {
-    const s = server.find((i) => i.skuId === g.skuId);
-    return s ? { ...g, quantity: g.quantity + s.quantity } : g;
-  });
-  server.forEach((s) => {
-    if (!guest.some((g) => g.skuId === s.skuId)) merged.push(s);
-  });
-  return merged;
+  return values(
+    mergeWith(
+      keyBy(server, "skuId"),
+      keyBy(guest, "skuId"),
+      (s: CartItem | undefined, g: CartItem) =>
+        s ? { ...g, quantity: g.quantity + s.quantity } : undefined
+    )
+  );
 }
 
 export function getSubtotal(items: CartItem[]) {
