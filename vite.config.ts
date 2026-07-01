@@ -11,18 +11,23 @@ import { playwright } from "@vitest/browser-playwright";
 const dirname =
   typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
+const isTest = !!process.env.VITEST;
+
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 const config = defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
   plugins: [
-    devtools(),
-    tanstackStart(),
+    // ponytail: skip heavy build plugins in unit tests — tanstackStart regenerates the route tree
+    // per worker and emits 28+ warnings; babel/reactCompiler adds ~400ms transform per file
+    !isTest && devtools(),
+    !isTest && tanstackStart(),
     viteReact(),
-    babel({
-      presets: [reactCompilerPreset()],
-    }),
+    !isTest &&
+      babel({
+        presets: [reactCompilerPreset()],
+      }),
   ],
   test: {
     coverage: {
@@ -40,6 +45,8 @@ const config = defineConfig({
           name: "unit",
           environment: "jsdom",
           setupFiles: ["./src/test-setup.tsx"],
+          // ponytail: pending MSW handlers (never-resolving promises) keep sockets open; force exit so Vitest doesn't hang waiting for the event loop to drain
+          forceExit: true,
         },
       },
       {

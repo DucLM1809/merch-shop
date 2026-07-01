@@ -1,13 +1,24 @@
-import { Box, Heading, Skeleton, Text } from '@chakra-ui/react'
+import { Box, Heading, Skeleton, Text } from "@chakra-ui/react";
+import { QueryError } from "@/components/QueryError";
 
 export interface GamePageViewProps {
-  gameName: string | undefined
-  publisherName: string | undefined
-  accentColor: string | undefined
-  isLoading: boolean
+  gameName: string | undefined;
+  publisherName: string | undefined;
+  accentColor: string | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  onRetry?: () => void;
 }
 
-export function GamePageView({ gameName, publisherName, accentColor, isLoading }: GamePageViewProps) {
+export function GamePageView({
+  gameName,
+  publisherName,
+  accentColor,
+  isLoading,
+  isError,
+  onRetry,
+}: GamePageViewProps) {
+  if (isError) return <QueryError message="Failed to load game." onRetry={onRetry} />;
   return (
     <Box
       px={8}
@@ -27,7 +38,7 @@ export function GamePageView({ gameName, publisherName, accentColor, isLoading }
         style={{
           background: accentColor
             ? `linear-gradient(90deg, ${accentColor}, transparent 60%)`
-            : 'transparent',
+            : "transparent",
         }}
       />
       <Box
@@ -40,7 +51,7 @@ export function GamePageView({ gameName, publisherName, accentColor, isLoading }
         style={{
           background: accentColor
             ? `radial-gradient(ellipse 40% 80% at 0% 0%, ${accentColor}12, transparent)`
-            : 'transparent',
+            : "transparent",
         }}
       />
       {isLoading ? (
@@ -71,5 +82,5 @@ export function GamePageView({ gameName, publisherName, accentColor, isLoading }
         </Box>
       )}
     </Box>
-  )
+  );
 }

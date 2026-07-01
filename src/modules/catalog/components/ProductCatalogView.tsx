@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { type ReactNode } from "react";
 import {
   Box,
   Flex,
@@ -9,17 +9,25 @@ import {
   SimpleGrid,
   Skeleton,
   Text,
-} from '@chakra-ui/react'
-import type { Product } from '@/api/types'
+} from "@chakra-ui/react";
+import type { Product } from "@/api/types";
+import { QueryError } from "@/components/QueryError";
 
 export interface ProductCatalogViewProps {
-  products: Product[] | undefined
-  isLoading: boolean
-  isError: boolean
-  renderLink?: (product: Product, children: ReactNode) => ReactNode
+  products: Product[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  onRetry?: () => void;
+  renderLink?: (product: Product, children: ReactNode) => ReactNode;
 }
 
-export function ProductCatalogView({ products, isLoading, isError, renderLink }: ProductCatalogViewProps) {
+export function ProductCatalogView({
+  products,
+  isLoading,
+  isError,
+  onRetry,
+  renderLink,
+}: ProductCatalogViewProps) {
   if (isLoading) {
     return (
       <Box p={8}>
@@ -29,24 +37,24 @@ export function ProductCatalogView({ products, isLoading, isError, renderLink }:
           ))}
         </SimpleGrid>
       </Box>
-    )
+    );
   }
 
   if (isError) {
-    return (
-      <Box p={8}>
-        <Text color="red.400">Failed to load products. Please try again.</Text>
-      </Box>
-    )
+    return <QueryError message="Failed to load products." onRetry={onRetry} />;
   }
 
   if (!products?.length) {
     return (
       <Box p={8} textAlign="center" py={20}>
-        <Text color="gray.500" fontSize="lg">No products found.</Text>
-        <Text color="gray.600" fontSize="sm" mt={1}>Check back soon for new merch.</Text>
+        <Text color="gray.500" fontSize="lg">
+          No products found.
+        </Text>
+        <Text color="gray.600" fontSize="sm" mt={1}>
+          Check back soon for new merch.
+        </Text>
       </Box>
-    )
+    );
   }
 
   return (
@@ -57,17 +65,17 @@ export function ProductCatalogView({ products, isLoading, isError, renderLink }:
         ))}
       </SimpleGrid>
     </Box>
-  )
+  );
 }
 
 function ProductCard({
   product,
   renderLink,
 }: {
-  product: Product
-  renderLink?: (product: Product, children: ReactNode) => ReactNode
+  product: Product;
+  renderLink?: (product: Product, children: ReactNode) => ReactNode;
 }) {
-  const accent = product.accentColor ?? '#1a9fff'
+  const accent = product.accentColor ?? "#1a9fff";
 
   const imageSection = (
     <Box h="52" bg="gray.800" overflow="hidden" position="relative">
@@ -80,7 +88,7 @@ function ProductCard({
             w="full"
             objectFit="cover"
             transition="transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)"
-            _groupHover={{ transform: 'scale(1.06)' }}
+            _groupHover={{ transform: "scale(1.06)" }}
           />
           <Box
             position="absolute"
@@ -89,7 +97,7 @@ function ProductCard({
             right={0}
             h="45%"
             pointerEvents="none"
-            style={{ background: 'linear-gradient(to top, rgba(8,8,12,0.9), transparent)' }}
+            style={{ background: "linear-gradient(to top, rgba(8,8,12,0.9), transparent)" }}
           />
         </>
       ) : (
@@ -100,7 +108,7 @@ function ProductCard({
         </Flex>
       )}
     </Box>
-  )
+  );
 
   const cardBody = (
     <>
@@ -114,24 +122,24 @@ function ProductCard({
         </Text>
       </Box>
     </>
-  )
+  );
 
   const cardStyles = {
-    borderRadius: 'lg',
-    overflow: 'hidden',
-    position: 'relative' as const,
-    borderTop: '2px solid',
-    transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s',
-    role: 'group',
+    borderRadius: "lg",
+    overflow: "hidden",
+    position: "relative" as const,
+    borderTop: "2px solid",
+    transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s",
+    role: "group",
     _hover: {
-      transform: 'translateY(-4px)',
-      boxShadow: '0 20px 48px rgba(0,0,0,0.7)',
+      transform: "translateY(-4px)",
+      boxShadow: "0 20px 48px rgba(0,0,0,0.7)",
     },
     style: {
       borderTopColor: accent,
       background: `linear-gradient(180deg, ${accent}0d 0%, #0e0e12 28%)`,
     },
-  }
+  };
 
   if (renderLink) {
     return (
@@ -143,7 +151,7 @@ function ProductCard({
               product,
               <Heading size="sm" color="white" fontWeight="600" lineHeight="snug" mb={1.5}>
                 {product.name}
-              </Heading>,
+              </Heading>
             )}
           </LinkOverlay>
           <Text color="gray.300" fontWeight="700" fontSize="sm">
@@ -151,12 +159,12 @@ function ProductCard({
           </Text>
         </Box>
       </LinkBox>
-    )
+    );
   }
 
   return (
     <Box as="article" {...cardStyles}>
       {cardBody}
     </Box>
-  )
+  );
 }

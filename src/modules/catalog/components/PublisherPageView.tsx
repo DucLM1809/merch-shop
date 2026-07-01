@@ -1,13 +1,22 @@
-import { Box, Flex, Heading, HStack, Skeleton, Text } from '@chakra-ui/react'
-import type { Publisher } from '@/api/types'
+import { Box, Flex, Heading, HStack, Skeleton, Text } from "@chakra-ui/react";
+import type { Publisher } from "@/api/types";
+import { QueryError } from "@/components/QueryError";
 
 export interface PublisherPageViewProps {
-  publisher: Publisher | undefined
-  isLoading: boolean
+  publisher: Publisher | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  onRetry?: () => void;
 }
 
-export function PublisherPageView({ publisher, isLoading }: PublisherPageViewProps) {
-  const accent = publisher?.accentColor
+export function PublisherPageView({
+  publisher,
+  isLoading,
+  isError,
+  onRetry,
+}: PublisherPageViewProps) {
+  if (isError) return <QueryError message="Failed to load publisher." onRetry={onRetry} />;
+  const accent = publisher?.accentColor;
 
   return (
     <Box
@@ -26,9 +35,7 @@ export function PublisherPageView({ publisher, isLoading }: PublisherPageViewPro
         right={0}
         h="3px"
         style={{
-          background: accent
-            ? `linear-gradient(90deg, ${accent}, transparent 60%)`
-            : 'transparent',
+          background: accent ? `linear-gradient(90deg, ${accent}, transparent 60%)` : "transparent",
         }}
       />
       <Box
@@ -41,7 +48,7 @@ export function PublisherPageView({ publisher, isLoading }: PublisherPageViewPro
         style={{
           background: accent
             ? `radial-gradient(ellipse 40% 80% at 0% 0%, ${accent}12, transparent)`
-            : 'transparent',
+            : "transparent",
         }}
       />
       {isLoading ? (
@@ -63,8 +70,8 @@ export function PublisherPageView({ publisher, isLoading }: PublisherPageViewPro
             flexShrink={0}
             aria-hidden
             style={{
-              background: accent ?? '#333',
-              boxShadow: accent ? `0 0 24px ${accent}50` : 'none',
+              background: accent ?? "#333",
+              boxShadow: accent ? `0 0 24px ${accent}50` : "none",
             }}
           >
             {publisher?.name[0]}
@@ -87,12 +94,11 @@ export function PublisherPageView({ publisher, isLoading }: PublisherPageViewPro
               letterSpacing="0.08em"
               fontWeight="600"
             >
-              {publisher?.games.length ?? 0}{' '}
-              {publisher?.games.length === 1 ? 'game' : 'games'}
+              {publisher?.games.length ?? 0} {publisher?.games.length === 1 ? "game" : "games"}
             </Text>
           </Box>
         </HStack>
       )}
     </Box>
-  )
+  );
 }

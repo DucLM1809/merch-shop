@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo } from "react";
 import {
   Box,
   Button,
@@ -9,22 +9,24 @@ import {
   Text,
   Wrap,
   WrapItem,
-} from '@chakra-ui/react'
-import type { Product, SKU } from '@/api/types'
+} from "@chakra-ui/react";
+import type { Product, SKU } from "@/api/types";
+import { QueryError } from "@/components/QueryError";
 
 export interface ProductDetailViewProps {
-  product: Product | undefined
-  isLoading: boolean
-  isError: boolean
-  onAddToCart?: (sku: SKU) => void
+  product: Product | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  onRetry?: () => void;
+  onAddToCart?: (sku: SKU) => void;
 }
 
 function uniqueValues(skus: SKU[], key: keyof SKU): string[] {
-  return [...new Set(skus.map((s) => s[key] as string).filter(Boolean))]
+  return [...new Set(skus.map((s) => s[key] as string).filter(Boolean))];
 }
 
 function isOptionAvailable(skus: SKU[], key: keyof SKU, value: string): boolean {
-  return skus.some((s) => s[key] === value && s.available)
+  return skus.some((s) => s[key] === value && s.available);
 }
 
 function DimButton({
@@ -33,59 +35,65 @@ function DimButton({
   selected,
   onToggle,
 }: {
-  label: string
-  available: boolean
-  selected: boolean
-  onToggle: () => void
+  label: string;
+  available: boolean;
+  selected: boolean;
+  onToggle: () => void;
 }) {
   return (
     <WrapItem>
       <Button
         size="sm"
-        variant={selected ? 'solid' : 'outline'}
-        colorPalette={selected ? 'blue' : 'gray'}
+        variant={selected ? "solid" : "outline"}
+        colorPalette={selected ? "blue" : "gray"}
         disabled={!available}
         aria-pressed={selected}
         aria-disabled={!available}
         opacity={!available ? 0.3 : 1}
-        textDecoration={!available ? 'line-through' : 'none'}
+        textDecoration={!available ? "line-through" : "none"}
         onClick={() => available && onToggle()}
       >
         {label}
       </Button>
     </WrapItem>
-  )
+  );
 }
 
-export function ProductDetailView({ product, isLoading, isError, onAddToCart }: ProductDetailViewProps) {
-  const [selectedSize, setSelectedSize] = useState<string | null>(null)
-  const [selectedColor, setSelectedColor] = useState<string | null>(null)
-  const [selectedEdition, setSelectedEdition] = useState<string | null>(null)
+export function ProductDetailView({
+  product,
+  isLoading,
+  isError,
+  onRetry,
+  onAddToCart,
+}: ProductDetailViewProps) {
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedEdition, setSelectedEdition] = useState<string | null>(null);
 
-  const skus = product?.skus ?? []
-  const sizes = useMemo(() => uniqueValues(skus, 'size'), [skus])
-  const colors = useMemo(() => uniqueValues(skus, 'color'), [skus])
-  const editions = useMemo(() => uniqueValues(skus, 'edition'), [skus])
+  const skus = product?.skus ?? [];
+  const sizes = useMemo(() => uniqueValues(skus, "size"), [skus]);
+  const colors = useMemo(() => uniqueValues(skus, "color"), [skus]);
+  const editions = useMemo(() => uniqueValues(skus, "edition"), [skus]);
 
   const selectedSku = useMemo(() => {
-    if (!skus.length) return null
+    if (!skus.length) return null;
     return (
       skus.find(
         (s) =>
           (!sizes.length || s.size === selectedSize) &&
           (!colors.length || s.color === selectedColor) &&
-          (!editions.length || s.edition === selectedEdition),
+          (!editions.length || s.edition === selectedEdition)
       ) ?? null
-    )
-  }, [skus, sizes, colors, editions, selectedSize, selectedColor, selectedEdition])
+    );
+  }, [skus, sizes, colors, editions, selectedSize, selectedColor, selectedEdition]);
 
-  const displayPrice = selectedSku?.price ?? product?.price
+  const displayPrice = selectedSku?.price ?? product?.price;
 
   if (isLoading) {
     return (
       <Box p={8} maxW="5xl" mx="auto">
-        <Flex gap={8} direction={{ base: 'column', md: 'row' }}>
-          <Box flex={{ base: '1', md: '0 0 52%' }}>
+        <Flex gap={8} direction={{ base: "column", md: "row" }}>
+          <Box flex={{ base: "1", md: "0 0 52%" }}>
             <Skeleton h="96" borderRadius="xl" />
           </Box>
           <Box flex="1">
@@ -97,35 +105,37 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
           </Box>
         </Flex>
       </Box>
-    )
+    );
   }
 
   if (isError || !product) {
-    return (
-      <Box p={8}>
-        <Text color="red.400">Failed to load product. Please try again.</Text>
-      </Box>
-    )
+    return <QueryError message="Failed to load product." onRetry={onRetry} />;
   }
 
-  const canAddToCart = selectedSku?.available === true
-  const accent = product.accentColor ?? '#0094e0'
+  const canAddToCart = selectedSku?.available === true;
+  const accent = product.accentColor ?? "#0094e0";
 
   return (
     <Box p={{ base: 6, md: 8 }} maxW="5xl" mx="auto">
-      <Flex gap={8} direction={{ base: 'column', md: 'row' }} align="flex-start">
+      <Flex gap={8} direction={{ base: "column", md: "row" }} align="flex-start">
         {/* Image */}
-        <Box flex={{ base: '1', md: '0 0 52%' }}>
+        <Box flex={{ base: "1", md: "0 0 52%" }}>
           {product.imageUrl ? (
             <Box
               borderRadius="xl"
               overflow="hidden"
               bg="gray.900"
-              h={{ base: '72', md: '96' }}
+              h={{ base: "72", md: "96" }}
               position="relative"
               style={{ boxShadow: `0 0 0 1px ${accent}30, 0 24px 64px rgba(0,0,0,0.6)` }}
             >
-              <Image src={product.imageUrl} alt={product.name} h="full" w="full" objectFit="cover" />
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                h="full"
+                w="full"
+                objectFit="cover"
+              />
               <Box
                 position="absolute"
                 bottom={0}
@@ -133,14 +143,14 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
                 right={0}
                 h="40%"
                 pointerEvents="none"
-                style={{ background: 'linear-gradient(to top, rgba(8,8,12,0.7), transparent)' }}
+                style={{ background: "linear-gradient(to top, rgba(8,8,12,0.7), transparent)" }}
               />
             </Box>
           ) : (
             <Box
               borderRadius="xl"
               bg="gray.900"
-              h={{ base: '72', md: '96' }}
+              h={{ base: "72", md: "96" }}
               display="flex"
               alignItems="center"
               justifyContent="center"
@@ -156,15 +166,17 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
 
         {/* Details */}
         <Box flex="1" minW={0} pt={{ base: 0, md: 2 }}>
-          <Box
-            h="3px"
-            w="40px"
-            borderRadius="full"
-            mb={4}
-            style={{ background: accent }}
-          />
+          <Box h="3px" w="40px" borderRadius="full" mb={4} style={{ background: accent }} />
 
-          <Heading as="h1" size="2xl" color="white" mb={2} fontWeight="800" letterSpacing="-0.03em" lineHeight="1.05">
+          <Heading
+            as="h1"
+            size="2xl"
+            color="white"
+            mb={2}
+            fontWeight="800"
+            letterSpacing="-0.03em"
+            lineHeight="1.05"
+          >
             {product.name}
           </Heading>
 
@@ -202,7 +214,7 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
                   <DimButton
                     key={size}
                     label={size}
-                    available={isOptionAvailable(skus, 'size', size)}
+                    available={isOptionAvailable(skus, "size", size)}
                     selected={selectedSize === size}
                     onToggle={() => setSelectedSize(selectedSize === size ? null : size)}
                   />
@@ -228,7 +240,7 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
                   <DimButton
                     key={color}
                     label={color}
-                    available={isOptionAvailable(skus, 'color', color)}
+                    available={isOptionAvailable(skus, "color", color)}
                     selected={selectedColor === color}
                     onToggle={() => setSelectedColor(selectedColor === color ? null : color)}
                   />
@@ -254,9 +266,11 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
                   <DimButton
                     key={edition}
                     label={edition}
-                    available={isOptionAvailable(skus, 'edition', edition)}
+                    available={isOptionAvailable(skus, "edition", edition)}
                     selected={selectedEdition === edition}
-                    onToggle={() => setSelectedEdition(selectedEdition === edition ? null : edition)}
+                    onToggle={() =>
+                      setSelectedEdition(selectedEdition === edition ? null : edition)
+                    }
                   />
                 ))}
               </Wrap>
@@ -267,7 +281,7 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
             size="lg"
             w="full"
             mt={6}
-            colorPalette={canAddToCart ? 'blue' : 'gray'}
+            colorPalette={canAddToCart ? "blue" : "gray"}
             disabled={!canAddToCart}
             aria-disabled={!canAddToCart}
             fontWeight="700"
@@ -279,5 +293,5 @@ export function ProductDetailView({ product, isLoading, isError, onAddToCart }: 
         </Box>
       </Flex>
     </Box>
-  )
+  );
 }
