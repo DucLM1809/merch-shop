@@ -19,6 +19,9 @@ type CartState = {
 const STORAGE_KEY = "merch-cart";
 
 function load(): CartState {
+  if (typeof sessionStorage === "undefined") {
+    return { items: [] };
+  }
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : { items: [] };
@@ -30,6 +33,9 @@ function load(): CartState {
 export const cartStore = new Store<CartState>(load());
 
 cartStore.subscribe(() => {
+  if (typeof sessionStorage === "undefined") {
+    return;
+  }
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(cartStore.state));
   } catch {

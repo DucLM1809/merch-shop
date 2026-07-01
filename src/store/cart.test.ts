@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
   cartStore,
   addToCart,
@@ -73,6 +73,22 @@ describe("cart store", () => {
     updateQuantity("fj-s-black", 3);
     const total = cartStore.state.items.reduce((s, i) => s + i.quantity, 0);
     expect(total).toBe(4);
+  });
+});
+
+describe("cart store SSR safety", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.resetModules();
+  });
+
+  it("imports without throwing and starts empty when sessionStorage is undefined", async () => {
+    vi.stubGlobal("sessionStorage", undefined);
+    vi.resetModules();
+
+    const { cartStore: ssrCartStore } = await import("./cart");
+
+    expect(ssrCartStore.state.items).toEqual([]);
   });
 });
 
