@@ -1,9 +1,61 @@
 import { describe, it, expect, vi } from "vitest";
-import { screen, within } from "@testing-library/react";
+import { screen, within, fireEvent } from "@testing-library/react";
 import { renderWithProviders } from "../test-utils";
 import { NavDrawerContent } from "./NavDrawerContent";
 
 describe("NavDrawerContent", () => {
+  it("has dialog semantics", () => {
+    renderWithProviders(
+      <NavDrawerContent
+        itemCount={0}
+        isLoaded={true}
+        isSignedIn={false}
+        onClose={vi.fn()}
+        onSignOut={vi.fn()}
+      />
+    );
+
+    const dialog = screen.getByRole("dialog");
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+    expect(dialog).toHaveAccessibleName();
+  });
+
+  it("closes on Escape", () => {
+    const onClose = vi.fn();
+    renderWithProviders(
+      <NavDrawerContent
+        itemCount={0}
+        isLoaded={true}
+        isSignedIn={false}
+        onClose={onClose}
+        onSignOut={vi.fn()}
+      />
+    );
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it("returns focus to the previously focused element on unmount", () => {
+    const trigger = document.createElement("button");
+    document.body.appendChild(trigger);
+    trigger.focus();
+
+    const { unmount } = renderWithProviders(
+      <NavDrawerContent
+        itemCount={0}
+        isLoaded={true}
+        isSignedIn={false}
+        onClose={vi.fn()}
+        onSignOut={vi.fn()}
+      />
+    );
+
+    expect(document.activeElement).not.toBe(trigger);
+    unmount();
+    expect(document.activeElement).toBe(trigger);
+    trigger.remove();
+  });
   it("shows guest sign-in/sign-up links when not signed in", () => {
     renderWithProviders(
       <NavDrawerContent

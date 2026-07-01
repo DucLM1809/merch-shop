@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import { useEffect, useRef, type JSX } from "react";
 import { Box, CloseButton, Flex, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { Gamepad2, LogIn, LogOut, ShoppingCart, User, UserPlus } from "lucide-react";
@@ -20,6 +20,52 @@ export function NavDrawerContent({
   onClose,
   onSignOut,
 }: NavDrawerContentProps): JSX.Element {
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const getFocusable = (): HTMLElement[] =>
+      Array.from(
+        panelRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        ) ?? []
+      );
+
+    getFocusable()[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const focusable = getFocusable();
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previouslyFocused?.focus();
+    };
+  }, [onClose]);
+
   const cartBadge = itemCount > 0 && (
     <Box
       position="absolute"
@@ -45,6 +91,10 @@ export function NavDrawerContent({
     <>
       <Box position="fixed" inset={0} bg="blackAlpha.600" zIndex="overlay" onClick={onClose} />
       <Box
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
         position="fixed"
         left={0}
         top={0}
