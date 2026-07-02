@@ -23,7 +23,7 @@ const twoOrders: Order[] = [
   {
     id: "ord-001",
     createdAt: "2024-01-15T10:00:00Z",
-    status: "pending",
+    status: "PENDING",
     total: 119.98,
     shipping: {
       fullName: "Faker",
@@ -57,7 +57,7 @@ const twoOrders: Order[] = [
       postalCode: "00000",
       country: "KR",
     },
-    status: "pending",
+    status: "PENDING",
     lines: [
       {
         skuId: "lol-hoodie-m",
