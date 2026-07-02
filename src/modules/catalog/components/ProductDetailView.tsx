@@ -1,17 +1,10 @@
 import { useState, useMemo } from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Skeleton,
-  Text,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Skeleton, Text, Wrap, WrapItem } from "@chakra-ui/react";
 import type { Product, SKU } from "@/api/types";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { QueryError } from "@/components/QueryError";
+
+const HERO_IMAGE_WIDTH = 960;
 
 export interface ProductDetailViewProps {
   product: Product | undefined;
@@ -129,8 +122,10 @@ export function ProductDetailView({
               position="relative"
               style={{ boxShadow: `0 0 0 1px ${accent}30, 0 24px 64px rgba(0,0,0,0.6)` }}
             >
-              <Image
+              <OptimizedImage
                 src={product.imageUrl}
+                width={HERO_IMAGE_WIDTH}
+                eager
                 alt={product.name}
                 h="full"
                 w="full"
