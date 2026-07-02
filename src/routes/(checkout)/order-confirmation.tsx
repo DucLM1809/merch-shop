@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 const searchSchema = z.object({
-  orderId: z.string(),
+  orderId: z.string().optional(),
   items: z.string(),
 });
 

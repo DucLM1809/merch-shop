@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { client } from "@/api/client";
-import type { ShippingAddressDto } from "@/api/types";
 import { cartStore, clearCart } from "@/store/cart";
 import { CheckoutFormView } from "./CheckoutFormView";
 import { schema, DEFAULTS } from "./CheckoutFormView.schema";
@@ -37,7 +36,7 @@ function CheckoutForm() {
     defaultValues: DEFAULTS,
   });
 
-  async function onSubmit(data: FormValues): Promise<void> {
+  async function onSubmit(): Promise<void> {
     if (!stripe || !elements) return;
     setPaymentError(null);
 
@@ -58,27 +57,12 @@ function CheckoutForm() {
         return;
       }
 
-      const shippingAddress: ShippingAddressDto = {
-        line1: data.line1.trim(),
-        ...(data.line2.trim() && { line2: data.line2.trim() }),
-        city: data.city.trim(),
-        state: data.state.trim(),
-        postalCode: data.postalCode.trim(),
-        country: data.country.trim(),
-      };
-
-      const {
-        data: { orderId },
-      } = await client.createOrder({
-        buyerEmail: data.email.trim(),
-        stripePaymentIntentId: result.paymentIntent.id,
-        shippingAddress,
-      });
-
+      // ponytail: BE creates the order asynchronously via Stripe webhook — no
+      // client-facing lookup exists yet, so confirmation can't show an orderId.
       clearCart();
       navigate({
         to: "/order-confirmation",
-        search: { orderId, items: JSON.stringify(items) },
+        search: { items: JSON.stringify(items) },
       });
     } catch {
       setPaymentError("Something went wrong. Please try again.");

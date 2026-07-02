@@ -79,4 +79,9 @@ describe("OrderConfirmationPage", () => {
     renderWithProviders(<OrderConfirmationPage orderId="ORD-123" items={singleItem} />);
     expect(screen.getByRole("link", { name: /continue shopping/i })).toBeInTheDocument();
   });
+
+  it("no orderId: shows generic confirmation message instead", () => {
+    renderWithProviders(<OrderConfirmationPage items={singleItem} />);
+    expect(screen.getByText(/we'll email your order confirmation shortly/i)).toBeInTheDocument();
+  });
 });
