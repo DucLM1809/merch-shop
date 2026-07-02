@@ -7,13 +7,13 @@ import { useRetryFulfillment } from "@/modules/orders";
 type Props = { orders: Order[] };
 
 const STATUS_COLOR: Record<OrderStatus, string> = {
-  pending: "orange.400",
-  processing: "blue.400",
-  shipped: "purple.400",
-  delivered: "green.400",
-  cancelled: "red.400",
-  refunded: "gray.400",
+  PENDING: "orange.400",
+  CONFIRMED: "blue.400",
+  FORWARDED: "green.400",
+  CANCELLED: "red.400",
 };
+
+const RETRYABLE_STATUSES: OrderStatus[] = ["PENDING", "CONFIRMED"];
 
 const COLS = ["Order", "Customer", "Date", "Total", "Status"] as const;
 const COL_FLEX = [1.5, 2, 1.5, 1, 1.5];
@@ -161,20 +161,22 @@ export function AdminOrdersView({ orders }: Props): React.JSX.Element {
                 </Box>
               </Flex>
 
-              <HStack gap={2}>
-                <Button
-                  size="sm"
-                  colorScheme="blue"
-                  variant="outline"
-                  loading={busy(order.id)}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    retry(order.id);
-                  }}
-                >
-                  Retry Fulfillment
-                </Button>
-              </HStack>
+              {RETRYABLE_STATUSES.includes(order.status) && (
+                <HStack gap={2}>
+                  <Button
+                    size="sm"
+                    colorScheme="blue"
+                    variant="outline"
+                    loading={busy(order.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      retry(order.id);
+                    }}
+                  >
+                    Retry Fulfillment
+                  </Button>
+                </HStack>
+              )}
             </Flex>
           )}
         </Box>

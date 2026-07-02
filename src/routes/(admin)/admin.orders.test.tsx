@@ -19,7 +19,7 @@ const mockUseUser = vi.mocked(useUser);
 const testOrders: Order[] = [
   {
     id: "ord_001",
-    status: "pending",
+    status: "PENDING",
     total: 59.99,
     createdAt: "2026-06-20T10:00:00Z",
     shipping: {
@@ -43,7 +43,7 @@ const testOrders: Order[] = [
   },
   {
     id: "ord_002",
-    status: "delivered",
+    status: "FORWARDED",
     total: 79.99,
     createdAt: "2026-06-22T14:30:00Z",
     shipping: {
@@ -80,9 +80,9 @@ describe("/admin/orders", () => {
     renderRoute("/admin/orders");
 
     expect(await screen.findByText("#ord_001")).toBeInTheDocument();
-    expect(screen.getByText("pending")).toBeInTheDocument();
+    expect(screen.getByText("PENDING")).toBeInTheDocument();
     expect(screen.getByText("#ord_002")).toBeInTheDocument();
-    expect(screen.getByText("delivered")).toBeInTheDocument();
+    expect(screen.getByText("FORWARDED")).toBeInTheDocument();
   });
 
   it("shows empty state when no orders", async () => {
@@ -101,6 +101,16 @@ describe("/admin/orders", () => {
     const user = userEvent.setup();
     await user.click(await screen.findByText("#ord_001"));
     expect(screen.getByRole("button", { name: /retry fulfillment/i })).toBeInTheDocument();
+  });
+
+  it("hides Retry Fulfillment button for a FORWARDED order", async () => {
+    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
+
+    renderRoute("/admin/orders");
+
+    const user = userEvent.setup();
+    await user.click(await screen.findByText("#ord_002"));
+    expect(screen.queryByRole("button", { name: /retry fulfillment/i })).not.toBeInTheDocument();
   });
 
   it("Retry Fulfillment fires POST /orders/:id/retry-fulfillment", async () => {

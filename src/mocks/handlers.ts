@@ -160,7 +160,7 @@ const products: RawProduct[] = [
 export const mockOrders: Order[] = [
   {
     id: "ord_001",
-    status: "pending",
+    status: "PENDING",
     total: 59.99,
     createdAt: "2026-06-20T10:00:00Z",
     shipping: {
@@ -184,7 +184,7 @@ export const mockOrders: Order[] = [
   },
   {
     id: "ord_002",
-    status: "shipped",
+    status: "CONFIRMED",
     total: 79.99,
     createdAt: "2026-06-22T14:30:00Z",
     shipping: {
@@ -208,7 +208,7 @@ export const mockOrders: Order[] = [
   },
   {
     id: "ord_003",
-    status: "delivered",
+    status: "FORWARDED",
     total: 109.98,
     createdAt: "2026-06-18T08:15:00Z",
     shipping: {
