@@ -14,13 +14,15 @@ module.exports = {
         "http://localhost:3000/riot/league-of-legends/products/faker-jersey",
       ],
       numberOfRuns: 3,
+      // CI runners have no sandbox namespace and tiny /dev/shm — Chrome
+      // needs both flags or it crashes on launch. Must live here, not under
+      // `settings` — Lighthouse's own config has no chromeFlags key there,
+      // and lhci mangles it into a single comma-joined switch if misplaced.
+      chromeFlags: "--no-sandbox --disable-dev-shm-usage",
       settings: {
         // Desktop: stable, reproducible lab numbers for this gate. Mobile/CWV
         // field data (Google's mobile-first ranking signal) is the RUM slice.
         preset: "desktop",
-        // CI runners have no sandbox namespace and tiny /dev/shm — Chrome
-        // needs both flags or it crashes on launch.
-        chromeFlags: ["--no-sandbox", "--disable-dev-shm-usage"],
       },
     },
     assert: {
