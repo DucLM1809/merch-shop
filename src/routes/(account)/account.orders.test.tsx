@@ -23,6 +23,7 @@ const twoOrders: Order[] = [
   {
     id: "ord-001",
     createdAt: "2024-01-15T10:00:00Z",
+    stripePaymentIntentId: "pi_test_ord-001",
     status: "PENDING",
     total: 119.98,
     shipping: {
@@ -47,6 +48,7 @@ const twoOrders: Order[] = [
   {
     id: "ord-002",
     createdAt: "2024-02-20T12:00:00Z",
+    stripePaymentIntentId: "pi_test_ord-002",
     total: 79.99,
     shipping: {
       fullName: "Faker",

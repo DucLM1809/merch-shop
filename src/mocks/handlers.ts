@@ -162,6 +162,7 @@ export const mockOrders: Order[] = [
     status: "PENDING",
     total: 59.99,
     createdAt: "2026-06-20T10:00:00Z",
+    stripePaymentIntentId: "pi_test_001",
     shipping: {
       fullName: "Alex Kim",
       email: "alex@example.com",
@@ -186,6 +187,7 @@ export const mockOrders: Order[] = [
     status: "CONFIRMED",
     total: 79.99,
     createdAt: "2026-06-22T14:30:00Z",
+    stripePaymentIntentId: "pi_test_002",
     shipping: {
       fullName: "Jordan Park",
       email: "jordan@example.com",
@@ -210,6 +212,7 @@ export const mockOrders: Order[] = [
     status: "FORWARDED",
     total: 109.98,
     createdAt: "2026-06-18T08:15:00Z",
+    stripePaymentIntentId: "pi_test_003",
     shipping: {
       fullName: "Sam Chen",
       email: "sam@example.com",
@@ -483,6 +486,12 @@ export const handlers = [
 
   http.get(`${BASE_URL}/orders/:id`, ({ params }) => {
     const order = mockOrders.find((o) => o.id === params.id);
+    if (!order) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json(envelope(order));
+  }),
+
+  http.get(`${BASE_URL}/orders/by-payment-intent/:paymentIntentId`, ({ params }) => {
+    const order = mockOrders.find((o) => o.stripePaymentIntentId === params.paymentIntentId);
     if (!order) return new HttpResponse(null, { status: 404 });
     return HttpResponse.json(envelope(order));
   }),

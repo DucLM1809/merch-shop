@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-import { OrderConfirmationPage } from "@/modules/orders";
+import { OrderConfirmationPage, useOrderByPaymentIntent } from "@/modules/orders";
 import type { CartItem } from "@/store/cart";
 
 export const Route = createLazyFileRoute("/(checkout)/order-confirmation")({
@@ -8,7 +8,15 @@ export const Route = createLazyFileRoute("/(checkout)/order-confirmation")({
 });
 
 function RouteComponent() {
-  const { orderId, items: itemsJson } = Route.useSearch();
+  const { paymentIntentId, items: itemsJson } = Route.useSearch();
   const items = JSON.parse(itemsJson) as CartItem[];
-  return <OrderConfirmationPage orderId={orderId} items={items} />;
+  const { data: order, isLoading } = useOrderByPaymentIntent(paymentIntentId);
+  return (
+    <OrderConfirmationPage
+      orderId={order?.id}
+      status={order?.status}
+      isResolving={!!paymentIntentId && isLoading}
+      items={items}
+    />
+  );
 }

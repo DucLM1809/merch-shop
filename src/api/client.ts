@@ -196,6 +196,18 @@ export const client = {
   getOrder: (id: string): Promise<ApiResponse<Order>> =>
     wrapEnvelope(http.get<ApiResponse<Order>>(`/orders/${id}`)),
 
+  // ponytail: /orders/by-payment-intent/:id is not yet in openapi.yaml — assumed shape,
+  // flagged to BE (merch-shop-fvg). 404 means webhook hasn't created the order yet.
+  getOrderByPaymentIntent: (paymentIntentId: string): Promise<Order | null> =>
+    wrap(
+      http
+        .get<ApiResponse<Order>>(`/orders/by-payment-intent/${paymentIntentId}`)
+        .then((r) => r.data.data)
+    ).catch((err) => {
+      if (err instanceof ApiError && err.status === 404) return null;
+      throw err;
+    }),
+
   retryFulfillment: (id: string): Promise<ApiResponse<Order>> =>
     wrapEnvelope(http.post<ApiResponse<Order>>(`/orders/${id}/retry-fulfillment`)),
 };
