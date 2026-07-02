@@ -1,0 +1,54 @@
+name: Lighthouse CI
+
+on:
+  pull_request:
+    paths:
+      - "src/routes/(catalog)/**"
+      - "src/modules/catalog/**"
+      - "vite.config.ts"
+      - "lighthouserc.cjs"
+      - ".github/workflows/lighthouse.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # pull_request's default GITHUB_SHA is the ephemeral merge commit —
+          # lhci posts its per-URL status against `git rev-parse HEAD`, so
+          # checking out the merge commit makes those statuses invisible on
+          # the PR. Check out the real head commit instead.
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+
+      - run: echo "CHROME_PATH=${{ steps.setup-chrome.outputs.chrome-path }}" >> "$GITHUB_ENV"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build (MSW-backed data so SSR routes render real content)
+        run: pnpm build
+        env:
+          VITE_ENABLE_MSW: "true"
+
+      - name: Run Lighthouse CI budgets
+        run: pnpm exec lhci autorun
+        env:
+          LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

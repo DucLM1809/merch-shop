@@ -27,3 +27,7 @@ graphify-out/cost.json        # local only
 .bv/
 
 coverage/
+
+# Ignore Lighthouse CI directories and reports
+.lighthouseci/
+.lighthouseci-*
