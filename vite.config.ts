@@ -47,8 +47,6 @@ const config = defineConfig({
           name: "unit",
           environment: "jsdom",
           setupFiles: ["./src/test-setup.tsx"],
-          // ponytail: pending MSW handlers (never-resolving promises) keep sockets open; force exit so Vitest doesn't hang waiting for the event loop to drain
-          forceExit: true,
         },
       },
       {

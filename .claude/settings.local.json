@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm test *)",
+      "Bash(pnpm --prefix /Users/admin/Documents/merch-shop test --run)",
+      "Bash(npm run *)",
+      "Bash(graphify query *)",
+      "Bash(npx vitest *)",
+      "Bash(npx tsr *)",
+      "Bash(bd list *)",
+      "Bash(bd show *)",
+      "Bash(bd ready *)",
+      "Bash(pnpm tsc *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(bd close *)",
+      "Bash(git push *)",
+      "Bash(bd update *)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}
