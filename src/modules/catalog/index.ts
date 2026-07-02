@@ -6,6 +6,9 @@ export { PublisherNav } from "./components/PublisherNav";
 export { PublisherPage } from "./components/PublisherPage";
 export {
   catalogKeys,
+  productsQueryOptions,
+  productQueryOptions,
+  publisherQueryOptions,
   useProducts,
   useProduct,
   usePublishers,

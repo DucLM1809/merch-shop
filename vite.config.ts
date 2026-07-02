@@ -2,6 +2,7 @@
 import { defineConfig } from "vitest/config";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { nitro } from "nitro/vite";
 import viteReact, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 import path from "node:path";
@@ -23,6 +24,7 @@ const config = defineConfig({
     // per worker and emits 28+ warnings; babel/reactCompiler adds ~400ms transform per file
     !isTest && devtools(),
     !isTest && tanstackStart(),
+    !isTest && nitro(),
     viteReact(),
     !isTest &&
       babel({

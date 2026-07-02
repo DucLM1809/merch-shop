@@ -1,3 +1,3 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/(cart)/cart")({});
+export const Route = createFileRoute("/(cart)/cart")({ ssr: false });

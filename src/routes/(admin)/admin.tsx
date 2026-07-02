@@ -6,6 +6,7 @@ import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { AdminLayout } from "@/modules/admin";
 
 export const Route = createFileRoute("/(admin)/admin")({
+  ssr: false,
   component: AdminGuard,
 });
 

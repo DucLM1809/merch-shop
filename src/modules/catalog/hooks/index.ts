@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { client } from "@/api/client";
 import type { ProductFilters } from "@/api/types";
@@ -15,18 +15,35 @@ export const catalogKeys = {
   skus: (productId: string) => [...catalogKeys.all, "skus", productId] as const,
 };
 
-export function useProducts(filters?: ProductFilters) {
-  return useQuery({
+// Unselected query options, shared between route loaders (SSR prefetch) and hooks (CSR read).
+export const productsQueryOptions = (filters?: ProductFilters) =>
+  queryOptions({
     queryKey: catalogKeys.products(filters),
     queryFn: () => client.getProducts(filters),
+  });
+
+export const productQueryOptions = (id: string) =>
+  queryOptions({
+    queryKey: catalogKeys.product(id),
+    queryFn: () => client.getProduct(id),
+  });
+
+export const publisherQueryOptions = (slug: string) =>
+  queryOptions({
+    queryKey: catalogKeys.publisher(slug),
+    queryFn: () => client.getPublisher(slug),
+  });
+
+export function useProducts(filters?: ProductFilters) {
+  return useQuery({
+    ...productsQueryOptions(filters),
     select: (r) => r.data,
   });
 }
 
 export function useProduct(id: string) {
   return useQuery({
-    queryKey: catalogKeys.product(id),
-    queryFn: () => client.getProduct(id),
+    ...productQueryOptions(id),
     select: (r) => r.data,
   });
 }
@@ -42,8 +59,7 @@ export function usePublishers() {
 
 export function usePublisher(slug: string) {
   return useQuery({
-    queryKey: catalogKeys.publisher(slug),
-    queryFn: () => client.getPublisher(slug),
+    ...publisherQueryOptions(slug),
     select: (r) => r.data,
   });
 }

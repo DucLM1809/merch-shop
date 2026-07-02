@@ -1,3 +1,3 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/(account)/account/orders")({});
+export const Route = createFileRoute("/(account)/account/orders")({ ssr: false });

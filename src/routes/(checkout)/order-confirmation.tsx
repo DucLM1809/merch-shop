@@ -7,5 +7,6 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute("/(checkout)/order-confirmation")({
+  ssr: false,
   validateSearch: searchSchema,
 });
