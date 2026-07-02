@@ -1,9 +1,12 @@
 import "@testing-library/jest-dom/vitest";
-import { vi, afterAll, afterEach, beforeAll } from "vitest";
+import { vi, afterAll, afterEach, beforeAll, expect } from "vitest";
 import { cleanup, configure } from "@testing-library/react";
+import * as axeMatchers from "vitest-axe/matchers";
 import { server } from "./mocks/server";
 
 configure({ asyncUtilTimeout: 5000 });
+
+expect.extend(axeMatchers);
 
 vi.mock("@clerk/react", () => ({
   ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,

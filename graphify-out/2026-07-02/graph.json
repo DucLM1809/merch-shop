@@ -130,7 +130,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_types_sku",
-      "community": 13,
+      "community": 6,
       "norm_label": "sku"
     },
     {
@@ -220,7 +220,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "api_types_productfilters",
-      "community": 1,
+      "community": 2,
       "norm_label": "productfilters"
     },
     {
@@ -550,7 +550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_globalnav",
-      "community": 6,
+      "community": 3,
       "norm_label": "globalnav.tsx"
     },
     {
@@ -560,7 +560,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "components_globalnav_globalnav",
-      "community": 6,
+      "community": 3,
       "norm_label": "globalnav()"
     },
     {
@@ -570,7 +570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_navdrawercontent_test",
-      "community": 6,
+      "community": 3,
       "norm_label": "navdrawercontent.test.tsx"
     },
     {
@@ -580,7 +580,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_navdrawercontent",
-      "community": 6,
+      "community": 3,
       "norm_label": "navdrawercontent.tsx"
     },
     {
@@ -590,7 +590,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_navdrawercontent_navdrawercontentprops",
-      "community": 6,
+      "community": 3,
       "norm_label": "navdrawercontentprops"
     },
     {
@@ -600,7 +600,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_navdrawercontent_navdrawercontent",
-      "community": 6,
+      "community": 3,
       "norm_label": "navdrawercontent()"
     },
     {
@@ -610,7 +610,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_queryerror",
-      "community": 4,
+      "community": 25,
       "norm_label": "queryerror.tsx"
     },
     {
@@ -620,7 +620,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "components_queryerror_props",
-      "community": 4,
+      "community": 25,
       "norm_label": "props"
     },
     {
@@ -630,7 +630,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_queryerror_queryerror",
-      "community": 4,
+      "community": 25,
       "norm_label": "queryerror()"
     },
     {
@@ -640,7 +640,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_env",
-      "community": 6,
+      "community": 3,
       "norm_label": "env.ts"
     },
     {
@@ -650,7 +650,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_env_env",
-      "community": 6,
+      "community": 3,
       "norm_label": "env"
     },
     {
@@ -660,7 +660,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tanstack_query_devtools",
-      "community": 6,
+      "community": 3,
       "norm_label": "devtools.tsx"
     },
     {
@@ -890,7 +890,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "mocks_handlers_mockorders",
-      "community": 1,
+      "community": 9,
       "norm_label": "mockorders"
     },
     {
@@ -1230,7 +1230,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_adminordersview",
-      "community": 3,
+      "community": 9,
       "norm_label": "adminordersview.tsx"
     },
     {
@@ -1240,7 +1240,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_adminordersview_props",
-      "community": 3,
+      "community": 9,
       "norm_label": "props"
     },
     {
@@ -1250,7 +1250,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_adminordersview_status_color",
-      "community": 3,
+      "community": 9,
       "norm_label": "status_color"
     },
     {
@@ -1260,7 +1260,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "components_adminordersview_next_step",
-      "community": 3,
+      "community": 9,
       "norm_label": "next_step"
     },
     {
@@ -1270,7 +1270,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "components_adminordersview_cols",
-      "community": 3,
+      "community": 9,
       "norm_label": "cols"
     },
     {
@@ -1280,7 +1280,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "components_adminordersview_col_flex",
-      "community": 3,
+      "community": 9,
       "norm_label": "col_flex"
     },
     {
@@ -1290,7 +1290,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "components_adminordersview_fmtdate",
-      "community": 3,
+      "community": 9,
       "norm_label": "fmtdate()"
     },
     {
@@ -1300,7 +1300,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "components_adminordersview_adminordersview",
-      "community": 3,
+      "community": 9,
       "norm_label": "adminordersview()"
     },
     {
@@ -1790,7 +1790,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_cartpage_cartpage",
-      "community": 6,
+      "community": 3,
       "norm_label": "cartpage()"
     },
     {
@@ -1910,7 +1910,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_cart_hooks_index_test_ts_hooks_index_test",
-      "community": 6,
+      "community": 3,
       "norm_label": "index.test.ts"
     },
     {
@@ -1920,7 +1920,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_modules_cart_hooks_index_test_ts_hooks_index_test_makewrapper",
-      "community": 6,
+      "community": 3,
       "norm_label": "makewrapper()"
     },
     {
@@ -1930,7 +1930,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_cart_hooks_index_ts_hooks_index",
-      "community": 6,
+      "community": 3,
       "norm_label": "index.ts"
     },
     {
@@ -1940,7 +1940,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "hooks_index_cartkeys",
-      "community": 6,
+      "community": 3,
       "norm_label": "cartkeys"
     },
     {
@@ -1950,7 +1950,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "hooks_index_usecart",
-      "community": 6,
+      "community": 3,
       "norm_label": "usecart()"
     },
     {
@@ -1960,7 +1960,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "hooks_index_useaddcartitem",
-      "community": 6,
+      "community": 3,
       "norm_label": "useaddcartitem()"
     },
     {
@@ -1970,7 +1970,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "hooks_index_useremovecartitem",
-      "community": 6,
+      "community": 3,
       "norm_label": "useremovecartitem()"
     },
     {
@@ -1980,7 +1980,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "hooks_index_usemergecart",
-      "community": 6,
+      "community": 3,
       "norm_label": "usemergecart()"
     },
     {
@@ -1990,7 +1990,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "hooks_index_usecartsync",
-      "community": 6,
+      "community": 3,
       "norm_label": "usecartsync()"
     },
     {
@@ -2000,7 +2000,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "cart_index",
-      "community": 6,
+      "community": 3,
       "norm_label": "index.ts"
     },
     {
@@ -2120,7 +2120,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_facetfilterview_test",
-      "community": 2,
+      "community": 10,
       "norm_label": "facetfilterview.test.tsx"
     },
     {
@@ -2130,7 +2130,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_facetfilterview_test_games",
-      "community": 2,
+      "community": 10,
       "norm_label": "games"
     },
     {
@@ -2140,7 +2140,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_facetfilterview_test_teams",
-      "community": 2,
+      "community": 10,
       "norm_label": "teams"
     },
     {
@@ -2150,7 +2150,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "components_facetfilterview_test_characters",
-      "community": 2,
+      "community": 10,
       "norm_label": "characters"
     },
     {
@@ -2160,7 +2160,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "components_facetfilterview_test_renderfilter",
-      "community": 2,
+      "community": 10,
       "norm_label": "renderfilter()"
     },
     {
@@ -2190,7 +2190,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "components_facetfilterview_facetfilterview",
-      "community": 2,
+      "community": 10,
       "norm_label": "facetfilterview()"
     },
     {
@@ -2260,7 +2260,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_gamepageview_stories",
-      "community": 4,
+      "community": 25,
       "norm_label": "gamepageview.stories.tsx"
     },
     {
@@ -2270,7 +2270,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_gamepageview_stories_meta",
-      "community": 4,
+      "community": 25,
       "norm_label": "meta"
     },
     {
@@ -2280,7 +2280,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "components_gamepageview_stories_story",
-      "community": 4,
+      "community": 25,
       "norm_label": "story"
     },
     {
@@ -2290,7 +2290,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_gamepageview_stories_loading",
-      "community": 4,
+      "community": 25,
       "norm_label": "loading"
     },
     {
@@ -2300,7 +2300,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "components_gamepageview_stories_loaded",
-      "community": 4,
+      "community": 25,
       "norm_label": "loaded"
     },
     {
@@ -2310,7 +2310,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_gamepageview_test",
-      "community": 4,
+      "community": 25,
       "norm_label": "gamepageview.test.tsx"
     },
     {
@@ -2320,7 +2320,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_gamepageview",
-      "community": 4,
+      "community": 25,
       "norm_label": "gamepageview.tsx"
     },
     {
@@ -2330,7 +2330,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "components_gamepageview_gamepageviewprops",
-      "community": 4,
+      "community": 25,
       "norm_label": "gamepageviewprops"
     },
     {
@@ -2340,7 +2340,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "components_gamepageview_gamepageview",
-      "community": 4,
+      "community": 25,
       "norm_label": "gamepageview()"
     },
     {
@@ -2520,7 +2520,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_productdetail",
-      "community": 13,
+      "community": 6,
       "norm_label": "productdetail.tsx"
     },
     {
@@ -2530,7 +2530,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_productdetail_props",
-      "community": 13,
+      "community": 6,
       "norm_label": "props"
     },
     {
@@ -2550,7 +2550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_productdetailview_stories",
-      "community": 13,
+      "community": 29,
       "norm_label": "productdetailview.stories.tsx"
     },
     {
@@ -2560,7 +2560,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "components_productdetailview_stories_product",
-      "community": 13,
+      "community": 29,
       "norm_label": "product"
     },
     {
@@ -2570,7 +2570,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "components_productdetailview_stories_story",
-      "community": 13,
+      "community": 29,
       "norm_label": "story"
     },
     {
@@ -2580,7 +2580,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "components_productdetailview_stories_loading",
-      "community": 13,
+      "community": 29,
       "norm_label": "loading"
     },
     {
@@ -2590,7 +2590,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "components_productdetailview_stories_error",
-      "community": 13,
+      "community": 29,
       "norm_label": "error"
     },
     {
@@ -2600,7 +2600,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "components_productdetailview_stories_default",
-      "community": 13,
+      "community": 29,
       "norm_label": "default"
     },
     {
@@ -2610,7 +2610,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "components_productdetailview_stories_noimage",
-      "community": 13,
+      "community": 29,
       "norm_label": "noimage"
     },
     {
@@ -2620,7 +2620,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "components_productdetailview_stories_noskus",
-      "community": 13,
+      "community": 29,
       "norm_label": "noskus"
     },
     {
@@ -2630,7 +2630,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "components_productdetailview_stories_editionvariants",
-      "community": 13,
+      "community": 29,
       "norm_label": "editionvariants"
     },
     {
@@ -2640,7 +2640,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_productdetailview_test",
-      "community": 13,
+      "community": 6,
       "norm_label": "productdetailview.test.tsx"
     },
     {
@@ -2650,7 +2650,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_productdetailview_test_product",
-      "community": 13,
+      "community": 6,
       "norm_label": "product"
     },
     {
@@ -2660,7 +2660,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_productdetailview",
-      "community": 13,
+      "community": 6,
       "norm_label": "productdetailview.tsx"
     },
     {
@@ -2670,7 +2670,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "components_productdetailview_productdetailviewprops",
-      "community": 13,
+      "community": 6,
       "norm_label": "productdetailviewprops"
     },
     {
@@ -2680,7 +2680,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "components_productdetailview_uniquevalues",
-      "community": 13,
+      "community": 6,
       "norm_label": "uniquevalues()"
     },
     {
@@ -2690,7 +2690,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "components_productdetailview_isoptionavailable",
-      "community": 13,
+      "community": 6,
       "norm_label": "isoptionavailable()"
     },
     {
@@ -2700,7 +2700,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "components_productdetailview_dimbutton",
-      "community": 13,
+      "community": 6,
       "norm_label": "dimbutton()"
     },
     {
@@ -2710,7 +2710,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "components_productdetailview_productdetailview",
-      "community": 13,
+      "community": 6,
       "norm_label": "productdetailview()"
     },
     {
@@ -2930,7 +2930,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_publisherpageview_stories",
-      "community": 4,
+      "community": 31,
       "norm_label": "publisherpageview.stories.tsx"
     },
     {
@@ -2940,7 +2940,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "components_publisherpageview_stories_meta",
-      "community": 4,
+      "community": 31,
       "norm_label": "meta"
     },
     {
@@ -2950,7 +2950,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_publisherpageview_stories_story",
-      "community": 4,
+      "community": 31,
       "norm_label": "story"
     },
     {
@@ -2960,7 +2960,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "components_publisherpageview_stories_loading",
-      "community": 4,
+      "community": 31,
       "norm_label": "loading"
     },
     {
@@ -2970,7 +2970,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "components_publisherpageview_stories_loaded",
-      "community": 4,
+      "community": 31,
       "norm_label": "loaded"
     },
     {
@@ -2980,7 +2980,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_publisherpageview_test",
-      "community": 4,
+      "community": 31,
       "norm_label": "publisherpageview.test.tsx"
     },
     {
@@ -2990,7 +2990,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_publisherpageview",
-      "community": 4,
+      "community": 31,
       "norm_label": "publisherpageview.tsx"
     },
     {
@@ -3010,7 +3010,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "components_publisherpageview_publisherpageview",
-      "community": 4,
+      "community": 31,
       "norm_label": "publisherpageview()"
     },
     {
@@ -3380,7 +3380,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_orderconfirmationpage_test",
-      "community": 3,
+      "community": 9,
       "norm_label": "orderconfirmationpage.test.tsx"
     },
     {
@@ -3390,7 +3390,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_orderconfirmationpage_test_singleitem",
-      "community": 3,
+      "community": 9,
       "norm_label": "singleitem"
     },
     {
@@ -3400,7 +3400,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "components_orderconfirmationpage_test_multiitems",
-      "community": 3,
+      "community": 9,
       "norm_label": "multiitems"
     },
     {
@@ -3410,7 +3410,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_orderconfirmationpage",
-      "community": 3,
+      "community": 9,
       "norm_label": "orderconfirmationpage.tsx"
     },
     {
@@ -3420,7 +3420,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_orderconfirmationpage_props",
-      "community": 3,
+      "community": 9,
       "norm_label": "props"
     },
     {
@@ -3430,7 +3430,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "components_orderconfirmationpage_orderconfirmationpage",
-      "community": 3,
+      "community": 9,
       "norm_label": "orderconfirmationpage()"
     },
     {
@@ -3440,7 +3440,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_orders_hooks_index_test_ts_hooks_index_test",
-      "community": 1,
+      "community": 9,
       "norm_label": "index.test.ts"
     },
     {
@@ -3450,7 +3450,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_modules_orders_hooks_index_test_ts_hooks_index_test_makewrapper",
-      "community": 1,
+      "community": 9,
       "norm_label": "makewrapper()"
     },
     {
@@ -3470,7 +3470,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "hooks_index_orderkeys",
-      "community": 1,
+      "community": 9,
       "norm_label": "orderkeys"
     },
     {
@@ -3480,7 +3480,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "hooks_index_useorders",
-      "community": 1,
+      "community": 9,
       "norm_label": "useorders()"
     },
     {
@@ -3490,7 +3490,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "hooks_index_useadminorders",
-      "community": 3,
+      "community": 9,
       "norm_label": "useadminorders()"
     },
     {
@@ -3500,7 +3500,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "hooks_index_useorder",
-      "community": 1,
+      "community": 9,
       "norm_label": "useorder()"
     },
     {
@@ -3510,7 +3510,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "hooks_index_useupdateorderstatus",
-      "community": 3,
+      "community": 9,
       "norm_label": "useupdateorderstatus()"
     },
     {
@@ -3520,7 +3520,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "orders_index",
-      "community": 3,
+      "community": 9,
       "norm_label": "index.ts"
     },
     {
@@ -3760,7 +3760,7 @@
       "source_location": "L241",
       "_origin": "ast",
       "id": "src_routetree_gen_fileroutesbyid",
-      "community": 14,
+      "community": 37,
       "norm_label": "fileroutesbyid"
     },
     {
@@ -3910,7 +3910,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "account_account_orders_lazy",
-      "community": 1,
+      "community": 9,
       "norm_label": "account.orders.lazy.tsx"
     },
     {
@@ -3920,7 +3920,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "account_account_orders_lazy_route",
-      "community": 1,
+      "community": 9,
       "norm_label": "route"
     },
     {
@@ -3930,7 +3930,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "account_account_orders_lazy_accountorderspage",
-      "community": 1,
+      "community": 9,
       "norm_label": "accountorderspage()"
     },
     {
@@ -3940,7 +3940,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "account_account_orders_lazy_ordercard",
-      "community": 1,
+      "community": 9,
       "norm_label": "ordercard()"
     },
     {
@@ -4080,7 +4080,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "admin_admin_characters",
-      "community": 14,
+      "community": 34,
       "norm_label": "admin.characters.tsx"
     },
     {
@@ -4090,7 +4090,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "admin_admin_characters_route",
-      "community": 14,
+      "community": 34,
       "norm_label": "route"
     },
     {
@@ -4190,7 +4190,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "admin_admin_orders_lazy",
-      "community": 3,
+      "community": 9,
       "norm_label": "admin.orders.lazy.tsx"
     },
     {
@@ -4200,7 +4200,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "admin_admin_orders_lazy_route",
-      "community": 3,
+      "community": 9,
       "norm_label": "route"
     },
     {
@@ -4210,7 +4210,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "admin_admin_orders_lazy_adminorderspage",
-      "community": 3,
+      "community": 9,
       "norm_label": "adminorderspage()"
     },
     {
@@ -4360,7 +4360,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "admin_admin_products",
-      "community": 14,
+      "community": 36,
       "norm_label": "admin.products.tsx"
     },
     {
@@ -4370,7 +4370,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "admin_admin_products_route",
-      "community": 14,
+      "community": 36,
       "norm_label": "route"
     },
     {
@@ -4650,7 +4650,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "admin_admin_route",
-      "community": 14,
+      "community": 11,
       "norm_label": "route"
     },
     {
@@ -4800,7 +4800,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "cart_cart_lazy",
-      "community": 6,
+      "community": 3,
       "norm_label": "cart.lazy.tsx"
     },
     {
@@ -4810,7 +4810,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "cart_cart_lazy_route",
-      "community": 6,
+      "community": 3,
       "norm_label": "route"
     },
     {
@@ -4820,7 +4820,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "cart_cart_test",
-      "community": 3,
+      "community": 5,
       "norm_label": "cart.test.tsx"
     },
     {
@@ -4960,7 +4960,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "catalog_publisherslug_gameslug_products_productslug",
-      "community": 29,
+      "community": 2,
       "norm_label": "$publisherslug.$gameslug.products.$productslug.tsx"
     },
     {
@@ -4970,7 +4970,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "catalog_publisherslug_gameslug_products_productslug_route",
-      "community": 29,
+      "community": 14,
       "norm_label": "route"
     },
     {
@@ -4980,7 +4980,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "catalog_publisherslug_gameslug",
-      "community": 25,
+      "community": 14,
       "norm_label": "$publisherslug.$gameslug.tsx"
     },
     {
@@ -4990,7 +4990,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "catalog_publisherslug_gameslug_route",
-      "community": 25,
+      "community": 14,
       "norm_label": "route"
     },
     {
@@ -5070,7 +5070,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "catalog_publisherslug",
-      "community": 9,
+      "community": 14,
       "norm_label": "$publisherslug.tsx"
     },
     {
@@ -5080,7 +5080,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "catalog_publisherslug_route",
-      "community": 9,
+      "community": 14,
       "norm_label": "route"
     },
     {
@@ -5160,7 +5160,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "checkout_checkout",
-      "community": 31,
+      "community": 14,
       "norm_label": "checkout.tsx"
     },
     {
@@ -5170,7 +5170,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "checkout_checkout_route",
-      "community": 31,
+      "community": 14,
       "norm_label": "route"
     },
     {
@@ -5180,7 +5180,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "checkout_order_confirmation_lazy",
-      "community": 3,
+      "community": 9,
       "norm_label": "order-confirmation.lazy.tsx"
     },
     {
@@ -5190,7 +5190,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "checkout_order_confirmation_lazy_route",
-      "community": 3,
+      "community": 9,
       "norm_label": "route"
     },
     {
@@ -5200,7 +5200,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "checkout_order_confirmation_lazy_routecomponent",
-      "community": 3,
+      "community": 9,
       "norm_label": "routecomponent()"
     },
     {
@@ -5240,7 +5240,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "routes_root",
-      "community": 6,
+      "community": 3,
       "norm_label": "__root.tsx"
     },
     {
@@ -5250,7 +5250,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "routes_root_myroutercontext",
-      "community": 6,
+      "community": 3,
       "norm_label": "myroutercontext"
     },
     {
@@ -5260,7 +5260,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "routes_root_route",
-      "community": 14,
+      "community": 37,
       "norm_label": "route"
     },
     {
@@ -5270,7 +5270,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "routes_root_cartsynceffect",
-      "community": 6,
+      "community": 3,
       "norm_label": "cartsynceffect()"
     },
     {
@@ -5280,7 +5280,7 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "routes_root_rootdocument",
-      "community": 6,
+      "community": 3,
       "norm_label": "rootdocument()"
     },
     {
@@ -5470,7 +5470,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "store_cart_clearcart",
-      "community": 3,
+      "community": 12,
       "norm_label": "clearcart()"
     },
     {
@@ -5480,7 +5480,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "store_cart_setitems",
-      "community": 6,
+      "community": 3,
       "norm_label": "setitems()"
     },
     {
@@ -5510,7 +5510,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "store_cart_formatvariant",
-      "community": 13,
+      "community": 6,
       "norm_label": "formatvariant()"
     },
     {
@@ -5537,7 +5537,7 @@
       "label": "renderWithProviders()",
       "file_type": "code",
       "source_file": "src/test-utils.tsx",
-      "source_location": "L15",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "src_test_utils_renderwithproviders",
       "community": 2,
@@ -5547,21 +5547,11 @@
       "label": "renderRoute()",
       "file_type": "code",
       "source_file": "src/test-utils.tsx",
-      "source_location": "L34",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "src_test_utils_renderroute",
       "community": 5,
       "norm_label": "renderroute()"
-    },
-    {
-      "label": "expectNoA11yViolations()",
-      "file_type": "code",
-      "source_file": "src/test-utils.tsx",
-      "source_location": "L58",
-      "_origin": "ast",
-      "id": "src_test_utils_expectnoa11yviolations",
-      "community": 5,
-      "norm_label": "expectnoa11yviolations()"
     },
     {
       "label": "theme.ts",
@@ -5570,7 +5560,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_theme",
-      "community": 6,
+      "community": 3,
       "norm_label": "theme.ts"
     },
     {
@@ -5580,28 +5570,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_theme_system",
-      "community": 6,
+      "community": 3,
       "norm_label": "system"
-    },
-    {
-      "label": "vitest-axe.d.ts",
-      "file_type": "code",
-      "source_file": "src/vitest-axe.d.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_vitest_axe_d",
-      "community": 34,
-      "norm_label": "vitest-axe.d.ts"
-    },
-    {
-      "label": "Assertion",
-      "file_type": "code",
-      "source_file": "src/vitest-axe.d.ts",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "src_vitest_axe_d_assertion",
-      "community": 34,
-      "norm_label": "assertion"
     }
   ],
   "links": [
@@ -8087,17 +8057,6 @@
       "confidence_score": 1.0,
       "source": "components_globalnav_test",
       "target": "src_test_utils"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/GlobalNav.test.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_globalnav_test",
-      "target": "src_test_utils_expectnoa11yviolations",
-      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -14566,9 +14525,9 @@
       "source_file": "src/modules/catalog/hooks/index.ts",
       "source_location": "L25",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_modules_catalog_hooks_index_ts_hooks_index",
-      "target": "hooks_index_productqueryoptions"
+      "target": "hooks_index_productqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14576,9 +14535,9 @@
       "source_file": "src/modules/catalog/hooks/index.ts",
       "source_location": "L19",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_modules_catalog_hooks_index_ts_hooks_index",
-      "target": "hooks_index_productsqueryoptions"
+      "target": "hooks_index_productsqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14586,9 +14545,9 @@
       "source_file": "src/modules/catalog/hooks/index.ts",
       "source_location": "L31",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_modules_catalog_hooks_index_ts_hooks_index",
-      "target": "hooks_index_publisherqueryoptions"
+      "target": "hooks_index_publisherqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14688,9 +14647,9 @@
       "source_file": "src/modules/catalog/index.ts",
       "source_location": "L7",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_index",
-      "target": "hooks_index_productsqueryoptions"
+      "target": "hooks_index_productsqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14699,9 +14658,9 @@
       "source_file": "src/modules/catalog/hooks/index.ts",
       "source_location": "L39",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "hooks_index_useproducts",
-      "target": "hooks_index_productsqueryoptions"
+      "target": "hooks_index_productsqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -14710,9 +14669,9 @@
       "source_file": "src/routes/index.tsx",
       "source_location": "L4",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "routes_index",
-      "target": "hooks_index_productsqueryoptions"
+      "target": "hooks_index_productsqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "re_exports",
@@ -14721,9 +14680,9 @@
       "source_file": "src/modules/catalog/index.ts",
       "source_location": "L7",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_index",
-      "target": "hooks_index_productqueryoptions"
+      "target": "hooks_index_productqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -14732,9 +14691,9 @@
       "source_file": "src/routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_publisherslug_gameslug_products_productslug",
-      "target": "hooks_index_productqueryoptions"
+      "target": "hooks_index_productqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14743,9 +14702,9 @@
       "source_file": "src/modules/catalog/hooks/index.ts",
       "source_location": "L46",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "hooks_index_useproduct",
-      "target": "hooks_index_productqueryoptions"
+      "target": "hooks_index_productqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "re_exports",
@@ -14754,9 +14713,9 @@
       "source_file": "src/modules/catalog/index.ts",
       "source_location": "L7",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_index",
-      "target": "hooks_index_publisherqueryoptions"
+      "target": "hooks_index_publisherqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -14765,9 +14724,9 @@
       "source_file": "src/routes/(catalog)/$publisherSlug.$gameSlug.index.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_publisherslug_gameslug_index",
-      "target": "hooks_index_publisherqueryoptions"
+      "target": "hooks_index_publisherqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -14776,9 +14735,9 @@
       "source_file": "src/routes/(catalog)/$publisherSlug.index.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_publisherslug_index",
-      "target": "hooks_index_publisherqueryoptions"
+      "target": "hooks_index_publisherqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14787,9 +14746,9 @@
       "source_file": "src/modules/catalog/hooks/index.ts",
       "source_location": "L62",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "hooks_index_usepublisher",
-      "target": "hooks_index_publisherqueryoptions"
+      "target": "hooks_index_publisherqueryoptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "re_exports",
@@ -14875,9 +14834,9 @@
       "source_file": "src/routes/(catalog)/$publisherSlug.$gameSlug.index.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_publisherslug_gameslug_index",
-      "target": "catalog_index"
+      "target": "catalog_index",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -14897,9 +14856,9 @@
       "source_file": "src/routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_publisherslug_gameslug_products_productslug",
-      "target": "catalog_index"
+      "target": "catalog_index",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -14919,9 +14878,9 @@
       "source_file": "src/routes/(catalog)/$publisherSlug.index.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "catalog_publisherslug_index",
-      "target": "catalog_index"
+      "target": "catalog_index",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -18533,16 +18492,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/test-utils.tsx",
-      "source_location": "L58",
-      "weight": 1.0,
-      "source": "src_test_utils",
-      "target": "src_test_utils_expectnoa11yviolations",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/test-utils.tsx",
       "source_location": "L32",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -18568,18 +18517,8 @@
       "confidence_score": 1.0,
       "source": "src_theme",
       "target": "src_theme_system"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/vitest-axe.d.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "src_vitest_axe_d",
-      "target": "src_vitest_axe_d_assertion",
-      "confidence_score": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "35237251c981ae9309e8f550a922377a9a209a6b"
+  "built_at_commit": "f927e1509daf308214ce89238343c5316cdfaa15"
 }
