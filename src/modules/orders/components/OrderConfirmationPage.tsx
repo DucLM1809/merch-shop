@@ -3,14 +3,17 @@ import type { JSX } from "react";
 import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 
+import type { OrderStatus } from "@/api/types";
 import type { CartItem } from "@/store/cart";
 
 type Props = {
   orderId?: string;
+  status?: OrderStatus;
+  isResolving?: boolean;
   items: CartItem[];
 };
 
-export function OrderConfirmationPage({ orderId, items }: Props): JSX.Element {
+export function OrderConfirmationPage({ orderId, status, isResolving, items }: Props): JSX.Element {
   const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
 
   return (
@@ -27,7 +30,10 @@ export function OrderConfirmationPage({ orderId, items }: Props): JSX.Element {
                 <Box as="span" color="white" fontWeight="700">
                   {orderId}
                 </Box>
+                {status && ` (${status})`}
               </>
+            ) : isResolving ? (
+              "Confirming your order…"
             ) : (
               "We'll email your order confirmation shortly."
             )}

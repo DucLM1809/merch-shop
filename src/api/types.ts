@@ -118,6 +118,7 @@ export type Order = {
   shipping: ShippingAddress;
   total: number;
   createdAt: string;
+  stripePaymentIntentId: string;
 };
 
 export type ServerCartItem = {

@@ -91,6 +91,27 @@ describe("/checkout successful payment", () => {
     await screen.findByText(/order confirmed/i);
     expect(screen.getByText(/faker jersey/i)).toBeInTheDocument();
   });
+
+  it("resolves the order id by polling for the payment intent (merch-shop-fvg)", async () => {
+    const user = userEvent.setup();
+    mockConfirmCardPayment.mockResolvedValue({
+      paymentIntent: { status: "succeeded", id: "pi_test_001" },
+    });
+
+    addToCart({
+      skuId: "fj-s-black",
+      productId: "1",
+      productName: "Faker Jersey",
+      variant: "S / Black",
+      price: 59.99,
+    });
+    renderRoute("/checkout");
+    await fillShippingForm(user);
+    await user.click(screen.getByRole("button", { name: /pay/i }));
+
+    // MSW fixture ord_001 carries stripePaymentIntentId "pi_test_001"
+    expect(await screen.findByText("ord_001")).toBeInTheDocument();
+  });
 });
 
 // ---------------------------------------------------------------------------

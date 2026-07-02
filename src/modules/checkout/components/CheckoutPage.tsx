@@ -57,12 +57,12 @@ function CheckoutForm() {
         return;
       }
 
-      // ponytail: BE creates the order asynchronously via Stripe webhook — no
-      // client-facing lookup exists yet, so confirmation can't show an orderId.
+      // BE creates the order asynchronously via Stripe webhook — confirmation
+      // page resolves it by polling for the paymentIntentId (merch-shop-fvg).
       clearCart();
       navigate({
         to: "/order-confirmation",
-        search: { items: JSON.stringify(items) },
+        search: { paymentIntentId: result.paymentIntent.id, items: JSON.stringify(items) },
       });
     } catch {
       setPaymentError("Something went wrong. Please try again.");

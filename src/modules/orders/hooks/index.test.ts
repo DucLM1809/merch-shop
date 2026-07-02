@@ -5,7 +5,14 @@ import { describe, expect, it, vi } from "vitest";
 
 import { mockOrders } from "@/mocks/handlers";
 
-import { useOrders, useAdminOrders, useOrder, useRetryFulfillment, orderKeys } from "./index";
+import {
+  useOrders,
+  useAdminOrders,
+  useOrder,
+  useOrderByPaymentIntent,
+  useRetryFulfillment,
+  orderKeys,
+} from "./index";
 
 function makeWrapper() {
   const queryClient = new QueryClient({
@@ -65,6 +72,29 @@ describe("useOrder", () => {
     const { result } = renderHook(() => useOrder("ord_001"), { wrapper });
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data?.id).toBe("ord_001");
+  });
+});
+
+describe("useOrderByPaymentIntent", () => {
+  it("does not call client when paymentIntentId is undefined", async () => {
+    const { wrapper } = makeWrapper();
+    const { result } = renderHook(() => useOrderByPaymentIntent(undefined), { wrapper });
+    expect(result.current.fetchStatus).toBe("idle");
+    expect(result.current.data).toBeUndefined();
+  });
+
+  it("resolves the order for a matching payment intent id", async () => {
+    const { wrapper } = makeWrapper();
+    const { result } = renderHook(() => useOrderByPaymentIntent("pi_test_001"), { wrapper });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data?.id).toBe("ord_001");
+  });
+
+  it("returns null for a payment intent with no matching order yet", async () => {
+    const { wrapper } = makeWrapper();
+    const { result } = renderHook(() => useOrderByPaymentIntent("pi_unknown"), { wrapper });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toBeNull();
   });
 });
 

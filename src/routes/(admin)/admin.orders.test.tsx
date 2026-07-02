@@ -22,6 +22,7 @@ const testOrders: Order[] = [
     status: "PENDING",
     total: 59.99,
     createdAt: "2026-06-20T10:00:00Z",
+    stripePaymentIntentId: "pi_test_ord_001",
     shipping: {
       fullName: "Alex Kim",
       email: "alex@example.com",
@@ -46,6 +47,7 @@ const testOrders: Order[] = [
     status: "FORWARDED",
     total: 79.99,
     createdAt: "2026-06-22T14:30:00Z",
+    stripePaymentIntentId: "pi_test_ord_002",
     shipping: {
       fullName: "Jordan Park",
       email: "jordan@example.com",
