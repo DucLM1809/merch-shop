@@ -107,25 +107,6 @@ export type OrderLine = {
   quantity: number;
 };
 
-export type ShippingAddressDto = {
-  line1: string;
-  line2?: string;
-  city: string;
-  state?: string;
-  postalCode: string;
-  country: string;
-};
-
-export type CreateOrderRequest = {
-  buyerEmail: string;
-  stripePaymentIntentId: string;
-  shippingAddress: ShippingAddressDto;
-};
-
-export type CreateOrderResponse = {
-  orderId: string;
-};
-
 export const ORDER_STATUSES = ["PENDING", "CONFIRMED", "FORWARDED", "CANCELLED"] as const;
 
 export type OrderStatus = (typeof ORDER_STATUSES)[number];

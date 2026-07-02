@@ -4,7 +4,6 @@ import type {
   Game,
   Team,
   Character,
-  CreateOrderResponse,
   Order,
   ServerCart,
   SyncCartItem,
@@ -478,11 +477,6 @@ export const handlers = [
   }),
 
   // --- Orders ---
-  http.post(`${BASE_URL}/orders`, () => {
-    const response: CreateOrderResponse = { orderId: "ord_test_123" };
-    return HttpResponse.json(envelope(response), { status: 201 });
-  }),
-
   http.get(`${BASE_URL}/orders/mine`, (): Response => HttpResponse.json(envelope([] as Order[]))),
 
   http.get(`${BASE_URL}/orders`, (): Response => HttpResponse.json(envelope(mockOrders))),

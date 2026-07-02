@@ -70,10 +70,10 @@ describe("/checkout Stripe CardElement", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Behavior 4: Valid card → POST /orders → confirmation page with orderId + SKU summary
+// Behavior 4: Valid card → confirmation page (BE creates order via webhook) + SKU summary
 // ---------------------------------------------------------------------------
 describe("/checkout successful payment", () => {
-  it("submitting with valid fields navigates to confirmation page with orderId and clears cart", async () => {
+  it("submitting with valid fields navigates to confirmation page and clears cart", async () => {
     const user = userEvent.setup();
     mockConfirmCardPayment.mockResolvedValue({ paymentIntent: { status: "succeeded" } });
 
@@ -88,7 +88,7 @@ describe("/checkout successful payment", () => {
     await fillShippingForm(user);
     await user.click(screen.getByRole("button", { name: /pay/i }));
 
-    await screen.findByText(/ord_test_123/i);
+    await screen.findByText(/order confirmed/i);
     expect(screen.getByText(/faker jersey/i)).toBeInTheDocument();
   });
 });

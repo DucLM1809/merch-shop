@@ -3,8 +3,6 @@ import type {
   ApiResponse,
   Character,
   CreateGameDto,
-  CreateOrderRequest,
-  CreateOrderResponse,
   CreateProductDto,
   CreatePublisherDto,
   CreateCharacterDto,
@@ -189,9 +187,6 @@ export const client = {
     ),
 
   // --- Orders ---
-  createOrder: (body: CreateOrderRequest): Promise<ApiResponse<CreateOrderResponse>> =>
-    wrapEnvelope(http.post<ApiResponse<CreateOrderResponse>>("/orders", body)),
-
   getMyOrders: (): Promise<ApiResponse<Order[]>> =>
     wrapEnvelope(http.get<ApiResponse<Order[]>>("/orders/mine")),
 

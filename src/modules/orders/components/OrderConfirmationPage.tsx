@@ -1,30 +1,48 @@
-import type { JSX } from 'react'
+import type { JSX } from "react";
 
-import { Box, Button, Flex, Heading, Text, VStack } from '@chakra-ui/react'
-import { Link } from '@tanstack/react-router'
+import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Link } from "@tanstack/react-router";
 
-import type { CartItem } from '@/store/cart'
+import type { CartItem } from "@/store/cart";
 
 type Props = {
-  orderId: string
-  items: CartItem[]
-}
+  orderId?: string;
+  items: CartItem[];
+};
 
 export function OrderConfirmationPage({ orderId, items }: Props): JSX.Element {
-  const total = items.reduce((s, i) => s + i.price * i.quantity, 0)
+  const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
 
   return (
     <Box p={8} maxW="2xl" mx="auto">
       <VStack gap={6} align="stretch">
         <Box>
-          <Heading size="xl" color="white" fontWeight="800">Order Confirmed</Heading>
+          <Heading size="xl" color="white" fontWeight="800">
+            Order Confirmed
+          </Heading>
           <Text color="gray.400" mt={1} fontSize="sm">
-            Order ID: <Box as="span" color="white" fontWeight="700">{orderId}</Box>
+            {orderId ? (
+              <>
+                Order ID:{" "}
+                <Box as="span" color="white" fontWeight="700">
+                  {orderId}
+                </Box>
+              </>
+            ) : (
+              "We'll email your order confirmation shortly."
+            )}
           </Text>
         </Box>
 
         <Box>
-          <Heading size="sm" color="gray.400" fontWeight="600" textTransform="uppercase" letterSpacing="0.05em" mb={3}>
+          <Heading
+            size="sm"
+            color="gray.400"
+            fontWeight="600"
+            textTransform="uppercase"
+            letterSpacing="0.05em"
+            mb={3}
+          >
             Items Purchased
           </Heading>
           <VStack gap={2} align="stretch">
@@ -38,8 +56,12 @@ export function OrderConfirmationPage({ orderId, items }: Props): JSX.Element {
                 p={3}
               >
                 <Box>
-                  <Text color="white" fontWeight="600" fontSize="sm">{item.productName}</Text>
-                  <Text color="gray.500" fontSize="xs">{item.variant} × {item.quantity}</Text>
+                  <Text color="white" fontWeight="600" fontSize="sm">
+                    {item.productName}
+                  </Text>
+                  <Text color="gray.500" fontSize="xs">
+                    {item.variant} × {item.quantity}
+                  </Text>
                 </Box>
                 <Text color="white" fontWeight="700" fontSize="sm">
                   ${(item.price * item.quantity).toFixed(2)}
@@ -50,8 +72,12 @@ export function OrderConfirmationPage({ orderId, items }: Props): JSX.Element {
         </Box>
 
         <Flex justify="space-between" pt={4} borderTop="1px solid" borderColor="gray.700">
-          <Text color="gray.400" fontWeight="600" textTransform="uppercase" fontSize="sm">Total</Text>
-          <Text color="white" fontWeight="800" fontSize="xl">${total.toFixed(2)}</Text>
+          <Text color="gray.400" fontWeight="600" textTransform="uppercase" fontSize="sm">
+            Total
+          </Text>
+          <Text color="white" fontWeight="800" fontSize="xl">
+            ${total.toFixed(2)}
+          </Text>
         </Flex>
 
         <Button variant="outline" colorPalette="blue" asChild>
@@ -59,5 +85,5 @@ export function OrderConfirmationPage({ orderId, items }: Props): JSX.Element {
         </Button>
       </VStack>
     </Box>
-  )
+  );
 }
