@@ -86,4 +86,61 @@ describe("Product detail page", () => {
       expect(screen.getByRole("button", { name: /add to cart/i })).toBeDisabled();
     });
   });
+
+  it("sets dynamic title, meta description, and OG tags for the product", async () => {
+    renderRoute(PRODUCT_ROUTE);
+    await waitFor(() => {
+      expect(document.title).toBe("Faker Jersey | Merch Shop");
+    });
+    expect(document.head.querySelector('meta[name="description"]')).toHaveAttribute(
+      "content",
+      "Official T1 Faker jersey — lightweight performance fabric."
+    );
+    expect(document.head.querySelector('meta[property="og:title"]')).toHaveAttribute(
+      "content",
+      "Faker Jersey | Merch Shop"
+    );
+    expect(document.head.querySelector('meta[property="og:type"]')).toHaveAttribute(
+      "content",
+      "product"
+    );
+    expect(document.head.querySelector('meta[property="og:image"]')).toHaveAttribute(
+      "content",
+      "https://picsum.photos/seed/faker-jersey/400/400"
+    );
+  });
+
+  it("emits Product JSON-LD with name, price, and availability", async () => {
+    renderRoute(PRODUCT_ROUTE);
+    await waitFor(() => {
+      expect(document.head.querySelectorAll('script[type="application/ld+json"]').length).toBe(2);
+    });
+    const scripts = [...document.head.querySelectorAll('script[type="application/ld+json"]')];
+    const jsonLd = scripts.map((s) => JSON.parse(s.textContent ?? "{}"));
+    const product = jsonLd.find((entry) => entry["@type"] === "Product");
+    expect(product).toMatchObject({
+      "@type": "Product",
+      name: "Faker Jersey",
+      offers: {
+        "@type": "Offer",
+        price: 59.99,
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+      },
+    });
+  });
+
+  it("emits a BreadcrumbList JSON-LD ending with the product name", async () => {
+    renderRoute(PRODUCT_ROUTE);
+    await waitFor(() => {
+      expect(document.head.querySelectorAll('script[type="application/ld+json"]').length).toBe(2);
+    });
+    const scripts = [...document.head.querySelectorAll('script[type="application/ld+json"]')];
+    const jsonLd = scripts.map((s) => JSON.parse(s.textContent ?? "{}"));
+    const breadcrumb = jsonLd.find((entry) => entry["@type"] === "BreadcrumbList");
+    expect(breadcrumb.itemListElement.at(-1)).toMatchObject({
+      "@type": "ListItem",
+      name: "Faker Jersey",
+    });
+  });
 });
