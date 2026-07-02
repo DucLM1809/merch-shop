@@ -3,6 +3,7 @@ import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { describe, it, expect, vi } from "vitest";
 import type { UseFormRegister } from "react-hook-form";
 
+import { expectNoA11yViolations } from "@/test-utils";
 import { CheckoutFormView } from "./CheckoutFormView";
 import { schema } from "./CheckoutFormView.schema";
 import type { FormValues } from "./CheckoutFormView.schema";
@@ -22,7 +23,7 @@ function renderView(props: Partial<React.ComponentProps<typeof CheckoutFormView>
     isSubmitting: false,
     total: 59.99,
     onSubmit: vi.fn(),
-    cardSlot: <input data-testid="card-slot" readOnly />,
+    cardSlot: <input data-testid="card-slot" aria-label="Card details" readOnly />,
     ...props,
   };
   return render(
@@ -94,6 +95,11 @@ describe("CheckoutFormView default state", () => {
   it("renders card slot", () => {
     renderView();
     expect(screen.getByTestId("card-slot")).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = renderView();
+    await expectNoA11yViolations(container);
   });
 
   it("does not show payment-error by default", () => {

@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { renderWithProviders } from "@/test-utils";
+import { expectNoA11yViolations, renderWithProviders } from "@/test-utils";
 import { FormField } from "./FormField";
 
 describe("FormField", () => {
@@ -48,5 +48,14 @@ describe("FormField", () => {
       </FormField>
     );
     expect(screen.queryByText(/.+/)).toBeNull();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = renderWithProviders(
+      <FormField name="price" label="Price" error="Required">
+        <input id="price" />
+      </FormField>
+    );
+    await expectNoA11yViolations(container);
   });
 });
