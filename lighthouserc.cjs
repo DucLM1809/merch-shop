@@ -18,6 +18,9 @@ module.exports = {
         // Desktop: stable, reproducible lab numbers for this gate. Mobile/CWV
         // field data (Google's mobile-first ranking signal) is the RUM slice.
         preset: "desktop",
+        // CI runners have no sandbox namespace and tiny /dev/shm — Chrome
+        // needs both flags or it crashes on launch.
+        chromeFlags: ["--no-sandbox", "--disable-dev-shm-usage"],
       },
     },
     assert: {
