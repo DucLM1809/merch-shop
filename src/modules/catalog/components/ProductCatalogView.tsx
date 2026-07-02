@@ -130,7 +130,7 @@ function ProductCard({
     position: "relative" as const,
     borderTop: "2px solid",
     transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s",
-    role: "group",
+    className: "group",
     _hover: {
       transform: "translateY(-4px)",
       boxShadow: "0 20px 48px rgba(0,0,0,0.7)",

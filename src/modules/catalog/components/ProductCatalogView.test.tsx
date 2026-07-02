@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { renderWithProviders } from "@/test-utils";
+import { expectNoA11yViolations, renderWithProviders } from "@/test-utils";
 import { ProductCatalogView } from "./ProductCatalogView";
 import type { Product } from "@/api/types";
 
@@ -137,6 +137,18 @@ describe("ProductCatalogView", () => {
     );
     const card = screen.getByText("No Accent Product").closest("article");
     expect(card).toHaveStyle({ borderTopColor: "#1a9fff" });
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = renderWithProviders(
+      <ProductCatalogView
+        products={products}
+        isLoading={false}
+        isError={false}
+        renderLink={(product, children) => <a href={`/products/${product.slug}`}>{children}</a>}
+      />
+    );
+    await expectNoA11yViolations(container);
   });
 
   it("renders plain article cards without links when renderLink is absent", () => {
