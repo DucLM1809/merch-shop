@@ -479,10 +479,7 @@ export const handlers = [
 
   // --- Orders ---
   http.post(`${BASE_URL}/orders`, () => {
-    const response: CreateOrderResponse = {
-      orderId: "ord_test_123",
-      clientSecret: "pi_test_secret_abc",
-    };
+    const response: CreateOrderResponse = { orderId: "ord_test_123" };
     return HttpResponse.json(envelope(response), { status: 201 });
   }),
 
