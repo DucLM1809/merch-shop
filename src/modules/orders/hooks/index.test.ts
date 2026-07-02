@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { mockOrders } from "@/mocks/handlers";
 
-import { useOrders, useAdminOrders, useOrder, useUpdateOrderStatus, orderKeys } from "./index";
+import { useOrders, useAdminOrders, useOrder, useRetryFulfillment, orderKeys } from "./index";
 
 function makeWrapper() {
   const queryClient = new QueryClient({
@@ -68,12 +68,12 @@ describe("useOrder", () => {
   });
 });
 
-describe("useUpdateOrderStatus", () => {
+describe("useRetryFulfillment", () => {
   it("invalidates admin query key on success", async () => {
     const { wrapper, queryClient } = makeWrapper();
     const invalidate = vi.spyOn(queryClient, "invalidateQueries");
-    const { result } = renderHook(() => useUpdateOrderStatus(), { wrapper });
-    result.current.mutate({ id: "ord_001", status: "shipped" });
+    const { result } = renderHook(() => useRetryFulfillment(), { wrapper });
+    result.current.mutate("ord_001");
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(invalidate).toHaveBeenCalledWith({ queryKey: orderKeys.admin() });
   });

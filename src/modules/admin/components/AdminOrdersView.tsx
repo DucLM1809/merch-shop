@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 
 import type { Order, OrderStatus } from "@/api/types";
-import { useUpdateOrderStatus } from "@/modules/orders";
+import { useRetryFulfillment } from "@/modules/orders";
 
 type Props = { orders: Order[] };
 
@@ -13,12 +13,6 @@ const STATUS_COLOR: Record<OrderStatus, string> = {
   delivered: "green.400",
   cancelled: "red.400",
   refunded: "gray.400",
-};
-
-const NEXT_STEP: Partial<Record<OrderStatus, { label: string; status: OrderStatus }>> = {
-  pending: { label: "→ Processing", status: "processing" },
-  processing: { label: "→ Shipped", status: "shipped" },
-  shipped: { label: "→ Delivered", status: "delivered" },
 };
 
 const COLS = ["Order", "Customer", "Date", "Total", "Status"] as const;
@@ -34,17 +28,17 @@ function fmtDate(iso: string) {
 
 export function AdminOrdersView({ orders }: Props): React.JSX.Element {
   const [expanded, setExpanded] = useState<string | null>(null);
-  const mutation = useUpdateOrderStatus();
+  const mutation = useRetryFulfillment();
 
   if (orders.length === 0) {
     return <Text color="gray.400">No orders yet.</Text>;
   }
 
-  function act(id: string, status: OrderStatus) {
-    mutation.mutate({ id, status });
+  function retry(id: string) {
+    mutation.mutate(id);
   }
 
-  const busy = (id: string) => mutation.isPending && mutation.variables?.id === id;
+  const busy = (id: string) => mutation.isPending && mutation.variables === id;
 
   return (
     <Box border="1px solid" borderColor="gray.800" borderRadius="lg" overflow="hidden">
@@ -167,56 +161,20 @@ export function AdminOrdersView({ orders }: Props): React.JSX.Element {
                 </Box>
               </Flex>
 
-              {(NEXT_STEP[order.status] ||
-                ["pending", "processing", "shipped"].includes(order.status) ||
-                order.status === "delivered") && (
-                <HStack gap={2}>
-                  {NEXT_STEP[order.status] && (
-                    <Button
-                      size="sm"
-                      colorScheme="blue"
-                      variant="outline"
-                      loading={busy(order.id)}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        act(order.id, NEXT_STEP[order.status]!.status);
-                      }}
-                    >
-                      {NEXT_STEP[order.status]!.label}
-                    </Button>
-                  )}
-                  {(["pending", "processing", "shipped"] as OrderStatus[]).includes(
-                    order.status
-                  ) && (
-                    <Button
-                      size="sm"
-                      colorScheme="red"
-                      variant="outline"
-                      loading={busy(order.id)}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        act(order.id, "cancelled");
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  )}
-                  {order.status === "delivered" && (
-                    <Button
-                      size="sm"
-                      colorScheme="gray"
-                      variant="outline"
-                      loading={busy(order.id)}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        act(order.id, "refunded");
-                      }}
-                    >
-                      Refund
-                    </Button>
-                  )}
-                </HStack>
-              )}
+              <HStack gap={2}>
+                <Button
+                  size="sm"
+                  colorScheme="blue"
+                  variant="outline"
+                  loading={busy(order.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    retry(order.id);
+                  }}
+                >
+                  Retry Fulfillment
+                </Button>
+              </HStack>
             </Flex>
           )}
         </Box>
