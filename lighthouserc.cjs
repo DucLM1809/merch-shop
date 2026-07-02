@@ -35,6 +35,9 @@ module.exports = {
     },
     upload: {
       target: "temporary-public-storage",
+      // Posts a commit status per URL with a link to its report; set from
+      // the workflow's GITHUB_TOKEN, no extra secret needed.
+      githubToken: process.env.LHCI_GITHUB_TOKEN,
     },
   },
 };
