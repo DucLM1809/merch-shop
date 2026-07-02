@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { client } from "@/api/client";
-import type { CreateOrderRequest } from "@/api/types";
+import type { ShippingAddressDto } from "@/api/types";
 import { cartStore, clearCart } from "@/store/cart";
 import { CheckoutFormView } from "./CheckoutFormView";
 import { schema, DEFAULTS } from "./CheckoutFormView.schema";
@@ -42,37 +42,38 @@ function CheckoutForm() {
     setPaymentError(null);
 
     try {
-      const body: CreateOrderRequest = {
-        shipping: {
-          fullName: data.fullName.trim(),
-          email: data.email.trim(),
-          line1: data.line1.trim(),
-          ...(data.line2.trim() && { line2: data.line2.trim() }),
-          city: data.city.trim(),
-          state: data.state.trim(),
-          postalCode: data.postalCode.trim(),
-          country: data.country.trim(),
-        },
-        lines: items.map((i) => ({
-          skuId: i.skuId,
-          productName: i.productName,
-          variant: i.variant,
-          price: i.price,
-          quantity: i.quantity,
-        })),
-      };
       const {
-        data: { orderId, clientSecret },
-      } = await client.createOrder(body);
+        data: { id: cartId },
+      } = await client.getCart();
+      const {
+        data: { clientSecret },
+      } = await client.createPaymentIntent(cartId);
 
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: elements.getElement(CardElement)! },
       });
 
-      if (result.error) {
-        setPaymentError(result.error.message ?? "Payment failed");
+      if (result.error || !result.paymentIntent) {
+        setPaymentError(result.error?.message ?? "Payment failed");
         return;
       }
+
+      const shippingAddress: ShippingAddressDto = {
+        line1: data.line1.trim(),
+        ...(data.line2.trim() && { line2: data.line2.trim() }),
+        city: data.city.trim(),
+        state: data.state.trim(),
+        postalCode: data.postalCode.trim(),
+        country: data.country.trim(),
+      };
+
+      const {
+        data: { orderId },
+      } = await client.createOrder({
+        buyerEmail: data.email.trim(),
+        stripePaymentIntentId: result.paymentIntent.id,
+        shippingAddress,
+      });
 
       clearCart();
       navigate({

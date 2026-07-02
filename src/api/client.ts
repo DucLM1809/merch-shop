@@ -189,7 +189,6 @@ export const client = {
     ),
 
   // --- Orders ---
-  // ponytail: createOrder still uses legacy body shape; update when server cart replaces client cart
   createOrder: (body: CreateOrderRequest): Promise<ApiResponse<CreateOrderResponse>> =>
     wrapEnvelope(http.post<ApiResponse<CreateOrderResponse>>("/orders", body)),
 
