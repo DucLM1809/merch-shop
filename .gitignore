@@ -20,11 +20,11 @@ storybook-static
 *.db
 .beads-credential-key
 
-graphify-out/cost.json        # local only
-# graphify-out/cache/         # optional: commit for speed, skip to keep repo small
+graphify-out/
 
 # bv (beads viewer) local config and caches
 .bv/
+.beads/
 
 coverage/
 
