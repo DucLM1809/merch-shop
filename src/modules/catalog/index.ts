@@ -4,6 +4,7 @@ export { ProductCatalog } from "./components/ProductCatalog";
 export { ProductDetail } from "./components/ProductDetail";
 export { PublisherNav } from "./components/PublisherNav";
 export { PublisherPage } from "./components/PublisherPage";
+export { buildGameHeadMeta, buildProductHeadMeta } from "./seo";
 export {
   catalogKeys,
   productsQueryOptions,
