@@ -3,7 +3,6 @@ import {
   Box,
   Flex,
   Heading,
-  Image,
   LinkBox,
   LinkOverlay,
   SimpleGrid,
@@ -11,7 +10,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import type { Product } from "@/api/types";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { QueryError } from "@/components/QueryError";
+
+const CARD_IMAGE_WIDTH = 480;
 
 export interface ProductCatalogViewProps {
   products: Product[] | undefined;
@@ -81,8 +83,9 @@ function ProductCard({
     <Box h="52" bg="gray.800" overflow="hidden" position="relative">
       {product.imageUrl ? (
         <>
-          <Image
+          <OptimizedImage
             src={product.imageUrl}
+            width={CARD_IMAGE_WIDTH}
             alt={product.name}
             h="full"
             w="full"
