@@ -6,7 +6,6 @@ import type {
   Character,
   CreateOrderResponse,
   Order,
-  OrderStatus,
   ServerCart,
   SyncCartItem,
   SyncCartResponse,
@@ -497,11 +496,9 @@ export const handlers = [
     return HttpResponse.json(envelope(order));
   }),
 
-  http.patch(`${BASE_URL}/orders/:id/status`, async ({ params, request }) => {
-    const body = (await request.json()) as { status: OrderStatus };
+  http.post(`${BASE_URL}/orders/:id/retry-fulfillment`, ({ params }) => {
     const order = mockOrders.find((o) => o.id === params.id);
     if (!order) return new HttpResponse(null, { status: 404 });
-    order.status = body.status;
     return HttpResponse.json(envelope(order));
   }),
 ];

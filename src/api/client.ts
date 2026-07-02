@@ -12,7 +12,6 @@ import type {
   CreateTeamDto,
   Game,
   Order,
-  OrderStatus,
   PaymentIntentResponse,
   Product,
   ProductFilters,
@@ -203,6 +202,6 @@ export const client = {
   getOrder: (id: string): Promise<ApiResponse<Order>> =>
     wrapEnvelope(http.get<ApiResponse<Order>>(`/orders/${id}`)),
 
-  updateOrderStatus: (id: string, status: OrderStatus): Promise<ApiResponse<Order>> =>
-    wrapEnvelope(http.patch<ApiResponse<Order>>(`/orders/${id}/status`, { status })),
+  retryFulfillment: (id: string): Promise<ApiResponse<Order>> =>
+    wrapEnvelope(http.post<ApiResponse<Order>>(`/orders/${id}/retry-fulfillment`)),
 };

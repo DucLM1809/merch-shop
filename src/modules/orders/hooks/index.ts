@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/api/client";
-import type { OrderStatus } from "@/api/types";
 
 export const orderKeys = {
   all: ["orders"] as const,
@@ -39,11 +38,10 @@ export function useOrder(id: string, enabled = true) {
   });
 }
 
-export function useUpdateOrderStatus() {
+export function useRetryFulfillment() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, status }: { id: string; status: OrderStatus }) =>
-      client.updateOrderStatus(id, status),
+    mutationFn: (id: string) => client.retryFulfillment(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: orderKeys.admin() });
     },

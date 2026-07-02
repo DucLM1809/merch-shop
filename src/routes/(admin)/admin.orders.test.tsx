@@ -93,38 +93,24 @@ describe("/admin/orders", () => {
     expect(await screen.findByText(/no orders yet/i)).toBeInTheDocument();
   });
 
-  it("shows Cancel button for pending order when expanded", async () => {
+  it("shows Retry Fulfillment button when expanded", async () => {
     server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
 
     renderRoute("/admin/orders");
 
     const user = userEvent.setup();
     await user.click(await screen.findByText("#ord_001"));
-    expect(screen.getByRole("button", { name: /^cancel$/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /→ processing/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /retry fulfillment/i })).toBeInTheDocument();
   });
 
-  it("shows Refund button for delivered order when expanded", async () => {
+  it("Retry Fulfillment fires POST /orders/:id/retry-fulfillment", async () => {
     server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
 
-    renderRoute("/admin/orders");
-
-    const user = userEvent.setup();
-    await user.click(await screen.findByText("#ord_002"));
-    expect(screen.getByRole("button", { name: /^refund$/i })).toBeInTheDocument();
-  });
-
-  it("Cancel fires PATCH /orders/:id/status with cancelled", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
-
-    let patchedStatus: string | null = null;
-    let patchedId: string | null = null;
+    let calledId: string | null = null;
     server.use(
-      http.patch(`${BASE_URL}/orders/:id/status`, async ({ params, request }) => {
-        const body = (await request.json()) as { status: string };
-        patchedId = params.id as string;
-        patchedStatus = body.status;
-        return HttpResponse.json(envelope({ ...testOrders[0], status: body.status }));
+      http.post(`${BASE_URL}/orders/:id/retry-fulfillment`, ({ params }) => {
+        calledId = params.id as string;
+        return HttpResponse.json(envelope(testOrders[0]));
       })
     );
 
@@ -132,32 +118,8 @@ describe("/admin/orders", () => {
 
     const user = userEvent.setup();
     await user.click(await screen.findByText("#ord_001"));
-    await user.click(screen.getByRole("button", { name: /^cancel$/i }));
+    await user.click(screen.getByRole("button", { name: /retry fulfillment/i }));
 
-    await waitFor(() => {
-      expect(patchedId).toBe("ord_001");
-      expect(patchedStatus).toBe("cancelled");
-    });
-  });
-
-  it("→ Processing fires PATCH with processing status", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
-
-    let patchedStatus: string | null = null;
-    server.use(
-      http.patch(`${BASE_URL}/orders/:id/status`, async ({ request }) => {
-        const body = (await request.json()) as { status: string };
-        patchedStatus = body.status;
-        return HttpResponse.json(envelope({ ...testOrders[0], status: body.status }));
-      })
-    );
-
-    renderRoute("/admin/orders");
-
-    const user = userEvent.setup();
-    await user.click(await screen.findByText("#ord_001"));
-    await user.click(screen.getByRole("button", { name: /→ processing/i }));
-
-    await waitFor(() => expect(patchedStatus).toBe("processing"));
+    await waitFor(() => expect(calledId).toBe("ord_001"));
   });
 });
