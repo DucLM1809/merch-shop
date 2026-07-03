@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { Alert, Box, ChakraProvider } from "@chakra-ui/react";
 import { ClerkProvider, useAuth } from "@clerk/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { system } from "../theme";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
@@ -106,6 +107,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             ]}
           />
         )}
+        <SpeedInsights />
         <Scripts />
       </body>
     </html>
