@@ -4,6 +4,7 @@ import { client } from "@/api/client";
 import { catalogKeys } from "@/modules/catalog";
 
 import type {
+  BulkAvailabilityDto,
   CreateCharacterDto,
   CreateGameDto,
   CreateProductDto,
@@ -193,6 +194,16 @@ export function useDeleteSku() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => client.deleteSku(id),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+    },
+  });
+}
+
+export function useBulkSetSkuAvailability() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: BulkAvailabilityDto) => client.bulkSetSkuAvailability(body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: catalogKeys.products() });
     },
