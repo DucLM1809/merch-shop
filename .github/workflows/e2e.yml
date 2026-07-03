@@ -6,6 +6,7 @@ on:
 jobs:
   playwright:
     runs-on: ubuntu-latest
+    environment: e2e
     env:
       PLAYWRIGHT_BASE_URL: http://localhost:3000
       E2E_CLERK_EMAIL: ${{ secrets.E2E_CLERK_EMAIL }}
