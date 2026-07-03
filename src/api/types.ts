@@ -111,6 +111,12 @@ export const ORDER_STATUSES = ["PENDING", "CONFIRMED", "FORWARDED", "CANCELLED"]
 
 export type OrderStatus = (typeof ORDER_STATUSES)[number];
 
+export type AdminOrdersFilters = {
+  page?: number;
+  limit?: number;
+  status?: OrderStatus;
+};
+
 export type Order = {
   id: string;
   status: OrderStatus;

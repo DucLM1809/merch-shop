@@ -82,9 +82,9 @@ describe("/admin/orders", () => {
     renderRoute("/admin/orders");
 
     expect(await screen.findByText("#ord_001")).toBeInTheDocument();
-    expect(screen.getByText("PENDING")).toBeInTheDocument();
+    expect(screen.getByTestId("order-status-ord_001")).toHaveTextContent("PENDING");
     expect(screen.getByText("#ord_002")).toBeInTheDocument();
-    expect(screen.getByText("FORWARDED")).toBeInTheDocument();
+    expect(screen.getByTestId("order-status-ord_002")).toHaveTextContent("FORWARDED");
   });
 
   it("shows empty state when no orders", async () => {
@@ -113,6 +113,51 @@ describe("/admin/orders", () => {
     const user = userEvent.setup();
     await user.click(await screen.findByText("#ord_002"));
     expect(screen.queryByRole("button", { name: /retry fulfillment/i })).not.toBeInTheDocument();
+  });
+
+  it("filters by status via chip click", async () => {
+    server.use(
+      http.get(`${BASE_URL}/orders`, ({ request }) => {
+        const status = new URL(request.url).searchParams.get("status");
+        const data = status ? testOrders.filter((o) => o.status === status) : testOrders;
+        return HttpResponse.json({
+          success: true,
+          data,
+          meta: { total: data.length, page: 1, limit: 20 },
+        });
+      })
+    );
+
+    renderRoute("/admin/orders");
+    expect(await screen.findByText("#ord_001")).toBeInTheDocument();
+
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "FORWARDED" }));
+
+    await waitFor(() => expect(screen.queryByText("#ord_001")).not.toBeInTheDocument());
+    expect(screen.getByText("#ord_002")).toBeInTheDocument();
+  });
+
+  it("shows pagination controls and requests the next page", async () => {
+    let requestedPage: string | null = null;
+    server.use(
+      http.get(`${BASE_URL}/orders`, ({ request }) => {
+        requestedPage = new URL(request.url).searchParams.get("page");
+        return HttpResponse.json({
+          success: true,
+          data: testOrders,
+          meta: { total: 25, page: Number(requestedPage ?? 1), limit: 20 },
+        });
+      })
+    );
+
+    renderRoute("/admin/orders");
+    expect(await screen.findByText("Page 1 of 2")).toBeInTheDocument();
+
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Next" }));
+
+    await waitFor(() => expect(requestedPage).toBe("2"));
   });
 
   it("Retry Fulfillment fires POST /orders/:id/retry-fulfillment", async () => {

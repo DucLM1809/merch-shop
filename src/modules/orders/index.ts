@@ -1,6 +1,7 @@
 export { OrderConfirmationPage } from "./components/OrderConfirmationPage";
 export {
   orderKeys,
+  adminOrdersQueryOptions,
   useOrders,
   useAdminOrders,
   useOrder,
