@@ -1,5 +1,6 @@
 import axios, { type AxiosResponse } from "axios";
 import type {
+  Account,
   AdminOrdersFilters,
   ApiResponse,
   Character,
@@ -218,4 +219,11 @@ export const client = {
 
   retryFulfillment: (id: string): Promise<ApiResponse<Order>> =>
     wrapEnvelope(http.post<ApiResponse<Order>>(`/orders/${id}/retry-fulfillment`)),
+
+  // --- Account ---
+  getMyAccount: (): Promise<ApiResponse<Account>> =>
+    wrapEnvelope(http.get<ApiResponse<Account>>("/account/me")),
+
+  deleteAccount: (id: string): Promise<void> =>
+    wrap(http.delete(`/account/${id}`).then(() => undefined)),
 };

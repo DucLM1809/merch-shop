@@ -174,4 +174,13 @@ export type CreateCharacterDto = {
 
 export type PaginationMeta = { total: number; page: number; limit: number };
 
+export type AccountRole = "customer" | "admin";
+
+export type Account = {
+  id: string;
+  email: string;
+  role: AccountRole;
+  createdAt: string;
+};
+
 export type ApiResponse<T> = { success: boolean; data: T; meta: PaginationMeta };

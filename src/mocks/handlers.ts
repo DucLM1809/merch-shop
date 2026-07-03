@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 import type {
+  Account,
   Publisher,
   Game,
   Team,
@@ -240,6 +241,13 @@ export const mockOrders: Order[] = [
     ],
   },
 ];
+
+export const mockAccount: Account = {
+  id: "acc_001",
+  email: "alex@example.com",
+  role: "customer",
+  createdAt: "2026-06-01T00:00:00Z",
+};
 
 export const handlers = [
   http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(publishers))),
@@ -515,5 +523,13 @@ export const handlers = [
     const order = mockOrders.find((o) => o.id === params.id);
     if (!order) return new HttpResponse(null, { status: 404 });
     return HttpResponse.json(envelope(order));
+  }),
+
+  // --- Account ---
+  http.get(`${BASE_URL}/account/me`, () => HttpResponse.json(envelope(mockAccount))),
+
+  http.delete(`${BASE_URL}/account/:id`, ({ params }) => {
+    if (params.id !== mockAccount.id) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({ ok: true });
   }),
 ];
