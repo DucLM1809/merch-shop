@@ -1,5 +1,5 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
@@ -32,6 +32,9 @@ const config = defineConfig({
       }),
   ],
   test: {
+    // ponytail: Playwright's own *.spec.ts files live in e2e/ — keep them out of
+    // vitest's default glob so the two runners don't fight over the same files.
+    exclude: [...configDefaults.exclude, "e2e/**"],
     coverage: {
       provider: "v8",
       exclude: ["**/*.test.{ts,tsx}", "**/mocks/**", "src/routeTree.gen.ts", "src/test-setup.tsx"],
