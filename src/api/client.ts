@@ -208,14 +208,12 @@ export const client = {
 
   // 404 means the webhook hasn't created the order yet.
   getOrderByPaymentIntent: (paymentIntentId: string): Promise<Order | null> =>
-    wrap(
-      http
-        .get<ApiResponse<Order>>(`/orders/by-payment-intent/${paymentIntentId}`)
-        .then((r) => r.data.data)
-    ).catch((err) => {
-      if (err instanceof ApiError && err.status === 404) return null;
-      throw err;
-    }),
+    wrapEnvelope(http.get<ApiResponse<Order>>(`/orders/by-payment-intent/${paymentIntentId}`))
+      .then((envelope) => envelope.data)
+      .catch((err) => {
+        if (err instanceof ApiError && err.status === 404) return null;
+        throw err;
+      }),
 
   retryFulfillment: (id: string): Promise<ApiResponse<Order>> =>
     wrapEnvelope(http.post<ApiResponse<Order>>(`/orders/${id}/retry-fulfillment`)),

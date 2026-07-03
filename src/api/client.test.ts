@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { http, HttpResponse } from "msw";
 import { server } from "../mocks/server";
 import { client, BASE_URL } from "./client";
-import type { PaginationMeta } from "./types";
+import type { Order, PaginationMeta } from "./types";
 
 const META: PaginationMeta = { total: 6, page: 1, limit: 20 };
 const envelope = <T>(data: T, total = 6) => ({ success: true, data, meta: { ...META, total } });
@@ -66,6 +66,59 @@ describe("API client", () => {
     await expect(client.getProducts()).rejects.toMatchObject({
       name: "ApiError",
       status: 500,
+    });
+  });
+});
+
+describe("API client - getOrderByPaymentIntent", () => {
+  const MOCK_ORDER: Order = {
+    id: "order-1",
+    status: "CONFIRMED",
+    lines: [],
+    shipping: {
+      fullName: "Faker",
+      email: "faker@example.com",
+      line1: "1 Rift Ave",
+      city: "Seoul",
+      state: "Seoul",
+      postalCode: "00000",
+      country: "KR",
+    },
+    total: 49,
+    createdAt: "2026-07-03T00:00:00.000Z",
+    stripePaymentIntentId: "pi_123",
+  };
+
+  it("returns the order on a success envelope", async () => {
+    server.use(
+      http.get(`${BASE_URL}/orders/by-payment-intent/pi_123`, () =>
+        HttpResponse.json({ success: true, data: MOCK_ORDER })
+      )
+    );
+
+    await expect(client.getOrderByPaymentIntent("pi_123")).resolves.toEqual(MOCK_ORDER);
+  });
+
+  it("returns null on 404 (webhook hasn't created the order yet)", async () => {
+    server.use(
+      http.get(
+        `${BASE_URL}/orders/by-payment-intent/pi_pending`,
+        () => new HttpResponse(null, { status: 404 })
+      )
+    );
+
+    await expect(client.getOrderByPaymentIntent("pi_pending")).resolves.toBeNull();
+  });
+
+  it("throws instead of returning data when envelope success is false", async () => {
+    server.use(
+      http.get(`${BASE_URL}/orders/by-payment-intent/pi_bad`, () =>
+        HttpResponse.json({ success: false, data: MOCK_ORDER })
+      )
+    );
+
+    await expect(client.getOrderByPaymentIntent("pi_bad")).rejects.toMatchObject({
+      name: "ApiError",
     });
   });
 });
