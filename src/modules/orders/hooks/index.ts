@@ -1,15 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/api/client";
+import type { AdminOrdersFilters } from "@/api/types";
 
 export const orderKeys = {
   all: ["orders"] as const,
   mine: () => [...orderKeys.all, "mine"] as const,
-  admin: () => [...orderKeys.all, "admin"] as const,
+  admin: (filters?: AdminOrdersFilters) => [...orderKeys.all, "admin", filters] as const,
   detail: (id: string) => [...orderKeys.all, "detail", id] as const,
   byPaymentIntent: (paymentIntentId: string) =>
     [...orderKeys.all, "by-payment-intent", paymentIntentId] as const,
 };
+
+// Unselected query options, shared between route loaders (SSR prefetch) and hooks (CSR read).
+export const adminOrdersQueryOptions = (filters?: AdminOrdersFilters) =>
+  queryOptions({
+    queryKey: orderKeys.admin(filters),
+    queryFn: () => client.getAdminOrders(filters),
+  });
 
 export function useOrders(enabled = true) {
   const result = useQuery({
@@ -21,12 +29,11 @@ export function useOrders(enabled = true) {
   return { ...result, error: result.error };
 }
 
-export function useAdminOrders(enabled = true) {
+export function useAdminOrders(filters?: AdminOrdersFilters, enabled = true) {
   const result = useQuery({
-    queryKey: orderKeys.admin(),
-    queryFn: () => client.getAdminOrders(),
+    ...adminOrdersQueryOptions(filters),
     enabled,
-    select: (r) => r.data,
+    select: (r) => ({ orders: r.data, meta: r.meta }),
   });
   return { ...result, error: result.error };
 }

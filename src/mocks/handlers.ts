@@ -482,7 +482,22 @@ export const handlers = [
   // --- Orders ---
   http.get(`${BASE_URL}/orders/mine`, (): Response => HttpResponse.json(envelope([] as Order[]))),
 
-  http.get(`${BASE_URL}/orders`, (): Response => HttpResponse.json(envelope(mockOrders))),
+  http.get(`${BASE_URL}/orders`, ({ request }): Response => {
+    const url = new URL(request.url);
+    const status = url.searchParams.get("status");
+    const page = Number(url.searchParams.get("page") ?? 1);
+    const limit = Number(url.searchParams.get("limit") ?? 20);
+
+    const filtered = status ? mockOrders.filter((o) => o.status === status) : mockOrders;
+    const start = (page - 1) * limit;
+    const data = filtered.slice(start, start + limit);
+
+    return HttpResponse.json({
+      success: true,
+      data,
+      meta: { total: filtered.length, page, limit },
+    });
+  }),
 
   http.get(`${BASE_URL}/orders/:id`, ({ params }) => {
     const order = mockOrders.find((o) => o.id === params.id);

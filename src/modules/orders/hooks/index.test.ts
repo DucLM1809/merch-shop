@@ -46,7 +46,7 @@ describe("useOrders", () => {
 describe("useAdminOrders", () => {
   it("does not call client when enabled=false", async () => {
     const { wrapper } = makeWrapper();
-    const { result } = renderHook(() => useAdminOrders(false), { wrapper });
+    const { result } = renderHook(() => useAdminOrders(undefined, false), { wrapper });
     expect(result.current.fetchStatus).toBe("idle");
     expect(result.current.data).toBeUndefined();
   });
@@ -55,7 +55,15 @@ describe("useAdminOrders", () => {
     const { wrapper } = makeWrapper();
     const { result } = renderHook(() => useAdminOrders(), { wrapper });
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(result.current.data).toEqual(mockOrders);
+    expect(result.current.data?.orders).toEqual(mockOrders);
+    expect(result.current.data?.meta.total).toBe(mockOrders.length);
+  });
+
+  it("sends page/limit/status filters as query params", async () => {
+    const { wrapper } = makeWrapper();
+    const { result } = renderHook(() => useAdminOrders({ status: "FORWARDED" }), { wrapper });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data?.orders.every((o) => o.status === "FORWARDED")).toBe(true);
   });
 });
 

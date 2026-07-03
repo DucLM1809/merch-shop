@@ -91,6 +91,7 @@ export function AdminOrdersView({ orders }: Props): React.JSX.Element {
             </Text>
             <Box flex={1.5}>
               <Text
+                data-testid={`order-status-${order.id}`}
                 display="inline"
                 fontSize="xs"
                 fontWeight="700"

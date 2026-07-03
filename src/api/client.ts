@@ -1,5 +1,6 @@
 import axios, { type AxiosResponse } from "axios";
 import type {
+  AdminOrdersFilters,
   ApiResponse,
   Character,
   CreateGameDto,
@@ -190,8 +191,16 @@ export const client = {
   getMyOrders: (): Promise<ApiResponse<Order[]>> =>
     wrapEnvelope(http.get<ApiResponse<Order[]>>("/orders/mine")),
 
-  getAdminOrders: (): Promise<ApiResponse<Order[]>> =>
-    wrapEnvelope(http.get<ApiResponse<Order[]>>("/orders")),
+  getAdminOrders: (filters?: AdminOrdersFilters): Promise<ApiResponse<Order[]>> =>
+    wrapEnvelope(
+      http.get<ApiResponse<Order[]>>("/orders", {
+        params: {
+          ...(filters?.page && { page: filters.page }),
+          ...(filters?.limit && { limit: filters.limit }),
+          ...(filters?.status && { status: filters.status }),
+        },
+      })
+    ),
 
   getOrder: (id: string): Promise<ApiResponse<Order>> =>
     wrapEnvelope(http.get<ApiResponse<Order>>(`/orders/${id}`)),
