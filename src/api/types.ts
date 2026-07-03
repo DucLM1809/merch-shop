@@ -68,6 +68,14 @@ export type CreateSkuDto = {
   edition?: string;
 };
 
+export type SkuFacet = "game" | "team" | "character";
+
+export type BulkAvailabilityDto = {
+  facet: SkuFacet;
+  facetId: string;
+  available: boolean;
+};
+
 export type CreateProductDto = {
   name: string;
   slug: string;

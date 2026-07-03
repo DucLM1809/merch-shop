@@ -138,6 +138,33 @@ describe("/admin/skus", () => {
     await waitFor(() => expect(patched).toBe(true));
   });
 
+  it("bulk apply fires PATCH /skus/availability/bulk", async () => {
+    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
+    mockUseUser.mockReturnValue(userCtx(adminUser));
+    server.use(
+      http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
+    );
+
+    let patchedBody: unknown = null;
+    server.use(
+      http.patch(`${BASE_URL}/skus/availability/bulk`, async ({ request }) => {
+        patchedBody = await request.json();
+        return HttpResponse.json({ ok: true });
+      })
+    );
+
+    renderRoute("/admin/skus");
+
+    const user = userEvent.setup();
+    await screen.findByRole("option", { name: "League of Legends" });
+    await user.selectOptions(screen.getByLabelText("Facet value"), "lol");
+    await user.click(screen.getByRole("button", { name: /^apply$/i }));
+
+    await waitFor(() =>
+      expect(patchedBody).toEqual({ facet: "game", facetId: "lol", available: true })
+    );
+  });
+
   it("delete fires DELETE /skus/:id", async () => {
     mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
     mockUseUser.mockReturnValue(userCtx(adminUser));

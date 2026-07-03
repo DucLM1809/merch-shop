@@ -3,6 +3,7 @@ import type {
   Account,
   AdminOrdersFilters,
   ApiResponse,
+  BulkAvailabilityDto,
   Character,
   CreateGameDto,
   CreateProductDto,
@@ -165,6 +166,9 @@ export const client = {
     wrapEnvelope(http.patch<ApiResponse<SKU>>(`/skus/${id}/availability`, { available })),
 
   deleteSku: (id: string): Promise<void> => wrap(http.delete(`/skus/${id}`).then(() => undefined)),
+
+  bulkSetSkuAvailability: (body: BulkAvailabilityDto): Promise<void> =>
+    wrap(http.patch(`/skus/availability/bulk`, body).then(() => undefined)),
 
   // --- Cart ---
   getCart: (): Promise<ApiResponse<ServerCart>> =>

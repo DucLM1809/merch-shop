@@ -448,6 +448,19 @@ export const handlers = [
 
   http.delete(`${BASE_URL}/skus/:id`, () => HttpResponse.json({ ok: true })),
 
+  http.patch(`${BASE_URL}/skus/availability/bulk`, async ({ request }) => {
+    const body = (await request.json()) as {
+      facet: "game" | "team" | "character";
+      facetId: string;
+      available: boolean;
+    };
+    const facetKey = { game: "gameId", team: "teamId", character: "characterId" }[body.facet];
+    products
+      .filter((p) => p[facetKey as keyof RawProduct] === body.facetId)
+      .forEach((p) => p.skus?.forEach((s) => (s.available = body.available)));
+    return HttpResponse.json({ ok: true });
+  }),
+
   http.get(`${BASE_URL}/skus`, ({ request }) => {
     const url = new URL(request.url);
     const productId = url.searchParams.get("productId");
