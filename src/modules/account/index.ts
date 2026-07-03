@@ -1,1 +1,2 @@
-export { AuthPageView } from './components/AuthPageView'
+export { AuthPageView } from "./components/AuthPageView";
+export { accountKeys, useAccount, useDeleteAccount } from "./hooks";
