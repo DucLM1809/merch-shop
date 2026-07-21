@@ -1,5 +1,5 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
@@ -47,6 +47,9 @@ const config = defineConfig({
           name: "unit",
           environment: "jsdom",
           setupFiles: ["./src/test-setup.tsx"],
+          // Playwright specs in e2e/ own a separate runner (playwright.config.ts);
+          // keep them out of the Vitest unit project.
+          exclude: [...configDefaults.exclude, "e2e/**"],
         },
       },
       {
