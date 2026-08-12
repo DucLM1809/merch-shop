@@ -1,33 +1,20 @@
 import "@testing-library/jest-dom/vitest";
-import { vi, afterAll, afterEach, beforeAll, expect } from "vitest";
+import { afterAll, afterEach, beforeAll, expect } from "vitest";
 import { cleanup, configure } from "@testing-library/react";
 import * as axeMatchers from "vitest-axe/matchers";
 import { server } from "./mocks/server";
+import { resetAuthMockState } from "./mocks/handlers";
+import { authStore } from "./store/authToken";
 
 configure({ asyncUtilTimeout: 5000 });
 
 expect.extend(axeMatchers);
 
-vi.mock("@clerk/react", () => ({
-  ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  useAuth: vi.fn(() => ({ isLoaded: true, isSignedIn: false })),
-  useUser: vi.fn(() => ({ user: null })),
-  useClerk: vi.fn(() => ({ signOut: vi.fn() })),
-  SignIn: ({ fallbackRedirectUrl }: { fallbackRedirectUrl?: string }) => (
-    <div data-testid="clerk-sign-in" data-redirect-url={fallbackRedirectUrl ?? ""}>
-      Sign In Form
-    </div>
-  ),
-  SignUp: ({ fallbackRedirectUrl }: { fallbackRedirectUrl?: string }) => (
-    <div data-testid="clerk-sign-up" data-redirect-url={fallbackRedirectUrl ?? ""}>
-      Sign Up Form
-    </div>
-  ),
-}));
-
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 afterEach(() => {
   server.resetHandlers();
+  resetAuthMockState();
+  authStore.setState(() => ({ accessToken: null, isLoaded: false, isSignedIn: false }));
   cleanup();
 });
 afterAll(() => server.close());

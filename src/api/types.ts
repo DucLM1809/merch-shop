@@ -192,3 +192,15 @@ export type Account = {
 };
 
 export type ApiResponse<T> = { success: boolean; data: T; meta: PaginationMeta };
+
+export type RegisterDto = { email: string; password: string };
+
+export type LoginDto = { email: string; password: string };
+
+export type ForgotPasswordDto = { email: string };
+
+export type ResetPasswordDto = { token: string; newPassword: string };
+
+export type VerifyEmailDto = { token: string };
+
+export type AuthTokenResponse = { accessToken: string };

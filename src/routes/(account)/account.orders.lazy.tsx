@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-import { useAuth } from "@clerk/react";
 import { Box, Heading, Text, VStack } from "@chakra-ui/react";
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 
 import type { Order } from "@/api/types";
+import { useAuth } from "@/modules/account";
 import { useOrders } from "@/modules/orders";
 
 export const Route = createLazyFileRoute("/(account)/account/orders")({

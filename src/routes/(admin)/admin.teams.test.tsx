@@ -10,18 +10,7 @@ import { envelope } from "../../mocks/handlers";
 
 import type { Game, Team } from "../../api/types";
 
-import { useAuth, useUser } from "@clerk/react";
-import {
-  adminUser,
-  buyerUser,
-  AUTH_SIGNED_OUT,
-  AUTH_SIGNED_IN,
-  USER_SIGNED_OUT,
-  userCtx,
-} from "../../mocks/fixtures";
-
-const mockUseAuth = vi.mocked(useAuth);
-const mockUseUser = vi.mocked(useUser);
+import { adminAccount, buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 
 const mockGames: Game[] = [
   { id: "lol", slug: "league-of-legends", name: "League of Legends", publisherId: "riot" },
@@ -39,8 +28,6 @@ beforeEach(() => {
 
 describe("/admin/teams", () => {
   it("redirects unauthenticated user to /sign-in", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
     const { router } = renderRoute("/admin/teams");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/sign-in");
@@ -48,8 +35,7 @@ describe("/admin/teams", () => {
   });
 
   it("redirects signed-in non-admin to /", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(buyerUser));
+    mockSignedIn(buyerAccount);
     const { router } = renderRoute("/admin/teams");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
@@ -57,8 +43,7 @@ describe("/admin/teams", () => {
   });
 
   it("renders team rows for admin user", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
 
     renderRoute("/admin/teams");
@@ -68,8 +53,7 @@ describe("/admin/teams", () => {
   });
 
   it("shows empty state when no teams", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/teams");
@@ -78,8 +62,7 @@ describe("/admin/teams", () => {
   });
 
   it("create form fires POST /teams", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope([]))));
 
     let posted = false;
@@ -104,8 +87,7 @@ describe("/admin/teams", () => {
   });
 
   it("edit form fires PATCH /teams/:id", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
 
     let patched = false;
@@ -130,8 +112,7 @@ describe("/admin/teams", () => {
   });
 
   it("delete fires DELETE /teams/:id", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
 
     let deleted = false;

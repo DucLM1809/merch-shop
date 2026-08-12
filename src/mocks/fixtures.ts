@@ -1,38 +1,30 @@
-import { useAuth, useUser } from "@clerk/react";
+import { http, HttpResponse } from "msw";
 
-// ponytail: as unknown casts valid at test mock boundary — Clerk types require full objects not needed in tests
-export const adminUser = {
-  firstName: "Admin",
-  emailAddresses: [{ emailAddress: "admin@test.com" }],
-  publicMetadata: { role: "admin" },
+import { BASE_URL } from "../api/client";
+import type { Account } from "../api/types";
+import { envelope } from "./handlers";
+import { server } from "./server";
+
+export const adminAccount: Account = {
+  id: "acc_admin",
+  email: "admin@test.com",
+  role: "admin",
+  createdAt: "2026-01-01T00:00:00Z",
 };
 
-export const buyerUser = {
-  firstName: "Buyer",
-  emailAddresses: [{ emailAddress: "buyer@test.com" }],
-  publicMetadata: { role: "buyer" },
+export const buyerAccount: Account = {
+  id: "acc_buyer",
+  email: "buyer@test.com",
+  role: "customer",
+  createdAt: "2026-01-01T00:00:00Z",
 };
 
-export const fakerUser = {
-  firstName: "Faker",
-  emailAddresses: [{ emailAddress: "faker@t1.gg" }],
-};
-
-export const AUTH_SIGNED_OUT = {
-  isLoaded: true,
-  isSignedIn: false,
-} as unknown as ReturnType<typeof useAuth>;
-
-export const AUTH_SIGNED_IN = {
-  isLoaded: true,
-  isSignedIn: true,
-} as unknown as ReturnType<typeof useAuth>;
-
-export const USER_SIGNED_OUT = {
-  isLoaded: true,
-  isSignedIn: false,
-  user: null,
-} as unknown as ReturnType<typeof useUser>;
-
-export const userCtx = (user: object) =>
-  ({ isLoaded: true, isSignedIn: true, user }) as unknown as ReturnType<typeof useUser>;
+/** Override the auth MSW handlers so bootstrapAuth() resolves as signed in with the given account. */
+export function mockSignedIn(account: Account = buyerAccount): void {
+  server.use(
+    http.post(`${BASE_URL}/auth/refresh`, () =>
+      HttpResponse.json(envelope({ accessToken: "mock-access-token" }))
+    ),
+    http.get(`${BASE_URL}/account/me`, () => HttpResponse.json(envelope(account)))
+  );
+}

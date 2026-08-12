@@ -1,28 +1,11 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { renderRoute } from "../../test-utils";
-
-import { useAuth, useUser } from "@clerk/react";
-import {
-  fakerUser,
-  AUTH_SIGNED_OUT,
-  AUTH_SIGNED_IN,
-  USER_SIGNED_OUT,
-  userCtx,
-} from "../../mocks/fixtures";
-
-const mockUseAuth = vi.mocked(useAuth);
-const mockUseUser = vi.mocked(useUser);
-
-beforeEach(() => {
-  vi.clearAllMocks();
-});
+import { buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 
 describe("GlobalNav auth state", () => {
   it("shows sign-in and sign-up links when guest", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
-
     renderRoute("/");
 
     expect(await screen.findByTestId("nav-guest-links")).toBeInTheDocument();
@@ -32,72 +15,43 @@ describe("GlobalNav auth state", () => {
   });
 
   it("shows account menu and hides guest links when signed in", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(fakerUser));
+    mockSignedIn(buyerAccount);
 
     renderRoute("/");
 
     expect(await screen.findByTestId("nav-account-menu")).toBeInTheDocument();
-    expect(screen.getByText("Faker")).toBeInTheDocument();
+    expect(screen.getByText(buyerAccount.email)).toBeInTheDocument();
     expect(screen.queryByTestId("nav-guest-links")).not.toBeInTheDocument();
   });
 });
 
 describe("/sign-in route", () => {
-  it("renders Clerk SignIn component", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
-
+  it("renders the sign-in form", async () => {
     renderRoute("/sign-in");
 
-    expect(await screen.findByTestId("clerk-sign-in")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: /sign in/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   });
 
-  it("passes fallbackRedirectUrl=/ to SignIn", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
-
-    renderRoute("/sign-in");
-
-    expect(await screen.findByTestId("clerk-sign-in")).toHaveAttribute("data-redirect-url", "/");
-  });
-
-  it("redirects to / when already signed in", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(fakerUser));
-
+  it("signs in and redirects to / on valid credentials", async () => {
+    const user = userEvent.setup();
     const { router } = renderRoute("/sign-in");
+
+    await screen.findByRole("heading", { name: /sign in/i });
+    await user.type(screen.getByLabelText(/email/i), "buyer@test.com");
+    await user.type(screen.getByLabelText(/password/i), "correct-horse-battery-staple");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     });
   });
-});
-
-describe("/sign-up route", () => {
-  it("renders Clerk SignUp component", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
-
-    renderRoute("/sign-up");
-
-    expect(await screen.findByTestId("clerk-sign-up")).toBeInTheDocument();
-  });
-
-  it("passes fallbackRedirectUrl=/ to SignUp", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
-
-    renderRoute("/sign-up");
-
-    expect(await screen.findByTestId("clerk-sign-up")).toHaveAttribute("data-redirect-url", "/");
-  });
 
   it("redirects to / when already signed in", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(fakerUser));
+    mockSignedIn(buyerAccount);
 
-    const { router } = renderRoute("/sign-up");
+    const { router } = renderRoute("/sign-in");
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");

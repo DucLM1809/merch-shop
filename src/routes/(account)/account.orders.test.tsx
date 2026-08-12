@@ -1,23 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
 import { envelope } from "../../mocks/handlers";
+import { buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 import type { Order } from "../../api/types";
-
-import { useAuth, useUser } from "@clerk/react";
-import {
-  fakerUser,
-  AUTH_SIGNED_OUT,
-  AUTH_SIGNED_IN,
-  USER_SIGNED_OUT,
-  userCtx,
-} from "../../mocks/fixtures";
-
-const mockUseAuth = vi.mocked(useAuth);
-const mockUseUser = vi.mocked(useUser);
 
 const twoOrders: Order[] = [
   {
@@ -72,14 +61,8 @@ const twoOrders: Order[] = [
   },
 ];
 
-beforeEach(() => {
-  vi.clearAllMocks();
-});
-
 describe("/account/orders", () => {
   it("redirects guest to /sign-in", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
     const { router } = renderRoute("/account/orders");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/sign-in");
@@ -87,8 +70,7 @@ describe("/account/orders", () => {
   });
 
   it("renders two seeded orders for authenticated buyer", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(fakerUser));
+    mockSignedIn(buyerAccount);
     server.use(http.get(`${BASE_URL}/orders/mine`, () => HttpResponse.json(envelope(twoOrders))));
 
     renderRoute("/account/orders");
@@ -100,8 +82,7 @@ describe("/account/orders", () => {
   });
 
   it("shows empty state when buyer has no orders", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(fakerUser));
+    mockSignedIn(buyerAccount);
 
     renderRoute("/account/orders");
 

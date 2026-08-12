@@ -10,18 +10,7 @@ import { envelope } from "../../mocks/handlers";
 
 import type { Product, SKU } from "../../api/types";
 
-import { useAuth, useUser } from "@clerk/react";
-import {
-  adminUser,
-  buyerUser,
-  AUTH_SIGNED_OUT,
-  AUTH_SIGNED_IN,
-  USER_SIGNED_OUT,
-  userCtx,
-} from "../../mocks/fixtures";
-
-const mockUseAuth = vi.mocked(useAuth);
-const mockUseUser = vi.mocked(useUser);
+import { adminAccount, buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 
 const twoSkus: SKU[] = [
   { id: "sku-1", price: 49.99, available: true, size: "M", color: "Black" },
@@ -46,8 +35,6 @@ beforeEach(() => {
 
 describe("/admin/skus", () => {
   it("redirects unauthenticated user to /sign-in", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
     const { router } = renderRoute("/admin/skus");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/sign-in");
@@ -55,8 +42,7 @@ describe("/admin/skus", () => {
   });
 
   it("redirects signed-in non-admin to /", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(buyerUser));
+    mockSignedIn(buyerAccount);
     const { router } = renderRoute("/admin/skus");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
@@ -64,8 +50,7 @@ describe("/admin/skus", () => {
   });
 
   it("renders SKU rows for admin user", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(
       http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
     );
@@ -78,8 +63,7 @@ describe("/admin/skus", () => {
   });
 
   it("shows empty state when no SKUs", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/skus");
@@ -88,8 +72,7 @@ describe("/admin/skus", () => {
   });
 
   it("create form fires POST /skus", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(
       http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
     );
@@ -115,8 +98,7 @@ describe("/admin/skus", () => {
   });
 
   it("availability toggle fires PATCH /skus/:id/availability", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(
       http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
     );
@@ -139,8 +121,7 @@ describe("/admin/skus", () => {
   });
 
   it("bulk apply fires PATCH /skus/availability/bulk", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(
       http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
     );
@@ -166,8 +147,7 @@ describe("/admin/skus", () => {
   });
 
   it("delete fires DELETE /skus/:id", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(
       http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
     );

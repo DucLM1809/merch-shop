@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 
-import { SignUp, useAuth } from "@clerk/react";
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 
-import { AuthPageView } from "@/modules/account";
+import { AuthPageView, SignUpForm, useAuth } from "@/modules/account";
 
 export const Route = createLazyFileRoute("/(auth)/sign-up")({
   component: SignUpPage,
@@ -21,7 +20,7 @@ function SignUpPage() {
 
   return (
     <AuthPageView>
-      <SignUp routing="path" path="/sign-up" fallbackRedirectUrl="/" />
+      <SignUpForm />
     </AuthPageView>
   );
 }

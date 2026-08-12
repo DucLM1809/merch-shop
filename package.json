@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^3.36.0",
-    "@clerk/react": "^6.10.4",
+    "@emotion/react": "^11.14.0",
     "@faker-js/faker": "^10.3.0",
     "@fontsource-variable/geist": "^5.2.9",
     "@hookform/resolvers": "^5.4.0",

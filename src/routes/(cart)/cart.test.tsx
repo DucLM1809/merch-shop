@@ -1,13 +1,13 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
-import { useAuth } from "@clerk/react";
 import { renderRoute } from "../../test-utils";
 import { addToCart, clearCart, updateQuantity } from "../../store/cart";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
 import { envelope } from "../../mocks/handlers";
+import { buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 import type { SyncCartResponse } from "../../api/types";
 
 beforeEach(() => clearCart());
@@ -56,9 +56,7 @@ describe("/cart route", () => {
   });
 
   it("clears sessionStorage guest cart after successful sync", async () => {
-    vi.mocked(useAuth).mockReturnValue({ isLoaded: true, isSignedIn: true } as ReturnType<
-      typeof useAuth
-    >);
+    mockSignedIn(buyerAccount);
     addToCart({
       skuId: "fj-s-black",
       productId: "1",
@@ -128,9 +126,7 @@ describe("cart merge on sign-in", () => {
       })
     );
 
-    vi.mocked(useAuth).mockReturnValue({ isLoaded: true, isSignedIn: true } as ReturnType<
-      typeof useAuth
-    >);
+    mockSignedIn(buyerAccount);
 
     renderRoute("/cart");
 
@@ -156,9 +152,7 @@ describe("cart merge on sign-in", () => {
 
     server.use(http.post(`${BASE_URL}/cart/sync`, () => new HttpResponse(null, { status: 500 })));
 
-    vi.mocked(useAuth).mockReturnValue({ isLoaded: true, isSignedIn: true } as ReturnType<
-      typeof useAuth
-    >);
+    mockSignedIn(buyerAccount);
 
     renderRoute("/cart");
 

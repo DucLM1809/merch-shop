@@ -10,8 +10,14 @@ import type {
   SyncCartItem,
   SyncCartResponse,
   PaymentIntentResponse,
+  LoginDto,
+  RegisterDto,
+  ResetPasswordDto,
+  VerifyEmailDto,
 } from "../api/types";
 import { BASE_URL } from "../api/client";
+
+export const VALID_TOKEN = "valid-token";
 
 interface RawProduct {
   id: string;
@@ -249,7 +255,47 @@ export const mockAccount: Account = {
   createdAt: "2026-06-01T00:00:00Z",
 };
 
+const registeredEmails = new Set<string>();
+
+export function resetAuthMockState(): void {
+  registeredEmails.clear();
+}
+
 export const handlers = [
+  // --- Auth ---
+  // Guest by default — tests that need a signed-in session override /auth/refresh
+  // and /account/me via mocks/fixtures.ts's mockSignedIn().
+  http.post(`${BASE_URL}/auth/register`, async ({ request }) => {
+    const body = (await request.json()) as RegisterDto;
+    if (registeredEmails.has(body.email)) return new HttpResponse(null, { status: 409 });
+    registeredEmails.add(body.email);
+    return new HttpResponse(null, { status: 201 });
+  }),
+
+  http.post(`${BASE_URL}/auth/login`, async ({ request }) => {
+    const body = (await request.json()) as LoginDto;
+    if (!body.email || !body.password) return new HttpResponse(null, { status: 401 });
+    return HttpResponse.json(envelope({ accessToken: "mock-access-token" }));
+  }),
+
+  http.post(`${BASE_URL}/auth/refresh`, () => new HttpResponse(null, { status: 401 })),
+
+  http.post(`${BASE_URL}/auth/logout`, () => HttpResponse.json({ success: true })),
+
+  http.post(`${BASE_URL}/auth/forgot-password`, () => HttpResponse.json({ success: true })),
+
+  http.post(`${BASE_URL}/auth/reset-password`, async ({ request }) => {
+    const body = (await request.json()) as ResetPasswordDto;
+    if (body.token !== VALID_TOKEN) return new HttpResponse(null, { status: 400 });
+    return HttpResponse.json({ success: true });
+  }),
+
+  http.post(`${BASE_URL}/auth/verify-email`, async ({ request }) => {
+    const body = (await request.json()) as VerifyEmailDto;
+    if (body.token !== VALID_TOKEN) return new HttpResponse(null, { status: 400 });
+    return HttpResponse.json({ success: true });
+  }),
+
   http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(publishers))),
 
   http.get(`${BASE_URL}/publishers/:slug`, ({ params }) => {

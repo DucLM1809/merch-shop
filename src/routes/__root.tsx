@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { Alert, Box, ChakraProvider } from "@chakra-ui/react";
-import { ClerkProvider, useAuth } from "@clerk/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { system } from "../theme";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
@@ -10,7 +10,9 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import { GlobalNav } from "../components/GlobalNav";
 import { env } from "../env";
+import { bootstrapAuth, useAuth } from "../modules/account";
 import { cartStore } from "../store/cart";
+import { registerHardSignOutHandler } from "../store/authToken";
 import { useCartSync } from "../modules/cart";
 
 import appCss from "../styles.css?url";
@@ -71,6 +73,17 @@ function CartSyncEffect() {
   );
 }
 
+function AuthBootstrapEffect() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    registerHardSignOutHandler(() => queryClient.clear());
+    void bootstrapAuth(queryClient);
+  }, [queryClient]);
+
+  return null;
+}
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (env.VITE_ENABLE_MSW) {
@@ -86,13 +99,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ClerkProvider publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY ?? ""}>
-          <ChakraProvider value={system}>
-            <CartSyncEffect />
-            <GlobalNav />
-            {children}
-          </ChakraProvider>
-        </ClerkProvider>
+        <ChakraProvider value={system}>
+          <AuthBootstrapEffect />
+          <CartSyncEffect />
+          <GlobalNav />
+          {children}
+        </ChakraProvider>
         {!import.meta.env.VITEST && (
           <TanStackDevtools
             config={{

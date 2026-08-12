@@ -1,7 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { http, HttpResponse } from "msw";
 import { server } from "../mocks/server";
 import { client, BASE_URL } from "./client";
+import { clearSession, setSession } from "../store/authToken";
 import type { Order, PaginationMeta } from "./types";
 
 const META: PaginationMeta = { total: 6, page: 1, limit: 20 };
@@ -125,16 +126,12 @@ describe("API client - getOrderByPaymentIntent", () => {
 
 describe("API client - Bearer token", () => {
   afterEach(() => {
-    delete (window as any).Clerk;
+    clearSession();
   });
 
-  it("attaches Bearer token when window.Clerk session is active", async () => {
-    const mockToken = "test-clerk-token-xyz";
+  it("attaches Bearer token when a session is active", async () => {
+    setSession("test-access-token-xyz");
     let capturedAuth: string | null = null;
-
-    (window as any).Clerk = {
-      session: { getToken: vi.fn().mockResolvedValue(mockToken) },
-    };
 
     server.use(
       http.get(`${BASE_URL}/products`, ({ request }) => {
@@ -145,7 +142,7 @@ describe("API client - Bearer token", () => {
 
     await client.getProducts();
 
-    expect(capturedAuth).toBe(`Bearer ${mockToken}`);
+    expect(capturedAuth).toBe("Bearer test-access-token-xyz");
   });
 
   it("sends request without Authorization header when not signed in", async () => {
@@ -161,5 +158,45 @@ describe("API client - Bearer token", () => {
     await client.getProducts();
 
     expect(capturedAuth).toBeNull();
+  });
+});
+
+describe("API client - 401 refresh-and-retry", () => {
+  afterEach(() => {
+    clearSession();
+  });
+
+  it("dedupes concurrent refresh calls and retries both requests once", async () => {
+    setSession("stale-token");
+    let refreshCalls = 0;
+
+    server.use(
+      http.post(`${BASE_URL}/auth/refresh`, () => {
+        refreshCalls += 1;
+        return HttpResponse.json(envelope({ accessToken: "fresh-token" }));
+      }),
+      http.get(`${BASE_URL}/products`, ({ request }) => {
+        const auth = request.headers.get("Authorization");
+        if (auth === "Bearer stale-token") return new HttpResponse(null, { status: 401 });
+        return HttpResponse.json(envelope([]));
+      })
+    );
+
+    const [a, b] = await Promise.all([client.getProducts(), client.getProducts()]);
+
+    expect(refreshCalls).toBe(1);
+    expect(a.data).toEqual([]);
+    expect(b.data).toEqual([]);
+  });
+
+  it("clears the session when refresh itself fails", async () => {
+    setSession("stale-token");
+
+    server.use(
+      http.post(`${BASE_URL}/auth/refresh`, () => new HttpResponse(null, { status: 401 })),
+      http.get(`${BASE_URL}/products`, () => new HttpResponse(null, { status: 401 }))
+    );
+
+    await expect(client.getProducts()).rejects.toMatchObject({ name: "ApiError", status: 401 });
   });
 });

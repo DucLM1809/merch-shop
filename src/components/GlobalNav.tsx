@@ -2,7 +2,7 @@ import { useState, type JSX } from "react";
 import { Box, Flex, IconButton, Portal, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
-import { useAuth, useUser, useClerk } from "@clerk/react";
+import { useAccount, useAuth, useLogout } from "../modules/account";
 import { cartStore } from "../store/cart";
 import { NavDrawerContent } from "./NavDrawerContent";
 import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart, User, UserPlus } from "lucide-react";
@@ -10,14 +10,14 @@ import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart, User, UserPlus } from "luc
 export function GlobalNav(): JSX.Element {
   const itemCount = useStore(cartStore, (s) => s.items.reduce((n, i) => n + i.quantity, 0));
   const { isSignedIn, isLoaded } = useAuth();
-  const { user } = useUser();
-  const { signOut } = useClerk();
+  const { data: account } = useAccount(isSignedIn);
+  const logout = useLogout();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const handleSignOut = () => signOut();
+  const handleSignOut = () => logout.mutate();
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
-  const userDisplayName = user?.firstName ?? user?.emailAddresses[0]?.emailAddress;
+  const userDisplayName = account?.email;
 
   const cartBadge = itemCount > 0 && (
     <Box
@@ -101,7 +101,7 @@ export function GlobalNav(): JSX.Element {
                 <Flex align="center" gap={2} color="gray.300" data-testid="nav-account-menu">
                   <User size={16} strokeWidth={1.5} />
                   <Text fontSize="sm" fontWeight="600">
-                    {user?.firstName ?? user?.emailAddresses[0]?.emailAddress}
+                    {userDisplayName}
                   </Text>
                 </Flex>
                 <Box

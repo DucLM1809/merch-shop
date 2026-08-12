@@ -10,18 +10,7 @@ import { envelope } from "../../mocks/handlers";
 
 import type { Product, Publisher, Game } from "../../api/types";
 
-import { useAuth, useUser } from "@clerk/react";
-import {
-  adminUser,
-  buyerUser,
-  AUTH_SIGNED_OUT,
-  AUTH_SIGNED_IN,
-  USER_SIGNED_OUT,
-  userCtx,
-} from "../../mocks/fixtures";
-
-const mockUseAuth = vi.mocked(useAuth);
-const mockUseUser = vi.mocked(useUser);
+import { adminAccount, buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 
 const mockPublishers: Publisher[] = [
   { id: "riot", slug: "riot-games", name: "Riot Games", accentColor: "#C89B3C", games: [] },
@@ -66,8 +55,6 @@ beforeEach(() => {
 
 describe("/admin/products", () => {
   it("redirects unauthenticated user to /sign-in", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_OUT);
-    mockUseUser.mockReturnValue(USER_SIGNED_OUT);
     const { router } = renderRoute("/admin/products");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/sign-in");
@@ -75,8 +62,7 @@ describe("/admin/products", () => {
   });
 
   it("redirects signed-in non-admin to /", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(buyerUser));
+    mockSignedIn(buyerAccount);
     const { router } = renderRoute("/admin/products");
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
@@ -84,8 +70,7 @@ describe("/admin/products", () => {
   });
 
   it("renders product rows for admin user", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope(twoProducts))));
 
     renderRoute("/admin/products");
@@ -95,8 +80,7 @@ describe("/admin/products", () => {
   });
 
   it("shows empty state when no products", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));
 
     renderRoute("/admin/products");
@@ -105,8 +89,7 @@ describe("/admin/products", () => {
   });
 
   it("create form fires POST /products", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));
 
     let posted = false;
@@ -142,8 +125,7 @@ describe("/admin/products", () => {
   });
 
   it("edit form fires PATCH /products/:id", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope(twoProducts))));
 
     let patched = false;
@@ -168,8 +150,7 @@ describe("/admin/products", () => {
   });
 
   it("delete fires DELETE /products/:id", async () => {
-    mockUseAuth.mockReturnValue(AUTH_SIGNED_IN);
-    mockUseUser.mockReturnValue(userCtx(adminUser));
+    mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope(twoProducts))));
 
     let deleted = false;

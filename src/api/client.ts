@@ -1,8 +1,9 @@
-import axios, { type AxiosResponse } from "axios";
+import axios, { type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
 import type {
   Account,
   AdminOrdersFilters,
   ApiResponse,
+  AuthTokenResponse,
   BulkAvailabilityDto,
   Character,
   CreateGameDto,
@@ -11,36 +12,80 @@ import type {
   CreateCharacterDto,
   CreateSkuDto,
   CreateTeamDto,
+  ForgotPasswordDto,
   Game,
+  LoginDto,
   Order,
   PaymentIntentResponse,
   Product,
   ProductFilters,
   Publisher,
+  RegisterDto,
+  ResetPasswordDto,
   ServerCart,
   SKU,
   SyncCartItem,
   SyncCartResponse,
   Team,
+  VerifyEmailDto,
 } from "./types";
+import { forceSignOut, getAccessToken, setSession } from "../store/authToken";
 
 export const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000";
 
-const http = axios.create({ baseURL: BASE_URL });
+const http = axios.create({ baseURL: BASE_URL, withCredentials: true });
 
-// Attach Clerk session token when available (no-op in tests / unauthenticated)
-http.interceptors.request.use(async (config) => {
-  // as any: Clerk injects window.Clerk at runtime; no ambient type declaration available
-  if (typeof window !== "undefined" && (window as any).Clerk?.session) {
-    try {
-      const token = await (window as any).Clerk.session.getToken();
-      if (token) config.headers.Authorization = `Bearer ${token}`;
-    } catch {
-      // session expired or unavailable — proceed without token
-    }
-  }
+type RetryableConfig = InternalAxiosRequestConfig & { _retry?: boolean };
+
+http.interceptors.request.use((config) => {
+  const token = getAccessToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
+
+let refreshPromise: Promise<string | null> | null = null;
+
+function refreshAccessToken(): Promise<string | null> {
+  if (!refreshPromise) {
+    refreshPromise = http
+      .post<ApiResponse<AuthTokenResponse>>("/auth/refresh")
+      .then((r) => {
+        const token = r.data.data.accessToken;
+        setSession(token);
+        return token;
+      })
+      .catch(() => {
+        forceSignOut();
+        return null;
+      })
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+  return refreshPromise;
+}
+
+http.interceptors.response.use(
+  (response) => response,
+  async (error: unknown) => {
+    if (!axios.isAxiosError(error) || error.response?.status !== 401 || !error.config) {
+      return Promise.reject(error);
+    }
+    const config = error.config as RetryableConfig;
+    const isAuthEndpoint =
+      config.url?.includes("/auth/refresh") || config.url?.includes("/auth/login");
+    if (config._retry || isAuthEndpoint) {
+      return Promise.reject(error);
+    }
+    config._retry = true;
+    const token = await refreshAccessToken();
+    if (!token) {
+      return Promise.reject(error);
+    }
+    config.headers.Authorization = `Bearer ${token}`;
+    return http(config);
+  }
+);
 
 export class ApiError extends Error {
   constructor(
@@ -71,6 +116,27 @@ function wrapEnvelope<T>(promise: Promise<AxiosResponse<ApiResponse<T>>>): Promi
 }
 
 export const client = {
+  // --- Auth ---
+  register: (body: RegisterDto): Promise<void> =>
+    wrap(http.post("/auth/register", body).then(() => undefined)),
+
+  login: (body: LoginDto): Promise<ApiResponse<AuthTokenResponse>> =>
+    wrapEnvelope(http.post<ApiResponse<AuthTokenResponse>>("/auth/login", body)),
+
+  refresh: (): Promise<ApiResponse<AuthTokenResponse>> =>
+    wrapEnvelope(http.post<ApiResponse<AuthTokenResponse>>("/auth/refresh")),
+
+  logout: (): Promise<void> => wrap(http.post("/auth/logout").then(() => undefined)),
+
+  forgotPassword: (body: ForgotPasswordDto): Promise<void> =>
+    wrap(http.post("/auth/forgot-password", body).then(() => undefined)),
+
+  resetPassword: (body: ResetPasswordDto): Promise<void> =>
+    wrap(http.post("/auth/reset-password", body).then(() => undefined)),
+
+  verifyEmail: (body: VerifyEmailDto): Promise<void> =>
+    wrap(http.post("/auth/verify-email", body).then(() => undefined)),
+
   // --- Catalog ---
   getProducts: (filters?: ProductFilters): Promise<ApiResponse<Product[]>> =>
     wrapEnvelope(
