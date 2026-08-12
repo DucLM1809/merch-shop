@@ -1,5 +1,7 @@
 # Clerk for frontend authentication
 
+Status: superseded by ADR-0015
+
 Buyer authentication uses Clerk. Clerk handles session management, sign-up/sign-in UI, and the guest-to-account upgrade flow. It integrates with TanStack Router via its React SDK.
 
 ## Considered Options
