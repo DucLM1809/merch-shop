@@ -1,5 +1,6 @@
 import { expect, GUEST_STORAGE_STATE, test } from "./fixtures";
 import { signIn } from "./auth";
+import { GlobalNavPage } from "./pages/GlobalNav.page";
 
 // Guaranteed non-empty: global-setup.ts validates these before any test runs.
 const email = process.env.E2E_TEST_EMAIL as string;
@@ -16,14 +17,13 @@ test.describe("Mobile nav drawer", () => {
   });
 
   test.describe("with a freshly authenticated session", () => {
-    // The shared storageState.json refresh token is single-use and rotates on every
-    // /auth/refresh call (ADR-0015). Every fresh browser context triggers one on load,
-    // so tests asserting on authenticated identity would race each other over that one
-    // token. Signing in here gives each of these tests its own untouched token.
-    test.use({ storageState: GUEST_STORAGE_STATE });
-
-    test("opens showing authenticated account details", async ({ page, nav }) => {
-      await signIn(page, email, password);
+    test("opens showing authenticated account details", async ({ authenticatedPage }) => {
+      // Shares one login across the worker (see fixtures.ts) instead of signing in itself
+      // — this assertion only reads authenticated state, it doesn't mutate the session.
+      // test.use({ viewport }) only configures the built-in page/context fixtures, which
+      // this worker-scoped fixture bypasses, so the mobile viewport is set explicitly.
+      await authenticatedPage.setViewportSize({ width: 375, height: 812 });
+      const nav = new GlobalNavPage(authenticatedPage);
       await nav.open();
 
       await expect(nav.drawerUsername).toBeVisible();
@@ -31,15 +31,23 @@ test.describe("Mobile nav drawer", () => {
       await expect(nav.drawerGuestLinks).toBeHidden();
     });
 
-    test("signing out from the drawer switches it to guest state", async ({ page, nav }) => {
-      await signIn(page, email, password);
-      await nav.open();
-      await nav.signOut();
+    test.describe("signing out", () => {
+      // Signs in on its own dedicated page rather than the shared authenticatedPage
+      // fixture — signing out invalidates the session, which would break whichever test
+      // in this worker uses the shared fixture next. Starts from a guest storageState so
+      // signIn() has a clean session to authenticate, same as the "opens..." fixture does.
+      test.use({ storageState: GUEST_STORAGE_STATE });
 
-      await expect(nav.drawerGuestLinks).toBeVisible();
-      await expect(nav.drawerSignInLink).toBeVisible();
-      await expect(nav.drawerSignUpLink).toBeVisible();
-      await expect(nav.drawerUsername).toBeHidden();
+      test("switches the drawer to guest state", async ({ page, nav }) => {
+        await signIn(page, email, password);
+        await nav.open();
+        await nav.signOut();
+
+        await expect(nav.drawerGuestLinks).toBeVisible();
+        await expect(nav.drawerSignInLink).toBeVisible();
+        await expect(nav.drawerSignUpLink).toBeVisible();
+        await expect(nav.drawerUsername).toBeHidden();
+      });
     });
   });
 
