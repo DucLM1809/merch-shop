@@ -89,7 +89,14 @@ export function NavDrawerContent({
 
   return (
     <>
-      <Box position="fixed" inset={0} bg="blackAlpha.600" zIndex="overlay" onClick={onClose} />
+      <Box
+        position="fixed"
+        inset={0}
+        bg="blackAlpha.600"
+        zIndex="overlay"
+        onClick={onClose}
+        data-testid="nav-drawer-overlay"
+      />
       <Box
         ref={panelRef}
         role="dialog"

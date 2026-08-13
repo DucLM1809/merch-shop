@@ -30,3 +30,8 @@ coverage/
 # Ignore Lighthouse CI directories and reports
 .lighthouseci/
 .lighthouseci-*
+
+# Playwright e2e
+e2e/.auth/
+playwright-report/
+test-results/
