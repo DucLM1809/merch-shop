@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { client } from "@/api/client";
 
+// Loads the `server` route option's type augmentation; nothing else in the app imports this package.
+import type {} from "@tanstack/react-start";
+
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? "http://localhost:3000";
 
 export async function buildSitemapResponse(): Promise<Response> {
