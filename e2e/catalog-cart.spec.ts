@@ -1,0 +1,73 @@
+import { expect, test } from "./fixtures";
+
+function parsePublisherAndGameSlug(productHref: string): {
+  publisherSlug: string;
+  gameSlug: string;
+} {
+  const [, publisherSlug, gameSlug] = productHref.split("/");
+  return { publisherSlug, gameSlug };
+}
+
+test("browsing the catalog and adding an item to the cart", async ({
+  page,
+  nav,
+  catalog,
+  productDetail,
+  cart,
+}) => {
+  // Homepage renders the catalog without errors.
+  await page.goto("/");
+  const homepageProductLink = catalog.firstProductLink();
+  await expect(homepageProductLink).toBeVisible();
+
+  const productHref = await homepageProductLink.getAttribute("href");
+  if (!productHref) throw new Error("Homepage product card has no link.");
+  const { publisherSlug, gameSlug } = parsePublisherAndGameSlug(productHref);
+
+  // Publisher page → game page, via the sidebar nav (real clicks, not deep-linking).
+  await page.goto(`/${publisherSlug}`);
+  const gameLink = catalog.gameNavLink(publisherSlug, gameSlug);
+  await expect(gameLink).toBeVisible();
+  await gameLink.click();
+  await expect(page).toHaveURL(new RegExp(`/${publisherSlug}/${gameSlug}/?$`));
+
+  // Game page → product detail page.
+  const gameProductLink = catalog.firstProductLink();
+  await expect(gameProductLink).toBeVisible();
+  const product = await productDetail.open(() => gameProductLink.click());
+  const availableSku = product.skus?.find((sku) => sku.available);
+  if (!availableSku) {
+    throw new Error(
+      `Product "${product.name}" has no in-stock SKU to add to cart — check the staging catalog seed data.`
+    );
+  }
+
+  await expect(productDetail.heading(product.name)).toBeVisible();
+  await expect(productDetail.price).toBeVisible();
+
+  await productDetail.selectSku(availableSku);
+
+  // Add to Cart updates the nav cart badge count.
+  await productDetail.addToCart(() => expect(nav.cartBadgeCount("1")).toBeVisible());
+
+  // /cart shows the added item with correct name and price.
+  await nav.cartLink.click();
+  await expect(page).toHaveURL(/\/cart$/);
+  await expect(cart.itemName(product.name)).toBeVisible();
+
+  // Unit price and line total render as identical strings while quantity is 1.
+  await expect(cart.priceText(availableSku.price)).toHaveCount(2);
+  await expect(cart.subtotal).toHaveText(`$${availableSku.price.toFixed(2)}`);
+
+  // Quantity increment updates the line total (and subtotal, the only item in cart).
+  const doubled = availableSku.price * 2;
+  await cart.increaseQuantity(() => expect(cart.subtotal).toHaveText(`$${doubled.toFixed(2)}`));
+  await expect(cart.priceText(availableSku.price)).toHaveCount(1);
+  await expect(cart.priceText(doubled)).toBeVisible();
+
+  // Quantity decrement reverses it.
+  await cart.decreaseQuantity(() =>
+    expect(cart.subtotal).toHaveText(`$${availableSku.price.toFixed(2)}`)
+  );
+  await expect(cart.priceText(availableSku.price)).toHaveCount(2);
+});

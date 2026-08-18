@@ -5,6 +5,7 @@ export class GlobalNavPage {
 
   readonly openDrawerButton: Locator;
   readonly desktopAccountMenu: Locator;
+  readonly cartLink: Locator;
 
   readonly drawer: Locator;
   readonly drawerOverlay: Locator;
@@ -21,6 +22,9 @@ export class GlobalNavPage {
 
     this.openDrawerButton = page.getByRole("button", { name: "Open navigation" });
     this.desktopAccountMenu = page.getByTestId("nav-account-menu");
+    // Scoped by href, not accessible name — the badge digit renders inside the same
+    // link as the "Cart" text, so the computed name is ambiguous ("1 Cart" etc.).
+    this.cartLink = page.locator('a[href="/cart"]').first();
 
     this.drawer = page.getByRole("dialog", { name: "Navigation menu" });
     this.drawerOverlay = page.getByTestId("nav-drawer-overlay");
@@ -31,6 +35,10 @@ export class GlobalNavPage {
     this.drawerGuestLinks = this.drawer.getByTestId("drawer-guest-links");
     this.drawerSignInLink = this.drawer.getByRole("link", { name: "Sign in" });
     this.drawerSignUpLink = this.drawer.getByRole("link", { name: "Sign up" });
+  }
+
+  cartBadgeCount(count: string): Locator {
+    return this.cartLink.getByText(count, { exact: true });
   }
 
   async open(): Promise<void> {

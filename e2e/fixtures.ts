@@ -1,12 +1,18 @@
 import { test as base, expect, type Page } from "@playwright/test";
 
 import { signIn } from "./auth";
+import { CartPage } from "./pages/Cart.page";
+import { CatalogPage } from "./pages/Catalog.page";
 import { GlobalNavPage } from "./pages/GlobalNav.page";
+import { ProductDetailPage } from "./pages/ProductDetail.page";
 
 export const GUEST_STORAGE_STATE = { cookies: [], origins: [] };
 
 type Fixtures = {
   nav: GlobalNavPage;
+  catalog: CatalogPage;
+  productDetail: ProductDetailPage;
+  cart: CartPage;
 };
 
 type WorkerFixtures = {
@@ -16,6 +22,18 @@ type WorkerFixtures = {
 export const test = base.extend<Fixtures, WorkerFixtures>({
   nav: async ({ page }, use) => {
     await use(new GlobalNavPage(page));
+  },
+
+  catalog: async ({ page }, use) => {
+    await use(new CatalogPage(page));
+  },
+
+  productDetail: async ({ page }, use) => {
+    await use(new ProductDetailPage(page));
+  },
+
+  cart: async ({ page }, use) => {
+    await use(new CartPage(page));
   },
 
   // One real POST /auth/login per worker instead of one per test, and retries of a
