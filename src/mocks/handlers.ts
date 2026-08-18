@@ -1,8 +1,8 @@
 import { http, HttpResponse } from "msw";
 import type {
   Account,
-  Publisher,
   Game,
+  Publisher,
   Team,
   Character,
   Order,
@@ -14,40 +14,58 @@ import type {
   RegisterDto,
   ResetPasswordDto,
   VerifyEmailDto,
+  RawPublisher,
+  RawProduct,
+  RawSku,
 } from "../api/types";
 import { BASE_URL } from "../api/client";
 
 export const VALID_TOKEN = "valid-token";
 
-interface RawProduct {
+// Internal storage shape. The real backend only prices/attributes SKUs (not
+// products) and doesn't return a product slug — see merch-shop-11d.
+interface RawSkuRecord {
   id: string;
-  slug: string;
+  size?: string;
+  color?: string;
+  edition?: string;
+  price: number;
+  available: boolean;
+}
+
+interface ProductRecord {
+  id: string;
   name: string;
   description?: string;
   imageUrl?: string;
-  price: number;
-  publisherId: string;
   gameId: string;
   teamId?: string;
   characterId?: string;
-  skus?: {
-    id: string;
-    size?: string;
-    color?: string;
-    edition?: string;
-    price: number;
-    available: boolean;
-  }[];
+  skus?: RawSkuRecord[];
 }
 
-function enrich(p: RawProduct) {
-  const game = games.find((g) => g.id === p.gameId)!;
-  const publisher = publishers.find((pub) => pub.id === p.publisherId)!;
+function toWireSku(sku: RawSkuRecord, { full }: { full: boolean }): RawSku {
   return {
-    ...p,
-    gameSlug: game.slug,
-    publisherSlug: publisher.slug,
-    accentColor: publisher.accentColor,
+    id: sku.id,
+    price: sku.price,
+    attributes: { size: sku.size, color: sku.color, edition: sku.edition },
+    // The real /products list endpoint omits `available` on nested skus —
+    // only /products/:id and /skus return it.
+    ...(full && { available: sku.available }),
+  };
+}
+
+function toWireProduct(p: ProductRecord, { full }: { full: boolean }): RawProduct {
+  const game = games.find((g) => g.id === p.gameId)!;
+  return {
+    id: p.id,
+    name: p.name,
+    ...(p.description && { description: p.description }),
+    ...(p.imageUrl && { images: [p.imageUrl] }),
+    game: { id: game.id, name: game.name, slug: game.slug },
+    ...(p.teamId && { teamId: p.teamId }),
+    ...(p.characterId && { characterId: p.characterId }),
+    skus: (p.skus ?? []).map((s) => toWireSku(s, { full })),
   };
 }
 
@@ -65,22 +83,25 @@ const games: Game[] = [
   { id: "cs2", slug: "cs2", name: "CS2", publisherId: "valve" },
 ];
 
-export const publishers: Publisher[] = [
-  {
-    id: "riot",
-    slug: "riot",
-    name: "Riot Games",
-    accentColor: "#d13639",
-    games: games.filter((g) => g.publisherId === "riot"),
-  },
-  {
-    id: "valve",
-    slug: "valve",
-    name: "Valve",
-    accentColor: "#1a9fff",
-    games: games.filter((g) => g.publisherId === "valve"),
-  },
+// The real backend doesn't return an accent color or embedded games list on
+// publishers (client.ts derives `games` via a join against /games).
+export const publishers: RawPublisher[] = [
+  { id: "riot", slug: "riot", name: "Riot Games" },
+  { id: "valve", slug: "valve", name: "Valve" },
 ];
+
+const PUBLISHER_ACCENT_COLORS: Record<string, string> = { riot: "#d13639", valve: "#1a9fff" };
+
+// Domain-shaped (not wire-shaped) publishers, for stories/tests that render
+// View components directly with props instead of going through MSW/client.ts
+// normalization. Includes a demo accentColor since that's purely client-side
+// visual polish, not real backend data — see Publisher.accentColor in
+// api/types.ts.
+export const mockPublishers: Publisher[] = publishers.map((p) => ({
+  ...p,
+  accentColor: PUBLISHER_ACCENT_COLORS[p.id],
+  games: games.filter((g) => g.publisherId === p.id),
+}));
 
 export const teams: Team[] = [
   { id: "t1", slug: "t1", name: "T1", gameId: "lol" },
@@ -93,14 +114,11 @@ export const characters: Character[] = [
   { id: "jett", slug: "jett", name: "Jett", gameId: "val" },
 ];
 
-const products: RawProduct[] = [
+const products: ProductRecord[] = [
   {
     id: "1",
-    slug: "faker-jersey",
     name: "Faker Jersey",
     description: "Official T1 Faker jersey — lightweight performance fabric.",
-    price: 59.99,
-    publisherId: "riot",
     gameId: "lol",
     teamId: "t1",
     characterId: "azir",
@@ -115,51 +133,41 @@ const products: RawProduct[] = [
   },
   {
     id: "2",
-    slug: "lol-hoodie",
     name: "League of Legends Hoodie",
-    price: 79.99,
-    publisherId: "riot",
     gameId: "lol",
     imageUrl: "https://picsum.photos/seed/lol-hoodie/400/400",
+    skus: [{ id: "lol-hoodie", price: 79.99, available: true }],
   },
   {
     id: "3",
-    slug: "valorant-team-jersey",
     name: "Valorant Team Jersey",
-    price: 54.99,
-    publisherId: "riot",
     gameId: "val",
     imageUrl: "https://picsum.photos/seed/valorant-jersey/400/400",
+    skus: [{ id: "valorant-jersey", price: 54.99, available: true }],
   },
   {
     id: "4",
-    slug: "cs2-team-jersey",
     name: "CS2 Team Jersey",
-    price: 49.99,
-    publisherId: "valve",
     gameId: "cs2",
     teamId: "navi",
     imageUrl: "https://picsum.photos/seed/cs2-jersey/400/400",
+    skus: [{ id: "cs2-jersey", price: 49.99, available: true }],
   },
   {
     id: "5",
-    slug: "c9-jersey",
     name: "Cloud9 Jersey",
-    price: 54.99,
-    publisherId: "riot",
     gameId: "lol",
     teamId: "c9",
     imageUrl: "https://picsum.photos/seed/c9-jersey/400/400",
+    skus: [{ id: "c9-jersey", price: 54.99, available: true }],
   },
   {
     id: "6",
-    slug: "jett-hoodie",
     name: "Jett Hoodie",
-    price: 69.99,
-    publisherId: "riot",
     gameId: "val",
     characterId: "jett",
     imageUrl: "https://picsum.photos/seed/jett-hoodie/400/400",
+    skus: [{ id: "jett-hoodie", price: 69.99, available: true }],
   },
 ];
 
@@ -306,12 +314,10 @@ export const handlers = [
 
   http.post(`${BASE_URL}/publishers`, async ({ request }) => {
     const body = (await request.json()) as { name: string; slug: string; logoUrl?: string };
-    const created: Publisher = {
+    const created: RawPublisher = {
       id: `pub-${Date.now()}`,
       slug: body.slug,
       name: body.name,
-      accentColor: "#888888",
-      games: [],
       ...(body.logoUrl && { logoUrl: body.logoUrl }),
     };
     return HttpResponse.json(envelope(created), { status: 201 });
@@ -421,43 +427,67 @@ export const handlers = [
 
   http.get(`${BASE_URL}/products`, ({ request }) => {
     const url = new URL(request.url);
-    const publisher = url.searchParams.get("publisher");
-    // accept both legacy names and contract names
-    const game = url.searchParams.get("gameId") ?? url.searchParams.get("game");
-    const gameSlug = url.searchParams.get("gameSlug");
-    const team = url.searchParams.get("teamId") ?? url.searchParams.get("team");
-    const character = url.searchParams.get("characterId") ?? url.searchParams.get("character");
-
-    const gameBySlug = gameSlug ? games.find((g) => g.slug === gameSlug) : null;
+    // The real API only accepts gameId/teamId/characterId (strict param
+    // validation — confirmed against a live backend, see merch-shop-11d)
+    // — no gameSlug or publisher-level filter. client.ts resolves those
+    // client-side, so this mock only needs to support what the client sends.
+    const game = url.searchParams.get("gameId");
+    const team = url.searchParams.get("teamId");
+    const character = url.searchParams.get("characterId");
 
     const filtered = products.filter(
       (p) =>
-        (!publisher || p.publisherId === publisher) &&
         (!game || p.gameId === game) &&
-        (!gameBySlug || p.gameId === gameBySlug.id) &&
         (!team || p.teamId === team) &&
         (!character || p.characterId === character)
     );
-    return HttpResponse.json(envelope(filtered.map(enrich)));
+    return HttpResponse.json(envelope(filtered.map((p) => toWireProduct(p, { full: false }))));
   }),
 
   http.get(`${BASE_URL}/products/:id`, ({ params }) => {
-    const product = products.find((p) => p.id === params.id || p.slug === params.id);
+    const product = products.find((p) => p.id === params.id);
     if (!product) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json(envelope(enrich(product)));
+    return HttpResponse.json(envelope(toWireProduct(product, { full: true })));
   }),
 
   http.post(`${BASE_URL}/products`, async ({ request }) => {
-    const body = (await request.json()) as RawProduct;
-    const created: RawProduct = { ...body, id: `product-${Date.now()}` };
-    return HttpResponse.json(envelope(enrich(created)), { status: 201 });
+    const body = (await request.json()) as {
+      name: string;
+      description?: string;
+      images?: string[];
+      gameId: string;
+      teamId?: string;
+      characterId?: string;
+    };
+    const created: ProductRecord = {
+      id: `product-${Date.now()}`,
+      name: body.name,
+      description: body.description,
+      imageUrl: body.images?.[0],
+      gameId: body.gameId,
+      teamId: body.teamId,
+      characterId: body.characterId,
+    };
+    products.push(created);
+    return HttpResponse.json(envelope(toWireProduct(created, { full: true })), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/products/:id`, async ({ params, request }) => {
-    const body = (await request.json()) as Partial<RawProduct>;
+    const body = (await request.json()) as Partial<{
+      name: string;
+      description?: string;
+      images?: string[];
+      gameId: string;
+      teamId?: string;
+      characterId?: string;
+    }>;
     const existing = products.find((p) => p.id === params.id);
     if (!existing) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json(envelope(enrich({ ...existing, ...body })));
+    Object.assign(existing, {
+      ...body,
+      ...(body.images && { imageUrl: body.images[0] }),
+    });
+    return HttpResponse.json(envelope(toWireProduct(existing, { full: true })));
   }),
 
   http.delete(`${BASE_URL}/products/:id`, ({ params }) => {
@@ -470,26 +500,32 @@ export const handlers = [
     const body = (await request.json()) as {
       productId: string;
       price: number;
-      size?: string;
-      color?: string;
-      edition?: string;
+      available?: boolean;
+      attributes?: { size?: string; color?: string; edition?: string };
     };
-    return HttpResponse.json(
-      envelope({
-        id: `sku-${Date.now()}`,
-        price: body.price,
-        available: true,
-        size: body.size,
-        color: body.color,
-        edition: body.edition,
-      }),
-      { status: 201 }
-    );
+    const created: RawSkuRecord = {
+      id: `sku-${Date.now()}`,
+      price: body.price,
+      available: body.available ?? true,
+      size: body.attributes?.size,
+      color: body.attributes?.color,
+      edition: body.attributes?.edition,
+    };
+    const product = products.find((p) => p.id === body.productId);
+    product?.skus?.push(created);
+    return HttpResponse.json(envelope(toWireSku(created, { full: true })), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/skus/:id/availability`, async ({ params, request }) => {
     const body = (await request.json()) as { available: boolean };
-    return HttpResponse.json(envelope({ id: params.id, price: 0, available: body.available }));
+    for (const p of products) {
+      const sku = p.skus?.find((s) => s.id === params.id);
+      if (sku) {
+        sku.available = body.available;
+        return HttpResponse.json(envelope(toWireSku(sku, { full: true })));
+      }
+    }
+    return new HttpResponse(null, { status: 404 });
   }),
 
   http.delete(`${BASE_URL}/skus/:id`, () => HttpResponse.json({ ok: true })),
@@ -502,7 +538,7 @@ export const handlers = [
     };
     const facetKey = { game: "gameId", team: "teamId", character: "characterId" }[body.facet];
     products
-      .filter((p) => p[facetKey as keyof RawProduct] === body.facetId)
+      .filter((p) => p[facetKey as keyof ProductRecord] === body.facetId)
       .forEach((p) => p.skus?.forEach((s) => (s.available = body.available)));
     return HttpResponse.json({ ok: true });
   }),
@@ -510,10 +546,10 @@ export const handlers = [
   http.get(`${BASE_URL}/skus`, ({ request }) => {
     const url = new URL(request.url);
     const productId = url.searchParams.get("productId");
-    const product = productId
-      ? products.find((p) => p.id === productId || p.slug === productId)
-      : null;
-    return HttpResponse.json(envelope(product?.skus ?? []));
+    const product = productId ? products.find((p) => p.id === productId) : null;
+    return HttpResponse.json(
+      envelope((product?.skus ?? []).map((s) => toWireSku(s, { full: true })))
+    );
   }),
 
   // --- Cart ---

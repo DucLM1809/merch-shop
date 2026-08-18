@@ -8,25 +8,20 @@ import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
 import { envelope } from "../../mocks/handlers";
 
-import type { Product, SKU } from "../../api/types";
+import type { RawProduct, RawSku } from "../../api/types";
 
 import { adminAccount, buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 
-const twoSkus: SKU[] = [
-  { id: "sku-1", price: 49.99, available: true, size: "M", color: "Black" },
-  { id: "sku-2", price: 29.99, available: false, size: "L", color: "White" },
-];
-
-const productWithSkus: Product = {
+// Nested `game`/`attributes` match the real backend's wire shape — see the
+// Raw* types in api/types.ts and merch-shop-11d.
+const productWithSkus: RawProduct = {
   id: "p1",
-  slug: "jinx-hoodie",
   name: "Jinx Hoodie",
-  price: 49.99,
-  publisherId: "riot",
-  publisherSlug: "riot-games",
-  gameId: "lol",
-  gameSlug: "league-of-legends",
-  skus: twoSkus,
+  game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
+  skus: [
+    { id: "sku-1", price: 49.99, available: true, attributes: { size: "M", color: "Black" } },
+    { id: "sku-2", price: 29.99, available: false, attributes: { size: "L", color: "White" } },
+  ],
 };
 
 beforeEach(() => {
@@ -57,7 +52,7 @@ describe("/admin/skus", () => {
 
     renderRoute("/admin/skus");
 
-    expect(await screen.findAllByText("Jinx Hoodie")).toHaveLength(twoSkus.length);
+    expect(await screen.findAllByText("Jinx Hoodie")).toHaveLength(2);
     expect(screen.getByText("$49.99")).toBeInTheDocument();
     expect(screen.getByText("$29.99")).toBeInTheDocument();
   });
@@ -81,7 +76,12 @@ describe("/admin/skus", () => {
     server.use(
       http.post(`${BASE_URL}/skus`, async () => {
         posted = true;
-        const created: SKU = { id: "new-sku", price: 19.99, available: true, size: "S" };
+        const created: RawSku = {
+          id: "new-sku",
+          price: 19.99,
+          available: true,
+          attributes: { size: "S" },
+        };
         return HttpResponse.json(envelope(created), { status: 201 });
       })
     );
@@ -107,7 +107,8 @@ describe("/admin/skus", () => {
     server.use(
       http.patch(`${BASE_URL}/skus/:id/availability`, async () => {
         patched = true;
-        return HttpResponse.json(envelope({ id: "sku-1", price: 49.99, available: false }));
+        const updated: RawSku = { id: "sku-1", price: 49.99, available: false, attributes: {} };
+        return HttpResponse.json(envelope(updated));
       })
     );
 

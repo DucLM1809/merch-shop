@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { renderWithProviders } from "@/test-utils";
 import { PublisherPageView } from "./PublisherPageView";
-import { publishers } from "@/mocks/handlers";
+import { mockPublishers as publishers } from "@/mocks/handlers";
 
 describe("PublisherPageView", () => {
   it("shows skeletons and no heading when loading", () => {

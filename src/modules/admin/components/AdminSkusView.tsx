@@ -93,12 +93,15 @@ export function AdminSkusView(): React.JSX.Element {
   }
 
   async function onSubmit(data: FormValues) {
-    const dto: CreateSkuDto = {
-      productId: data.productId,
-      price: parseFloat(data.price),
+    const attributes = {
       ...(data.size.trim() && { size: data.size.trim() }),
       ...(data.color.trim() && { color: data.color.trim() }),
       ...(data.edition.trim() && { edition: data.edition.trim() }),
+    };
+    const dto: CreateSkuDto = {
+      productId: data.productId,
+      price: parseFloat(data.price),
+      ...(Object.keys(attributes).length > 0 && { attributes }),
     };
     await create.mutateAsync(dto);
     cancel();

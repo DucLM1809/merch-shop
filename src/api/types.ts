@@ -7,12 +7,56 @@ export type SKU = {
   edition?: string;
 };
 
+// --- Wire-format types (merch-shop-11d) ---
+//
+// What the real backend actually returns for products/SKUs/publishers, which
+// differs from the domain shapes above: products nest a minimal `game` ref
+// instead of flat publisher/game slugs, SKU prices are serialized decimal.js
+// internals instead of numbers, SKU variant fields nest under `attributes`,
+// and publishers don't embed their games. src/api/client.ts normalizes these
+// into the domain types at the API boundary; exported here so MSW mocks and
+// tests can build fixtures against the real contract instead of the frontend's
+// own (previously wrong) assumptions.
+export type RawDecimal = { s: number; e: number; d: number[] };
+
+export type RawSkuAttributes = { size?: string; color?: string; edition?: string };
+
+export type RawSku = {
+  id: string;
+  price: RawDecimal | number;
+  // Omitted on SKUs nested in the /products list response; present on
+  // /products/:id and direct /skus responses.
+  available?: boolean;
+  attributes: RawSkuAttributes;
+};
+
+export type RawGameRef = { id: string; name: string; slug: string };
+
+export type RawProduct = {
+  id: string;
+  name: string;
+  description?: string;
+  images?: string[];
+  game: RawGameRef;
+  // Sent as explicit null when absent, not omitted.
+  teamId?: string | null;
+  characterId?: string | null;
+  skus?: RawSku[];
+};
+
+export type RawPublisher = { id: string; name: string; slug: string; logoUrl?: string };
+
 export type Product = {
   id: string;
+  // The real backend doesn't return a distinct product slug (and /products/:id
+  // expects the DB id), so this is always equal to `id` — kept as its own field
+  // so routing/SEO code doesn't need to special-case it.
   slug: string;
   name: string;
   description?: string;
   imageUrl?: string;
+  // The backend only prices SKUs, not products — this is the lowest SKU price,
+  // used for catalog display before a variant is selected.
   price: number;
   publisherId: string;
   publisherSlug: string;
@@ -42,7 +86,9 @@ export type Publisher = {
   slug: string;
   name: string;
   logoUrl?: string;
-  accentColor: string;
+  // The real backend doesn't return a publisher accent color — always undefined
+  // until product/theming data adds one. Consumers already fall back when unset.
+  accentColor?: string;
   games: Game[];
 };
 
@@ -63,9 +109,12 @@ export type Character = {
 export type CreateSkuDto = {
   productId: string;
   price: number;
-  size?: string;
-  color?: string;
-  edition?: string;
+  available?: boolean;
+  attributes?: {
+    size?: string;
+    color?: string;
+    edition?: string;
+  };
 };
 
 export type SkuFacet = "game" | "team" | "character";
@@ -78,12 +127,9 @@ export type BulkAvailabilityDto = {
 
 export type CreateProductDto = {
   name: string;
-  slug: string;
   description?: string;
-  imageUrl?: string;
-  price: number;
-  publisherId: string;
-  gameId: string;
+  images?: string[];
+  gameId?: string;
   teamId?: string;
   characterId?: string;
 };

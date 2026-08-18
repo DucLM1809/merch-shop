@@ -94,7 +94,7 @@ export function PublisherPageView({
               letterSpacing="0.08em"
               fontWeight="600"
             >
-              {publisher?.games.length ?? 0} {publisher?.games.length === 1 ? "game" : "games"}
+              {publisher?.games?.length ?? 0} {publisher?.games?.length === 1 ? "game" : "games"}
             </Text>
           </Box>
         </HStack>

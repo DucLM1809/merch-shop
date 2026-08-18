@@ -3,7 +3,9 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
 import { renderRoute } from "../../test-utils";
 
-const PRODUCT_ROUTE = "/riot/league-of-legends/products/faker-jersey";
+// The real backend doesn't return a distinct product slug — /products/:id
+// expects the DB id, so the route param is the fixture product's id ("1").
+const PRODUCT_ROUTE = "/riot/league-of-legends/products/1";
 
 describe("Product detail page", () => {
   it("renders product name and description", async () => {

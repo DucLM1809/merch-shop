@@ -8,7 +8,7 @@ import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
 import { envelope } from "../../mocks/handlers";
 
-import type { Product, Publisher, Game } from "../../api/types";
+import type { Publisher, Game, RawProduct } from "../../api/types";
 
 import { adminAccount, buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 
@@ -20,26 +20,20 @@ const mockGames: Game[] = [
   { id: "lol", slug: "league-of-legends", name: "League of Legends", publisherId: "riot" },
 ];
 
-const twoProducts: Product[] = [
+// Nested `game` ref (no flat slug/price/publisherId) matches the real
+// backend's wire shape — see the Raw* types in api/types.ts and merch-shop-11d.
+const twoProducts: RawProduct[] = [
   {
     id: "p1",
-    slug: "jinx-hoodie",
     name: "Jinx Hoodie",
-    price: 49.99,
-    publisherId: "riot",
-    publisherSlug: "riot-games",
-    gameId: "lol",
-    gameSlug: "league-of-legends",
+    game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
+    skus: [{ id: "p1-sku", price: 49.99, attributes: {} }],
   },
   {
     id: "p2",
-    slug: "azir-tee",
     name: "Azir Tee",
-    price: 29.99,
-    publisherId: "riot",
-    publisherSlug: "riot-games",
-    gameId: "lol",
-    gameSlug: "league-of-legends",
+    game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
+    skus: [{ id: "p2-sku", price: 29.99, attributes: {} }],
   },
 ];
 
@@ -96,15 +90,11 @@ describe("/admin/products", () => {
     server.use(
       http.post(`${BASE_URL}/products`, async () => {
         posted = true;
-        const created: Product = {
+        const created: RawProduct = {
           id: "new",
-          slug: "jinx-hoodie",
           name: "Jinx Hoodie",
-          price: 49.99,
-          publisherId: "riot",
-          publisherSlug: "riot-games",
-          gameId: "lol",
-          gameSlug: "league-of-legends",
+          game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
+          skus: [],
         };
         return HttpResponse.json(envelope(created), { status: 201 });
       })
@@ -115,9 +105,6 @@ describe("/admin/products", () => {
     const user = userEvent.setup();
     await user.click(await screen.findByRole("button", { name: /\+ new product/i }));
     await user.type(screen.getByPlaceholderText("Name"), "Jinx Hoodie");
-    await user.type(screen.getByPlaceholderText("Slug (e.g. jinx-hoodie)"), "jinx-hoodie");
-    await user.type(screen.getByPlaceholderText("Price (e.g. 29.99)"), "49.99");
-    await user.selectOptions(screen.getByDisplayValue("Publisher…"), "riot");
     await user.selectOptions(screen.getByDisplayValue("Game…"), "lol");
     await user.click(screen.getByRole("button", { name: /^save$/i }));
 

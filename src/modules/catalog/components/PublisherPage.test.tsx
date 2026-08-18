@@ -16,13 +16,13 @@ describe("PublisherPage", () => {
     expect(await screen.findByRole("heading", { name: "Riot Games" })).toBeInTheDocument();
   });
 
-  it("sets --accent CSS var on wrapper when publisher loads", async () => {
+  it("leaves --accent unset since the backend doesn't return a publisher accent color", async () => {
     renderWithProviders(<PublisherPage publisherSlug="riot" />);
     const heading = await screen.findByRole("heading", { name: "Riot Games" });
     let el: Element | null = heading;
-    while (el && !(el as HTMLElement).style?.getPropertyValue("--accent")) {
+    while (el) {
+      expect((el as HTMLElement).style?.getPropertyValue("--accent")).toBe("");
       el = el.parentElement;
     }
-    expect((el as HTMLElement | null)?.style.getPropertyValue("--accent")).toBe("#d13639");
   });
 });

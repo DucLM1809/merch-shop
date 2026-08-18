@@ -71,11 +71,8 @@ export function AdminProductsView(): React.JSX.Element {
     setMode({ edit: product });
     reset({
       name: product.name,
-      slug: product.slug,
-      price: String(product.price),
       description: product.description ?? "",
       imageUrl: product.imageUrl ?? "",
-      publisherId: product.publisherId,
       gameId: product.gameId,
       teamId: product.teamId ?? "",
       characterId: product.characterId ?? "",
@@ -91,12 +88,9 @@ export function AdminProductsView(): React.JSX.Element {
   async function onSubmit(data: FormValues) {
     const dto: CreateProductDto = {
       name: data.name.trim(),
-      slug: data.slug.trim(),
-      price: parseFloat(data.price),
-      publisherId: data.publisherId,
       gameId: data.gameId,
       ...(data.description.trim() && { description: data.description.trim() }),
-      ...(data.imageUrl.trim() && { imageUrl: data.imageUrl.trim() }),
+      ...(data.imageUrl.trim() && { images: [data.imageUrl.trim()] }),
       ...(data.teamId && { teamId: data.teamId }),
       ...(data.characterId && { characterId: data.characterId }),
     };
@@ -160,28 +154,6 @@ export function AdminProductsView(): React.JSX.Element {
               />
             </FormField>
 
-            <FormField name="slug" label="Slug" error={errors.slug}>
-              <Input
-                id="slug"
-                placeholder="Slug (e.g. jinx-hoodie)"
-                {...register("slug")}
-                bg="gray.800"
-                borderColor="gray.700"
-                color="white"
-              />
-            </FormField>
-
-            <FormField name="price" label="Price" error={errors.price}>
-              <Input
-                id="price"
-                placeholder="Price (e.g. 29.99)"
-                {...register("price")}
-                bg="gray.800"
-                borderColor="gray.700"
-                color="white"
-              />
-            </FormField>
-
             <FormField name="description" label="Description" error={errors.description}>
               <Input
                 id="description"
@@ -202,19 +174,6 @@ export function AdminProductsView(): React.JSX.Element {
                 borderColor="gray.700"
                 color="white"
               />
-            </FormField>
-
-            <FormField name="publisherId" label="Publisher" error={errors.publisherId}>
-              <NativeSelectRoot unstyled>
-                <NativeSelectField id="publisherId" {...register("publisherId")} {...selectStyle}>
-                  <option value="">Publisher…</option>
-                  {publishers.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name}
-                    </option>
-                  ))}
-                </NativeSelectField>
-              </NativeSelectRoot>
             </FormField>
 
             <FormField name="gameId" label="Game" error={errors.gameId}>
@@ -283,7 +242,7 @@ export function AdminProductsView(): React.JSX.Element {
             {(
               [
                 ["Name", 2],
-                ["Slug", 2],
+                ["ID", 2],
                 ["Price", 1],
                 ["Publisher", 1.5],
                 ["Game", 1.5],
@@ -325,7 +284,7 @@ export function AdminProductsView(): React.JSX.Element {
                   {product.name}
                 </Text>
                 <Text flex={2} fontSize="sm" color="gray.400" fontFamily="mono">
-                  {product.slug}
+                  {product.id}
                 </Text>
                 <Text flex={1} fontSize="sm" color="gray.400">
                   ${product.price.toFixed(2)}

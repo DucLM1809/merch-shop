@@ -7,29 +7,49 @@ import { describe, it, expect } from "vitest";
 import { BASE_URL } from "@/api/client";
 import { server } from "@/mocks/server";
 
+import type { Game, RawProduct, RawPublisher } from "@/api/types";
+
 import { buildSitemapResponse } from "./sitemap[.]xml";
 
-const MOCK_PRODUCTS = [
+const MOCK_GAMES: Game[] = [
+  { id: "lol", slug: "lol", name: "League of Legends", publisherId: "riot" },
+  { id: "cs2", slug: "cs2", name: "CS2", publisherId: "valve" },
+];
+
+const MOCK_PUBLISHERS: RawPublisher[] = [
+  { id: "riot", slug: "riot", name: "Riot Games" },
+  { id: "valve", slug: "valve", name: "Valve" },
+];
+
+const MOCK_PRODUCTS: RawProduct[] = [
   {
     id: "1",
-    slug: "faker-jersey",
     name: "Faker Jersey",
-    publisherSlug: "riot",
-    gameSlug: "lol",
-    price: 49,
+    game: { id: "lol", name: "League of Legends", slug: "lol" },
+    skus: [{ id: "sku-1", price: 49, attributes: {} }],
   },
   {
     id: "2",
-    slug: "cs2-knife",
     name: "CS2 Knife",
-    publisherSlug: "valve",
-    gameSlug: "cs2",
-    price: 199,
+    game: { id: "cs2", name: "CS2", slug: "cs2" },
+    skus: [{ id: "sku-2", price: 199, attributes: {} }],
   },
 ];
 
+function mockGamesAndPublishers(): void {
+  server.use(
+    http.get(`${BASE_URL}/games`, () =>
+      HttpResponse.json({ success: true, data: MOCK_GAMES, meta: {} })
+    ),
+    http.get(`${BASE_URL}/publishers`, () =>
+      HttpResponse.json({ success: true, data: MOCK_PUBLISHERS, meta: {} })
+    )
+  );
+}
+
 describe("sitemap.xml route", () => {
   it("returns XML reflecting the current backend product list", async () => {
+    mockGamesAndPublishers();
     server.use(
       http.get(`${BASE_URL}/products`, () =>
         HttpResponse.json({ success: true, data: MOCK_PRODUCTS, meta: {} })
@@ -41,11 +61,14 @@ describe("sitemap.xml route", () => {
 
     expect(response.headers.get("Content-Type")).toBe("application/xml");
     expect(body).toContain("<urlset");
-    expect(body).toContain("/riot/lol/products/faker-jersey");
-    expect(body).toContain("/valve/cs2/products/cs2-knife");
+    // The real backend doesn't return a distinct product slug — /products/:id
+    // expects the DB id, so the URL segment is the product's id.
+    expect(body).toContain("/riot/lol/products/1");
+    expect(body).toContain("/valve/cs2/products/2");
   });
 
   it("is cached at the CDN edge", async () => {
+    mockGamesAndPublishers();
     server.use(
       http.get(`${BASE_URL}/products`, () =>
         HttpResponse.json({ success: true, data: [], meta: {} })

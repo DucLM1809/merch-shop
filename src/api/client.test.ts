@@ -3,26 +3,52 @@ import { http, HttpResponse } from "msw";
 import { server } from "../mocks/server";
 import { client, BASE_URL } from "./client";
 import { clearSession, setSession } from "../store/authToken";
-import type { Order, PaginationMeta } from "./types";
+import type { Order, PaginationMeta, RawProduct } from "./types";
 
 const META: PaginationMeta = { total: 6, page: 1, limit: 20 };
 const envelope = <T>(data: T, total = 6) => ({ success: true, data, meta: { ...META, total } });
 
-const MOCK_PRODUCTS = [
+// Nested `game` ref (no flat gameId/publisherSlug/price/slug) matches the
+// real backend's wire shape — see the Raw* types in api/types.ts and
+// merch-shop-11d.
+const MOCK_PRODUCTS: RawProduct[] = [
   {
     id: "1",
-    slug: "faker-jersey",
     name: "Faker Jersey",
     teamId: "t1",
-    gameId: "lol",
-    publisherId: "riot",
-    price: 49,
+    game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
+    skus: [{ id: "sku-1", price: 49, attributes: {} }],
   },
-  { id: "2", slug: "product-2", name: "Product 2", gameId: "lol", publisherId: "riot", price: 29 },
-  { id: "3", slug: "product-3", name: "Product 3", gameId: "lol", publisherId: "riot", price: 29 },
-  { id: "4", slug: "product-4", name: "Product 4", gameId: "val", publisherId: "riot", price: 29 },
-  { id: "5", slug: "product-5", name: "Product 5", gameId: "cs2", publisherId: "valve", price: 29 },
-  { id: "6", slug: "product-6", name: "Product 6", gameId: "cs2", publisherId: "valve", price: 29 },
+  {
+    id: "2",
+    name: "Product 2",
+    game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
+    skus: [{ id: "sku-2", price: 29, attributes: {} }],
+  },
+  {
+    id: "3",
+    name: "Product 3",
+    game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
+    skus: [{ id: "sku-3", price: 29, attributes: {} }],
+  },
+  {
+    id: "4",
+    name: "Product 4",
+    game: { id: "val", name: "Valorant", slug: "valorant" },
+    skus: [{ id: "sku-4", price: 29, attributes: {} }],
+  },
+  {
+    id: "5",
+    name: "Product 5",
+    game: { id: "cs2", name: "CS2", slug: "cs2" },
+    skus: [{ id: "sku-5", price: 29, attributes: {} }],
+  },
+  {
+    id: "6",
+    name: "Product 6",
+    game: { id: "cs2", name: "CS2", slug: "cs2" },
+    skus: [{ id: "sku-6", price: 29, attributes: {} }],
+  },
 ];
 
 describe("API client", () => {
@@ -35,7 +61,7 @@ describe("API client", () => {
         return HttpResponse.json(envelope(filtered, filtered.length));
       }),
       http.get(`${BASE_URL}/products/:id`, ({ params }) => {
-        const product = MOCK_PRODUCTS.find((p) => p.id === params.id || p.slug === params.id);
+        const product = MOCK_PRODUCTS.find((p) => p.id === params.id);
         if (!product) return new HttpResponse(null, { status: 404 });
         return HttpResponse.json(envelope(product, 1));
       })
@@ -57,9 +83,43 @@ describe("API client", () => {
     expect(res.data[0]?.teamId).toBe("t1");
   });
 
-  it("fetches a single product by slug", async () => {
-    const res = await client.getProduct("faker-jersey");
-    expect(res.data).toMatchObject({ id: "1", slug: "faker-jersey", name: "Faker Jersey" });
+  it("fetches a single product by id, resolving its game/publisher slugs", async () => {
+    const res = await client.getProduct("1");
+    expect(res.data).toMatchObject({
+      id: "1",
+      slug: "1",
+      name: "Faker Jersey",
+      gameSlug: "league-of-legends",
+      publisherSlug: "riot",
+    });
+  });
+
+  it("parses a decimal.js-serialized SKU price into a number", async () => {
+    server.use(
+      http.get(`${BASE_URL}/products/:id`, () =>
+        HttpResponse.json(
+          envelope(
+            {
+              id: "7",
+              name: "Decimal Priced Item",
+              game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
+              skus: [
+                {
+                  id: "sku-7",
+                  price: { s: 1, e: 1, d: [29, 9900000] },
+                  available: true,
+                  attributes: { size: "M" },
+                },
+              ],
+            } satisfies RawProduct,
+            1
+          )
+        )
+      )
+    );
+
+    const res = await client.getProduct("7");
+    expect(res.data.skus?.[0]).toMatchObject({ price: 29.99, size: "M", available: true });
   });
 
   it("throws ApiError on server error", async () => {

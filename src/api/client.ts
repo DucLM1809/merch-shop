@@ -1,4 +1,5 @@
 import axios, { type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
+import Decimal from "decimal.js";
 import type {
   Account,
   AdminOrdersFilters,
@@ -20,6 +21,10 @@ import type {
   Product,
   ProductFilters,
   Publisher,
+  RawDecimal,
+  RawProduct,
+  RawPublisher,
+  RawSku,
   RegisterDto,
   ResetPasswordDto,
   ServerCart,
@@ -115,6 +120,81 @@ function wrapEnvelope<T>(promise: Promise<AxiosResponse<ApiResponse<T>>>): Promi
   );
 }
 
+// --- Wire-format normalization (merch-shop-11d) ---
+//
+// Normalizes the real backend's Product/SKU/Publisher wire shapes (see the
+// Raw* types in src/api/types.ts) into the app's domain Product/SKU/Publisher
+// types at this API boundary, so the rest of the app can keep working against
+// one stable shape.
+
+function parseDecimal(value: RawDecimal | number): number {
+  if (typeof value === "number") return value;
+  // Backend serializes SKU prices as decimal.js's raw internal {s,e,d} fields
+  // rather than calling toString()/toJSON() — reattach the Decimal prototype
+  // instead of hand-parsing the digit-group encoding.
+  const revived = Object.assign(Object.create(Decimal.prototype) as Decimal, value);
+  return revived.toNumber();
+}
+
+function normalizeSku(raw: RawSku): SKU {
+  return {
+    id: raw.id,
+    price: parseDecimal(raw.price),
+    // CreateSkuDto defaults `available` to true server-side, so treat a
+    // missing value (list-endpoint skus) the same way rather than as false.
+    available: raw.available ?? true,
+    size: raw.attributes.size,
+    color: raw.attributes.color,
+    edition: raw.attributes.edition,
+  };
+}
+
+// Games/publishers are cross-referenced to resolve routing slugs for products
+// (the backend doesn't embed them) since neither is embedded in the product
+// response itself.
+function loadGames(): Promise<Game[]> {
+  return wrapEnvelope(http.get<ApiResponse<Game[]>>("/games")).then((r) => r.data);
+}
+
+function loadRawPublishers(): Promise<RawPublisher[]> {
+  return wrapEnvelope(http.get<ApiResponse<RawPublisher[]>>("/publishers")).then((r) => r.data);
+}
+
+async function normalizeProduct(raw: RawProduct): Promise<Product> {
+  const [games, rawPublishers] = await Promise.all([loadGames(), loadRawPublishers()]);
+  const game = games.find((g) => g.id === raw.game.id);
+  const publisher = game ? rawPublishers.find((p) => p.id === game.publisherId) : undefined;
+  const skus = (raw.skus ?? []).map(normalizeSku);
+
+  return {
+    id: raw.id,
+    slug: raw.id,
+    name: raw.name,
+    description: raw.description,
+    imageUrl: raw.images?.[0],
+    price: skus.length ? Math.min(...skus.map((s) => s.price)) : 0,
+    publisherId: publisher?.id ?? "",
+    publisherSlug: publisher?.slug ?? "",
+    accentColor: undefined,
+    gameId: raw.game.id,
+    gameSlug: game?.slug ?? raw.game.slug,
+    teamId: raw.teamId ?? undefined,
+    characterId: raw.characterId ?? undefined,
+    skus,
+  };
+}
+
+function normalizePublisher(raw: RawPublisher, games: Game[]): Publisher {
+  return {
+    id: raw.id,
+    slug: raw.slug,
+    name: raw.name,
+    logoUrl: raw.logoUrl,
+    accentColor: undefined,
+    games: games.filter((g) => g.publisherId === raw.id),
+  };
+}
+
 export const client = {
   // --- Auth ---
   register: (body: RegisterDto): Promise<void> =>
@@ -138,29 +218,58 @@ export const client = {
     wrap(http.post("/auth/verify-email", body).then(() => undefined)),
 
   // --- Catalog ---
-  getProducts: (filters?: ProductFilters): Promise<ApiResponse<Product[]>> =>
-    wrapEnvelope(
-      http.get<ApiResponse<Product[]>>("/products", {
+  getProducts: async (filters?: ProductFilters): Promise<ApiResponse<Product[]>> => {
+    // The real API strictly validates query params (whitelist) and 400s on
+    // unknown ones like `gameSlug`/`publisher` — confirmed against a live
+    // backend while fixing merch-shop-11d, so both need resolving to
+    // supported params instead of being forwarded as-is. There's no
+    // publisher-level filter param at all, so that one is applied client-side.
+    const needsGamesJoin = Boolean(filters?.gameSlug || filters?.publisher);
+    const games = needsGamesJoin ? await loadGames() : undefined;
+    const gameIdFromSlug = filters?.gameSlug
+      ? games?.find((g) => g.slug === filters.gameSlug)?.id
+      : undefined;
+    const publisherGameIds = filters?.publisher
+      ? new Set(games?.filter((g) => g.publisherId === filters.publisher).map((g) => g.id))
+      : undefined;
+    const gameId = filters?.game ?? gameIdFromSlug;
+
+    const res = await wrapEnvelope(
+      http.get<ApiResponse<RawProduct[]>>("/products", {
         params: {
-          // map frontend names → OpenAPI contract names
-          ...(filters?.game && { gameId: filters.game }),
+          ...(gameId && { gameId }),
           ...(filters?.team && { teamId: filters.team }),
           ...(filters?.character && { characterId: filters.character }),
-          // non-standard: resolved by the mock only; real API ignores them
-          ...(filters?.publisher && { publisher: filters.publisher }),
-          ...(filters?.gameSlug && { gameSlug: filters.gameSlug }),
         },
       })
-    ),
+    );
+    const data = await Promise.all(res.data.map(normalizeProduct));
+    return {
+      ...res,
+      data: publisherGameIds ? data.filter((p) => publisherGameIds.has(p.gameId)) : data,
+    };
+  },
 
-  getProduct: (id: string): Promise<ApiResponse<Product>> =>
-    wrapEnvelope(http.get<ApiResponse<Product>>(`/products/${id}`)),
+  getProduct: async (id: string): Promise<ApiResponse<Product>> => {
+    const res = await wrapEnvelope(http.get<ApiResponse<RawProduct>>(`/products/${id}`));
+    return { ...res, data: await normalizeProduct(res.data) };
+  },
 
-  getPublishers: (): Promise<ApiResponse<Publisher[]>> =>
-    wrapEnvelope(http.get<ApiResponse<Publisher[]>>("/publishers")),
+  getPublishers: async (): Promise<ApiResponse<Publisher[]>> => {
+    const [res, games] = await Promise.all([
+      wrapEnvelope(http.get<ApiResponse<RawPublisher[]>>("/publishers")),
+      loadGames(),
+    ]);
+    return { ...res, data: res.data.map((p) => normalizePublisher(p, games)) };
+  },
 
-  getPublisher: (slug: string): Promise<ApiResponse<Publisher>> =>
-    wrapEnvelope(http.get<ApiResponse<Publisher>>(`/publishers/${slug}`)),
+  getPublisher: async (slug: string): Promise<ApiResponse<Publisher>> => {
+    const [res, games] = await Promise.all([
+      wrapEnvelope(http.get<ApiResponse<RawPublisher>>(`/publishers/${slug}`)),
+      loadGames(),
+    ]);
+    return { ...res, data: normalizePublisher(res.data, games) };
+  },
 
   getGames: (): Promise<ApiResponse<Game[]>> =>
     wrapEnvelope(http.get<ApiResponse<Game[]>>("/games")),
@@ -174,11 +283,24 @@ export const client = {
   deleteGame: (id: string): Promise<void> =>
     wrap(http.delete(`/games/${id}`).then(() => undefined)),
 
-  createPublisher: (body: CreatePublisherDto): Promise<ApiResponse<Publisher>> =>
-    wrapEnvelope(http.post<ApiResponse<Publisher>>("/publishers", body)),
+  createPublisher: async (body: CreatePublisherDto): Promise<ApiResponse<Publisher>> => {
+    const [res, games] = await Promise.all([
+      wrapEnvelope(http.post<ApiResponse<RawPublisher>>("/publishers", body)),
+      loadGames(),
+    ]);
+    return { ...res, data: normalizePublisher(res.data, games) };
+  },
 
-  updatePublisher: (id: string, body: CreatePublisherDto): Promise<ApiResponse<Publisher>> =>
-    wrapEnvelope(http.patch<ApiResponse<Publisher>>(`/publishers/${id}`, body)),
+  updatePublisher: async (
+    id: string,
+    body: CreatePublisherDto
+  ): Promise<ApiResponse<Publisher>> => {
+    const [res, games] = await Promise.all([
+      wrapEnvelope(http.patch<ApiResponse<RawPublisher>>(`/publishers/${id}`, body)),
+      loadGames(),
+    ]);
+    return { ...res, data: normalizePublisher(res.data, games) };
+  },
 
   deletePublisher: (id: string): Promise<void> =>
     wrap(http.delete(`/publishers/${id}`).then(() => undefined)),
@@ -213,23 +335,37 @@ export const client = {
   deleteCharacter: (id: string): Promise<void> =>
     wrap(http.delete(`/characters/${id}`).then(() => undefined)),
 
-  createProduct: (body: CreateProductDto): Promise<ApiResponse<Product>> =>
-    wrapEnvelope(http.post<ApiResponse<Product>>("/products", body)),
+  createProduct: async (body: CreateProductDto): Promise<ApiResponse<Product>> => {
+    const res = await wrapEnvelope(http.post<ApiResponse<RawProduct>>("/products", body));
+    return { ...res, data: await normalizeProduct(res.data) };
+  },
 
-  updateProduct: (id: string, body: CreateProductDto): Promise<ApiResponse<Product>> =>
-    wrapEnvelope(http.patch<ApiResponse<Product>>(`/products/${id}`, body)),
+  updateProduct: async (id: string, body: CreateProductDto): Promise<ApiResponse<Product>> => {
+    const res = await wrapEnvelope(http.patch<ApiResponse<RawProduct>>(`/products/${id}`, body));
+    return { ...res, data: await normalizeProduct(res.data) };
+  },
 
   deleteProduct: (id: string): Promise<void> =>
     wrap(http.delete(`/products/${id}`).then(() => undefined)),
 
-  getSkus: (productId: string): Promise<ApiResponse<SKU[]>> =>
-    wrapEnvelope(http.get<ApiResponse<SKU[]>>("/skus", { params: { productId } })),
+  getSkus: async (productId: string): Promise<ApiResponse<SKU[]>> => {
+    const res = await wrapEnvelope(
+      http.get<ApiResponse<RawSku[]>>("/skus", { params: { productId } })
+    );
+    return { ...res, data: res.data.map(normalizeSku) };
+  },
 
-  createSku: (body: CreateSkuDto): Promise<ApiResponse<SKU>> =>
-    wrapEnvelope(http.post<ApiResponse<SKU>>("/skus", body)),
+  createSku: async (body: CreateSkuDto): Promise<ApiResponse<SKU>> => {
+    const res = await wrapEnvelope(http.post<ApiResponse<RawSku>>("/skus", body));
+    return { ...res, data: normalizeSku(res.data) };
+  },
 
-  setSkuAvailability: (id: string, available: boolean): Promise<ApiResponse<SKU>> =>
-    wrapEnvelope(http.patch<ApiResponse<SKU>>(`/skus/${id}/availability`, { available })),
+  setSkuAvailability: async (id: string, available: boolean): Promise<ApiResponse<SKU>> => {
+    const res = await wrapEnvelope(
+      http.patch<ApiResponse<RawSku>>(`/skus/${id}/availability`, { available })
+    );
+    return { ...res, data: normalizeSku(res.data) };
+  },
 
   deleteSku: (id: string): Promise<void> => wrap(http.delete(`/skus/${id}`).then(() => undefined)),
 
