@@ -9,102 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root";
-import { Route as IndexRouteImport } from "./routes/index";
 import { Route as SitemapDotxmlRouteImport } from "./routes/sitemap[.]xml";
-import { Route as adminAdminRouteImport } from "./routes/(admin)/admin";
-import { Route as authForgotPasswordRouteImport } from "./routes/(auth)/forgot-password";
-import { Route as authResetPasswordRouteImport } from "./routes/(auth)/reset-password";
-import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
-import { Route as authSignUpRouteImport } from "./routes/(auth)/sign-up";
-import { Route as authVerifyEmailRouteImport } from "./routes/(auth)/verify-email";
-import { Route as cartCartRouteImport } from "./routes/(cart)/cart";
-import { Route as catalogPublisherSlugRouteImport } from "./routes/(catalog)/$publisherSlug";
-import { Route as checkoutCheckoutRouteImport } from "./routes/(checkout)/checkout";
+import { Route as IndexRouteImport } from "./routes/index";
 import { Route as checkoutOrderConfirmationRouteImport } from "./routes/(checkout)/order-confirmation";
-import { Route as accountAccountOrdersRouteImport } from "./routes/(account)/account.orders";
-import { Route as adminAdminCharactersRouteImport } from "./routes/(admin)/admin.characters";
-import { Route as adminAdminGamesRouteImport } from "./routes/(admin)/admin.games";
-import { Route as adminAdminOrdersRouteImport } from "./routes/(admin)/admin.orders";
-import { Route as adminAdminProductsRouteImport } from "./routes/(admin)/admin.products";
-import { Route as adminAdminPublishersRouteImport } from "./routes/(admin)/admin.publishers";
-import { Route as adminAdminSkusRouteImport } from "./routes/(admin)/admin.skus";
-import { Route as adminAdminTeamsRouteImport } from "./routes/(admin)/admin.teams";
+import { Route as checkoutCheckoutRouteImport } from "./routes/(checkout)/checkout";
+import { Route as catalogPublisherSlugRouteImport } from "./routes/(catalog)/$publisherSlug";
+import { Route as cartCartRouteImport } from "./routes/(cart)/cart";
+import { Route as authVerifyEmailRouteImport } from "./routes/(auth)/verify-email";
+import { Route as authSignUpRouteImport } from "./routes/(auth)/sign-up";
+import { Route as authSignInRouteImport } from "./routes/(auth)/sign-in";
+import { Route as authResetPasswordRouteImport } from "./routes/(auth)/reset-password";
+import { Route as authForgotPasswordRouteImport } from "./routes/(auth)/forgot-password";
+import { Route as adminAdminRouteImport } from "./routes/(admin)/admin";
 import { Route as catalogPublisherSlugIndexRouteImport } from "./routes/(catalog)/$publisherSlug.index";
 import { Route as catalogPublisherSlugGameSlugRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug";
+import { Route as adminAdminTeamsRouteImport } from "./routes/(admin)/admin.teams";
+import { Route as adminAdminSkusRouteImport } from "./routes/(admin)/admin.skus";
+import { Route as adminAdminPublishersRouteImport } from "./routes/(admin)/admin.publishers";
+import { Route as adminAdminProductsRouteImport } from "./routes/(admin)/admin.products";
+import { Route as adminAdminOrdersRouteImport } from "./routes/(admin)/admin.orders";
+import { Route as adminAdminGamesRouteImport } from "./routes/(admin)/admin.games";
+import { Route as adminAdminCharactersRouteImport } from "./routes/(admin)/admin.characters";
+import { Route as accountAccountOrdersRouteImport } from "./routes/(account)/account.orders";
 import { Route as catalogPublisherSlugGameSlugIndexRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug.index";
 import { Route as catalogPublisherSlugGameSlugProductsProductSlugRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug";
 
-const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: "/sitemap.xml",
   path: "/sitemap.xml",
   getParentRoute: () => rootRouteImport,
 } as any);
-const adminAdminRoute = adminAdminRouteImport.update({
-  id: "/(admin)/admin",
-  path: "/admin",
+const IndexRoute = IndexRouteImport.update({
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any);
-const authForgotPasswordRoute = authForgotPasswordRouteImport
-  .update({
-    id: "/(auth)/forgot-password",
-    path: "/forgot-password",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-  .lazy(() => import("./routes/(auth)/forgot-password.lazy").then((d) => d.Route));
-const authResetPasswordRoute = authResetPasswordRouteImport
-  .update({
-    id: "/(auth)/reset-password",
-    path: "/reset-password",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-  .lazy(() => import("./routes/(auth)/reset-password.lazy").then((d) => d.Route));
-const authSignInRoute = authSignInRouteImport
-  .update({
-    id: "/(auth)/sign-in",
-    path: "/sign-in",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-  .lazy(() => import("./routes/(auth)/sign-in.lazy").then((d) => d.Route));
-const authSignUpRoute = authSignUpRouteImport
-  .update({
-    id: "/(auth)/sign-up",
-    path: "/sign-up",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-  .lazy(() => import("./routes/(auth)/sign-up.lazy").then((d) => d.Route));
-const authVerifyEmailRoute = authVerifyEmailRouteImport
-  .update({
-    id: "/(auth)/verify-email",
-    path: "/verify-email",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-  .lazy(() => import("./routes/(auth)/verify-email.lazy").then((d) => d.Route));
-const cartCartRoute = cartCartRouteImport
-  .update({
-    id: "/(cart)/cart",
-    path: "/cart",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-  .lazy(() => import("./routes/(cart)/cart.lazy").then((d) => d.Route));
-const catalogPublisherSlugRoute = catalogPublisherSlugRouteImport
-  .update({
-    id: "/(catalog)/$publisherSlug",
-    path: "/$publisherSlug",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-  .lazy(() => import("./routes/(catalog)/$publisherSlug.lazy").then((d) => d.Route));
-const checkoutCheckoutRoute = checkoutCheckoutRouteImport
-  .update({
-    id: "/(checkout)/checkout",
-    path: "/checkout",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-  .lazy(() => import("./routes/(checkout)/checkout.lazy").then((d) => d.Route));
+} as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
 const checkoutOrderConfirmationRoute = checkoutOrderConfirmationRouteImport
   .update({
     id: "/(checkout)/order-confirmation",
@@ -112,62 +51,67 @@ const checkoutOrderConfirmationRoute = checkoutOrderConfirmationRouteImport
     getParentRoute: () => rootRouteImport,
   } as any)
   .lazy(() => import("./routes/(checkout)/order-confirmation.lazy").then((d) => d.Route));
-const accountAccountOrdersRoute = accountAccountOrdersRouteImport
+const checkoutCheckoutRoute = checkoutCheckoutRouteImport
   .update({
-    id: "/(account)/account/orders",
-    path: "/account/orders",
+    id: "/(checkout)/checkout",
+    path: "/checkout",
     getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import("./routes/(account)/account.orders.lazy").then((d) => d.Route));
-const adminAdminCharactersRoute = adminAdminCharactersRouteImport
+  .lazy(() => import("./routes/(checkout)/checkout.lazy").then((d) => d.Route));
+const catalogPublisherSlugRoute = catalogPublisherSlugRouteImport
   .update({
-    id: "/characters",
-    path: "/characters",
-    getParentRoute: () => adminAdminRoute,
+    id: "/(catalog)/$publisherSlug",
+    path: "/$publisherSlug",
+    getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import("./routes/(admin)/admin.characters.lazy").then((d) => d.Route));
-const adminAdminGamesRoute = adminAdminGamesRouteImport
+  .lazy(() => import("./routes/(catalog)/$publisherSlug.lazy").then((d) => d.Route));
+const cartCartRoute = cartCartRouteImport
   .update({
-    id: "/games",
-    path: "/games",
-    getParentRoute: () => adminAdminRoute,
+    id: "/(cart)/cart",
+    path: "/cart",
+    getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import("./routes/(admin)/admin.games.lazy").then((d) => d.Route));
-const adminAdminOrdersRoute = adminAdminOrdersRouteImport
+  .lazy(() => import("./routes/(cart)/cart.lazy").then((d) => d.Route));
+const authVerifyEmailRoute = authVerifyEmailRouteImport
   .update({
-    id: "/orders",
-    path: "/orders",
-    getParentRoute: () => adminAdminRoute,
+    id: "/(auth)/verify-email",
+    path: "/verify-email",
+    getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import("./routes/(admin)/admin.orders.lazy").then((d) => d.Route));
-const adminAdminProductsRoute = adminAdminProductsRouteImport
+  .lazy(() => import("./routes/(auth)/verify-email.lazy").then((d) => d.Route));
+const authSignUpRoute = authSignUpRouteImport
   .update({
-    id: "/products",
-    path: "/products",
-    getParentRoute: () => adminAdminRoute,
+    id: "/(auth)/sign-up",
+    path: "/sign-up",
+    getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import("./routes/(admin)/admin.products.lazy").then((d) => d.Route));
-const adminAdminPublishersRoute = adminAdminPublishersRouteImport
+  .lazy(() => import("./routes/(auth)/sign-up.lazy").then((d) => d.Route));
+const authSignInRoute = authSignInRouteImport
   .update({
-    id: "/publishers",
-    path: "/publishers",
-    getParentRoute: () => adminAdminRoute,
+    id: "/(auth)/sign-in",
+    path: "/sign-in",
+    getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import("./routes/(admin)/admin.publishers.lazy").then((d) => d.Route));
-const adminAdminSkusRoute = adminAdminSkusRouteImport
+  .lazy(() => import("./routes/(auth)/sign-in.lazy").then((d) => d.Route));
+const authResetPasswordRoute = authResetPasswordRouteImport
   .update({
-    id: "/skus",
-    path: "/skus",
-    getParentRoute: () => adminAdminRoute,
+    id: "/(auth)/reset-password",
+    path: "/reset-password",
+    getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import("./routes/(admin)/admin.skus.lazy").then((d) => d.Route));
-const adminAdminTeamsRoute = adminAdminTeamsRouteImport
+  .lazy(() => import("./routes/(auth)/reset-password.lazy").then((d) => d.Route));
+const authForgotPasswordRoute = authForgotPasswordRouteImport
   .update({
-    id: "/teams",
-    path: "/teams",
-    getParentRoute: () => adminAdminRoute,
+    id: "/(auth)/forgot-password",
+    path: "/forgot-password",
+    getParentRoute: () => rootRouteImport,
   } as any)
-  .lazy(() => import("./routes/(admin)/admin.teams.lazy").then((d) => d.Route));
+  .lazy(() => import("./routes/(auth)/forgot-password.lazy").then((d) => d.Route));
+const adminAdminRoute = adminAdminRouteImport.update({
+  id: "/(admin)/admin",
+  path: "/admin",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const catalogPublisherSlugIndexRoute = catalogPublisherSlugIndexRouteImport
   .update({
     id: "/",
@@ -182,6 +126,62 @@ const catalogPublisherSlugGameSlugRoute = catalogPublisherSlugGameSlugRouteImpor
     getParentRoute: () => catalogPublisherSlugRoute,
   } as any)
   .lazy(() => import("./routes/(catalog)/$publisherSlug.$gameSlug.lazy").then((d) => d.Route));
+const adminAdminTeamsRoute = adminAdminTeamsRouteImport
+  .update({
+    id: "/teams",
+    path: "/teams",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.teams.lazy").then((d) => d.Route));
+const adminAdminSkusRoute = adminAdminSkusRouteImport
+  .update({
+    id: "/skus",
+    path: "/skus",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.skus.lazy").then((d) => d.Route));
+const adminAdminPublishersRoute = adminAdminPublishersRouteImport
+  .update({
+    id: "/publishers",
+    path: "/publishers",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.publishers.lazy").then((d) => d.Route));
+const adminAdminProductsRoute = adminAdminProductsRouteImport
+  .update({
+    id: "/products",
+    path: "/products",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.products.lazy").then((d) => d.Route));
+const adminAdminOrdersRoute = adminAdminOrdersRouteImport
+  .update({
+    id: "/orders",
+    path: "/orders",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.orders.lazy").then((d) => d.Route));
+const adminAdminGamesRoute = adminAdminGamesRouteImport
+  .update({
+    id: "/games",
+    path: "/games",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.games.lazy").then((d) => d.Route));
+const adminAdminCharactersRoute = adminAdminCharactersRouteImport
+  .update({
+    id: "/characters",
+    path: "/characters",
+    getParentRoute: () => adminAdminRoute,
+  } as any)
+  .lazy(() => import("./routes/(admin)/admin.characters.lazy").then((d) => d.Route));
+const accountAccountOrdersRoute = accountAccountOrdersRouteImport
+  .update({
+    id: "/(account)/account/orders",
+    path: "/account/orders",
+    getParentRoute: () => rootRouteImport,
+  } as any)
+  .lazy(() => import("./routes/(account)/account.orders.lazy").then((d) => d.Route));
 const catalogPublisherSlugGameSlugIndexRoute = catalogPublisherSlugGameSlugIndexRouteImport
   .update({
     id: "/",
@@ -378,13 +378,6 @@ export interface RootRouteChildren {
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
     "/sitemap.xml": {
       id: "/sitemap.xml";
       path: "/sitemap.xml";
@@ -392,67 +385,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof SitemapDotxmlRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/(admin)/admin": {
-      id: "/(admin)/admin";
-      path: "/admin";
-      fullPath: "/admin";
-      preLoaderRoute: typeof adminAdminRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/(auth)/forgot-password": {
-      id: "/(auth)/forgot-password";
-      path: "/forgot-password";
-      fullPath: "/forgot-password";
-      preLoaderRoute: typeof authForgotPasswordRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/(auth)/reset-password": {
-      id: "/(auth)/reset-password";
-      path: "/reset-password";
-      fullPath: "/reset-password";
-      preLoaderRoute: typeof authResetPasswordRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/(auth)/sign-in": {
-      id: "/(auth)/sign-in";
-      path: "/sign-in";
-      fullPath: "/sign-in";
-      preLoaderRoute: typeof authSignInRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/(auth)/sign-up": {
-      id: "/(auth)/sign-up";
-      path: "/sign-up";
-      fullPath: "/sign-up";
-      preLoaderRoute: typeof authSignUpRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/(auth)/verify-email": {
-      id: "/(auth)/verify-email";
-      path: "/verify-email";
-      fullPath: "/verify-email";
-      preLoaderRoute: typeof authVerifyEmailRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/(cart)/cart": {
-      id: "/(cart)/cart";
-      path: "/cart";
-      fullPath: "/cart";
-      preLoaderRoute: typeof cartCartRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/(catalog)/$publisherSlug": {
-      id: "/(catalog)/$publisherSlug";
-      path: "/$publisherSlug";
-      fullPath: "/$publisherSlug";
-      preLoaderRoute: typeof catalogPublisherSlugRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/(checkout)/checkout": {
-      id: "/(checkout)/checkout";
-      path: "/checkout";
-      fullPath: "/checkout";
-      preLoaderRoute: typeof checkoutCheckoutRouteImport;
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/(checkout)/order-confirmation": {
@@ -462,61 +399,68 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof checkoutOrderConfirmationRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/(account)/account/orders": {
-      id: "/(account)/account/orders";
-      path: "/account/orders";
-      fullPath: "/account/orders";
-      preLoaderRoute: typeof accountAccountOrdersRouteImport;
+    "/(checkout)/checkout": {
+      id: "/(checkout)/checkout";
+      path: "/checkout";
+      fullPath: "/checkout";
+      preLoaderRoute: typeof checkoutCheckoutRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/(admin)/admin/characters": {
-      id: "/(admin)/admin/characters";
-      path: "/characters";
-      fullPath: "/admin/characters";
-      preLoaderRoute: typeof adminAdminCharactersRouteImport;
-      parentRoute: typeof adminAdminRoute;
+    "/(catalog)/$publisherSlug": {
+      id: "/(catalog)/$publisherSlug";
+      path: "/$publisherSlug";
+      fullPath: "/$publisherSlug";
+      preLoaderRoute: typeof catalogPublisherSlugRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/(admin)/admin/games": {
-      id: "/(admin)/admin/games";
-      path: "/games";
-      fullPath: "/admin/games";
-      preLoaderRoute: typeof adminAdminGamesRouteImport;
-      parentRoute: typeof adminAdminRoute;
+    "/(cart)/cart": {
+      id: "/(cart)/cart";
+      path: "/cart";
+      fullPath: "/cart";
+      preLoaderRoute: typeof cartCartRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/(admin)/admin/orders": {
-      id: "/(admin)/admin/orders";
-      path: "/orders";
-      fullPath: "/admin/orders";
-      preLoaderRoute: typeof adminAdminOrdersRouteImport;
-      parentRoute: typeof adminAdminRoute;
+    "/(auth)/verify-email": {
+      id: "/(auth)/verify-email";
+      path: "/verify-email";
+      fullPath: "/verify-email";
+      preLoaderRoute: typeof authVerifyEmailRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/(admin)/admin/products": {
-      id: "/(admin)/admin/products";
-      path: "/products";
-      fullPath: "/admin/products";
-      preLoaderRoute: typeof adminAdminProductsRouteImport;
-      parentRoute: typeof adminAdminRoute;
+    "/(auth)/sign-up": {
+      id: "/(auth)/sign-up";
+      path: "/sign-up";
+      fullPath: "/sign-up";
+      preLoaderRoute: typeof authSignUpRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/(admin)/admin/publishers": {
-      id: "/(admin)/admin/publishers";
-      path: "/publishers";
-      fullPath: "/admin/publishers";
-      preLoaderRoute: typeof adminAdminPublishersRouteImport;
-      parentRoute: typeof adminAdminRoute;
+    "/(auth)/sign-in": {
+      id: "/(auth)/sign-in";
+      path: "/sign-in";
+      fullPath: "/sign-in";
+      preLoaderRoute: typeof authSignInRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/(admin)/admin/skus": {
-      id: "/(admin)/admin/skus";
-      path: "/skus";
-      fullPath: "/admin/skus";
-      preLoaderRoute: typeof adminAdminSkusRouteImport;
-      parentRoute: typeof adminAdminRoute;
+    "/(auth)/reset-password": {
+      id: "/(auth)/reset-password";
+      path: "/reset-password";
+      fullPath: "/reset-password";
+      preLoaderRoute: typeof authResetPasswordRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/(admin)/admin/teams": {
-      id: "/(admin)/admin/teams";
-      path: "/teams";
-      fullPath: "/admin/teams";
-      preLoaderRoute: typeof adminAdminTeamsRouteImport;
-      parentRoute: typeof adminAdminRoute;
+    "/(auth)/forgot-password": {
+      id: "/(auth)/forgot-password";
+      path: "/forgot-password";
+      fullPath: "/forgot-password";
+      preLoaderRoute: typeof authForgotPasswordRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/(admin)/admin": {
+      id: "/(admin)/admin";
+      path: "/admin";
+      fullPath: "/admin";
+      preLoaderRoute: typeof adminAdminRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
     "/(catalog)/$publisherSlug/": {
       id: "/(catalog)/$publisherSlug/";
@@ -531,6 +475,62 @@ declare module "@tanstack/react-router" {
       fullPath: "/$publisherSlug/$gameSlug";
       preLoaderRoute: typeof catalogPublisherSlugGameSlugRouteImport;
       parentRoute: typeof catalogPublisherSlugRoute;
+    };
+    "/(admin)/admin/teams": {
+      id: "/(admin)/admin/teams";
+      path: "/teams";
+      fullPath: "/admin/teams";
+      preLoaderRoute: typeof adminAdminTeamsRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(admin)/admin/skus": {
+      id: "/(admin)/admin/skus";
+      path: "/skus";
+      fullPath: "/admin/skus";
+      preLoaderRoute: typeof adminAdminSkusRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(admin)/admin/publishers": {
+      id: "/(admin)/admin/publishers";
+      path: "/publishers";
+      fullPath: "/admin/publishers";
+      preLoaderRoute: typeof adminAdminPublishersRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(admin)/admin/products": {
+      id: "/(admin)/admin/products";
+      path: "/products";
+      fullPath: "/admin/products";
+      preLoaderRoute: typeof adminAdminProductsRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(admin)/admin/orders": {
+      id: "/(admin)/admin/orders";
+      path: "/orders";
+      fullPath: "/admin/orders";
+      preLoaderRoute: typeof adminAdminOrdersRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(admin)/admin/games": {
+      id: "/(admin)/admin/games";
+      path: "/games";
+      fullPath: "/admin/games";
+      preLoaderRoute: typeof adminAdminGamesRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(admin)/admin/characters": {
+      id: "/(admin)/admin/characters";
+      path: "/characters";
+      fullPath: "/admin/characters";
+      preLoaderRoute: typeof adminAdminCharactersRouteImport;
+      parentRoute: typeof adminAdminRoute;
+    };
+    "/(account)/account/orders": {
+      id: "/(account)/account/orders";
+      path: "/account/orders";
+      fullPath: "/account/orders";
+      preLoaderRoute: typeof accountAccountOrdersRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
     "/(catalog)/$publisherSlug/$gameSlug/": {
       id: "/(catalog)/$publisherSlug/$gameSlug/";
