@@ -1,6 +1,6 @@
-import { expect, GUEST_STORAGE_STATE, test } from "./fixtures";
-import { signIn } from "./auth";
-import { GlobalNavPage } from "./pages/GlobalNav.page";
+import { expect, GUEST_STORAGE_STATE, test } from "../fixtures";
+import { signIn } from "../auth";
+import { GlobalNavPage } from "../pages/GlobalNav.page";
 
 // Guaranteed non-empty: global-setup.ts validates these before any test runs.
 const email = process.env.E2E_TEST_EMAIL as string;

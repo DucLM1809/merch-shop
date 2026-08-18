@@ -1,5 +1,5 @@
-import { expect, test } from "./fixtures";
-import { AdminProductsPage } from "./pages/AdminProducts.page";
+import { expect, test } from "../fixtures";
+import { AdminProductsPage } from "../pages/AdminProducts.page";
 
 test.describe("Admin product CRUD", () => {
   test("admin can create, edit, and delete a product", async ({ adminPage }) => {

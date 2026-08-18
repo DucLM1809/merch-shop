@@ -1,5 +1,5 @@
-import { expect, test } from "./fixtures";
-import { AccountOrdersPage } from "./pages/AccountOrders.page";
+import { expect, test } from "../fixtures";
+import { AccountOrdersPage } from "../pages/AccountOrders.page";
 
 // The guest-redirect case for /account/orders is already covered by
 // auth-redirect.spec.ts — this suite only covers order-history-specific behavior.
