@@ -5,9 +5,13 @@ import { AccountOrdersPage } from "../pages/AccountOrders.page";
 // auth-redirect.spec.ts — this suite only covers order-history-specific behavior.
 test.describe("Account order history", () => {
   test("renders order history for the authenticated buyer", async ({ authenticatedPage }) => {
+    // Arrange
     const orders = new AccountOrdersPage(authenticatedPage);
+
+    // Act
     await authenticatedPage.goto("/account/orders");
 
+    // Assert
     await expect(orders.heading).toBeVisible();
 
     const rowCount = await orders.orderRows.count();
@@ -22,11 +26,12 @@ test.describe("Account order history", () => {
     const firstRow = orders.orderRows.first();
     const orderId = (await firstRow.getAttribute("data-testid"))?.replace("order-row-", "");
     if (!orderId) throw new Error("Order row is missing its data-testid.");
-
     await expect(orders.statusBadge(orderId)).toBeVisible();
 
+    // Act: open the order detail page.
     await firstRow.click();
 
+    // Assert
     await expect(authenticatedPage).toHaveURL(`/account/orders/${orderId}`);
     await expect(
       authenticatedPage.getByRole("heading", { name: `Order #${orderId}` })
@@ -34,16 +39,23 @@ test.describe("Account order history", () => {
     await expect(orders.detailStatus).toBeVisible();
     await expect(orders.detailTotal).toBeVisible();
 
+    // Act: navigate back to the order list.
     await orders.detailBackLink.click();
+
+    // Assert
     await expect(authenticatedPage).toHaveURL("/account/orders");
   });
 
   test("shows a not-found message for an order id that doesn't exist", async ({
     authenticatedPage,
   }) => {
+    // Arrange
     const orders = new AccountOrdersPage(authenticatedPage);
+
+    // Act
     await authenticatedPage.goto("/account/orders/does-not-exist");
 
+    // Assert
     await expect(authenticatedPage.getByText(/order not found/i)).toBeVisible({ timeout: 10_000 });
     await expect(orders.detailStatus).toBeHidden();
   });

@@ -15,7 +15,10 @@ test("browsing the catalog and adding an item to the cart", async ({
   productDetail,
   cart,
 }) => {
-  // Homepage renders the catalog without errors.
+  // This is a multi-step journey, so each leg below is its own Act/Assert pair,
+  // chained off the state the previous leg's Assert just confirmed.
+
+  // Arrange: homepage renders the catalog without errors.
   await page.goto("/");
   const homepageProductLink = catalog.firstProductLink();
   await expect(homepageProductLink).toBeVisible();
@@ -24,14 +27,16 @@ test("browsing the catalog and adding an item to the cart", async ({
   if (!productHref) throw new Error("Homepage product card has no link.");
   const { publisherSlug, gameSlug } = parsePublisherAndGameSlug(productHref);
 
-  // Publisher page → game page, via the sidebar nav (real clicks, not deep-linking).
+  // Act: publisher page → game page, via the sidebar nav (real clicks, not deep-linking).
   await page.goto(`/${publisherSlug}`);
   const gameLink = catalog.gameNavLink(publisherSlug, gameSlug);
   await expect(gameLink).toBeVisible();
   await gameLink.click();
+
+  // Assert
   await expect(page).toHaveURL(new RegExp(`/${publisherSlug}/${gameSlug}/?$`));
 
-  // Game page → product detail page.
+  // Act: game page → product detail page.
   const gameProductLink = catalog.firstProductLink();
   await expect(gameProductLink).toBeVisible();
   const product = await productDetail.open(() => gameProductLink.click());
@@ -42,16 +47,20 @@ test("browsing the catalog and adding an item to the cart", async ({
     );
   }
 
+  // Assert
   await expect(productDetail.heading(product.name)).toBeVisible();
   await expect(productDetail.price).toBeVisible();
 
+  // Act: add the selected SKU to the cart.
   await productDetail.selectSku(availableSku);
-
-  // Add to Cart updates the nav cart badge count.
   await productDetail.addToCart(() => expect(nav.cartBadgeCount("1")).toBeVisible());
 
-  // /cart shows the added item with correct name and price.
+  // Assert: the nav cart badge count updated (checked inline above as part of the action).
+
+  // Act: navigate to /cart.
   await nav.cartLink.click();
+
+  // Assert: the added item shows with the correct name and price.
   await expect(page).toHaveURL(/\/cart$/);
   await expect(cart.itemName(product.name)).toBeVisible();
 
@@ -59,15 +68,19 @@ test("browsing the catalog and adding an item to the cart", async ({
   await expect(cart.priceText(availableSku.price)).toHaveCount(2);
   await expect(cart.subtotal).toHaveText(`$${availableSku.price.toFixed(2)}`);
 
-  // Quantity increment updates the line total (and subtotal, the only item in cart).
+  // Act: increment quantity.
   const doubled = availableSku.price * 2;
   await cart.increaseQuantity(() => expect(cart.subtotal).toHaveText(`$${doubled.toFixed(2)}`));
+
+  // Assert: the line total (and subtotal, the only item in cart) updated.
   await expect(cart.priceText(availableSku.price)).toHaveCount(1);
   await expect(cart.priceText(doubled)).toBeVisible();
 
-  // Quantity decrement reverses it.
+  // Act: decrement quantity.
   await cart.decreaseQuantity(() =>
     expect(cart.subtotal).toHaveText(`$${availableSku.price.toFixed(2)}`)
   );
+
+  // Assert: the increment above is reversed.
   await expect(cart.priceText(availableSku.price)).toHaveCount(2);
 });

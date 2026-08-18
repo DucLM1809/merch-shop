@@ -10,22 +10,28 @@ test.describe("Mobile nav drawer", () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
   test("hides desktop-only nav and shows the mobile trigger", async ({ page, nav }) => {
+    // Act
     await page.goto("/");
 
+    // Assert
     await expect(nav.desktopAccountMenu).toBeHidden();
     await expect(nav.openDrawerButton).toBeVisible();
   });
 
   test.describe("with a freshly authenticated session", () => {
     test("opens showing authenticated account details", async ({ authenticatedPage }) => {
+      // Arrange
       // Shares one login across the worker (see fixtures.ts) instead of signing in itself
       // — this assertion only reads authenticated state, it doesn't mutate the session.
       // test.use({ viewport }) only configures the built-in page/context fixtures, which
       // this worker-scoped fixture bypasses, so the mobile viewport is set explicitly.
       await authenticatedPage.setViewportSize({ width: 375, height: 812 });
       const nav = new GlobalNavPage(authenticatedPage);
+
+      // Act
       await nav.open();
 
+      // Assert
       await expect(nav.drawerUsername).toBeVisible();
       await expect(nav.drawerSignOutButton).toBeVisible();
       await expect(nav.drawerGuestLinks).toBeHidden();
@@ -39,10 +45,14 @@ test.describe("Mobile nav drawer", () => {
       test.use({ storageState: GUEST_STORAGE_STATE });
 
       test("switches the drawer to guest state", async ({ page, nav }) => {
+        // Arrange
         await signIn(page, email, password);
+
+        // Act
         await nav.open();
         await nav.signOut();
 
+        // Assert
         await expect(nav.drawerGuestLinks).toBeVisible();
         await expect(nav.drawerSignInLink).toBeVisible();
         await expect(nav.drawerSignUpLink).toBeVisible();
@@ -52,31 +62,41 @@ test.describe("Mobile nav drawer", () => {
   });
 
   test("closes via the close button", async ({ page, nav }) => {
+    // Arrange
     await page.goto("/");
     await nav.open();
 
+    // Act & Assert
     await nav.closeViaCloseButton();
   });
 
   test("closes via clicking the overlay", async ({ page, nav }) => {
+    // Arrange
     await page.goto("/");
     await nav.open();
 
+    // Act & Assert
     await nav.closeViaOverlay();
   });
 
   test("closes via the Escape key", async ({ page, nav }) => {
+    // Arrange
     await page.goto("/");
     await nav.open();
 
+    // Act & Assert
     await nav.closeViaEscape();
   });
 
   test("closes when a link inside the drawer is clicked", async ({ page, nav }) => {
+    // Arrange
     await page.goto("/");
     await nav.open();
+
+    // Act
     await nav.drawerCartLink.click();
 
+    // Assert
     await expect(nav.drawer).toBeHidden();
     await expect(page).toHaveURL(/\/cart$/);
   });
@@ -85,9 +105,13 @@ test.describe("Mobile nav drawer", () => {
     test.use({ storageState: GUEST_STORAGE_STATE });
 
     test("opens showing guest links instead of an account", async ({ page, nav }) => {
+      // Arrange
       await page.goto("/");
+
+      // Act
       await nav.open();
 
+      // Assert
       await expect(nav.drawerGuestLinks).toBeVisible();
       await expect(nav.drawerSignInLink).toBeVisible();
       await expect(nav.drawerSignUpLink).toBeVisible();
