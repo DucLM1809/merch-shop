@@ -1,7 +1,12 @@
 import type { Page } from "@playwright/test";
 
-export async function signIn(page: Page, email: string, password: string): Promise<void> {
-  await page.goto("/sign-in");
+export async function signIn(
+  page: Page,
+  email: string,
+  password: string,
+  startPath = "/sign-in"
+): Promise<void> {
+  await page.goto(startPath);
 
   // The SSR'd form exists in the DOM before React finishes hydrating and attaching its
   // submit handler, so a click that lands too early falls through to a native GET submit
@@ -9,7 +14,7 @@ export async function signIn(page: Page, email: string, password: string): Promi
   // Retry through that window rather than guessing at a fixed hydration delay.
   for (let attempt = 1; attempt <= 5; attempt++) {
     if (page.url().includes("?email=")) {
-      await page.goto("/sign-in");
+      await page.goto(startPath);
     }
 
     await page.getByLabel("Email").fill(email);

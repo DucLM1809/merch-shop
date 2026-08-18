@@ -1,7 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
+import { server } from "../../mocks/server";
+import { BASE_URL } from "../../api/client";
 import { buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 
 describe("GlobalNav auth state", () => {
@@ -56,5 +59,34 @@ describe("/sign-in route", () => {
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     });
+  });
+
+  it("signs in and redirects back to the ?redirect target on valid credentials", async () => {
+    const user = userEvent.setup();
+    const { router } = renderRoute("/sign-in?redirect=%2Faccount%2Forders");
+
+    await screen.findByRole("heading", { name: /sign in/i });
+    await user.type(screen.getByLabelText(/email/i), "buyer@test.com");
+    await user.type(screen.getByLabelText(/password/i), "correct-horse-battery-staple");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe("/account/orders");
+    });
+  });
+
+  it("shows 'Invalid email or password' on invalid credentials", async () => {
+    server.use(http.post(`${BASE_URL}/auth/login`, () => new HttpResponse(null, { status: 401 })));
+    const user = userEvent.setup();
+    renderRoute("/sign-in");
+
+    await screen.findByRole("heading", { name: /sign in/i });
+    await user.type(screen.getByLabelText(/email/i), "buyer@test.com");
+    await user.type(screen.getByLabelText(/password/i), "wrong-password");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    expect(await screen.findByTestId("sign-in-error")).toHaveTextContent(
+      "Invalid email or password"
+    );
   });
 });

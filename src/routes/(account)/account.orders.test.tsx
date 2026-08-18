@@ -69,6 +69,13 @@ describe("/account/orders", () => {
     });
   });
 
+  it("redirects guest to /sign-in with a redirect back to /account/orders", async () => {
+    const { router } = renderRoute("/account/orders");
+    await waitFor(() => {
+      expect(router.state.location.search).toEqual({ redirect: "/account/orders" });
+    });
+  });
+
   it("renders two seeded orders for authenticated buyer", async () => {
     mockSignedIn(buyerAccount);
     server.use(http.get(`${BASE_URL}/orders/mine`, () => HttpResponse.json(envelope(twoOrders))));

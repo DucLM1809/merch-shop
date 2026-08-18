@@ -16,7 +16,8 @@ function AccountOrdersPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoaded && !isSignedIn) navigate({ to: "/sign-in" });
+    if (isLoaded && !isSignedIn)
+      navigate({ to: "/sign-in", search: { redirect: "/account/orders" } });
   }, [isLoaded, isSignedIn, navigate]);
 
   const { data: orders = [] } = useOrders(!!isSignedIn);

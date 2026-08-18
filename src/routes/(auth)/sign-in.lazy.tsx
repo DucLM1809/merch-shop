@@ -10,11 +10,12 @@ export const Route = createLazyFileRoute("/(auth)/sign-in")({
 
 function SignInPage() {
   const { isSignedIn } = useAuth();
+  const { redirect } = Route.useSearch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isSignedIn) navigate({ to: "/" });
-  }, [isSignedIn, navigate]);
+    if (isSignedIn) navigate({ to: redirect ?? "/" });
+  }, [isSignedIn, redirect, navigate]);
 
   if (isSignedIn) return null;
 
