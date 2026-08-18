@@ -15,6 +15,9 @@ function AdminOrdersPage(): React.JSX.Element {
   const navigate = Route.useNavigate();
 
   const { data: { orders, meta } = {}, isLoading, error } = useAdminOrders(search);
+  // No route-level errorComponent here, so a response shape mismatch would otherwise
+  // crash AdminOrdersView's orders.map() and blank the whole admin section.
+  const safeOrders = Array.isArray(orders) ? orders : [];
 
   const totalPages = meta ? Math.max(1, Math.ceil(meta.total / meta.limit)) : 1;
   const page = search.page ?? 1;
@@ -62,7 +65,7 @@ function AdminOrdersPage(): React.JSX.Element {
 
       {isLoading && <Text color="gray.500">Loading…</Text>}
       {error && <Text color="red.400">Failed to load orders.</Text>}
-      {!isLoading && !error && <AdminOrdersView orders={orders ?? []} />}
+      {!isLoading && !error && <AdminOrdersView orders={safeOrders} />}
 
       {!isLoading && !error && totalPages > 1 && (
         <HStack mt={5} justify="center" gap={4}>

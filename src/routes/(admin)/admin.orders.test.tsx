@@ -90,6 +90,18 @@ describe("/admin/orders", () => {
     expect(await screen.findByText(/no orders yet/i)).toBeInTheDocument();
   });
 
+  it("renders without crashing when the API returns a malformed (non-array) orders payload", async () => {
+    server.use(
+      http.get(`${BASE_URL}/orders`, () =>
+        HttpResponse.json({ success: true, data: {}, meta: { total: 0, page: 1, limit: 20 } })
+      )
+    );
+
+    renderRoute("/admin/orders");
+
+    expect(await screen.findByText(/no orders yet/i)).toBeInTheDocument();
+  });
+
   it("shows Retry Fulfillment button when expanded", async () => {
     server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
 
