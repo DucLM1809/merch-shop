@@ -95,4 +95,23 @@ describe("/account/orders", () => {
 
     expect(await screen.findByText(/no orders yet/i)).toBeInTheDocument();
   });
+
+  it("shows a status badge for each order and links each row to its detail page", async () => {
+    mockSignedIn(buyerAccount);
+    server.use(http.get(`${BASE_URL}/orders/mine`, () => HttpResponse.json(envelope(twoOrders))));
+
+    renderRoute("/account/orders");
+
+    await screen.findByText(/ord-001/);
+
+    expect(screen.getByTestId("order-status-ord-001")).toHaveTextContent("PENDING");
+    expect(screen.getByRole("link", { name: /order #ord-001/i })).toHaveAttribute(
+      "href",
+      "/account/orders/ord-001"
+    );
+    expect(screen.getByRole("link", { name: /order #ord-002/i })).toHaveAttribute(
+      "href",
+      "/account/orders/ord-002"
+    );
+  });
 });

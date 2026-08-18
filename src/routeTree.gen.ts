@@ -32,6 +32,8 @@ import { Route as adminAdminGamesRouteImport } from "./routes/(admin)/admin.game
 import { Route as adminAdminCharactersRouteImport } from "./routes/(admin)/admin.characters";
 import { Route as accountAccountOrdersRouteImport } from "./routes/(account)/account.orders";
 import { Route as catalogPublisherSlugGameSlugIndexRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug.index";
+import { Route as accountAccountOrdersIndexRouteImport } from "./routes/(account)/account.orders.index";
+import { Route as accountAccountOrdersOrderIdRouteImport } from "./routes/(account)/account.orders.$orderId";
 import { Route as catalogPublisherSlugGameSlugProductsProductSlugRouteImport } from "./routes/(catalog)/$publisherSlug.$gameSlug.products.$productSlug";
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -191,6 +193,20 @@ const catalogPublisherSlugGameSlugIndexRoute = catalogPublisherSlugGameSlugIndex
   .lazy(() =>
     import("./routes/(catalog)/$publisherSlug.$gameSlug.index.lazy").then((d) => d.Route)
   );
+const accountAccountOrdersIndexRoute = accountAccountOrdersIndexRouteImport
+  .update({
+    id: "/",
+    path: "/",
+    getParentRoute: () => accountAccountOrdersRoute,
+  } as any)
+  .lazy(() => import("./routes/(account)/account.orders.index.lazy").then((d) => d.Route));
+const accountAccountOrdersOrderIdRoute = accountAccountOrdersOrderIdRouteImport
+  .update({
+    id: "/$orderId",
+    path: "/$orderId",
+    getParentRoute: () => accountAccountOrdersRoute,
+  } as any)
+  .lazy(() => import("./routes/(account)/account.orders.$orderId.lazy").then((d) => d.Route));
 const catalogPublisherSlugGameSlugProductsProductSlugRoute =
   catalogPublisherSlugGameSlugProductsProductSlugRouteImport
     .update({
@@ -217,7 +233,7 @@ export interface FileRoutesByFullPath {
   "/$publisherSlug": typeof catalogPublisherSlugRouteWithChildren;
   "/checkout": typeof checkoutCheckoutRoute;
   "/order-confirmation": typeof checkoutOrderConfirmationRoute;
-  "/account/orders": typeof accountAccountOrdersRoute;
+  "/account/orders": typeof accountAccountOrdersRouteWithChildren;
   "/admin/characters": typeof adminAdminCharactersRoute;
   "/admin/games": typeof adminAdminGamesRoute;
   "/admin/orders": typeof adminAdminOrdersRoute;
@@ -227,6 +243,8 @@ export interface FileRoutesByFullPath {
   "/admin/teams": typeof adminAdminTeamsRoute;
   "/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugRouteWithChildren;
   "/$publisherSlug/": typeof catalogPublisherSlugIndexRoute;
+  "/account/orders/$orderId": typeof accountAccountOrdersOrderIdRoute;
+  "/account/orders/": typeof accountAccountOrdersIndexRoute;
   "/$publisherSlug/$gameSlug/": typeof catalogPublisherSlugGameSlugIndexRoute;
   "/$publisherSlug/$gameSlug/products/$productSlug": typeof catalogPublisherSlugGameSlugProductsProductSlugRoute;
 }
@@ -242,7 +260,6 @@ export interface FileRoutesByTo {
   "/cart": typeof cartCartRoute;
   "/checkout": typeof checkoutCheckoutRoute;
   "/order-confirmation": typeof checkoutOrderConfirmationRoute;
-  "/account/orders": typeof accountAccountOrdersRoute;
   "/admin/characters": typeof adminAdminCharactersRoute;
   "/admin/games": typeof adminAdminGamesRoute;
   "/admin/orders": typeof adminAdminOrdersRoute;
@@ -251,6 +268,8 @@ export interface FileRoutesByTo {
   "/admin/skus": typeof adminAdminSkusRoute;
   "/admin/teams": typeof adminAdminTeamsRoute;
   "/$publisherSlug": typeof catalogPublisherSlugIndexRoute;
+  "/account/orders/$orderId": typeof accountAccountOrdersOrderIdRoute;
+  "/account/orders": typeof accountAccountOrdersIndexRoute;
   "/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugIndexRoute;
   "/$publisherSlug/$gameSlug/products/$productSlug": typeof catalogPublisherSlugGameSlugProductsProductSlugRoute;
 }
@@ -268,7 +287,7 @@ export interface FileRoutesById {
   "/(catalog)/$publisherSlug": typeof catalogPublisherSlugRouteWithChildren;
   "/(checkout)/checkout": typeof checkoutCheckoutRoute;
   "/(checkout)/order-confirmation": typeof checkoutOrderConfirmationRoute;
-  "/(account)/account/orders": typeof accountAccountOrdersRoute;
+  "/(account)/account/orders": typeof accountAccountOrdersRouteWithChildren;
   "/(admin)/admin/characters": typeof adminAdminCharactersRoute;
   "/(admin)/admin/games": typeof adminAdminGamesRoute;
   "/(admin)/admin/orders": typeof adminAdminOrdersRoute;
@@ -278,6 +297,8 @@ export interface FileRoutesById {
   "/(admin)/admin/teams": typeof adminAdminTeamsRoute;
   "/(catalog)/$publisherSlug/$gameSlug": typeof catalogPublisherSlugGameSlugRouteWithChildren;
   "/(catalog)/$publisherSlug/": typeof catalogPublisherSlugIndexRoute;
+  "/(account)/account/orders/$orderId": typeof accountAccountOrdersOrderIdRoute;
+  "/(account)/account/orders/": typeof accountAccountOrdersIndexRoute;
   "/(catalog)/$publisherSlug/$gameSlug/": typeof catalogPublisherSlugGameSlugIndexRoute;
   "/(catalog)/$publisherSlug/$gameSlug/products/$productSlug": typeof catalogPublisherSlugGameSlugProductsProductSlugRoute;
 }
@@ -306,6 +327,8 @@ export interface FileRouteTypes {
     | "/admin/teams"
     | "/$publisherSlug/$gameSlug"
     | "/$publisherSlug/"
+    | "/account/orders/$orderId"
+    | "/account/orders/"
     | "/$publisherSlug/$gameSlug/"
     | "/$publisherSlug/$gameSlug/products/$productSlug";
   fileRoutesByTo: FileRoutesByTo;
@@ -321,7 +344,6 @@ export interface FileRouteTypes {
     | "/cart"
     | "/checkout"
     | "/order-confirmation"
-    | "/account/orders"
     | "/admin/characters"
     | "/admin/games"
     | "/admin/orders"
@@ -330,6 +352,8 @@ export interface FileRouteTypes {
     | "/admin/skus"
     | "/admin/teams"
     | "/$publisherSlug"
+    | "/account/orders/$orderId"
+    | "/account/orders"
     | "/$publisherSlug/$gameSlug"
     | "/$publisherSlug/$gameSlug/products/$productSlug";
   id:
@@ -356,6 +380,8 @@ export interface FileRouteTypes {
     | "/(admin)/admin/teams"
     | "/(catalog)/$publisherSlug/$gameSlug"
     | "/(catalog)/$publisherSlug/"
+    | "/(account)/account/orders/$orderId"
+    | "/(account)/account/orders/"
     | "/(catalog)/$publisherSlug/$gameSlug/"
     | "/(catalog)/$publisherSlug/$gameSlug/products/$productSlug";
   fileRoutesById: FileRoutesById;
@@ -373,7 +399,7 @@ export interface RootRouteChildren {
   catalogPublisherSlugRoute: typeof catalogPublisherSlugRouteWithChildren;
   checkoutCheckoutRoute: typeof checkoutCheckoutRoute;
   checkoutOrderConfirmationRoute: typeof checkoutOrderConfirmationRoute;
-  accountAccountOrdersRoute: typeof accountAccountOrdersRoute;
+  accountAccountOrdersRoute: typeof accountAccountOrdersRouteWithChildren;
 }
 
 declare module "@tanstack/react-router" {
@@ -539,6 +565,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof catalogPublisherSlugGameSlugIndexRouteImport;
       parentRoute: typeof catalogPublisherSlugGameSlugRoute;
     };
+    "/(account)/account/orders/": {
+      id: "/(account)/account/orders/";
+      path: "/";
+      fullPath: "/account/orders/";
+      preLoaderRoute: typeof accountAccountOrdersIndexRouteImport;
+      parentRoute: typeof accountAccountOrdersRoute;
+    };
+    "/(account)/account/orders/$orderId": {
+      id: "/(account)/account/orders/$orderId";
+      path: "/$orderId";
+      fullPath: "/account/orders/$orderId";
+      preLoaderRoute: typeof accountAccountOrdersOrderIdRouteImport;
+      parentRoute: typeof accountAccountOrdersRoute;
+    };
     "/(catalog)/$publisherSlug/$gameSlug/products/$productSlug": {
       id: "/(catalog)/$publisherSlug/$gameSlug/products/$productSlug";
       path: "/products/$productSlug";
@@ -599,6 +639,20 @@ const catalogPublisherSlugRouteWithChildren = catalogPublisherSlugRoute._addFile
   catalogPublisherSlugRouteChildren
 );
 
+interface accountAccountOrdersRouteChildren {
+  accountAccountOrdersOrderIdRoute: typeof accountAccountOrdersOrderIdRoute;
+  accountAccountOrdersIndexRoute: typeof accountAccountOrdersIndexRoute;
+}
+
+const accountAccountOrdersRouteChildren: accountAccountOrdersRouteChildren = {
+  accountAccountOrdersOrderIdRoute: accountAccountOrdersOrderIdRoute,
+  accountAccountOrdersIndexRoute: accountAccountOrdersIndexRoute,
+};
+
+const accountAccountOrdersRouteWithChildren = accountAccountOrdersRoute._addFileChildren(
+  accountAccountOrdersRouteChildren
+);
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -612,7 +666,7 @@ const rootRouteChildren: RootRouteChildren = {
   catalogPublisherSlugRoute: catalogPublisherSlugRouteWithChildren,
   checkoutCheckoutRoute: checkoutCheckoutRoute,
   checkoutOrderConfirmationRoute: checkoutOrderConfirmationRoute,
-  accountAccountOrdersRoute: accountAccountOrdersRoute,
+  accountAccountOrdersRoute: accountAccountOrdersRouteWithChildren,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

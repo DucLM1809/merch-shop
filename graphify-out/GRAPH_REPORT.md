@@ -1,214 +1,245 @@
-# Graph Report - merch-shop (2026-07-02)
+# Graph Report - merch-shop  (2026-08-18)
 
 ## Corpus Check
-
-- 147 files · ~30,389 words
+- 183 files · ~38,836 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-
-- 560 nodes · 1217 edges · 36 communities (20 shown, 16 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 695 nodes · 1621 edges · 52 communities (31 shown, 21 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 16 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-
-- Built from commit: `35237251`
+- Built from commit: `6210a12f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-
-- [[_COMMUNITY_Routes & Page Containers|Routes & Page Containers]]
-- [[_COMMUNITY_HTTP Client & API Types|HTTP Client & API Types]]
-- [[_COMMUNITY_Catalog Browse Components|Catalog Browse Components]]
-- [[_COMMUNITY_Cart View & Stories|Cart View & Stories]]
-- [[_COMMUNITY_Publisher Nav UI|Publisher Nav UI]]
-- [[_COMMUNITY_Catalog View Tests|Catalog View Tests]]
-- [[_COMMUNITY_Product Detail View|Product Detail View]]
-- [[_COMMUNITY_Account & Auth UI|Account & Auth UI]]
-- [[_COMMUNITY_Product Catalog View|Product Catalog View]]
-- [[_COMMUNITY_Orders Module|Orders Module]]
-- [[_COMMUNITY_Facet Filter Stories|Facet Filter Stories]]
-- [[_COMMUNITY_App Shell & Theme|App Shell & Theme]]
-- [[_COMMUNITY_Checkout Form Stories|Checkout Form Stories]]
-- [[_COMMUNITY_Community 13|Community 13]]
-- [[_COMMUNITY_Community 14|Community 14]]
-- [[_COMMUNITY_Community 15|Community 15]]
-- [[_COMMUNITY_Community 16|Community 16]]
-- [[_COMMUNITY_Community 17|Community 17]]
-- [[_COMMUNITY_Community 18|Community 18]]
-- [[_COMMUNITY_Community 19|Community 19]]
-- [[_COMMUNITY_Community 20|Community 20]]
-- [[_COMMUNITY_Community 21|Community 21]]
-- [[_COMMUNITY_Community 22|Community 22]]
-- [[_COMMUNITY_Community 23|Community 23]]
-- [[_COMMUNITY_Community 24|Community 24]]
-- [[_COMMUNITY_Community 25|Community 25]]
-- [[_COMMUNITY_Community 26|Community 26]]
-- [[_COMMUNITY_Community 27|Community 27]]
-- [[_COMMUNITY_Community 28|Community 28]]
-- [[_COMMUNITY_Community 29|Community 29]]
-- [[_COMMUNITY_Community 30|Community 30]]
-- [[_COMMUNITY_Community 31|Community 31]]
-- [[_COMMUNITY_Community 32|Community 32]]
-- [[_COMMUNITY_Community 33|Community 33]]
-- [[_COMMUNITY_Community 34|Community 34]]
-- [[_COMMUNITY_Community 35|Community 35]]
+- Routes & Page Containers
+- HTTP Client & API Types
+- Catalog Browse Components
+- Cart View & Stories
+- Publisher Nav UI
+- Catalog View Tests
+- Product Detail View
+- Account & Auth UI
+- Product Catalog View
+- Orders Module
+- Facet Filter Stories
+- App Shell & Theme
+- Checkout Form Stories
+- Community 13
+- Community 14
+- Community 15
+- Community 16
+- Community 17
+- Community 18
+- Community 19
+- Community 20
+- Community 21
+- Community 22
+- Community 23
+- Community 24
+- Community 25
+- Community 26
+- Community 27
+- Community 28
+- Community 29
+- Community 30
+- Community 31
+- Community 32
+- Community 33
+- Community 34
+- Community 35
+- verify-email.tsx
+- order-confirmation.tsx
+- Route
+- Route
+- account.orders.lazy.tsx
+- Route
+- Route
+- Route
+- Route
+- Route
+- Route
+- Route
+- Route
+- $publisherSlug.$gameSlug.lazy.tsx
+- $publisherSlug.lazy.tsx
+- Route
 
 ## God Nodes (most connected - your core abstractions)
-
-1. `FileRoutesByPath` - 22 edges
-2. `renderRoute()` - 16 edges
-3. `renderWithProviders()` - 15 edges
-4. `Product` - 13 edges
-5. `server` - 13 edges
-6. `usePublishers()` - 12 edges
-7. `Publisher` - 11 edges
-8. `AdminProductsView()` - 11 edges
-9. `Game` - 10 edges
-10. `FormField()` - 10 edges
+1. `FileRoutesByPath` - 28 edges
+2. `renderRoute()` - 23 edges
+3. `server` - 18 edges
+4. `useAuth()` - 17 edges
+5. `renderWithProviders()` - 16 edges
+6. `FormField()` - 14 edges
+7. `mockSignedIn()` - 14 edges
+8. `envelope()` - 13 edges
+9. `Product` - 12 edges
+10. `buyerAccount` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
-
-- `CheckoutForm()` --calls--> `clearCart()` [EXTRACTED]
-  src/modules/checkout/components/CheckoutPage.tsx → src/store/cart.ts
-- `ProductCatalogViewProps` --references--> `Product` [EXTRACTED]
-  src/modules/catalog/components/ProductCatalogView.tsx → src/api/types.ts
-- `PublisherNavViewProps` --references--> `Publisher` [EXTRACTED]
+- `PublisherNavViewProps` --references--> `Publisher`  [EXTRACTED]
   src/modules/catalog/components/PublisherNavView.tsx → src/api/types.ts
-- `PublisherPageViewProps` --references--> `Publisher` [EXTRACTED]
+- `PublisherPageViewProps` --references--> `Publisher`  [EXTRACTED]
   src/modules/catalog/components/PublisherPageView.tsx → src/api/types.ts
-- `AdminCharactersView()` --calls--> `useCharacters()` [EXTRACTED]
-  src/modules/admin/components/AdminCharactersView.tsx → src/modules/catalog/hooks/index.ts
+- `ProductCatalogViewProps` --references--> `Product`  [EXTRACTED]
+  src/modules/catalog/components/ProductCatalogView.tsx → src/api/types.ts
+- `ProductDetailViewProps` --references--> `Product`  [EXTRACTED]
+  src/modules/catalog/components/ProductDetailView.tsx → src/api/types.ts
+- `OrderDetailPage()` --calls--> `useAuth()`  [EXTRACTED]
+  src/modules/orders/components/OrderDetailPage.tsx → src/modules/account/hooks/index.ts
 
 ## Import Cycles
-
 - None detected.
 
-## Communities (36 total, 16 thin omitted)
+## Communities (52 total, 21 thin omitted)
 
 ### Community 0 - "Routes & Page Containers"
-
-Cohesion: 0.32
-Nodes (5): getRouter(), Register, Register, routeTree, getContext()
+Cohesion: 0.28
+Nodes (6): getContext(), getRouter(), Register, @tanstack/react-router, Register, routeTree
 
 ### Community 1 - "HTTP Client & API Types"
-
 Cohesion: 0.07
-Nodes (45): AccountOrdersPage(), Route, ApiError, client, http, META, MOCK_PRODUCTS, wrap() (+37 more)
+Nodes (34): ORDER_STATUSES, OrderStatus, mockOrders, AdminOrdersView(), COL_FLEX, COLS, fmtDate(), Props (+26 more)
 
 ### Community 2 - "Catalog Browse Components"
-
-Cohesion: 0.06
-Nodes (40): Route, Route, Route, AdminProductsView(), DEFAULTS, FormValues, schema, selectStyle (+32 more)
+Cohesion: 0.10
+Nodes (17): NavDrawerContent(), NavDrawerContentProps, FacetFilterView(), FacetGroupProps, characters, games, GameSelected, MultipleActive (+9 more)
 
 ### Community 3 - "Cart View & Stories"
-
-Cohesion: 0.06
-Nodes (36): AdminOrdersPage(), Route, mockConfirmCardPayment, mockStripe, Route, AdminOrdersView(), COL_FLEX, COLS (+28 more)
+Cohesion: 0.08
+Nodes (31): CartPage(), CartView(), Props, Empty, items, MultipleItems, SingleItem, Story (+23 more)
 
 ### Community 4 - "Publisher Nav UI"
-
-Cohesion: 0.08
-Nodes (24): Publisher, GamePageView(), GamePageViewProps, Loaded, Loading, meta, Story, PublisherNavView() (+16 more)
-
-### Community 5 - "Catalog View Tests"
-
 Cohesion: 0.09
-Nodes (45): mockUseAuth, mockUseUser, twoOrders, mockGames, mockUseAuth, mockUseUser, twoCharacters, mockPublishers (+37 more)
+Nodes (33): ApiError, http, loadGames(), loadRawPublishers(), normalizeProduct(), normalizeSku(), parseDecimal(), RetryableConfig (+25 more)
 
 ### Community 6 - "Product Detail View"
-
-Cohesion: 0.11
-Nodes (16): Route, CartPage(), GlobalNav(), NavDrawerContent(), NavDrawerContentProps, cartKeys, useAddCartItem(), useCart() (+8 more)
+Cohesion: 0.05
+Nodes (52): refreshAccessToken(), GlobalNav(), env, mockAccount, AuthPageView(), Props, SignIn, SignUp (+44 more)
 
 ### Community 7 - "Account & Auth UI"
-
-Cohesion: 0.15
-Nodes (7): Route, Route, AuthPageView(), Props, SignIn, SignUp, Story
+Cohesion: 0.09
+Nodes (24): FormField(), Label, Props, Default, NoLabel, Story, WithError, WithFlex (+16 more)
 
 ### Community 8 - "Product Catalog View"
+Cohesion: 0.05
+Nodes (40): accountAccountOrdersIndexRoute, accountAccountOrdersOrderIdRoute, accountAccountOrdersRoute, accountAccountOrdersRouteChildren, accountAccountOrdersRouteWithChildren, adminAdminCharactersRoute, adminAdminGamesRoute, adminAdminOrdersRoute (+32 more)
 
-Cohesion: 0.06
-Nodes (30): accountAccountOrdersRoute, adminAdminCharactersRoute, adminAdminGamesRoute, adminAdminOrdersRoute, adminAdminProductsRoute, adminAdminPublishersRoute, adminAdminRoute, adminAdminRouteChildren (+22 more)
+### Community 9 - "Orders Module"
+Cohesion: 0.14
+Nodes (17): ProductFilters, FacetFilter(), ProductCatalog(), Props, ProductDetail(), Props, catalogKeys, productQueryOptions() (+9 more)
 
 ### Community 10 - "Facet Filter Stories"
-
-Cohesion: 0.22
-Nodes (8): characters, games, GameSelected, MultipleActive, NoSelection, Story, teams, TeamSelected
+Cohesion: 0.25
+Nodes (14): adminAccount, buyerAccount, mockSignedIn(), envelope(), server, twoOrders, testOrder, mockGames (+6 more)
 
 ### Community 11 - "App Shell & Theme"
-
-Cohesion: 0.20
-Nodes (6): Route, Route, AdminLayout(), NAV_ITEMS, NavItem, Props
+Cohesion: 0.14
+Nodes (15): CheckoutFormView(), Props, DEFAULTS, FormValues, schema, Empty, mockRegister, PaymentDeclined (+7 more)
 
 ### Community 12 - "Checkout Form Stories"
-
-Cohesion: 0.13
-Nodes (17): ShippingAddress, Route, CheckoutFormView(), Props, DEFAULTS, FormValues, schema, Empty (+9 more)
+Cohesion: 0.10
+Nodes (19): Account, ResetPasswordDto, ServerCart, VerifyEmailDto, worker, characters, games, handlers (+11 more)
 
 ### Community 13 - "Community 13"
-
-Cohesion: 0.07
-Nodes (25): Product, SKU, ProductCatalogView(), ProductCatalogViewProps, Default, Empty, Loading, meta (+17 more)
+Cohesion: 0.14
+Nodes (10): GamePage(), Props, NavLink, Props, PublisherNav(), Props, PublisherPage(), usePublisher() (+2 more)
 
 ### Community 14 - "Community 14"
-
-Cohesion: 0.15
-Nodes (10): Route, Route, Route, Route, Route, Route, Route, Route (+2 more)
+Cohesion: 0.11
+Nodes (13): Route, Route, Route, Route, Route, Route, Route, Route (+5 more)
 
 ### Community 15 - "Community 15"
-
-Cohesion: 0.31
-Nodes (9): AdminCharactersView(), DEFAULTS, FormValues, schema, selectStyle, useCreateCharacter(), useDeleteCharacter(), useGames() (+1 more)
+Cohesion: 0.16
+Nodes (11): mockPublishers, Loaded, Loading, meta, Story, PublisherPageView(), PublisherPageViewProps, Loaded (+3 more)
 
 ### Community 16 - "Community 16"
-
-Cohesion: 0.29
-Nodes (8): Route, AdminPublishersView(), DEFAULTS, FormValues, schema, useCreatePublisher(), useDeletePublisher(), useUpdatePublisher()
+Cohesion: 0.14
+Nodes (10): META, MOCK_PRODUCTS, Order, PaginationMeta, RawProduct, RawPublisher, buildSitemapResponse(), MOCK_GAMES (+2 more)
 
 ### Community 17 - "Community 17"
-
-Cohesion: 0.20
-Nodes (9): FormField(), Label, Props, Default, NoLabel, Story, WithError, WithFlex (+1 more)
+Cohesion: 0.27
+Nodes (11): CreateSkuDto, SkuFacet, AdminSkusView(), EnrichedSku, DEFAULTS, FormValues, schema, useBulkSetSkuAvailability() (+3 more)
 
 ### Community 18 - "Community 18"
-
-Cohesion: 0.26
-Nodes (9): Route, AdminSkusView(), EnrichedSku, DEFAULTS, FormValues, schema, useCreateSku(), useDeleteSku() (+1 more)
+Cohesion: 0.15
+Nodes (8): AdminLayout(), NAV_ITEMS, NavItem, Props, Route, Route, Route, Route
 
 ### Community 19 - "Community 19"
-
-Cohesion: 0.26
-Nodes (9): Route, AdminTeamsView(), DEFAULTS, FormValues, schema, selectStyle, useCreateTeam(), useDeleteTeam() (+1 more)
+Cohesion: 0.27
+Nodes (7): Product, buildOptimizedImageUrl(), OptimizedImage(), OptimizedImageProps, ProductCatalogView(), ProductCatalogViewProps, products
 
 ### Community 20 - "Community 20"
-
 Cohesion: 0.26
-Nodes (9): Route, AdminGamesView(), DEFAULTS, FormValues, schema, selectStyle, useCreateGame(), useDeleteGame() (+1 more)
+Nodes (9): AdminTeamsView(), DEFAULTS, FormValues, schema, selectStyle, useCreateTeam(), useDeleteTeam(), useUpdateTeam() (+1 more)
+
+### Community 21 - "Community 21"
+Cohesion: 0.20
+Nodes (8): PublisherNavView(), PublisherNavViewProps, Default, GameActive, Loading, meta, PublisherActive, Story
+
+### Community 22 - "Community 22"
+Cohesion: 0.31
+Nodes (9): AdminGamesView(), DEFAULTS, FormValues, schema, selectStyle, useCreateGame(), useDeleteGame(), useUpdateGame() (+1 more)
+
+### Community 23 - "Community 23"
+Cohesion: 0.33
+Nodes (8): AdminCharactersView(), DEFAULTS, FormValues, schema, selectStyle, useCreateCharacter(), useDeleteCharacter(), useUpdateCharacter()
+
+### Community 24 - "Community 24"
+Cohesion: 0.33
+Nodes (8): AdminProductsView(), DEFAULTS, FormValues, schema, selectStyle, useCreateProduct(), useDeleteProduct(), useUpdateProduct()
+
+### Community 25 - "Community 25"
+Cohesion: 0.33
+Nodes (6): SKU, isOptionAvailable(), ProductDetailView(), ProductDetailViewProps, product, uniqueValues()
+
+### Community 26 - "Community 26"
+Cohesion: 0.22
+Nodes (8): Default, EditionVariants, Error, Loading, NoImage, NoSkus, product, Story
+
+### Community 27 - "Community 27"
+Cohesion: 0.25
+Nodes (7): Default, Empty, Loading, meta, NoImages, sampleProducts, Story
+
+### Community 28 - "Community 28"
+Cohesion: 0.33
+Nodes (6): Character, Game, Team, FacetFilterViewProps, mockGames, twoTeams
+
+### Community 29 - "Community 29"
+Cohesion: 0.38
+Nodes (4): Props, QueryError(), GamePageView(), GamePageViewProps
+
+### Community 30 - "Community 30"
+Cohesion: 0.43
+Nodes (6): BreadcrumbItem, breadcrumbJsonLd(), buildGameHeadMeta(), buildProductHeadMeta(), GameHeadParams, slugToTitle()
+
+### Community 31 - "Community 31"
+Cohesion: 0.40
+Nodes (4): Publisher, mockGames, mockPublishers, twoProducts
 
 ## Knowledge Gaps
-
-- **200 isolated node(s):** `META`, `MOCK_PRODUCTS`, `http`, `OrderLine`, `ORDER_STATUSES` (+195 more)
+- **219 isolated node(s):** `META`, `MOCK_PRODUCTS`, `http`, `RetryableConfig`, `RawSkuAttributes` (+214 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
-
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `FormField()` connect `Community 17` to `Catalog Browse Components`, `Checkout Form Stories`, `Community 15`, `Community 16`, `Community 18`, `Community 19`, `Community 20`?**
-  _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **Why does `Product` connect `Community 13` to `HTTP Client & API Types`, `Catalog Browse Components`, `Community 18`, `Catalog View Tests`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
-- **Why does `renderWithProviders()` connect `Catalog Browse Components` to `Cart View & Stories`, `Publisher Nav UI`, `Catalog View Tests`, `Product Detail View`, `Community 13`, `Community 17`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+- **Why does `FormField()` connect `Account & Auth UI` to `Product Detail View`, `App Shell & Theme`, `Community 17`, `Community 20`, `Community 22`, `Community 23`, `Community 24`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Why does `useAuth()` connect `Product Detail View` to `HTTP Client & API Types`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
+- **Why does `client` connect `Community 32` to `HTTP Client & API Types`, `Cart View & Stories`, `Publisher Nav UI`, `Product Detail View`, `Orders Module`, `App Shell & Theme`, `Community 16`, `Community 17`?**
+  _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **What connects `META`, `MOCK_PRODUCTS`, `http` to the rest of the system?**
-  _200 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _219 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `HTTP Client & API Types` be split into smaller, more focused modules?**
-  _Cohesion score 0.06502732240437159 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07215686274509804 - nodes in this community are weakly interconnected._
 - **Should `Catalog Browse Components` be split into smaller, more focused modules?**
-  _Cohesion score 0.06433566433566433 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10276679841897234 - nodes in this community are weakly interconnected._
 - **Should `Cart View & Stories` be split into smaller, more focused modules?**
-  _Cohesion score 0.061495457721872815 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08181818181818182 - nodes in this community are weakly interconnected._

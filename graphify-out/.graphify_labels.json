@@ -34,5 +34,21 @@
   "32": "Community 32",
   "33": "Community 33",
   "34": "Community 34",
-  "35": "Community 35"
+  "35": "Community 35",
+  "36": "verify-email.tsx",
+  "37": "order-confirmation.tsx",
+  "38": "Route",
+  "39": "Route",
+  "40": "account.orders.lazy.tsx",
+  "41": "Route",
+  "42": "Route",
+  "43": "Route",
+  "44": "Route",
+  "45": "Route",
+  "46": "Route",
+  "47": "Route",
+  "48": "Route",
+  "49": "$publisherSlug.$gameSlug.lazy.tsx",
+  "50": "$publisherSlug.lazy.tsx",
+  "51": "Route"
 }
