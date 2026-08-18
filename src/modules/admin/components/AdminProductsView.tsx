@@ -274,6 +274,7 @@ export function AdminProductsView(): React.JSX.Element {
             return (
               <Flex
                 key={product.id}
+                data-testid={`product-row-${product.id}`}
                 px={4}
                 py={3.5}
                 align="center"

@@ -16,6 +16,7 @@ import type {
   VerifyEmailDto,
   RawPublisher,
   RawProduct,
+  RawProductMutationResponse,
   RawSku,
 } from "../api/types";
 import { BASE_URL } from "../api/client";
@@ -66,6 +67,21 @@ function toWireProduct(p: ProductRecord, { full }: { full: boolean }): RawProduc
     ...(p.teamId && { teamId: p.teamId }),
     ...(p.characterId && { characterId: p.characterId }),
     skus: (p.skus ?? []).map((s) => toWireSku(s, { full })),
+  };
+}
+
+// POST/PATCH /products return a flatter shape than GET /products — a flat gameId
+// instead of a nested game ref, and no skus — see merch-shop-485 and
+// RawProductMutationResponse in api/types.ts.
+function toWireProductMutationResponse(p: ProductRecord): RawProductMutationResponse {
+  return {
+    id: p.id,
+    name: p.name,
+    description: p.description ?? null,
+    ...(p.imageUrl && { images: [p.imageUrl] }),
+    gameId: p.gameId,
+    teamId: p.teamId ?? null,
+    characterId: p.characterId ?? null,
   };
 }
 
@@ -469,7 +485,7 @@ export const handlers = [
       characterId: body.characterId,
     };
     products.push(created);
-    return HttpResponse.json(envelope(toWireProduct(created, { full: true })), { status: 201 });
+    return HttpResponse.json(envelope(toWireProductMutationResponse(created)), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/products/:id`, async ({ params, request }) => {
@@ -487,7 +503,7 @@ export const handlers = [
       ...body,
       ...(body.images && { imageUrl: body.images[0] }),
     });
-    return HttpResponse.json(envelope(toWireProduct(existing, { full: true })));
+    return HttpResponse.json(envelope(toWireProductMutationResponse(existing)));
   }),
 
   http.delete(`${BASE_URL}/products/:id`, ({ params }) => {

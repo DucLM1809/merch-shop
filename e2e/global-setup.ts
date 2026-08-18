@@ -10,10 +10,13 @@ export default async function globalSetup(): Promise<void> {
   const baseURL = process.env.PLAYWRIGHT_BASE_URL;
   const email = process.env.E2E_TEST_EMAIL;
   const password = process.env.E2E_TEST_PASSWORD;
+  const adminEmail = process.env.E2E_ADMIN_EMAIL;
+  const adminPassword = process.env.E2E_ADMIN_PASSWORD;
 
-  if (!baseURL || !email || !password) {
+  if (!baseURL || !email || !password || !adminEmail || !adminPassword) {
     throw new Error(
-      "PLAYWRIGHT_BASE_URL, E2E_TEST_EMAIL, and E2E_TEST_PASSWORD must all be set to run e2e tests."
+      "PLAYWRIGHT_BASE_URL, E2E_TEST_EMAIL, E2E_TEST_PASSWORD, E2E_ADMIN_EMAIL, and " +
+        "E2E_ADMIN_PASSWORD must all be set to run e2e tests."
     );
   }
 

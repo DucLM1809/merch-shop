@@ -46,6 +46,19 @@ export type RawProduct = {
 
 export type RawPublisher = { id: string; name: string; slug: string; logoUrl?: string };
 
+// POST/PATCH /products return a flatter shape than GET /products: a flat gameId
+// instead of a nested game ref, and no skus (a freshly created/updated product has
+// none yet). See client.ts's normalizeProductMutationResponse.
+export type RawProductMutationResponse = {
+  id: string;
+  name: string;
+  description?: string | null;
+  images?: string[];
+  gameId: string;
+  teamId?: string | null;
+  characterId?: string | null;
+};
+
 export type Product = {
   id: string;
   // The real backend doesn't return a distinct product slug (and /products/:id
@@ -229,6 +242,20 @@ export type CreateCharacterDto = {
 export type PaginationMeta = { total: number; page: number; limit: number };
 
 export type AccountRole = "customer" | "admin";
+
+// --- Wire-format type (merch-shop-a0f) ---
+//
+// The real backend returns the role as SCREAMING_SNAKE_CASE ("ADMIN"/"CUSTOMER"),
+// not the lowercase AccountRole the rest of the app expects. client.ts normalizes
+// this case-insensitively at the API boundary (see normalizeAccount) so existing
+// lowercase MSW fixtures (src/mocks/fixtures.ts, src/mocks/handlers.ts) keep working
+// unchanged alongside the real backend's casing.
+export type RawAccount = {
+  id: string;
+  email: string;
+  role: string;
+  createdAt: string;
+};
 
 export type Account = {
   id: string;

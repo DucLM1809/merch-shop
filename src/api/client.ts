@@ -21,8 +21,10 @@ import type {
   Product,
   ProductFilters,
   Publisher,
+  RawAccount,
   RawDecimal,
   RawProduct,
+  RawProductMutationResponse,
   RawPublisher,
   RawSku,
   RegisterDto,
@@ -184,6 +186,23 @@ async function normalizeProduct(raw: RawProduct): Promise<Product> {
   };
 }
 
+// POST/PATCH /products only return a flat gameId, not the nested game ref GET
+// /products returns — passing a placeholder ref through to normalizeProduct is safe
+// since it re-resolves the game (name/slug) from the authoritative loadGames() list by
+// id anyway, it doesn't trust the ref's own name/slug fields.
+async function normalizeProductMutationResponse(raw: RawProductMutationResponse): Promise<Product> {
+  return normalizeProduct({
+    id: raw.id,
+    name: raw.name,
+    description: raw.description ?? undefined,
+    images: raw.images,
+    teamId: raw.teamId,
+    characterId: raw.characterId,
+    game: { id: raw.gameId, name: "", slug: "" },
+    skus: [],
+  });
+}
+
 function normalizePublisher(raw: RawPublisher, games: Game[]): Publisher {
   return {
     id: raw.id,
@@ -192,6 +211,18 @@ function normalizePublisher(raw: RawPublisher, games: Game[]): Publisher {
     logoUrl: raw.logoUrl,
     accentColor: undefined,
     games: games.filter((g) => g.publisherId === raw.id),
+  };
+}
+
+// Case-insensitive: the real backend sends "ADMIN"/"CUSTOMER", but MSW fixtures
+// (src/mocks/fixtures.ts, src/mocks/handlers.ts) already send lowercase — this
+// normalizes both without requiring every mock/story fixture to be rewritten.
+function normalizeAccount(raw: RawAccount): Account {
+  return {
+    id: raw.id,
+    email: raw.email,
+    role: raw.role.toLowerCase() === "admin" ? "admin" : "customer",
+    createdAt: raw.createdAt,
   };
 }
 
@@ -336,13 +367,17 @@ export const client = {
     wrap(http.delete(`/characters/${id}`).then(() => undefined)),
 
   createProduct: async (body: CreateProductDto): Promise<ApiResponse<Product>> => {
-    const res = await wrapEnvelope(http.post<ApiResponse<RawProduct>>("/products", body));
-    return { ...res, data: await normalizeProduct(res.data) };
+    const res = await wrapEnvelope(
+      http.post<ApiResponse<RawProductMutationResponse>>("/products", body)
+    );
+    return { ...res, data: await normalizeProductMutationResponse(res.data) };
   },
 
   updateProduct: async (id: string, body: CreateProductDto): Promise<ApiResponse<Product>> => {
-    const res = await wrapEnvelope(http.patch<ApiResponse<RawProduct>>(`/products/${id}`, body));
-    return { ...res, data: await normalizeProduct(res.data) };
+    const res = await wrapEnvelope(
+      http.patch<ApiResponse<RawProductMutationResponse>>(`/products/${id}`, body)
+    );
+    return { ...res, data: await normalizeProductMutationResponse(res.data) };
   },
 
   deleteProduct: (id: string): Promise<void> =>
@@ -425,8 +460,10 @@ export const client = {
     wrapEnvelope(http.post<ApiResponse<Order>>(`/orders/${id}/retry-fulfillment`)),
 
   // --- Account ---
-  getMyAccount: (): Promise<ApiResponse<Account>> =>
-    wrapEnvelope(http.get<ApiResponse<Account>>("/account/me")),
+  getMyAccount: async (): Promise<ApiResponse<Account>> => {
+    const res = await wrapEnvelope(http.get<ApiResponse<RawAccount>>("/account/me"));
+    return { ...res, data: normalizeAccount(res.data) };
+  },
 
   deleteAccount: (id: string): Promise<void> =>
     wrap(http.delete(`/account/${id}`).then(() => undefined)),

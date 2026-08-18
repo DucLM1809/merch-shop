@@ -17,6 +17,7 @@ type Fixtures = {
 
 type WorkerFixtures = {
   authenticatedPage: Page;
+  adminPage: Page;
 };
 
 export const test = base.extend<Fixtures, WorkerFixtures>({
@@ -48,6 +49,27 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       // Guaranteed non-empty: global-setup.ts validates these before any test runs.
       const email = process.env.E2E_TEST_EMAIL as string;
       const password = process.env.E2E_TEST_PASSWORD as string;
+
+      const context = await browser.newContext({ storageState: GUEST_STORAGE_STATE });
+      const page = await context.newPage();
+      await signIn(page, email, password);
+
+      await use(page);
+
+      await context.close();
+    },
+    { scope: "worker" },
+  ],
+
+  // One real POST /auth/login per worker, same rate-limit rationale as authenticatedPage
+  // above. Kept as a separate fixture/session rather than reusing authenticatedPage
+  // because the two accounts have different roles and admin-crud.spec.ts mutates data
+  // (product create/edit/delete) that other authenticatedPage consumers shouldn't see.
+  adminPage: [
+    async ({ browser }, use) => {
+      // Guaranteed non-empty: global-setup.ts validates these before any test runs.
+      const email = process.env.E2E_ADMIN_EMAIL as string;
+      const password = process.env.E2E_ADMIN_PASSWORD as string;
 
       const context = await browser.newContext({ storageState: GUEST_STORAGE_STATE });
       const page = await context.newPage();

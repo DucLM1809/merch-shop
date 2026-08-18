@@ -129,6 +129,67 @@ describe("API client", () => {
       status: 500,
     });
   });
+
+  // POST/PATCH /products return a flat gameId, not the nested game ref GET /products
+  // returns — normalizeProduct(raw.game.id) threw on this shape (merch-shop-485).
+  it("normalizes the flat-gameId shape POST /products actually returns", async () => {
+    server.use(
+      http.post(`${BASE_URL}/products`, () =>
+        HttpResponse.json(
+          envelope(
+            {
+              id: "new-product",
+              name: "New Product",
+              description: null,
+              images: [],
+              gameId: "lol",
+              teamId: null,
+              characterId: null,
+            },
+            1
+          )
+        )
+      )
+    );
+
+    const res = await client.createProduct({ name: "New Product", gameId: "lol" });
+    expect(res.data).toMatchObject({
+      id: "new-product",
+      name: "New Product",
+      gameId: "lol",
+      gameSlug: "league-of-legends",
+      publisherSlug: "riot",
+    });
+  });
+
+  it("normalizes the flat-gameId shape PATCH /products/:id actually returns", async () => {
+    server.use(
+      http.patch(`${BASE_URL}/products/:id`, () =>
+        HttpResponse.json(
+          envelope(
+            {
+              id: "1",
+              name: "Renamed Product",
+              description: null,
+              images: [],
+              gameId: "val",
+              teamId: null,
+              characterId: null,
+            },
+            1
+          )
+        )
+      )
+    );
+
+    const res = await client.updateProduct("1", { name: "Renamed Product", gameId: "val" });
+    expect(res.data).toMatchObject({
+      id: "1",
+      name: "Renamed Product",
+      gameSlug: "valorant",
+      publisherSlug: "riot",
+    });
+  });
 });
 
 describe("API client - getOrderByPaymentIntent", () => {
@@ -181,6 +242,74 @@ describe("API client - getOrderByPaymentIntent", () => {
     await expect(client.getOrderByPaymentIntent("pi_bad")).rejects.toMatchObject({
       name: "ApiError",
     });
+  });
+});
+
+describe("API client - getMyAccount", () => {
+  // The real backend sends SCREAMING_SNAKE_CASE roles (merch-shop-a0f) — this
+  // guards against normalizeAccount regressing back to a strict-equality check
+  // that would silently redirect every real admin out of /admin again.
+  it("normalizes an uppercase ADMIN role to the lowercase domain value", async () => {
+    server.use(
+      http.get(`${BASE_URL}/account/me`, () =>
+        HttpResponse.json(
+          envelope(
+            {
+              id: "acc-1",
+              email: "admin.test@merchshop.local",
+              role: "ADMIN",
+              createdAt: "2026-08-13T00:00:00.000Z",
+            },
+            1
+          )
+        )
+      )
+    );
+
+    const res = await client.getMyAccount();
+    expect(res.data.role).toBe("admin");
+  });
+
+  it("normalizes an uppercase CUSTOMER role to the lowercase domain value", async () => {
+    server.use(
+      http.get(`${BASE_URL}/account/me`, () =>
+        HttpResponse.json(
+          envelope(
+            {
+              id: "acc-2",
+              email: "buyer.test@merchshop.local",
+              role: "CUSTOMER",
+              createdAt: "2026-08-13T00:00:00.000Z",
+            },
+            1
+          )
+        )
+      )
+    );
+
+    const res = await client.getMyAccount();
+    expect(res.data.role).toBe("customer");
+  });
+
+  it("passes through an already-lowercase role unchanged (MSW mock fixtures)", async () => {
+    server.use(
+      http.get(`${BASE_URL}/account/me`, () =>
+        HttpResponse.json(
+          envelope(
+            {
+              id: "acc-3",
+              email: "admin@test.com",
+              role: "admin",
+              createdAt: "2026-01-01T00:00:00.000Z",
+            },
+            1
+          )
+        )
+      )
+    );
+
+    const res = await client.getMyAccount();
+    expect(res.data.role).toBe("admin");
   });
 });
 
