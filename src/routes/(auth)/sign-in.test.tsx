@@ -4,8 +4,9 @@ import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
+import { envelope } from "../../mocks/handlers";
 import { BASE_URL } from "../../api/client";
-import { buyerAccount, mockSignedIn } from "../../mocks/fixtures";
+import { adminAccount, buyerAccount, mockSignedIn } from "../../mocks/fixtures";
 
 describe("GlobalNav auth state", () => {
   it("shows sign-in and sign-up links when guest", async () => {
@@ -48,6 +49,21 @@ describe("/sign-in route", () => {
 
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
+    });
+  });
+
+  it("signs in and redirects to /admin for an admin account", async () => {
+    server.use(http.get(`${BASE_URL}/account/me`, () => HttpResponse.json(envelope(adminAccount))));
+    const user = userEvent.setup();
+    const { router } = renderRoute("/sign-in");
+
+    await screen.findByRole("heading", { name: /sign in/i });
+    await user.type(screen.getByLabelText(/email/i), "admin@test.com");
+    await user.type(screen.getByLabelText(/password/i), "correct-horse-battery-staple");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe("/admin");
     });
   });
 
