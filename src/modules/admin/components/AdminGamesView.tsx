@@ -233,6 +233,7 @@ export function AdminGamesView(): React.JSX.Element {
             return (
               <Flex
                 key={game.id}
+                data-testid={`game-row-${game.id}`}
                 px={4}
                 py={3.5}
                 align="center"
