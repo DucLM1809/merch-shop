@@ -76,12 +76,12 @@ function OrderCard({ order }: { order: Order }) {
       <VStack mt={3} gap={1} align="stretch">
         {order.lines.map((line) => (
           <Text key={line.skuId} fontSize="sm">
-            {line.productName} — {line.variant} × {line.quantity}
+            {line.productName ?? line.skuId} — {line.variant ?? "—"} × {line.quantity}
           </Text>
         ))}
       </VStack>
       <Text mt={3} fontWeight="semibold">
-        Total: ${order.total.toFixed(2)}
+        Total: {order.total !== undefined ? `$${order.total.toFixed(2)}` : "—"}
       </Text>
     </LinkBox>
   );

@@ -55,7 +55,13 @@ describe("useAdminOrders", () => {
     const { wrapper } = makeWrapper();
     const { result } = renderHook(() => useAdminOrders(), { wrapper });
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(result.current.data?.orders).toEqual(mockOrders);
+    // The mock /orders handler serves the real backend's thin wire shape (see
+    // toRawOrder in @/mocks/handlers), so only id/status survive normalization —
+    // not a full deep-equal against mockOrders.
+    expect(result.current.data?.orders.map((o) => o.id)).toEqual(mockOrders.map((o) => o.id));
+    expect(result.current.data?.orders.map((o) => o.status)).toEqual(
+      mockOrders.map((o) => o.status)
+    );
     expect(result.current.data?.meta.total).toBe(mockOrders.length);
   });
 

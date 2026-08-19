@@ -17,6 +17,7 @@ export class AdminOrdersPage {
 
   async gotoStatus(status: OrderStatus): Promise<void> {
     await this.page.goto(`/admin/orders?status=${status}`);
+    await this.waitForOrdersToSettle();
   }
 
   statusBadge(orderId: string): Locator {
@@ -29,7 +30,18 @@ export class AdminOrdersPage {
     await this.statusBadge(orderId).click();
   }
 
+  // `page.goto`'s "load" event fires before the orders query resolves, so right after
+  // navigation the list is still in its loading state — wait for either a row or the
+  // empty state before reading rows, or firstOrderId() below races the fetch.
+  private async waitForOrdersToSettle(): Promise<void> {
+    await Promise.race([
+      this.page.locator('[data-testid^="order-status-"]').first().waitFor({ state: "visible" }),
+      this.page.getByText("No orders yet.", { exact: true }).waitFor({ state: "visible" }),
+    ]).catch(() => {});
+  }
+
   async firstOrderId(): Promise<string | null> {
+    await this.waitForOrdersToSettle();
     const badge = this.page.locator('[data-testid^="order-status-"]').first();
     if ((await badge.count()) === 0) return null;
     const testId = await badge.getAttribute("data-testid");

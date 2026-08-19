@@ -17,12 +17,14 @@ import type {
   Game,
   LoginDto,
   Order,
+  PaginationMeta,
   PaymentIntentResponse,
   Product,
   ProductFilters,
   Publisher,
   RawAccount,
   RawDecimal,
+  RawOrder,
   RawProduct,
   RawProductMutationResponse,
   RawPublisher,
@@ -210,6 +212,17 @@ function normalizePublisher(raw: RawPublisher, games: Game[]): Publisher {
     logoUrl: raw.logoUrl,
     accentColor: undefined,
     games: games.filter((g) => g.publisherId === raw.id),
+  };
+}
+
+// GET /orders (admin list) only returns id/quantity/skuId per line — no product name,
+// variant, or price — so lines carry just enough to render and to key by skuId.
+function normalizeOrder(raw: RawOrder): Order {
+  return {
+    id: raw.id,
+    status: raw.status,
+    createdAt: raw.createdAt,
+    lines: raw.items.map((item) => ({ skuId: item.skuId, quantity: item.quantity })),
   };
 }
 
@@ -434,15 +447,37 @@ export const client = {
   getMyOrders: (): Promise<ApiResponse<Order[]>> =>
     wrapEnvelope(http.get<ApiResponse<Order[]>>("/orders/mine")),
 
+  // Unlike every other paginated list endpoint, GET /orders wraps its page in a nested
+  // envelope — {success, data: {data: RawOrder[], meta}} instead of the flat
+  // {success, data: T[], meta} every other endpoint (and the ApiResponse<T> type) uses.
+  // Unwrap and normalize here so callers keep working against the flat ApiResponse shape.
   getAdminOrders: (filters?: AdminOrdersFilters): Promise<ApiResponse<Order[]>> =>
-    wrapEnvelope(
-      http.get<ApiResponse<Order[]>>("/orders", {
-        params: {
-          ...(filters?.page && { page: filters.page }),
-          ...(filters?.limit && { limit: filters.limit }),
-          ...(filters?.status && { status: filters.status }),
-        },
-      })
+    wrap(
+      http
+        .get<{
+          success: boolean;
+          data: { data?: RawOrder[]; meta?: PaginationMeta } | RawOrder[];
+        }>("/orders", {
+          params: {
+            ...(filters?.page && { page: filters.page }),
+            ...(filters?.limit && { limit: filters.limit }),
+            ...(filters?.status && { status: filters.status }),
+          },
+        })
+        .then((r) => {
+          if (!r.data.success) throw new ApiError(0, "Request failed");
+          // Defensive: an unexpected shape here shouldn't crash the admin page — see
+          // "renders without crashing when the API returns a malformed orders payload".
+          const rawOrders = Array.isArray(r.data.data) ? r.data.data : (r.data.data.data ?? []);
+          const meta = Array.isArray(r.data.data)
+            ? { total: rawOrders.length, page: filters?.page ?? 1, limit: filters?.limit ?? 20 }
+            : (r.data.data.meta ?? {
+                total: rawOrders.length,
+                page: filters?.page ?? 1,
+                limit: filters?.limit ?? 20,
+              });
+          return { success: true, data: rawOrders.map(normalizeOrder), meta };
+        })
     ),
 
   getOrder: (id: string): Promise<ApiResponse<Order>> =>

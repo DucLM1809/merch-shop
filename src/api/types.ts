@@ -173,9 +173,12 @@ export type ShippingAddress = {
 
 export type OrderLine = {
   skuId: string;
-  productName: string;
-  variant: string;
-  price: number;
+  // The real backend's admin order list only returns skuId + quantity per line
+  // (see RawOrder below) — no product/pricing detail is embedded, so these stay
+  // optional rather than fabricated.
+  productName?: string;
+  variant?: string;
+  price?: number;
   quantity: number;
 };
 
@@ -193,10 +196,30 @@ export type Order = {
   id: string;
   status: OrderStatus;
   lines: OrderLine[];
-  shipping: ShippingAddress;
-  total: number;
+  // Not present on the real backend's admin order list wire shape (see RawOrder) —
+  // only endpoints that embed full order detail provide these.
+  shipping?: ShippingAddress;
+  total?: number;
   createdAt: string;
-  stripePaymentIntentId: string;
+  stripePaymentIntentId?: string;
+};
+
+// Wire shape of GET /orders (admin list) — see normalizeOrder in client.ts. Deliberately
+// thin: no shipping/pricing/productName, just enough to drive the admin list + status
+// filters + retry-fulfillment eligibility.
+export type RawOrderItem = {
+  id: string;
+  quantity: number;
+  skuId: string;
+};
+
+export type RawOrder = {
+  id: string;
+  accountId: string | null;
+  status: OrderStatus;
+  supplierReference: string | null;
+  createdAt: string;
+  items: RawOrderItem[];
 };
 
 export type ServerCartItem = {

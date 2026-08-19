@@ -6,7 +6,7 @@ import { http, HttpResponse } from "msw";
 import { renderRoute } from "../../test-utils";
 import { server } from "../../mocks/server";
 import { BASE_URL } from "../../api/client";
-import { envelope } from "../../mocks/handlers";
+import { envelope, toRawOrder } from "../../mocks/handlers";
 
 import type { Order } from "../../api/types";
 
@@ -70,9 +70,22 @@ beforeEach(() => {
   mockSignedIn(adminAccount);
 });
 
+// GET /orders wraps its page in a nested envelope ({success, data: {data, meta}}) — see
+// normalizeOrder in ../../api/client.ts — unlike every other paginated endpoint.
+function adminOrdersEnvelope(
+  orders: Order[],
+  meta: { total: number; page: number; limit: number }
+) {
+  return envelope({ data: orders.map(toRawOrder), meta });
+}
+
 describe("/admin/orders", () => {
   it("renders order rows with status badges", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
+    server.use(
+      http.get(`${BASE_URL}/orders`, () =>
+        HttpResponse.json(adminOrdersEnvelope(testOrders, { total: 2, page: 1, limit: 20 }))
+      )
+    );
 
     renderRoute("/admin/orders");
 
@@ -103,7 +116,11 @@ describe("/admin/orders", () => {
   });
 
   it("shows Retry Fulfillment button when expanded", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
+    server.use(
+      http.get(`${BASE_URL}/orders`, () =>
+        HttpResponse.json(adminOrdersEnvelope(testOrders, { total: 2, page: 1, limit: 20 }))
+      )
+    );
 
     renderRoute("/admin/orders");
 
@@ -113,7 +130,11 @@ describe("/admin/orders", () => {
   });
 
   it("hides Retry Fulfillment button for a FORWARDED order", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
+    server.use(
+      http.get(`${BASE_URL}/orders`, () =>
+        HttpResponse.json(adminOrdersEnvelope(testOrders, { total: 2, page: 1, limit: 20 }))
+      )
+    );
 
     renderRoute("/admin/orders");
 
@@ -127,11 +148,9 @@ describe("/admin/orders", () => {
       http.get(`${BASE_URL}/orders`, ({ request }) => {
         const status = new URL(request.url).searchParams.get("status");
         const data = status ? testOrders.filter((o) => o.status === status) : testOrders;
-        return HttpResponse.json({
-          success: true,
-          data,
-          meta: { total: data.length, page: 1, limit: 20 },
-        });
+        return HttpResponse.json(
+          adminOrdersEnvelope(data, { total: data.length, page: 1, limit: 20 })
+        );
       })
     );
 
@@ -150,11 +169,13 @@ describe("/admin/orders", () => {
     server.use(
       http.get(`${BASE_URL}/orders`, ({ request }) => {
         requestedPage = new URL(request.url).searchParams.get("page");
-        return HttpResponse.json({
-          success: true,
-          data: testOrders,
-          meta: { total: 25, page: Number(requestedPage ?? 1), limit: 20 },
-        });
+        return HttpResponse.json(
+          adminOrdersEnvelope(testOrders, {
+            total: 25,
+            page: Number(requestedPage ?? 1),
+            limit: 20,
+          })
+        );
       })
     );
 
@@ -168,7 +189,11 @@ describe("/admin/orders", () => {
   });
 
   it("Retry Fulfillment fires POST /orders/:id/retry-fulfillment", async () => {
-    server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope(testOrders))));
+    server.use(
+      http.get(`${BASE_URL}/orders`, () =>
+        HttpResponse.json(adminOrdersEnvelope(testOrders, { total: 2, page: 1, limit: 20 }))
+      )
+    );
 
     let calledId: string | null = null;
     server.use(

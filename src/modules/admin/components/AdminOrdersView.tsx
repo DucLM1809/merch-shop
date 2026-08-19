@@ -77,17 +77,17 @@ export function AdminOrdersView({ orders }: Props): React.JSX.Element {
             </Text>
             <Box flex={2}>
               <Text fontSize="sm" color="white">
-                {order.shipping.fullName}
+                {order.shipping?.fullName ?? "—"}
               </Text>
               <Text fontSize="xs" color="gray.500">
-                {order.shipping.email}
+                {order.shipping?.email ?? ""}
               </Text>
             </Box>
             <Text flex={1.5} fontSize="sm" color="gray.400">
               {fmtDate(order.createdAt)}
             </Text>
             <Text flex={1} fontSize="sm" fontWeight="600" color="white">
-              ${order.total.toFixed(2)}
+              {order.total !== undefined ? `$${order.total.toFixed(2)}` : "—"}
             </Text>
             <Box flex={1.5}>
               <Text
@@ -126,15 +126,23 @@ export function AdminOrdersView({ orders }: Props): React.JSX.Element {
                   >
                     Shipping
                   </Text>
-                  <Text fontSize="sm" color="gray.200">
-                    {order.shipping.fullName}
-                  </Text>
-                  <Text fontSize="sm" color="gray.400">
-                    {order.shipping.line1}
-                  </Text>
-                  <Text fontSize="sm" color="gray.400">
-                    {order.shipping.city}, {order.shipping.country}
-                  </Text>
+                  {order.shipping ? (
+                    <>
+                      <Text fontSize="sm" color="gray.200">
+                        {order.shipping.fullName}
+                      </Text>
+                      <Text fontSize="sm" color="gray.400">
+                        {order.shipping.line1}
+                      </Text>
+                      <Text fontSize="sm" color="gray.400">
+                        {order.shipping.city}, {order.shipping.country}
+                      </Text>
+                    </>
+                  ) : (
+                    <Text fontSize="sm" color="gray.500">
+                      No shipping details available.
+                    </Text>
+                  )}
                 </Box>
                 <Box flex={2}>
                   <Text
@@ -151,10 +159,13 @@ export function AdminOrdersView({ orders }: Props): React.JSX.Element {
                     {order.lines.map((line) => (
                       <Flex key={line.skuId} justify="space-between">
                         <Text fontSize="sm" color="gray.300">
-                          {line.productName} · {line.variant} × {line.quantity}
+                          {line.productName ?? line.skuId}
+                          {line.variant ? ` · ${line.variant}` : ""} × {line.quantity}
                         </Text>
                         <Text fontSize="sm" color="gray.400">
-                          ${(line.price * line.quantity).toFixed(2)}
+                          {line.price !== undefined
+                            ? `$${(line.price * line.quantity).toFixed(2)}`
+                            : "—"}
                         </Text>
                       </Flex>
                     ))}

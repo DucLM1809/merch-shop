@@ -18,6 +18,7 @@ import type {
   RawProduct,
   RawProductMutationResponse,
   RawSku,
+  RawOrder,
 } from "../api/types";
 import { BASE_URL } from "../api/client";
 
@@ -273,6 +274,25 @@ export const mockOrders: Order[] = [
     ],
   },
 ];
+
+// GET /orders (admin list) only returns id/quantity/skuId per line, wrapped in a nested
+// envelope — see normalizeOrder in ../api/client.ts. Derives that wire shape from
+// mockOrders so the admin-list handler below exercises the same parsing the real
+// backend requires, while /orders/:id, /orders/mine, etc. keep serving full mockOrders.
+export function toRawOrder(order: Order): RawOrder {
+  return {
+    id: order.id,
+    accountId: null,
+    status: order.status,
+    supplierReference: null,
+    createdAt: order.createdAt,
+    items: order.lines.map((line) => ({
+      id: line.skuId,
+      quantity: line.quantity,
+      skuId: line.skuId,
+    })),
+  };
+}
 
 export const mockAccount: Account = {
   id: "acc_001",
@@ -612,12 +632,11 @@ export const handlers = [
 
     const filtered = status ? mockOrders.filter((o) => o.status === status) : mockOrders;
     const start = (page - 1) * limit;
-    const data = filtered.slice(start, start + limit);
+    const data = filtered.slice(start, start + limit).map(toRawOrder);
 
     return HttpResponse.json({
       success: true,
-      data,
-      meta: { total: filtered.length, page, limit },
+      data: { data, meta: { total: filtered.length, page, limit } },
     });
   }),
 

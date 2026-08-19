@@ -91,14 +91,14 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
             >
               <Box>
                 <Text color="white" fontWeight="600" fontSize="sm">
-                  {line.productName}
+                  {line.productName ?? line.skuId}
                 </Text>
                 <Text color="gray.500" fontSize="xs">
-                  {line.variant} × {line.quantity}
+                  {line.variant ?? "—"} × {line.quantity}
                 </Text>
               </Box>
               <Text color="white" fontWeight="700" fontSize="sm">
-                ${(line.price * line.quantity).toFixed(2)}
+                {line.price !== undefined ? `$${(line.price * line.quantity).toFixed(2)}` : "—"}
               </Text>
             </Flex>
           ))}
@@ -116,18 +116,26 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
         >
           Shipping
         </Heading>
-        <Text fontSize="sm" color="gray.200">
-          {order.shipping.fullName}
-        </Text>
-        <Text fontSize="sm" color="gray.400">
-          {order.shipping.line1}
-        </Text>
-        <Text fontSize="sm" color="gray.400">
-          {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}
-        </Text>
-        <Text fontSize="sm" color="gray.400">
-          {order.shipping.country}
-        </Text>
+        {order.shipping ? (
+          <>
+            <Text fontSize="sm" color="gray.200">
+              {order.shipping.fullName}
+            </Text>
+            <Text fontSize="sm" color="gray.400">
+              {order.shipping.line1}
+            </Text>
+            <Text fontSize="sm" color="gray.400">
+              {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}
+            </Text>
+            <Text fontSize="sm" color="gray.400">
+              {order.shipping.country}
+            </Text>
+          </>
+        ) : (
+          <Text fontSize="sm" color="gray.500">
+            No shipping details available.
+          </Text>
+        )}
       </Box>
 
       <Flex justify="space-between" pt={4} borderTop="1px solid" borderColor="gray.700">
@@ -135,7 +143,7 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
           Total
         </Text>
         <Text data-testid="order-total" color="white" fontWeight="800" fontSize="xl">
-          ${order.total.toFixed(2)}
+          {order.total !== undefined ? `$${order.total.toFixed(2)}` : "—"}
         </Text>
       </Flex>
     </Box>
