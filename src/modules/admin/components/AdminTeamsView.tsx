@@ -233,6 +233,7 @@ export function AdminTeamsView(): React.JSX.Element {
             return (
               <Flex
                 key={team.id}
+                data-testid={`team-row-${team.id}`}
                 px={4}
                 py={3.5}
                 align="center"
