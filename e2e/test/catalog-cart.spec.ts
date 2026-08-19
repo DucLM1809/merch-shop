@@ -4,7 +4,7 @@ function parsePublisherAndGameSlug(productHref: string): {
   publisherSlug: string;
   gameSlug: string;
 } {
-  const [, publisherSlug, gameSlug] = productHref.split("/");
+  const [, , publisherSlug, gameSlug] = productHref.split("/");
   return { publisherSlug, gameSlug };
 }
 
@@ -19,7 +19,7 @@ test("browsing the catalog and adding an item to the cart", async ({
   // chained off the state the previous leg's Assert just confirmed.
 
   // Arrange: homepage renders the catalog without errors.
-  await page.goto("/");
+  await page.goto("/en-US/");
   const homepageProductLink = catalog.firstProductLink();
   await expect(homepageProductLink).toBeVisible();
 
@@ -28,7 +28,7 @@ test("browsing the catalog and adding an item to the cart", async ({
   const { publisherSlug, gameSlug } = parsePublisherAndGameSlug(productHref);
 
   // Act: publisher page → game page, via the sidebar nav (real clicks, not deep-linking).
-  await page.goto(`/${publisherSlug}`);
+  await page.goto(`/en-US/${publisherSlug}`);
   const gameLink = catalog.gameNavLink(publisherSlug, gameSlug);
   await expect(gameLink).toBeVisible();
   await gameLink.click();

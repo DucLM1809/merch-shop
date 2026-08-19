@@ -9,7 +9,7 @@ test.describe("Admin product CRUD", () => {
     const admin = new AdminProductsPage(adminPage);
     const productName = `E2E Product ${Date.now()}`;
     const updatedName = `${productName} Updated`;
-    await adminPage.goto("/admin/products");
+    await adminPage.goto("/en-US/admin/products");
     await expect(admin.heading).toBeVisible();
 
     // Act: create
@@ -40,9 +40,9 @@ test.describe("Admin product CRUD", () => {
   // already covered by auth-redirect.spec.ts.
   test("redirects a non-admin signed-in user away from /admin", async ({ page }) => {
     // Act
-    await page.goto("/admin/products");
+    await page.goto("/en-US/admin/products");
 
     // Assert
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/en-US/");
   });
 });

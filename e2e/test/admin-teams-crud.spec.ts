@@ -10,7 +10,7 @@ test.describe("Admin team CRUD", () => {
     const teamName = `E2E Team ${Date.now()}`;
     const teamSlug = `e2e-team-${Date.now()}`;
     const updatedName = `${teamName} Updated`;
-    await adminPage.goto("/admin/teams");
+    await adminPage.goto("/en-US/admin/teams");
     await expect(admin.heading).toBeVisible();
 
     // Act: create
@@ -41,9 +41,9 @@ test.describe("Admin team CRUD", () => {
   // already covered by auth-redirect.spec.ts.
   test("redirects a non-admin signed-in user away from /admin", async ({ page }) => {
     // Act
-    await page.goto("/admin/teams");
+    await page.goto("/en-US/admin/teams");
 
     // Assert
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/en-US/");
   });
 });

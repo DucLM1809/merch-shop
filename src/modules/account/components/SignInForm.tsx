@@ -6,11 +6,13 @@ import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 
 import { FormField } from "@/components/FormField";
+import { useLocale } from "@/i18n/useLocale";
 import { useLogin } from "../hooks";
 import { schema, DEFAULTS, type FormValues } from "./SignInForm.schema";
 
 export function SignInForm(): JSX.Element {
   const login = useLogin();
+  const locale = useLocale();
   const {
     register,
     handleSubmit,
@@ -56,7 +58,7 @@ export function SignInForm(): JSX.Element {
         </Button>
 
         <Flex justify="center">
-          <Link to="/forgot-password">
+          <Link to="/$locale/forgot-password" params={{ locale }}>
             <Text fontSize="sm" color="gray.400" _hover={{ color: "white" }}>
               Forgot password?
             </Text>

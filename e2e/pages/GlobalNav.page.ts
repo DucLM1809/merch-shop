@@ -24,7 +24,7 @@ export class GlobalNavPage {
     this.desktopAccountMenu = page.getByTestId("nav-account-menu");
     // Scoped by href, not accessible name — the badge digit renders inside the same
     // link as the "Cart" text, so the computed name is ambiguous ("1 Cart" etc.).
-    this.cartLink = page.locator('a[href="/cart"]').first();
+    this.cartLink = page.locator('a[href="/en-US/cart"]').first();
 
     this.drawer = page.getByRole("dialog", { name: "Navigation menu" });
     this.drawerOverlay = page.getByTestId("nav-drawer-overlay");

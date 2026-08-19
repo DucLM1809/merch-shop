@@ -4,7 +4,7 @@ export async function signIn(
   page: Page,
   email: string,
   password: string,
-  startPath = "/sign-in"
+  startPath = "/en-US/sign-in"
 ): Promise<void> {
   await page.goto(startPath);
 
@@ -32,7 +32,7 @@ export async function signIn(
     await page.getByRole("button", { name: "Sign in" }).click();
 
     try {
-      await page.waitForURL((url) => url.pathname !== "/sign-in" && !url.search, {
+      await page.waitForURL((url) => url.pathname !== "/en-US/sign-in" && !url.search, {
         timeout: 3000,
       });
       return;

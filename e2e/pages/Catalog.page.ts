@@ -21,6 +21,6 @@ export class CatalogPage {
   // href encodes the same publisherSlug/gameSlug the test already has, so it's the
   // more precise identifier here.
   gameNavLink(publisherSlug: string, gameSlug: string): Locator {
-    return this.page.locator(`nav a[href="/${publisherSlug}/${gameSlug}"]`);
+    return this.page.locator(`nav a[href="/en-US/${publisherSlug}/${gameSlug}"]`);
   }
 }

@@ -16,7 +16,7 @@ export class AdminOrdersPage {
   }
 
   async gotoStatus(status: OrderStatus): Promise<void> {
-    await this.page.goto(`/admin/orders?status=${status}`);
+    await this.page.goto(`/en-US/admin/orders?status=${status}`);
     await this.waitForOrdersToSettle();
   }
 

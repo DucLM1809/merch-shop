@@ -3,6 +3,8 @@ import { Box, CloseButton, Flex, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { Gamepad2, LogIn, LogOut, ShoppingCart, User, UserPlus } from "lucide-react";
 
+import { useLocale } from "../i18n/useLocale";
+
 type NavDrawerContentProps = {
   itemCount: number;
   isLoaded: boolean;
@@ -21,6 +23,7 @@ export function NavDrawerContent({
   onSignOut,
 }: NavDrawerContentProps): JSX.Element {
   const panelRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
 
   useEffect(() => {
     const previouslyFocused = document.activeElement as HTMLElement | null;
@@ -119,7 +122,7 @@ export function NavDrawerContent({
           borderBottom="1px solid"
           borderColor="gray.800"
         >
-          <Link to="/" onClick={onClose}>
+          <Link to="/$locale" params={{ locale }} onClick={onClose}>
             <Flex align="center" gap={2.5}>
               <Box color="blue.400" display="flex" alignItems="center">
                 <Gamepad2 size={18} strokeWidth={2} />
@@ -139,7 +142,7 @@ export function NavDrawerContent({
         </Flex>
 
         <Flex direction="column" gap={6} pt={6} px={4} pb={4} flex={1} overflowY="auto">
-          <Link to="/cart" onClick={onClose}>
+          <Link to="/$locale/cart" params={{ locale }} onClick={onClose}>
             <Flex
               align="center"
               gap={2.5}
@@ -187,7 +190,7 @@ export function NavDrawerContent({
             </Flex>
           ) : isLoaded ? (
             <Flex direction="column" gap={4} data-testid="drawer-guest-links">
-              <Link to="/sign-in" onClick={onClose}>
+              <Link to="/$locale/sign-in" params={{ locale }} onClick={onClose}>
                 <Flex
                   align="center"
                   gap={1.5}
@@ -201,7 +204,7 @@ export function NavDrawerContent({
                   </Text>
                 </Flex>
               </Link>
-              <Link to="/sign-up" onClick={onClose}>
+              <Link to="/$locale/sign-up" params={{ locale }} onClick={onClose}>
                 <Flex
                   align="center"
                   gap={1.5}

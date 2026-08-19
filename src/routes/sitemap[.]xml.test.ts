@@ -63,8 +63,8 @@ describe("sitemap.xml route", () => {
     expect(body).toContain("<urlset");
     // The real backend doesn't return a distinct product slug — /products/:id
     // expects the DB id, so the URL segment is the product's id.
-    expect(body).toContain("/riot/lol/products/1");
-    expect(body).toContain("/valve/cs2/products/2");
+    expect(body).toContain("/en-US/riot/lol/products/1");
+    expect(body).toContain("/en-US/valve/cs2/products/2");
   });
 
   it("is cached at the CDN edge", async () => {

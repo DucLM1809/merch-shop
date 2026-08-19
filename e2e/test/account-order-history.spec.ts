@@ -9,7 +9,7 @@ test.describe("Account order history", () => {
     const orders = new AccountOrdersPage(authenticatedPage);
 
     // Act
-    await authenticatedPage.goto("/account/orders");
+    await authenticatedPage.goto("/en-US/account/orders");
 
     // Assert
     await expect(orders.heading).toBeVisible();
@@ -32,7 +32,7 @@ test.describe("Account order history", () => {
     await firstRow.click();
 
     // Assert
-    await expect(authenticatedPage).toHaveURL(`/account/orders/${orderId}`);
+    await expect(authenticatedPage).toHaveURL(`/en-US/account/orders/${orderId}`);
     await expect(
       authenticatedPage.getByRole("heading", { name: `Order #${orderId}` })
     ).toBeVisible();
@@ -43,7 +43,7 @@ test.describe("Account order history", () => {
     await orders.detailBackLink.click();
 
     // Assert
-    await expect(authenticatedPage).toHaveURL("/account/orders");
+    await expect(authenticatedPage).toHaveURL("/en-US/account/orders");
   });
 
   test("shows a not-found message for an order id that doesn't exist", async ({
@@ -53,7 +53,7 @@ test.describe("Account order history", () => {
     const orders = new AccountOrdersPage(authenticatedPage);
 
     // Act
-    await authenticatedPage.goto("/account/orders/does-not-exist");
+    await authenticatedPage.goto("/en-US/account/orders/does-not-exist");
 
     // Assert
     await expect(authenticatedPage.getByText(/order not found/i)).toBeVisible({ timeout: 10_000 });

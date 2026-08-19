@@ -4,6 +4,8 @@ import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 
 import type { OrderStatus } from "@/api/types";
+import { useLocale } from "@/i18n/useLocale";
+
 import type { CartItem } from "@/store/cart";
 
 type Props = {
@@ -14,6 +16,7 @@ type Props = {
 };
 
 export function OrderConfirmationPage({ orderId, status, isResolving, items }: Props): JSX.Element {
+  const locale = useLocale();
   const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
 
   return (
@@ -87,7 +90,9 @@ export function OrderConfirmationPage({ orderId, status, isResolving, items }: P
         </Flex>
 
         <Button variant="outline" colorPalette="blue" asChild>
-          <Link to="/">Continue Shopping</Link>
+          <Link to="/$locale" params={{ locale }}>
+            Continue Shopping
+          </Link>
         </Button>
       </VStack>
     </Box>

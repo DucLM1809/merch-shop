@@ -3,6 +3,8 @@ import { useEffect, useRef, type JSX } from "react";
 import { Box, Button, Heading, Spinner, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 
+import { useLocale } from "@/i18n/useLocale";
+
 import { useVerifyEmail } from "../hooks";
 
 type Props = {
@@ -11,6 +13,7 @@ type Props = {
 
 export function VerifyEmailView({ token }: Props): JSX.Element {
   const verifyEmail = useVerifyEmail();
+  const locale = useLocale();
   const requested = useRef(false);
 
   useEffect(() => {
@@ -41,7 +44,7 @@ export function VerifyEmailView({ token }: Props): JSX.Element {
         <Text color="gray.400" mb={4} data-testid="verify-email-success">
           Your email has been verified.
         </Text>
-        <Link to="/">
+        <Link to="/$locale" params={{ locale }}>
           <Button colorPalette="blue">Continue</Button>
         </Link>
       </Box>

@@ -6,6 +6,7 @@ import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 
 import { FormField } from "@/components/FormField";
+import { useLocale } from "@/i18n/useLocale";
 import { useResetPassword } from "../hooks";
 import { schema, DEFAULTS, type FormValues } from "./ResetPasswordForm.schema";
 
@@ -15,6 +16,7 @@ type Props = {
 
 export function ResetPasswordForm({ token }: Props): JSX.Element {
   const resetPassword = useResetPassword();
+  const locale = useLocale();
   const {
     register,
     handleSubmit,
@@ -43,7 +45,7 @@ export function ResetPasswordForm({ token }: Props): JSX.Element {
         <Text color="gray.400" mb={4} data-testid="reset-password-success">
           Your password has been reset. You can now sign in.
         </Text>
-        <Link to="/sign-in">
+        <Link to="/$locale/sign-in" params={{ locale }}>
           <Button colorPalette="blue">Go to sign in</Button>
         </Link>
       </Box>

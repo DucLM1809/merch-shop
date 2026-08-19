@@ -3,21 +3,25 @@ import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { Gamepad2, List, Package, ShoppingBag, Tags, TrendingUp, Users } from "lucide-react";
 
+import { useLocale } from "@/i18n/useLocale";
+
 type NavItem = { label: string; to: string; icon: React.ElementType; live: boolean };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Orders", to: "/admin/orders", icon: ShoppingBag, live: true },
-  { label: "Publishers", to: "/admin/publishers", icon: TrendingUp, live: true },
-  { label: "Games", to: "/admin/games", icon: Gamepad2, live: true },
-  { label: "Teams", to: "/admin/teams", icon: Users, live: true },
-  { label: "Characters", to: "/admin/characters", icon: List, live: true },
-  { label: "Products", to: "/admin/products", icon: Package, live: true },
-  { label: "SKUs", to: "/admin/skus", icon: Tags, live: true },
+  { label: "Orders", to: "/$locale/admin/orders", icon: ShoppingBag, live: true },
+  { label: "Publishers", to: "/$locale/admin/publishers", icon: TrendingUp, live: true },
+  { label: "Games", to: "/$locale/admin/games", icon: Gamepad2, live: true },
+  { label: "Teams", to: "/$locale/admin/teams", icon: Users, live: true },
+  { label: "Characters", to: "/$locale/admin/characters", icon: List, live: true },
+  { label: "Products", to: "/$locale/admin/products", icon: Package, live: true },
+  { label: "SKUs", to: "/$locale/admin/skus", icon: Tags, live: true },
 ];
 
 type Props = { children: ReactNode };
 
 export function AdminLayout({ children }: Props): React.JSX.Element {
+  const locale = useLocale();
+
   return (
     <Flex h="calc(100dvh - 57px)" overflow="hidden">
       <Box
@@ -43,7 +47,7 @@ export function AdminLayout({ children }: Props): React.JSX.Element {
         <VStack gap={0} align="stretch">
           {NAV_ITEMS.map(({ label, to, icon: Icon, live }) =>
             live ? (
-              <Link key={label} to={to}>
+              <Link key={label} to={to} params={{ locale }}>
                 {({ isActive }) => (
                   <Flex
                     align="center"

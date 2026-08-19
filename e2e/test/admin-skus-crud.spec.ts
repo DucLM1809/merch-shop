@@ -13,7 +13,7 @@ test.describe("Admin SKU CRUD", () => {
     // depend on (or collide with) catalog data owned by other specs.
     const products = new AdminProductsPage(adminPage);
     const productName = `E2E SKU Product ${Date.now()}`;
-    await adminPage.goto("/admin/products");
+    await adminPage.goto("/en-US/admin/products");
     await expect(products.heading).toBeVisible();
 
     // Not using AdminProductsPage.createProduct() directly — the bulk-by-facet step
@@ -30,7 +30,7 @@ test.describe("Admin SKU CRUD", () => {
     await expect(products.rowByName(productName)).toBeVisible();
 
     const admin = new AdminSkusPage(adminPage);
-    await adminPage.goto("/admin/skus");
+    await adminPage.goto("/en-US/admin/skus");
     await expect(admin.heading).toBeVisible();
 
     // Act: create
@@ -66,9 +66,9 @@ test.describe("Admin SKU CRUD", () => {
   // already covered by auth-redirect.spec.ts.
   test("redirects a non-admin signed-in user away from /admin", async ({ page }) => {
     // Act
-    await page.goto("/admin/skus");
+    await page.goto("/en-US/admin/skus");
 
     // Assert
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/en-US/");
   });
 });

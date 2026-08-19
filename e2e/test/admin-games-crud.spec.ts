@@ -10,7 +10,7 @@ test.describe("Admin game CRUD", () => {
     const gameName = `E2E Game ${Date.now()}`;
     const gameSlug = `e2e-game-${Date.now()}`;
     const updatedName = `${gameName} Updated`;
-    await adminPage.goto("/admin/games");
+    await adminPage.goto("/en-US/admin/games");
     await expect(admin.heading).toBeVisible();
 
     // Act: create
@@ -41,9 +41,9 @@ test.describe("Admin game CRUD", () => {
   // already covered by auth-redirect.spec.ts.
   test("redirects a non-admin signed-in user away from /admin", async ({ page }) => {
     // Act
-    await page.goto("/admin/games");
+    await page.goto("/en-US/admin/games");
 
     // Assert
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/en-US/");
   });
 });

@@ -4,6 +4,7 @@ import type { JSX } from "react";
 import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 
+import { useLocale } from "@/i18n/useLocale";
 import { useAuth } from "@/modules/account";
 
 import { useOrder } from "../hooks";
@@ -16,11 +17,16 @@ type Props = {
 export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
   const { isLoaded, isSignedIn } = useAuth();
   const navigate = useNavigate();
+  const locale = useLocale();
 
   useEffect(() => {
     if (isLoaded && !isSignedIn)
-      navigate({ to: "/sign-in", search: { redirect: `/account/orders/${orderId}` } });
-  }, [isLoaded, isSignedIn, navigate, orderId]);
+      navigate({
+        to: "/$locale/sign-in",
+        params: { locale },
+        search: { redirect: `/${locale}/account/orders/${orderId}` },
+      });
+  }, [isLoaded, isSignedIn, locale, navigate, orderId]);
 
   const { data: order, isLoading, error } = useOrder(orderId, !!isSignedIn);
 
@@ -44,7 +50,7 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
 
   return (
     <Box p={8} maxW="800px" mx="auto">
-      <Link to="/account/orders">
+      <Link to="/$locale/account/orders" params={{ locale }}>
         <Text color="gray.400" fontSize="sm" mb={4} _hover={{ color: "white" }}>
           ← Back to Order History
         </Text>

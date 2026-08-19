@@ -11,7 +11,7 @@ test.describe("Mobile nav drawer", () => {
 
   test("hides desktop-only nav and shows the mobile trigger", async ({ page, nav }) => {
     // Act
-    await page.goto("/");
+    await page.goto("/en-US/");
 
     // Assert
     await expect(nav.desktopAccountMenu).toBeHidden();
@@ -63,7 +63,7 @@ test.describe("Mobile nav drawer", () => {
 
   test("closes via the close button", async ({ page, nav }) => {
     // Arrange
-    await page.goto("/");
+    await page.goto("/en-US/");
     await nav.open();
 
     // Act & Assert
@@ -72,7 +72,7 @@ test.describe("Mobile nav drawer", () => {
 
   test("closes via clicking the overlay", async ({ page, nav }) => {
     // Arrange
-    await page.goto("/");
+    await page.goto("/en-US/");
     await nav.open();
 
     // Act & Assert
@@ -81,7 +81,7 @@ test.describe("Mobile nav drawer", () => {
 
   test("closes via the Escape key", async ({ page, nav }) => {
     // Arrange
-    await page.goto("/");
+    await page.goto("/en-US/");
     await nav.open();
 
     // Act & Assert
@@ -90,7 +90,7 @@ test.describe("Mobile nav drawer", () => {
 
   test("closes when a link inside the drawer is clicked", async ({ page, nav }) => {
     // Arrange
-    await page.goto("/");
+    await page.goto("/en-US/");
     await nav.open();
 
     // Act
@@ -106,7 +106,7 @@ test.describe("Mobile nav drawer", () => {
 
     test("opens showing guest links instead of an account", async ({ page, nav }) => {
       // Arrange
-      await page.goto("/");
+      await page.goto("/en-US/");
 
       // Act
       await nav.open();

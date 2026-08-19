@@ -10,7 +10,7 @@ test.describe("Admin publisher CRUD", () => {
     const publisherName = `E2E Publisher ${Date.now()}`;
     const publisherSlug = `e2e-publisher-${Date.now()}`;
     const updatedName = `${publisherName} Updated`;
-    await adminPage.goto("/admin/publishers");
+    await adminPage.goto("/en-US/admin/publishers");
     await expect(admin.heading).toBeVisible();
 
     // Act: create
@@ -41,9 +41,9 @@ test.describe("Admin publisher CRUD", () => {
   // already covered by auth-redirect.spec.ts.
   test("redirects a non-admin signed-in user away from /admin", async ({ page }) => {
     // Act
-    await page.goto("/admin/publishers");
+    await page.goto("/en-US/admin/publishers");
 
     // Assert
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/en-US/");
   });
 });

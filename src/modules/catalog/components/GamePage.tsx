@@ -8,6 +8,7 @@ import { GamePageView } from "./GamePageView";
 import { ProductCatalog } from "./ProductCatalog";
 import { PublisherNav } from "./PublisherNav";
 import { usePublisher } from "../hooks";
+import { useLocale } from "@/i18n/useLocale";
 
 type Props = {
   publisherSlug: string;
@@ -16,6 +17,7 @@ type Props = {
 
 export function GamePage({ publisherSlug, gameSlug }: Props): JSX.Element {
   const { data: publisher, isLoading, isError, refetch } = usePublisher(publisherSlug);
+  const locale = useLocale();
 
   const game = publisher?.games.find((g) => g.slug === gameSlug);
 
@@ -35,8 +37,8 @@ export function GamePage({ publisherSlug, gameSlug }: Props): JSX.Element {
           filters={{ gameSlug }}
           renderLink={(p, children) => (
             <Link
-              to="/$publisherSlug/$gameSlug/products/$productSlug"
-              params={{ publisherSlug, gameSlug, productSlug: p.slug }}
+              to="/$locale/$publisherSlug/$gameSlug/products/$productSlug"
+              params={{ locale, publisherSlug, gameSlug, productSlug: p.slug }}
             >
               {children}
             </Link>

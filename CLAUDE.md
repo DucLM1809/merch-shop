@@ -52,9 +52,19 @@ Each domain: `src/modules/<domain>/hooks/`, `components/`, `types.ts`, `index.ts
 
 Cross-module imports only through `index.ts` barrel — deep imports across module boundaries are banned.
 
-Shared HTTP client stays in `src/api/`. Shared UI in `src/components/`. Routes in `src/routes/` — organized into `(group)/` directories by domain: `(auth)`, `(catalog)`, `(cart)`, `(checkout)`, `(account)`, `(admin)`. `__root.tsx` and `index.tsx` stay at root. Each route splits into `routeName.tsx` (config/loaders) and `routeName.lazy.tsx` (component, code-split). Auth-guard layout routes stay unsplit. Test files colocate inside the group directory. Global state in `src/store/`.
+Shared HTTP client stays in `src/api/`. Shared UI in `src/components/`. Shared i18n resources/config in `src/i18n/`. Routes in `src/routes/` — organized into `(group)/` directories by domain: `(auth)`, `(catalog)`, `(cart)`, `(checkout)`, `(account)`, `(admin)`, all wrapped under a leading `$locale` param. `__root.tsx` and `index.tsx` stay at root. Each route splits into `routeName.tsx` (config/loaders) and `routeName.lazy.tsx` (component, code-split). Auth-guard layout routes stay unsplit. Test files colocate inside the group directory. Global state in `src/store/`.
 
 See `docs/adr/0010-typescript-and-query-conventions.md`.
+
+## Internationalization conventions
+
+`react-i18next`, URL-prefixed locale (`/$locale/...`) is the source of truth while browsing; a cookie only drives the redirect decision on a bare/unprefixed URL (cookie → `Accept-Language` → `en-US` default), resolved server-side before render. Supported locales: `en-US` (default), `en-GB`, `fr-FR`. Phase 1 covers UI chrome only — dynamic catalog content and real currency conversion are deferred pending backend support; prices are locale-formatted but stay USD-denominated. Admin routes are not localized.
+
+Translations live in `src/i18n/locales/<locale>/<namespace>.json`, namespaced per domain (`common`, `catalog`, `cart`, `checkout`, `orders`, `account`). Key types are generated from the `en-US` files via module augmentation — unknown keys and malformed interpolation args are compile errors. A CI script enforces key parity: every non-default locale must have every key `en-US` has. Locale preference state lives in `src/store/locale.ts`, following the existing `Store<T>` pattern (see `src/store/authToken.ts`, `src/store/cart.ts`).
+
+Tests assert translated copy via the imported JSON value or role/testid, never a hardcoded literal string, for any new or touched test — existing tests aren't mass-rewritten. `renderRoute`/`renderWithProviders` wrap in a real `I18nextProvider` (`en-US` resources) and `renderRoute` defaults its path to the `en-US` prefix. Playwright e2e stays single-locale English, per the existing "optional supplement" stance.
+
+See `docs/adr/0017-multi-region-i18n-react-i18next.md`.
 
 ## Agent skills
 

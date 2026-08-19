@@ -1,30 +1,37 @@
-import { Box, Button, Flex, Heading, IconButton, Text } from '@chakra-ui/react'
-import { Link } from '@tanstack/react-router'
-import type { CartItem } from '@/store/cart'
-import { getSubtotal } from '@/store/cart'
+import { Box, Button, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
+import { Link } from "@tanstack/react-router";
+import type { CartItem } from "@/store/cart";
+import { getSubtotal } from "@/store/cart";
+import { useLocale } from "@/i18n/useLocale";
 
 interface Props {
-  items: CartItem[]
-  onUpdateQuantity: (skuId: string, quantity: number) => void
-  onRemove: (skuId: string) => void
+  items: CartItem[];
+  onUpdateQuantity: (skuId: string, quantity: number) => void;
+  onRemove: (skuId: string) => void;
 }
 
 export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
+  const locale = useLocale();
+
   if (items.length === 0) {
     return (
       <Box p={8} textAlign="center" pt={20}>
-        <Text color="gray.500" fontSize="lg" fontWeight="600">Your cart is empty</Text>
+        <Text color="gray.500" fontSize="lg" fontWeight="600">
+          Your cart is empty
+        </Text>
         <Text color="gray.600" fontSize="sm" mt={1} mb={6}>
           Add some gear to get started
         </Text>
         <Button variant="outline" colorPalette="blue" asChild>
-          <Link to="/">Continue Shopping</Link>
+          <Link to="/$locale" params={{ locale }}>
+            Continue Shopping
+          </Link>
         </Button>
       </Box>
-    )
+    );
   }
 
-  const subtotal = getSubtotal(items)
+  const subtotal = getSubtotal(items);
 
   return (
     <Box p={8} maxW="3xl" mx="auto">
@@ -33,7 +40,7 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
           Cart
         </Heading>
         <Text fontSize="sm" color="gray.500" fontWeight="600">
-          {items.length} {items.length === 1 ? 'item' : 'items'}
+          {items.length} {items.length === 1 ? "item" : "items"}
         </Text>
       </Flex>
 
@@ -49,13 +56,19 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
             borderTop="1px solid"
             borderColor="gray.800"
             transition="border-color 0.15s"
-            _hover={{ borderColor: 'gray.700' }}
+            _hover={{ borderColor: "gray.700" }}
           >
             <Box flex="1" minW={0}>
               <Text color="white" fontWeight="600" truncate fontSize="sm">
                 {item.productName}
               </Text>
-              <Text color="gray.500" fontSize="xs" mt={0.5} textTransform="uppercase" letterSpacing="0.05em">
+              <Text
+                color="gray.500"
+                fontSize="xs"
+                mt={0.5}
+                textTransform="uppercase"
+                letterSpacing="0.05em"
+              >
                 {item.variant}
               </Text>
               <Text color="gray.400" fontSize="sm" mt={1} fontWeight="600">
@@ -113,7 +126,13 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
         borderTop="1px solid"
         borderColor="gray.700"
       >
-        <Text color="gray.500" fontSize="sm" fontWeight="600" textTransform="uppercase" letterSpacing="0.05em">
+        <Text
+          color="gray.500"
+          fontSize="sm"
+          fontWeight="600"
+          textTransform="uppercase"
+          letterSpacing="0.05em"
+        >
           Subtotal
         </Text>
         <Text
@@ -136,8 +155,10 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
         letterSpacing="0.02em"
         asChild
       >
-        <Link to="/checkout">Proceed to Checkout</Link>
+        <Link to="/$locale/checkout" params={{ locale }}>
+          Proceed to Checkout
+        </Link>
       </Button>
     </Box>
-  )
+  );
 }

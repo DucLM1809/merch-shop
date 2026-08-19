@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { client } from "@/api/client";
+import { useLocale } from "@/i18n/useLocale";
 import { cartStore, clearCart } from "@/store/cart";
 import { CheckoutFormView } from "./CheckoutFormView";
 import { schema, DEFAULTS } from "./CheckoutFormView.schema";
@@ -21,6 +22,7 @@ const stripePromise = loadStripe(
 
 function CheckoutForm() {
   const navigate = useNavigate();
+  const locale = useLocale();
   const stripe = useStripe();
   const elements = useElements();
   const items = useStore(cartStore, (s) => s.items);
@@ -61,7 +63,8 @@ function CheckoutForm() {
       // page resolves it by polling for the paymentIntentId (merch-shop-fvg).
       clearCart();
       navigate({
-        to: "/order-confirmation",
+        to: "/$locale/order-confirmation",
+        params: { locale },
         search: { paymentIntentId: result.paymentIntent.id, items: JSON.stringify(items) },
       });
     } catch {

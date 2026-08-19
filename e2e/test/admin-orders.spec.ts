@@ -7,7 +7,7 @@ test.describe("Admin order detail and fulfillment retry", () => {
   }) => {
     // Arrange
     const orders = new AdminOrdersPage(adminPage);
-    await adminPage.goto("/admin/orders");
+    await adminPage.goto("/en-US/admin/orders");
     await expect(orders.heading).toBeVisible();
     const orderId = await orders.firstOrderId();
     // No orders exist in this environment yet — the empty state is a valid, if

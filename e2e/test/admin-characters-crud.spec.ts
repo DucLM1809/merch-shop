@@ -10,7 +10,7 @@ test.describe("Admin character CRUD", () => {
     const characterName = `E2E Character ${Date.now()}`;
     const characterSlug = `e2e-character-${Date.now()}`;
     const updatedName = `${characterName} Updated`;
-    await adminPage.goto("/admin/characters");
+    await adminPage.goto("/en-US/admin/characters");
     await expect(admin.heading).toBeVisible();
 
     // Act: create
@@ -41,9 +41,9 @@ test.describe("Admin character CRUD", () => {
   // already covered by auth-redirect.spec.ts.
   test("redirects a non-admin signed-in user away from /admin", async ({ page }) => {
     // Act
-    await page.goto("/admin/characters");
+    await page.goto("/en-US/admin/characters");
 
     // Assert
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/en-US/");
   });
 });

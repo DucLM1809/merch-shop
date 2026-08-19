@@ -2,6 +2,7 @@ import { useState, type JSX } from "react";
 import { Box, Flex, IconButton, Portal, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
+import { useLocale } from "../i18n/useLocale";
 import { useAccount, useAuth, useLogout } from "../modules/account";
 import { cartStore } from "../store/cart";
 import { NavDrawerContent } from "./NavDrawerContent";
@@ -12,6 +13,7 @@ export function GlobalNav(): JSX.Element {
   const { isSignedIn, isLoaded } = useAuth();
   const { data: account } = useAccount(isSignedIn);
   const logout = useLogout();
+  const locale = useLocale();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleSignOut = () => logout.mutate();
@@ -71,14 +73,14 @@ export function GlobalNav(): JSX.Element {
         style={{ backgroundColor: "rgba(6, 6, 10, 0.95)", backdropFilter: "blur(12px)" }}
       >
         <Flex align="center" justify="space-between" maxW="7xl" mx="auto">
-          <Link to="/">
+          <Link to="/$locale" params={{ locale }}>
             <Box _hover={{ opacity: 0.75 }} transition="opacity 0.15s">
               {logo}
             </Box>
           </Link>
 
           <Flex align="center" gap={4} hideBelow="sm">
-            <Link to="/cart">
+            <Link to="/$locale/cart" params={{ locale }}>
               <Flex
                 align="center"
                 gap={2.5}
@@ -125,7 +127,7 @@ export function GlobalNav(): JSX.Element {
               </Flex>
             ) : isLoaded ? (
               <Flex align="center" gap={3} data-testid="nav-guest-links">
-                <Link to="/sign-in">
+                <Link to="/$locale/sign-in" params={{ locale }}>
                   <Flex
                     align="center"
                     gap={1.5}
@@ -139,7 +141,7 @@ export function GlobalNav(): JSX.Element {
                     </Text>
                   </Flex>
                 </Link>
-                <Link to="/sign-up">
+                <Link to="/$locale/sign-up" params={{ locale }}>
                   <Flex
                     align="center"
                     gap={1.5}

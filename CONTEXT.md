@@ -56,6 +56,24 @@ _Avoid_: Anonymous user, visitor
 An authenticated identity linked to a Buyer, enabling order history, saved addresses, and a persistent Cart.
 _Avoid_: User, profile, member
 
+### Localization
+
+**Locale**:
+A language+region pair identifying how UI copy and number/date formatting render (e.g. `en-US`, `fr-FR`). Distinct from Currency, which SKUs do not yet carry.
+_Avoid_: Language, culture
+
+**Supported Locale**:
+One of the fixed, explicitly enumerated Locales the app renders in (`en-US`, `en-GB`, `fr-FR` at launch). Adding one is a deliberate, tracked change, not a runtime fallback.
+_Avoid_: Available language
+
+**Default Locale**:
+`en-US`. Used both as the fallback when a Buyer's preference can't be determined and as the single source of truth for translation-key type generation and parity checking against every other Supported Locale.
+_Avoid_: Base language, primary locale
+
+**Namespace** (localization):
+A domain-scoped translation file (e.g. `catalog`, `cart`) grouping related translation keys, one per Supported Locale. Distinct from a module (see Module structure in `CLAUDE.md`) — a Namespace holds copy, a module holds code.
+_Avoid_: Bundle, translation module
+
 ### Fulfillment
 
 **Drop-ship**:

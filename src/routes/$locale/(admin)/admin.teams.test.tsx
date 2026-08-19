@@ -1,0 +1,135 @@
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { http, HttpResponse } from "msw";
+
+import { renderRoute } from "../../../test-utils";
+import { server } from "../../../mocks/server";
+import { BASE_URL } from "../../../api/client";
+import { envelope } from "../../../mocks/handlers";
+
+import type { Game, Team } from "../../../api/types";
+
+import { adminAccount, buyerAccount, mockSignedIn } from "../../../mocks/fixtures";
+
+const mockGames: Game[] = [
+  { id: "lol", slug: "league-of-legends", name: "League of Legends", publisherId: "riot" },
+];
+
+const twoTeams: Team[] = [
+  { id: "t1", slug: "t1", name: "T1", gameId: "lol" },
+  { id: "c9", slug: "cloud9", name: "Cloud9", gameId: "lol" },
+];
+
+beforeEach(() => {
+  vi.clearAllMocks();
+  server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(mockGames))));
+});
+
+describe("/admin/teams", () => {
+  it("redirects unauthenticated user to /sign-in", async () => {
+    const { router } = renderRoute("/admin/teams");
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe("/en-US/sign-in");
+    });
+  });
+
+  it("redirects signed-in non-admin to /", async () => {
+    mockSignedIn(buyerAccount);
+    const { router } = renderRoute("/admin/teams");
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe("/en-US");
+    });
+  });
+
+  it("renders team rows for admin user", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
+
+    renderRoute("/admin/teams");
+
+    expect(await screen.findByText("T1")).toBeInTheDocument();
+    expect(screen.getByText("cloud9")).toBeInTheDocument();
+  });
+
+  it("shows empty state when no teams", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope([]))));
+
+    renderRoute("/admin/teams");
+
+    expect(await screen.findByText(/no teams yet/i)).toBeInTheDocument();
+  });
+
+  it("create form fires POST /teams", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope([]))));
+
+    let posted = false;
+    server.use(
+      http.post(`${BASE_URL}/teams`, async () => {
+        posted = true;
+        const created: Team = { id: "new", slug: "new-team", name: "New Team", gameId: "lol" };
+        return HttpResponse.json(envelope(created), { status: 201 });
+      })
+    );
+
+    renderRoute("/admin/teams");
+
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole("button", { name: /\+ new team/i }));
+    await user.type(screen.getByPlaceholderText("Name"), "New Team");
+    await user.type(screen.getByPlaceholderText("Slug (e.g. cloud9)"), "new-team");
+    await user.selectOptions(screen.getByDisplayValue("Game…"), "lol");
+    await user.click(screen.getByRole("button", { name: /^save$/i }));
+
+    await waitFor(() => expect(posted).toBe(true));
+  });
+
+  it("edit form fires PATCH /teams/:id", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
+
+    let patched = false;
+    server.use(
+      http.patch(`${BASE_URL}/teams/:id`, async () => {
+        patched = true;
+        return HttpResponse.json(envelope(twoTeams[0]));
+      })
+    );
+
+    renderRoute("/admin/teams");
+
+    const user = userEvent.setup();
+    const editBtns = await screen.findAllByRole("button", { name: /^edit$/i });
+    await user.click(editBtns[0]);
+    const nameInput = screen.getByDisplayValue("T1");
+    await user.clear(nameInput);
+    await user.type(nameInput, "T1 Updated");
+    await user.click(screen.getByRole("button", { name: /^save$/i }));
+
+    await waitFor(() => expect(patched).toBe(true));
+  });
+
+  it("delete fires DELETE /teams/:id", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
+
+    let deleted = false;
+    server.use(
+      http.delete(`${BASE_URL}/teams/:id`, () => {
+        deleted = true;
+        return HttpResponse.json({ ok: true });
+      })
+    );
+
+    renderRoute("/admin/teams");
+
+    const user = userEvent.setup();
+    const deleteBtns = await screen.findAllByRole("button", { name: /^delete$/i });
+    await user.click(deleteBtns[0]);
+    await user.click(screen.getByRole("button", { name: /^confirm$/i }));
+
+    await waitFor(() => expect(deleted).toBe(true));
+  });
+});

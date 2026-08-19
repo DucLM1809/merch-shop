@@ -10,7 +10,7 @@ test.describe("Auth redirect flow", () => {
 
   test("redirects an unauthenticated visit to /account/orders to /sign-in", async ({ page }) => {
     // Act
-    await page.goto("/account/orders");
+    await page.goto("/en-US/account/orders");
 
     // Assert
     await expect(page).toHaveURL(/\/sign-in(\?|$)/);
@@ -18,7 +18,7 @@ test.describe("Auth redirect flow", () => {
 
   test("completes sign-in and lands back at /account/orders", async ({ page, nav }) => {
     // Arrange
-    await page.goto("/account/orders");
+    await page.goto("/en-US/account/orders");
     await expect(page).toHaveURL(/\/sign-in(\?|$)/);
 
     // Act
@@ -34,7 +34,7 @@ test.describe("Auth redirect flow", () => {
 
   test("shows an error and stays on /sign-in for invalid credentials", async ({ page }) => {
     // Arrange
-    await page.goto("/sign-in");
+    await page.goto("/en-US/sign-in");
 
     // Act
     // Same SSR-before-hydration race documented in auth.ts's signIn: a click that lands
@@ -44,7 +44,7 @@ test.describe("Auth redirect flow", () => {
     // attempt folds in a probe assertion since hydration can only be confirmed by trying.
     for (let attempt = 1; attempt <= 5; attempt++) {
       if (page.url().includes("?email=")) {
-        await page.goto("/sign-in");
+        await page.goto("/en-US/sign-in");
       }
 
       await page.getByLabel("Email").fill(email);

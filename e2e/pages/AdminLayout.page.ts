@@ -2,13 +2,13 @@ import { type Locator, type Page } from "@playwright/test";
 
 // Mirrors NAV_ITEMS in src/modules/admin/components/AdminLayout.tsx.
 export const ADMIN_NAV_ITEMS = [
-  { label: "Orders", to: "/admin/orders" },
-  { label: "Publishers", to: "/admin/publishers" },
-  { label: "Games", to: "/admin/games" },
-  { label: "Teams", to: "/admin/teams" },
-  { label: "Characters", to: "/admin/characters" },
-  { label: "Products", to: "/admin/products" },
-  { label: "SKUs", to: "/admin/skus" },
+  { label: "Orders", to: "/en-US/admin/orders" },
+  { label: "Publishers", to: "/en-US/admin/publishers" },
+  { label: "Games", to: "/en-US/admin/games" },
+  { label: "Teams", to: "/en-US/admin/teams" },
+  { label: "Characters", to: "/en-US/admin/characters" },
+  { label: "Products", to: "/en-US/admin/products" },
+  { label: "SKUs", to: "/en-US/admin/skus" },
 ] as const;
 
 export class AdminLayoutPage {
