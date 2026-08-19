@@ -235,6 +235,7 @@ export function AdminCharactersView(): React.JSX.Element {
             return (
               <Flex
                 key={character.id}
+                data-testid={`character-row-${character.id}`}
                 px={4}
                 py={3.5}
                 align="center"
