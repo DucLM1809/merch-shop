@@ -52,8 +52,12 @@ test.describe("Admin order detail and fulfillment retry", () => {
     // Act: trigger the mutation
     await orders.retryFulfillmentButton.click();
 
-    // Assert: the mutation's pending state is observable on the button
-    await expect(orders.retryFulfillmentButton).toHaveAttribute("data-loading", "true");
+    // Assert: the mutation succeeds and the row re-renders with a non-retryable status,
+    // so the button unmounts. Asserting the transient data-loading=true state instead is
+    // racy against a fast local backend (~16ms round-trip) — the flag can flip back to
+    // false before the assertion's first poll observes it, even though the retry itself
+    // succeeded. The settled outcome (button gone) is what actually matters here.
+    await expect(orders.retryFulfillmentButton).toBeHidden();
   });
 
   test("hides Retry Fulfillment for an order that isn't retryable", async ({ adminPage }) => {
