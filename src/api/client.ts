@@ -27,6 +27,7 @@ import type {
   RawProductMutationResponse,
   RawPublisher,
   RawSku,
+  RawSkuAvailability,
   RegisterDto,
   ResetPasswordDto,
   ServerCart,
@@ -142,9 +143,7 @@ function normalizeSku(raw: RawSku): SKU {
   return {
     id: raw.id,
     price: parseDecimal(raw.price),
-    // CreateSkuDto defaults `available` to true server-side, so treat a
-    // missing value (list-endpoint skus) the same way rather than as false.
-    available: raw.available ?? true,
+    available: raw.available,
     size: raw.attributes.size,
     color: raw.attributes.color,
     edition: raw.attributes.edition,
@@ -271,6 +270,7 @@ export const client = {
           ...(gameId && { gameId }),
           ...(filters?.team && { teamId: filters.team }),
           ...(filters?.character && { characterId: filters.character }),
+          ...(filters?.includeUnavailable && { includeUnavailable: filters.includeUnavailable }),
         },
       })
     );
@@ -395,12 +395,13 @@ export const client = {
     return { ...res, data: normalizeSku(res.data) };
   },
 
-  setSkuAvailability: async (id: string, available: boolean): Promise<ApiResponse<SKU>> => {
-    const res = await wrapEnvelope(
-      http.patch<ApiResponse<RawSku>>(`/skus/${id}/availability`, { available })
-    );
-    return { ...res, data: normalizeSku(res.data) };
-  },
+  setSkuAvailability: async (
+    id: string,
+    available: boolean
+  ): Promise<ApiResponse<RawSkuAvailability>> =>
+    wrapEnvelope(
+      http.patch<ApiResponse<RawSkuAvailability>>(`/skus/${id}/availability`, { available })
+    ),
 
   deleteSku: (id: string): Promise<void> => wrap(http.delete(`/skus/${id}`).then(() => undefined)),
 

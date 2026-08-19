@@ -143,7 +143,7 @@ export function useCreateProduct() {
   return useMutation({
     mutationFn: (body: CreateProductDto) => client.createProduct(body),
     onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+      void qc.invalidateQueries({ queryKey: catalogKeys.productsAll() });
     },
   });
 }
@@ -154,7 +154,7 @@ export function useUpdateProduct() {
     mutationFn: ({ id, body }: { id: string; body: CreateProductDto }) =>
       client.updateProduct(id, body),
     onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+      void qc.invalidateQueries({ queryKey: catalogKeys.productsAll() });
     },
   });
 }
@@ -164,7 +164,7 @@ export function useDeleteProduct() {
   return useMutation({
     mutationFn: (id: string) => client.deleteProduct(id),
     onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+      void qc.invalidateQueries({ queryKey: catalogKeys.productsAll() });
     },
   });
 }
@@ -174,7 +174,7 @@ export function useCreateSku() {
   return useMutation({
     mutationFn: (body: CreateSkuDto) => client.createSku(body),
     onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+      void qc.invalidateQueries({ queryKey: catalogKeys.productsAll() });
     },
   });
 }
@@ -185,7 +185,7 @@ export function useSetSkuAvailability() {
     mutationFn: ({ id, available }: { id: string; available: boolean }) =>
       client.setSkuAvailability(id, available),
     onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+      void qc.invalidateQueries({ queryKey: catalogKeys.productsAll() });
     },
   });
 }
@@ -195,7 +195,7 @@ export function useDeleteSku() {
   return useMutation({
     mutationFn: (id: string) => client.deleteSku(id),
     onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+      void qc.invalidateQueries({ queryKey: catalogKeys.productsAll() });
     },
   });
 }
@@ -205,7 +205,7 @@ export function useBulkSetSkuAvailability() {
   return useMutation({
     mutationFn: (body: BulkAvailabilityDto) => client.bulkSetSkuAvailability(body),
     onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: catalogKeys.products() });
+      void qc.invalidateQueries({ queryKey: catalogKeys.productsAll() });
     },
   });
 }

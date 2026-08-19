@@ -26,13 +26,13 @@ const MOCK_PRODUCTS: RawProduct[] = [
     id: "1",
     name: "Faker Jersey",
     game: { id: "lol", name: "League of Legends", slug: "lol" },
-    skus: [{ id: "sku-1", price: 49, attributes: {} }],
+    skus: [{ id: "sku-1", price: 49, available: true, attributes: {} }],
   },
   {
     id: "2",
     name: "CS2 Knife",
     game: { id: "cs2", name: "CS2", slug: "cs2" },
-    skus: [{ id: "sku-2", price: 199, attributes: {} }],
+    skus: [{ id: "sku-2", price: 199, available: true, attributes: {} }],
   },
 ];
 

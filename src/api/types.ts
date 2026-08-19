@@ -24,11 +24,13 @@ export type RawSkuAttributes = { size?: string; color?: string; edition?: string
 export type RawSku = {
   id: string;
   price: RawDecimal | number;
-  // Omitted on SKUs nested in the /products list response; present on
-  // /products/:id and direct /skus responses.
-  available?: boolean;
+  available: boolean;
   attributes: RawSkuAttributes;
 };
+
+// PATCH /skus/:id/availability returns only this slice, not a full RawSku —
+// normalizeSku() would crash on the missing price/attributes if applied here.
+export type RawSkuAvailability = { id: string; available: boolean };
 
 export type RawGameRef = { id: string; name: string; slug: string };
 
@@ -153,6 +155,9 @@ export type ProductFilters = {
   gameSlug?: string;
   team?: string;
   character?: string;
+  // Admin-only: includes skus with available: false. Silently ignored by the
+  // backend for non-admin callers.
+  includeUnavailable?: boolean;
 };
 
 export type ShippingAddress = {

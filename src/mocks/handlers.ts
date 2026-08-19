@@ -45,19 +45,21 @@ interface ProductRecord {
   skus?: RawSkuRecord[];
 }
 
-function toWireSku(sku: RawSkuRecord, { full }: { full: boolean }): RawSku {
+function toWireSku(sku: RawSkuRecord): RawSku {
   return {
     id: sku.id,
     price: sku.price,
+    available: sku.available,
     attributes: { size: sku.size, color: sku.color, edition: sku.edition },
-    // The real /products list endpoint omits `available` on nested skus —
-    // only /products/:id and /skus return it.
-    ...(full && { available: sku.available }),
   };
 }
 
-function toWireProduct(p: ProductRecord, { full }: { full: boolean }): RawProduct {
+function toWireProduct(
+  p: ProductRecord,
+  { includeUnavailable }: { includeUnavailable: boolean }
+): RawProduct {
   const game = games.find((g) => g.id === p.gameId)!;
+  const skus = (p.skus ?? []).filter((s) => includeUnavailable || s.available);
   return {
     id: p.id,
     name: p.name,
@@ -66,7 +68,7 @@ function toWireProduct(p: ProductRecord, { full }: { full: boolean }): RawProduc
     game: { id: game.id, name: game.name, slug: game.slug },
     ...(p.teamId && { teamId: p.teamId }),
     ...(p.characterId && { characterId: p.characterId }),
-    skus: (p.skus ?? []).map((s) => toWireSku(s, { full })),
+    skus: skus.map(toWireSku),
   };
 }
 
@@ -450,6 +452,7 @@ export const handlers = [
     const game = url.searchParams.get("gameId");
     const team = url.searchParams.get("teamId");
     const character = url.searchParams.get("characterId");
+    const includeUnavailable = url.searchParams.get("includeUnavailable") === "true";
 
     const filtered = products.filter(
       (p) =>
@@ -457,13 +460,15 @@ export const handlers = [
         (!team || p.teamId === team) &&
         (!character || p.characterId === character)
     );
-    return HttpResponse.json(envelope(filtered.map((p) => toWireProduct(p, { full: false }))));
+    return HttpResponse.json(
+      envelope(filtered.map((p) => toWireProduct(p, { includeUnavailable })))
+    );
   }),
 
   http.get(`${BASE_URL}/products/:id`, ({ params }) => {
     const product = products.find((p) => p.id === params.id);
     if (!product) return new HttpResponse(null, { status: 404 });
-    return HttpResponse.json(envelope(toWireProduct(product, { full: true })));
+    return HttpResponse.json(envelope(toWireProduct(product, { includeUnavailable: true })));
   }),
 
   http.post(`${BASE_URL}/products`, async ({ request }) => {
@@ -529,7 +534,7 @@ export const handlers = [
     };
     const product = products.find((p) => p.id === body.productId);
     product?.skus?.push(created);
-    return HttpResponse.json(envelope(toWireSku(created, { full: true })), { status: 201 });
+    return HttpResponse.json(envelope(toWireSku(created)), { status: 201 });
   }),
 
   http.patch(`${BASE_URL}/skus/:id/availability`, async ({ params, request }) => {
@@ -538,7 +543,7 @@ export const handlers = [
       const sku = p.skus?.find((s) => s.id === params.id);
       if (sku) {
         sku.available = body.available;
-        return HttpResponse.json(envelope(toWireSku(sku, { full: true })));
+        return HttpResponse.json(envelope(toWireSku(sku)));
       }
     }
     return new HttpResponse(null, { status: 404 });
@@ -563,9 +568,7 @@ export const handlers = [
     const url = new URL(request.url);
     const productId = url.searchParams.get("productId");
     const product = productId ? products.find((p) => p.id === productId) : null;
-    return HttpResponse.json(
-      envelope((product?.skus ?? []).map((s) => toWireSku(s, { full: true })))
-    );
+    return HttpResponse.json(envelope((product?.skus ?? []).map(toWireSku)));
   }),
 
   // --- Cart ---

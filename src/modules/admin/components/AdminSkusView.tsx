@@ -34,7 +34,7 @@ import type { CreateSkuDto, Product, SKU, SkuFacet } from "@/api/types";
 type EnrichedSku = SKU & { productId: string; productName: string };
 
 export function AdminSkusView(): React.JSX.Element {
-  const { data: products = [], isLoading, error } = useProducts();
+  const { data: products = [], isLoading, error } = useProducts({ includeUnavailable: true });
   const create = useCreateSku();
   const toggle = useSetSkuAvailability();
   const del = useDeleteSku();
@@ -101,7 +101,7 @@ export function AdminSkusView(): React.JSX.Element {
     const dto: CreateSkuDto = {
       productId: data.productId,
       price: parseFloat(data.price),
-      ...(Object.keys(attributes).length > 0 && { attributes }),
+      attributes,
     };
     await create.mutateAsync(dto);
     cancel();
@@ -318,6 +318,7 @@ export function AdminSkusView(): React.JSX.Element {
           {allSkus.map((sku, i) => (
             <Flex
               key={sku.id}
+              data-testid={`sku-row-${sku.id}`}
               px={4}
               py={3.5}
               align="center"

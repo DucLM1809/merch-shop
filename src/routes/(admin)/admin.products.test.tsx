@@ -27,13 +27,13 @@ const twoProducts: RawProduct[] = [
     id: "p1",
     name: "Jinx Hoodie",
     game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
-    skus: [{ id: "p1-sku", price: 49.99, attributes: {} }],
+    skus: [{ id: "p1-sku", price: 49.99, available: true, attributes: {} }],
   },
   {
     id: "p2",
     name: "Azir Tee",
     game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
-    skus: [{ id: "p2-sku", price: 29.99, attributes: {} }],
+    skus: [{ id: "p2-sku", price: 29.99, available: true, attributes: {} }],
   },
 ];
 

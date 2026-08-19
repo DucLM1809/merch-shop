@@ -17,37 +17,37 @@ const MOCK_PRODUCTS: RawProduct[] = [
     name: "Faker Jersey",
     teamId: "t1",
     game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
-    skus: [{ id: "sku-1", price: 49, attributes: {} }],
+    skus: [{ id: "sku-1", price: 49, available: true, attributes: {} }],
   },
   {
     id: "2",
     name: "Product 2",
     game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
-    skus: [{ id: "sku-2", price: 29, attributes: {} }],
+    skus: [{ id: "sku-2", price: 29, available: true, attributes: {} }],
   },
   {
     id: "3",
     name: "Product 3",
     game: { id: "lol", name: "League of Legends", slug: "league-of-legends" },
-    skus: [{ id: "sku-3", price: 29, attributes: {} }],
+    skus: [{ id: "sku-3", price: 29, available: true, attributes: {} }],
   },
   {
     id: "4",
     name: "Product 4",
     game: { id: "val", name: "Valorant", slug: "valorant" },
-    skus: [{ id: "sku-4", price: 29, attributes: {} }],
+    skus: [{ id: "sku-4", price: 29, available: true, attributes: {} }],
   },
   {
     id: "5",
     name: "Product 5",
     game: { id: "cs2", name: "CS2", slug: "cs2" },
-    skus: [{ id: "sku-5", price: 29, attributes: {} }],
+    skus: [{ id: "sku-5", price: 29, available: true, attributes: {} }],
   },
   {
     id: "6",
     name: "Product 6",
     game: { id: "cs2", name: "CS2", slug: "cs2" },
-    skus: [{ id: "sku-6", price: 29, attributes: {} }],
+    skus: [{ id: "sku-6", price: 29, available: true, attributes: {} }],
   },
 ];
 

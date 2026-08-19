@@ -6,6 +6,10 @@ import type { ProductFilters } from "@/api/types";
 export const catalogKeys = {
   all: ["catalog"] as const,
   products: (filters?: ProductFilters) => [...catalogKeys.all, "products", filters] as const,
+  // Prefix shared by every products query regardless of filters — invalidate
+  // with this (not `products()`) so mutations refresh both the storefront
+  // query and the admin `includeUnavailable` query.
+  productsAll: () => [...catalogKeys.all, "products"] as const,
   product: (id: string) => [...catalogKeys.all, "product", id] as const,
   publishers: () => [...catalogKeys.all, "publishers"] as const,
   publisher: (slug: string) => [...catalogKeys.all, "publisher", slug] as const,
