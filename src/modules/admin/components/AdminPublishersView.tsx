@@ -209,6 +209,7 @@ export function AdminPublishersView(): React.JSX.Element {
             return (
               <Flex
                 key={pub.id}
+                data-testid={`publisher-row-${pub.id}`}
                 px={4}
                 py={3.5}
                 align="center"
