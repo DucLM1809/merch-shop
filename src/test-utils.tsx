@@ -10,7 +10,6 @@ import { render } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { expect } from "vitest";
 import { axe } from "vitest-axe";
-import { DEFAULT_LOCALE, isSupportedLocale } from "./i18n/locales";
 import { routeTree } from "./routeTree.gen";
 
 export function renderWithProviders(ui: ReactElement) {
@@ -32,23 +31,17 @@ export function renderWithProviders(ui: ReactElement) {
 }
 
 /**
- * Every route lives under a `/$locale` segment, so a path given without one is
- * rendered under the default locale — callers only spell the locale out when the
- * test is about locale itself.
+ * Render the full route tree at the given path (default: the root).
+ *
+ * A path given without a locale segment is redirected onto one by the app itself
+ * (jsdom offers no locale cookie, so that lands on the default locale) — callers
+ * only spell the locale out when the test is about locale itself.
  */
-function withDefaultLocale(path: string): string {
-  const firstSegment = path.replace(/^\//, "").split(/[/?#]/, 1)[0];
-  if (isSupportedLocale(firstSegment)) return path;
-
-  return `/${DEFAULT_LOCALE}${path}`;
-}
-
-/** Render the full route tree at the given path (default: the default locale's root). */
 export function renderRoute(path = "/") {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
-  const history = createMemoryHistory({ initialEntries: [withDefaultLocale(path)] });
+  const history = createMemoryHistory({ initialEntries: [path] });
   const router = createRouter({
     routeTree,
     context: { queryClient },

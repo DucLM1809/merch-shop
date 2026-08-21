@@ -10,6 +10,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import { GlobalNav } from "../components/GlobalNav";
 import { env } from "../env";
+import { useLocale } from "../i18n/useLocale";
 import { bootstrapAuth, useAuth } from "../modules/account";
 import { cartStore } from "../store/cart";
 import { registerHardSignOutHandler } from "../store/authToken";
@@ -85,6 +86,8 @@ function AuthBootstrapEffect() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const locale = useLocale();
+
   useEffect(() => {
     if (env.VITE_ENABLE_MSW) {
       import("../mocks/browser")
@@ -94,7 +97,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <html lang="en" className="dark">
+    <html lang={locale} className="dark">
       <head>
         <HeadContent />
       </head>

@@ -9,9 +9,9 @@ import type { SupportedLocale } from "./locales";
  *
  * Reads the pathname rather than the route param so it also works for chrome
  * rendered above the `/$locale` layout (the root shell) and for components
- * rendered outside a route match in tests. Falls back to the default locale for
- * an unrecognized segment — resolving those properly, with a redirect, is
- * merch-shop-giw.9.
+ * rendered outside a route match in tests. An unrecognized segment only shows up
+ * mid-redirect — the `/$locale` layout sends it to a supported locale — so the
+ * default locale stands in for that tick.
  */
 export function useLocale(): SupportedLocale {
   const firstSegment = useRouterState({

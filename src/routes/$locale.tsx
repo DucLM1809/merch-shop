@@ -1,9 +1,17 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-// Layout route that gives every customer-facing and admin route a leading locale
-// segment. It renders unconditionally for now — resolving an unsupported or missing
-// locale (cookie → Accept-Language → default, plus the redirect) is merch-shop-giw.9.
+import { redirectToResolvedLocale } from "@/i18n/localeRedirect";
+import { isSupportedLocale } from "@/i18n/locales";
+
+// Layout route that gives every customer-facing and admin route a leading locale segment.
+// A segment we don't serve is indistinguishable from a path given without a prefix at all
+// (`/cart` matches here with locale `cart`), so both resolve a locale and redirect.
 export const Route = createFileRoute("/$locale")({
+  beforeLoad: ({ params, location }) => {
+    if (isSupportedLocale(params.locale)) return;
+
+    return redirectToResolvedLocale(location);
+  },
   component: LocaleLayout,
 });
 

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleRouteImport } from './routes/$locale'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
@@ -37,6 +38,11 @@ import { Route as LocaleaccountAccountOrdersOrderIdRouteImport } from './routes/
 import { Route as LocalecatalogPublisherSlugGameSlugIndexRouteImport } from './routes/$locale/(catalog)/$publisherSlug.$gameSlug.index'
 import { Route as LocalecatalogPublisherSlugGameSlugProductsProductSlugRouteImport } from './routes/$locale/(catalog)/$publisherSlug.$gameSlug.products.$productSlug'
 
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
   path: '/$locale',
@@ -255,6 +261,7 @@ const LocalecatalogPublisherSlugGameSlugProductsProductSlugRoute =
   )
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
@@ -284,6 +291,7 @@ export interface FileRoutesByFullPath {
   '/$locale/$publisherSlug/$gameSlug/products/$productSlug': typeof LocalecatalogPublisherSlugGameSlugProductsProductSlugRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/admin': typeof LocaleadminAdminRouteWithChildren
@@ -310,6 +318,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
@@ -341,6 +350,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/$locale'
     | '/sitemap.xml'
     | '/$locale/'
@@ -370,6 +380,7 @@ export interface FileRouteTypes {
     | '/$locale/$publisherSlug/$gameSlug/products/$productSlug'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/sitemap.xml'
     | '/$locale'
     | '/$locale/admin'
@@ -395,6 +406,7 @@ export interface FileRouteTypes {
     | '/$locale/$publisherSlug/$gameSlug/products/$productSlug'
   id:
     | '__root__'
+    | '/'
     | '/$locale'
     | '/sitemap.xml'
     | '/$locale/'
@@ -425,12 +437,20 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$locale': {
       id: '/$locale'
       path: '/$locale'
@@ -732,6 +752,7 @@ const LocaleRouteWithChildren =
   LocaleRoute._addFileChildren(LocaleRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
