@@ -5,6 +5,7 @@ import { Gamepad2, LogIn, LogOut, ShoppingCart, User, UserPlus } from "lucide-re
 import { useTranslation } from "react-i18next";
 
 import { useLocale } from "../i18n/useLocale";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 
 type NavDrawerContentProps = {
   itemCount: number;
@@ -222,6 +223,8 @@ export function NavDrawerContent({
               </Link>
             </Flex>
           ) : null}
+
+          <LocaleSwitcher onChanged={onClose} />
         </Flex>
       </Box>
     </>

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useLocale } from "../i18n/useLocale";
 import { useAccount, useAuth, useLogout } from "../modules/account";
 import { cartStore } from "../store/cart";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 import { NavDrawerContent } from "./NavDrawerContent";
 import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart, User, UserPlus } from "lucide-react";
 
@@ -82,6 +83,8 @@ export function GlobalNav(): JSX.Element {
           </Link>
 
           <Flex align="center" gap={4} hideBelow="sm">
+            <LocaleSwitcher />
+
             {/* The badge digit renders inside the link, so its computed name would
                 otherwise read "1 Cart" — spell the count out instead. */}
             <Link

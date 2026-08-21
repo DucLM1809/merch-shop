@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react";
 import { describe, it, expect, afterEach } from "vitest";
 
-import { LOCALE_COOKIE_NAME } from "@/i18n/resolveLocale";
+import { LOCALE_COOKIE_NAME } from "@/i18n/localeCookie";
 import { SUPPORTED_LOCALES } from "@/i18n/locales";
 import { renderRoute } from "@/test-utils";
 

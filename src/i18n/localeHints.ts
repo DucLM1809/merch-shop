@@ -1,14 +1,6 @@
-import { LOCALE_COOKIE_NAME } from "./resolveLocale";
+import { LOCALE_COOKIE_NAME, readLocaleCookie } from "./localeCookie";
 
 import type { LocaleHints } from "./resolveLocale";
-
-function readCookie(name: string): string | undefined {
-  if (typeof document === "undefined") return undefined;
-
-  const entry = document.cookie.split("; ").find((part) => part.startsWith(`${name}=`));
-
-  return entry ? decodeURIComponent(entry.slice(name.length + 1)) : undefined;
-}
 
 /**
  * The locale hints the current environment can offer. On the server they come off the
@@ -27,7 +19,7 @@ export async function readLocaleHints(): Promise<LocaleHints> {
   }
 
   return {
-    cookie: readCookie(LOCALE_COOKIE_NAME),
+    cookie: readLocaleCookie(),
     acceptLanguage: navigator.languages?.join(",") ?? navigator.language,
   };
 }

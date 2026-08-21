@@ -11,6 +11,14 @@
     "signUp": "Créer un compte",
     "signOut": "Se déconnecter"
   },
+  "localeSwitcher": {
+    "label": "Langue",
+    "options": {
+      "en-US": "Anglais (États-Unis)",
+      "en-GB": "Anglais (Royaume-Uni)",
+      "fr-FR": "Français"
+    }
+  },
   "cartSync": {
     "failed": "Échec de la synchronisation du panier — vos articles ont été conservés."
   }

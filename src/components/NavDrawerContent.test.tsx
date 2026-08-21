@@ -5,6 +5,24 @@ import { renderWithProviders } from "../test-utils";
 import { NavDrawerContent } from "./NavDrawerContent";
 
 describe("NavDrawerContent", () => {
+  it("offers the language switcher on mobile, where the desktop nav is hidden", () => {
+    renderWithProviders(
+      <NavDrawerContent
+        itemCount={0}
+        isLoaded={true}
+        isSignedIn={false}
+        onClose={vi.fn()}
+        onSignOut={vi.fn()}
+      />
+    );
+
+    const drawer = screen.getByRole("dialog");
+
+    expect(within(drawer).getByTestId("locale-switcher")).toHaveAccessibleName(
+      enUS.localeSwitcher.label
+    );
+  });
+
   it("has dialog semantics", () => {
     renderWithProviders(
       <NavDrawerContent

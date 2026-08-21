@@ -10,6 +10,14 @@
     "signUp": "Sign up",
     "signOut": "Sign out"
   },
+  "localeSwitcher": {
+    "label": "Language",
+    "options": {
+      "en-US": "English (US)",
+      "en-GB": "English (UK)",
+      "fr-FR": "French"
+    }
+  },
   "cartSync": {
     "failed": "Basket sync failed — your items have been preserved."
   }

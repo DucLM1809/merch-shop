@@ -2,12 +2,6 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES, isSupportedLocale } from "./locales"
 
 import type { SupportedLocale } from "./locales";
 
-/**
- * Cookie holding a visitor's chosen locale. Only ever read here — it exists to decide
- * where a bare URL should land; writing it belongs to the switcher (merch-shop-giw.11).
- */
-export const LOCALE_COOKIE_NAME = "locale";
-
 /** What a locale can be inferred from when the URL itself doesn't carry one. */
 export type LocaleHints = {
   cookie?: string;
