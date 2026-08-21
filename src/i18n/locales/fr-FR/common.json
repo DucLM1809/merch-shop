@@ -5,6 +5,7 @@
     "menuLabel": "Menu de navigation",
     "cart": "Panier",
     "cartItems_one": "Panier, {{count}} article",
+    "cartItems_many": "Panier, {{count}} articles",
     "cartItems_other": "Panier, {{count}} articles",
     "signIn": "Se connecter",
     "signUp": "Créer un compte",

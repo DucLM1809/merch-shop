@@ -50,7 +50,7 @@
     "semantic_hash": "c56f70fb3f61bdf5e1b441a577a4f69b"
   },
   "src/routeTree.gen.ts": {
-    "mtime": 1787130086.2206807,
+    "mtime": 1787293942.4120483,
     "ast_hash": "29eb5ab2e2b47dbe3faf75d6d677460e",
     "semantic_hash": ""
   },
@@ -60,7 +60,7 @@
     "semantic_hash": "18e005cf39e236fb24cb1c706fc0eada"
   },
   "src/routes/__root.tsx": {
-    "mtime": 1787293066.7219107,
+    "mtime": 1787294037.3583758,
     "ast_hash": "51333aaff2735b5a5eb39ec3e0ff436c",
     "semantic_hash": ""
   },
@@ -75,7 +75,7 @@
     "semantic_hash": ""
   },
   "src/test-utils.tsx": {
-    "mtime": 1787293151.3745894,
+    "mtime": 1787294037.3640711,
     "ast_hash": "177dd7781af6a452d893b1dc9d827b42",
     "semantic_hash": ""
   },
@@ -970,8 +970,8 @@
     "semantic_hash": ""
   },
   "src/i18n/locales/fr-FR/common.json": {
-    "mtime": 1787292948.3034158,
-    "ast_hash": "372abec9db394e9883aed256de8a1bb0",
+    "mtime": 1787294684.2028728,
+    "ast_hash": "9b3d632d12855c6ff0de8d57b6fc2c9e",
     "semantic_hash": ""
   },
   "src/i18n/resolveLocale.test.ts": {
@@ -985,18 +985,28 @@
     "semantic_hash": ""
   },
   "src/i18n/resources.generated.ts": {
-    "mtime": 1787293206.3121257,
+    "mtime": 1787294673.700673,
     "ast_hash": "af13bfbf207da03e2fccb6ec14049c62",
     "semantic_hash": ""
   },
   "src/i18n/resources.ts": {
-    "mtime": 1787292977.9072385,
-    "ast_hash": "ab47273b168b20be598e77315ecbc90f",
+    "mtime": 1787294544.7254071,
+    "ast_hash": "c8087e0af973f17cc25a0b6c57c793d8",
     "semantic_hash": ""
   },
   "src/routes/index.tsx": {
     "mtime": 1787130053.3143845,
     "ast_hash": "ef75343ebceabdfbaeebf2ceabcd3286",
+    "semantic_hash": ""
+  },
+  "src/i18n/keyParity.test.ts": {
+    "mtime": 1787294572.0122406,
+    "ast_hash": "2d69d6dc481996a4d132197a06490a41",
+    "semantic_hash": ""
+  },
+  "src/i18n/keyParity.ts": {
+    "mtime": 1787294539.0779576,
+    "ast_hash": "659a4565321ba3605bc23e6dfe0af649",
     "semantic_hash": ""
   }
 }

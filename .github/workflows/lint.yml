@@ -31,3 +31,9 @@ jobs:
           git diff --exit-code -- src/i18n/resources.generated.ts
 
       - run: pnpm typecheck
+
+      # Types are generated from en-US alone, so they can't tell whether the other
+      # locales actually carry every key. A missing one falls back to English at runtime
+      # rather than failing, which is exactly the kind of gap that ships unnoticed.
+      - name: Check translation key parity across locales
+        run: pnpm i18n:parity

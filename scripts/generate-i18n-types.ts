@@ -1,9 +1,9 @@
-import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { format } from "prettier";
 
 import { DEFAULT_LOCALE } from "../src/i18n/locales.ts";
+import { ROOT, namespaceNames, readNamespace } from "./localeFiles.ts";
 
 // TypeScript widens every string in an imported `.json` to `string`, which is enough to
 // check that a key exists but throws away the `{{placeholder}}` names i18next needs to
@@ -14,34 +14,17 @@ import { DEFAULT_LOCALE } from "../src/i18n/locales.ts";
 //
 // Run it after editing any `en-US` namespace file: `pnpm i18n:types`.
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const LOCALES_DIR = path.join(ROOT, "src/i18n/locales");
 const OUTPUT_FILE = path.join(ROOT, "src/i18n/resources.generated.ts");
 
 const IDENTIFIER = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
-
-type JsonValue = string | { [key: string]: JsonValue };
-
-function readNamespace(namespace: string): JsonValue {
-  const file = path.join(LOCALES_DIR, DEFAULT_LOCALE, `${namespace}.json`);
-
-  return JSON.parse(readFileSync(file, "utf8")) as JsonValue;
-}
-
-function namespaceNames(): string[] {
-  return readdirSync(path.join(LOCALES_DIR, DEFAULT_LOCALE))
-    .filter((file) => file.endsWith(".json"))
-    .map((file) => path.basename(file, ".json"))
-    .sort();
-}
 
 function propertyKey(key: string): string {
   return IDENTIFIER.test(key) ? key : JSON.stringify(key);
 }
 
-/** A JSON subtree as a type literal — leaves become the exact string they hold. */
-function toTypeLiteral(value: JsonValue, depth: number): string {
-  if (typeof value === "string") return JSON.stringify(value);
+/** A resource subtree as a type literal — leaves become the exact string they hold. */
+function toTypeLiteral(value: unknown, depth: number): string {
+  if (typeof value !== "object" || value === null) return JSON.stringify(value);
 
   const indent = "  ".repeat(depth + 1);
   const members = Object.entries(value).map(
@@ -54,12 +37,9 @@ function toTypeLiteral(value: JsonValue, depth: number): string {
 async function main(): Promise<void> {
   const namespaces = namespaceNames();
 
-  if (namespaces.length === 0) {
-    throw new Error(`No namespace files found in ${path.join(LOCALES_DIR, DEFAULT_LOCALE)}`);
-  }
-
   const members = namespaces.map(
-    (namespace) => `  ${propertyKey(namespace)}: ${toTypeLiteral(readNamespace(namespace), 1)};`
+    (namespace) =>
+      `  ${propertyKey(namespace)}: ${toTypeLiteral(readNamespace(DEFAULT_LOCALE, namespace), 1)};`
   );
 
   const source = [

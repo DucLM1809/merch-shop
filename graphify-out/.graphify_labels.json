@@ -49,5 +49,13 @@
   "47": "ResetPasswordForm.tsx",
   "48": "i18next.d.ts",
   "49": "admin.orders.tsx",
-  "50": "$locale/index.tsx"
+  "50": "$locale/index.tsx",
+  "51": "ProductDetailView.tsx",
+  "52": "GamePageView.tsx",
+  "53": "SignInForm.tsx",
+  "54": "SignUpForm.tsx",
+  "55": "OptimizedImage.tsx",
+  "56": "client",
+  "57": "admin.orders.test.tsx",
+  "58": "order-confirmation.tsx"
 }

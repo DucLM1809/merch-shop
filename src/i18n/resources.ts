@@ -13,6 +13,9 @@ export const NAMESPACES = ["common"] as const;
 
 export type Namespace = (typeof NAMESPACES)[number];
 
+/** A namespace's copy: nested groups of strings, as authored in the locale JSON files. */
+export type ResourceTree = Record<string, unknown>;
+
 /**
  * Every locale's resources, bundled rather than fetched. They are small, and having them
  * in the bundle is what lets a locale render on its first pass with no loading state.
@@ -20,7 +23,7 @@ export type Namespace = (typeof NAMESPACES)[number];
  * Typing this as a total `Record` over the supported locales means adding a locale to
  * `SUPPORTED_LOCALES` without adding its files is a compile error, not a runtime fallback.
  */
-export const resources: Record<SupportedLocale, Record<Namespace, object>> = {
+export const resources: Record<SupportedLocale, Record<Namespace, ResourceTree>> = {
   "en-US": { common: enUSCommon },
   "en-GB": { common: enGBCommon },
   "fr-FR": { common: frFRCommon },

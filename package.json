@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "i18n:types": "node scripts/generate-i18n-types.ts",
+    "i18n:parity": "node scripts/check-i18n-parity.ts",
     "test": "vitest run --project unit",
     "test:storybook": "vitest run --project storybook",
     "test:e2e": "playwright test",
