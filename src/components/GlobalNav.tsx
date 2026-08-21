@@ -2,6 +2,7 @@ import { useState, type JSX } from "react";
 import { Box, Flex, IconButton, Portal, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
+import { useTranslation } from "react-i18next";
 import { useLocale } from "../i18n/useLocale";
 import { useAccount, useAuth, useLogout } from "../modules/account";
 import { cartStore } from "../store/cart";
@@ -9,6 +10,7 @@ import { NavDrawerContent } from "./NavDrawerContent";
 import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart, User, UserPlus } from "lucide-react";
 
 export function GlobalNav(): JSX.Element {
+  const { t } = useTranslation();
   const itemCount = useStore(cartStore, (s) => s.items.reduce((n, i) => n + i.quantity, 0));
   const { isSignedIn, isLoaded } = useAuth();
   const { data: account } = useAccount(isSignedIn);
@@ -54,7 +56,7 @@ export function GlobalNav(): JSX.Element {
         letterSpacing="0.1em"
         textTransform="uppercase"
       >
-        Merch Shop
+        {t("brand")}
       </Text>
     </Flex>
   );
@@ -80,7 +82,13 @@ export function GlobalNav(): JSX.Element {
           </Link>
 
           <Flex align="center" gap={4} hideBelow="sm">
-            <Link to="/$locale/cart" params={{ locale }}>
+            {/* The badge digit renders inside the link, so its computed name would
+                otherwise read "1 Cart" — spell the count out instead. */}
+            <Link
+              to="/$locale/cart"
+              params={{ locale }}
+              aria-label={t("nav.cartItems", { count: itemCount })}
+            >
               <Flex
                 align="center"
                 gap={2.5}
@@ -93,7 +101,7 @@ export function GlobalNav(): JSX.Element {
                   {cartBadge}
                 </Box>
                 <Text fontSize="sm" fontWeight="600">
-                  Cart
+                  {t("nav.cart")}
                 </Text>
               </Flex>
             </Link>
@@ -116,12 +124,12 @@ export function GlobalNav(): JSX.Element {
                   _hover={{ color: "white" }}
                   transition="color 0.15s"
                   cursor="pointer"
-                  aria-label="Sign out"
+                  aria-label={t("nav.signOut")}
                   data-testid="nav-sign-out"
                 >
                   <LogOut size={16} strokeWidth={1.5} />
                   <Text fontSize="sm" fontWeight="600">
-                    Sign out
+                    {t("nav.signOut")}
                   </Text>
                 </Box>
               </Flex>
@@ -137,7 +145,7 @@ export function GlobalNav(): JSX.Element {
                   >
                     <LogIn size={16} strokeWidth={1.5} />
                     <Text fontSize="sm" fontWeight="600">
-                      Sign in
+                      {t("nav.signIn")}
                     </Text>
                   </Flex>
                 </Link>
@@ -151,7 +159,7 @@ export function GlobalNav(): JSX.Element {
                   >
                     <UserPlus size={16} strokeWidth={1.5} />
                     <Text fontSize="sm" fontWeight="600">
-                      Sign up
+                      {t("nav.signUp")}
                     </Text>
                   </Flex>
                 </Link>
@@ -160,7 +168,7 @@ export function GlobalNav(): JSX.Element {
           </Flex>
 
           <IconButton
-            aria-label="Open navigation"
+            aria-label={t("nav.openMenu")}
             variant="ghost"
             color="gray.400"
             hideFrom="sm"

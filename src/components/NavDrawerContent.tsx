@@ -2,6 +2,7 @@ import { useEffect, useRef, type JSX } from "react";
 import { Box, CloseButton, Flex, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { Gamepad2, LogIn, LogOut, ShoppingCart, User, UserPlus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { useLocale } from "../i18n/useLocale";
 
@@ -22,6 +23,7 @@ export function NavDrawerContent({
   onClose,
   onSignOut,
 }: NavDrawerContentProps): JSX.Element {
+  const { t } = useTranslation();
   const panelRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
 
@@ -104,7 +106,7 @@ export function NavDrawerContent({
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Navigation menu"
+        aria-label={t("nav.menuLabel")}
         position="fixed"
         left={0}
         top={0}
@@ -134,7 +136,7 @@ export function NavDrawerContent({
                 letterSpacing="0.1em"
                 textTransform="uppercase"
               >
-                Merch Shop
+                {t("brand")}
               </Text>
             </Flex>
           </Link>
@@ -156,7 +158,7 @@ export function NavDrawerContent({
                 {cartBadge}
               </Box>
               <Text fontSize="sm" fontWeight="600">
-                Cart
+                {t("nav.cart")}
               </Text>
             </Flex>
           </Link>
@@ -179,12 +181,12 @@ export function NavDrawerContent({
                 _hover={{ color: "white" }}
                 transition="color 0.15s"
                 cursor="pointer"
-                aria-label="Sign out"
+                aria-label={t("nav.signOut")}
                 data-testid="drawer-sign-out"
               >
                 <LogOut size={16} strokeWidth={1.5} />
                 <Text fontSize="sm" fontWeight="600">
-                  Sign out
+                  {t("nav.signOut")}
                 </Text>
               </Box>
             </Flex>
@@ -200,7 +202,7 @@ export function NavDrawerContent({
                 >
                   <LogIn size={16} strokeWidth={1.5} />
                   <Text fontSize="sm" fontWeight="600">
-                    Sign in
+                    {t("nav.signIn")}
                   </Text>
                 </Flex>
               </Link>
@@ -214,7 +216,7 @@ export function NavDrawerContent({
                 >
                   <UserPlus size={16} strokeWidth={1.5} />
                   <Text fontSize="sm" fontWeight="600">
-                    Sign up
+                    {t("nav.signUp")}
                   </Text>
                 </Flex>
               </Link>

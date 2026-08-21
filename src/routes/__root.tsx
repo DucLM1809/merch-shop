@@ -3,6 +3,7 @@ import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/reac
 import { Alert, Box, ChakraProvider } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { I18nextProvider, useTranslation } from "react-i18next";
 import { system } from "../theme";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
@@ -10,6 +11,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import { GlobalNav } from "../components/GlobalNav";
 import { env } from "../env";
+import { getI18n } from "../i18n/i18n";
 import { useLocale } from "../i18n/useLocale";
 import { bootstrapAuth, useAuth } from "../modules/account";
 import { cartStore } from "../store/cart";
@@ -49,6 +51,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function CartSyncEffect() {
+  const { t } = useTranslation();
   const { isLoaded, isSignedIn } = useAuth();
   const prevSignedIn = useRef(false);
   const { mutate, isError } = useCartSync();
@@ -68,7 +71,7 @@ function CartSyncEffect() {
     <Box position="fixed" top={0} left={0} right={0} zIndex="toast">
       <Alert.Root status="error">
         <Alert.Indicator />
-        <Alert.Title>Cart sync failed — your items have been preserved.</Alert.Title>
+        <Alert.Title>{t("cartSync.failed")}</Alert.Title>
       </Alert.Root>
     </Box>
   );
@@ -87,6 +90,7 @@ function AuthBootstrapEffect() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const locale = useLocale();
+  const i18n = getI18n(locale);
 
   useEffect(() => {
     if (env.VITE_ENABLE_MSW) {
@@ -102,12 +106,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ChakraProvider value={system}>
-          <AuthBootstrapEffect />
-          <CartSyncEffect />
-          <GlobalNav />
-          {children}
-        </ChakraProvider>
+        <I18nextProvider i18n={i18n}>
+          <ChakraProvider value={system}>
+            <AuthBootstrapEffect />
+            <CartSyncEffect />
+            <GlobalNav />
+            {children}
+          </ChakraProvider>
+        </I18nextProvider>
         {!import.meta.env.VITEST && (
           <TanStackDevtools
             config={{

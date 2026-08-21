@@ -1,0 +1,27 @@
+import enGBCommon from "./locales/en-GB/common.json";
+import enUSCommon from "./locales/en-US/common.json";
+import frFRCommon from "./locales/fr-FR/common.json";
+
+import type { SupportedLocale } from "./locales";
+
+/**
+ * Translation namespaces, one per customer-facing domain plus `common` for global chrome.
+ * Domain namespaces arrive with the ticket that translates that domain; admin has none —
+ * it stays English-only (ADR-0017).
+ */
+export const NAMESPACES = ["common"] as const;
+
+export type Namespace = (typeof NAMESPACES)[number];
+
+/**
+ * Every locale's resources, bundled rather than fetched. They are small, and having them
+ * in the bundle is what lets a locale render on its first pass with no loading state.
+ *
+ * Typing this as a total `Record` over the supported locales means adding a locale to
+ * `SUPPORTED_LOCALES` without adding its files is a compile error, not a runtime fallback.
+ */
+export const resources: Record<SupportedLocale, Record<Namespace, object>> = {
+  "en-US": { common: enUSCommon },
+  "en-GB": { common: enGBCommon },
+  "fr-FR": { common: frFRCommon },
+};

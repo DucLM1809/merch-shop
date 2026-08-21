@@ -1,0 +1,16 @@
+{
+  "brand": "Merch Shop",
+  "nav": {
+    "openMenu": "Ouvrir la navigation",
+    "menuLabel": "Menu de navigation",
+    "cart": "Panier",
+    "cartItems_one": "Panier, {{count}} article",
+    "cartItems_other": "Panier, {{count}} articles",
+    "signIn": "Se connecter",
+    "signUp": "Créer un compte",
+    "signOut": "Se déconnecter"
+  },
+  "cartSync": {
+    "failed": "Échec de la synchronisation du panier — vos articles ont été conservés."
+  }
+}

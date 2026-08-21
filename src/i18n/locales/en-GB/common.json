@@ -1,0 +1,16 @@
+{
+  "brand": "Merch Shop",
+  "nav": {
+    "openMenu": "Open navigation",
+    "menuLabel": "Navigation menu",
+    "cart": "Basket",
+    "cartItems_one": "Basket, {{count}} item",
+    "cartItems_other": "Basket, {{count}} items",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out"
+  },
+  "cartSync": {
+    "failed": "Basket sync failed — your items have been preserved."
+  }
+}

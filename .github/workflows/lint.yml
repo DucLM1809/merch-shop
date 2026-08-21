@@ -21,3 +21,13 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm lint
+
+      # Translation keys and their interpolation arguments are only type-checked if tsc
+      # actually runs, and only correct if the generated types still match the en-US
+      # resource files (ADR-0017).
+      - name: Check generated i18n types are up to date
+        run: |
+          pnpm i18n:types
+          git diff --exit-code -- src/i18n/resources.generated.ts
+
+      - run: pnpm typecheck

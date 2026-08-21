@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { screen, within, fireEvent } from "@testing-library/react";
+import enUS from "../i18n/locales/en-US/common.json";
 import { renderWithProviders } from "../test-utils";
 import { NavDrawerContent } from "./NavDrawerContent";
 
@@ -68,8 +69,8 @@ describe("NavDrawerContent", () => {
     );
 
     const guestLinks = screen.getByTestId("drawer-guest-links");
-    expect(within(guestLinks).getByText("Sign in")).toBeInTheDocument();
-    expect(within(guestLinks).getByText("Sign up")).toBeInTheDocument();
+    expect(within(guestLinks).getByText(enUS.nav.signIn)).toBeInTheDocument();
+    expect(within(guestLinks).getByText(enUS.nav.signUp)).toBeInTheDocument();
     expect(screen.queryByTestId("drawer-username")).not.toBeInTheDocument();
   });
 
