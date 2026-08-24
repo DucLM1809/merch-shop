@@ -121,4 +121,26 @@ export interface GeneratedResources {
       retry: "Try again";
     };
   };
+  orders: {
+    history: {
+      title: "Order History";
+      empty: "No orders yet.";
+    };
+    orderNumber: "Order #{{id}}";
+    backToHistory: "Back to Order History";
+    placed: "Placed {{date}}";
+    loading: "Loading order…";
+    notFound: "Order not found.";
+    items: "Items";
+    shipping: "Shipping";
+    noShipping: "No shipping details available.";
+    total: "Total";
+    totalWithAmount: "Total: {{amount}}";
+    status: {
+      PENDING: "Pending";
+      CONFIRMED: "Confirmed";
+      FORWARDED: "Forwarded";
+      CANCELLED: "Cancelled";
+    };
+  };
 }

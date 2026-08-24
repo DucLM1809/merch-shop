@@ -1,0 +1,22 @@
+{
+  "history": {
+    "title": "Historique des commandes",
+    "empty": "Aucune commande pour le moment."
+  },
+  "orderNumber": "Commande n° {{id}}",
+  "backToHistory": "Retour à l'historique des commandes",
+  "placed": "Passée le {{date}}",
+  "loading": "Chargement de la commande…",
+  "notFound": "Commande introuvable.",
+  "items": "Articles",
+  "shipping": "Livraison",
+  "noShipping": "Aucune information de livraison disponible.",
+  "total": "Total",
+  "totalWithAmount": "Total : {{amount}}",
+  "status": {
+    "PENDING": "En attente",
+    "CONFIRMED": "Confirmée",
+    "FORWARDED": "Transmise",
+    "CANCELLED": "Annulée"
+  }
+}

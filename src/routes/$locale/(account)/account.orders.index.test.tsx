@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
+import enUSOrders from "@/i18n/locales/en-US/orders.json";
 import { renderRoute } from "../../../test-utils";
 import { server } from "../../../mocks/server";
 import { BASE_URL } from "../../../api/client";
@@ -61,6 +62,10 @@ const twoOrders: Order[] = [
   },
 ];
 
+function orderNumber(id: string): string {
+  return enUSOrders.orderNumber.replace("{{id}}", id);
+}
+
 describe("/account/orders", () => {
   it("redirects guest to /sign-in", async () => {
     const { router } = renderRoute("/account/orders");
@@ -93,7 +98,7 @@ describe("/account/orders", () => {
 
     renderRoute("/account/orders");
 
-    expect(await screen.findByText(/no orders yet/i)).toBeInTheDocument();
+    expect(await screen.findByText(enUSOrders.history.empty)).toBeInTheDocument();
   });
 
   it("shows a status badge for each order and links each row to its detail page", async () => {
@@ -104,12 +109,12 @@ describe("/account/orders", () => {
 
     await screen.findByText(/ord-001/);
 
-    expect(screen.getByTestId("order-status-ord-001")).toHaveTextContent("PENDING");
-    expect(screen.getByRole("link", { name: /order #ord-001/i })).toHaveAttribute(
+    expect(screen.getByTestId("order-status-ord-001")).toHaveTextContent(enUSOrders.status.PENDING);
+    expect(screen.getByRole("link", { name: orderNumber("ord-001") })).toHaveAttribute(
       "href",
       "/en-US/account/orders/ord-001"
     );
-    expect(screen.getByRole("link", { name: /order #ord-002/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: orderNumber("ord-002") })).toHaveAttribute(
       "href",
       "/en-US/account/orders/ord-002"
     );

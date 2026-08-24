@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
-import { renderRoute } from "../../../test-utils";
+import enUSOrders from "@/i18n/locales/en-US/orders.json";
+import { priceText, renderRoute } from "../../../test-utils";
 import { server } from "../../../mocks/server";
 import { BASE_URL } from "../../../api/client";
 import { envelope } from "../../../mocks/handlers";
@@ -50,8 +51,10 @@ describe("/account/orders/$orderId", () => {
     renderRoute("/account/orders/ord-001");
 
     expect(await screen.findByText(/Faker Jersey/)).toBeInTheDocument();
-    expect(screen.getByTestId("order-status")).toHaveTextContent("CONFIRMED");
-    expect(screen.getByTestId("order-total")).toHaveTextContent("119.98");
+    expect(screen.getByTestId("order-status")).toHaveTextContent(enUSOrders.status.CONFIRMED);
+
+    const total = screen.getByTestId("order-total");
+    expect(priceText(119.98, "en-US")(total.textContent ?? "")).toBe(true);
   });
 
   it("shows a not-found message for an unknown order id", async () => {
@@ -60,6 +63,6 @@ describe("/account/orders/$orderId", () => {
 
     renderRoute("/account/orders/unknown-id");
 
-    expect(await screen.findByText(/order not found/i)).toBeInTheDocument();
+    expect(await screen.findByText(enUSOrders.notFound)).toBeInTheDocument();
   });
 });

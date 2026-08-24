@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "src/modules/checkout/components/CheckoutFormView.tsx": {
-    "mtime": 1787559871.8273442,
-    "ast_hash": "80280cb11e99f1ffdf37d6fc07e189d3",
+    "mtime": 1787560919.9552007,
+    "ast_hash": "e8a859bee6ecca41a0c2d751c726829e",
     "semantic_hash": ""
   },
   "src/modules/checkout/components/CheckoutPage.tsx": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "src/modules/orders/index.ts": {
-    "mtime": 1787034745.3601665,
-    "ast_hash": "59d667c59fe253623f908c75507e64bb",
+    "mtime": 1787561761.3049881,
+    "ast_hash": "d212e2b61078fd90f2d3fdc903354018",
     "semantic_hash": ""
   },
   "src/components/FormField.stories.tsx": {
@@ -540,8 +540,8 @@
     "semantic_hash": ""
   },
   "src/modules/orders/components/OrderDetailPage.tsx": {
-    "mtime": 1787125794.0719602,
-    "ast_hash": "7ec7810985bd8c5cfe74f3e13a734f87",
+    "mtime": 1787561779.2771933,
+    "ast_hash": "d598984948fd2b031add0241f7d859d8",
     "semantic_hash": ""
   },
   "src/modules/orders/statusColor.ts": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(account)/account.orders.$orderId.test.tsx": {
-    "mtime": 1787126024.43911,
-    "ast_hash": "4e69873313d1ae9e01e59ad94deb30e2",
+    "mtime": 1787561827.920628,
+    "ast_hash": "e97ef0b60d6141f0bdbaeec43a1c5c74",
     "semantic_hash": ""
   },
   "src/routes/$locale/(account)/account.orders.$orderId.tsx": {
@@ -605,13 +605,13 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(account)/account.orders.index.lazy.tsx": {
-    "mtime": 1787125834.8478813,
-    "ast_hash": "4becb7670614d52b2b6e46526b11a624",
+    "mtime": 1787561795.8580246,
+    "ast_hash": "097daf844f703dffd6253e9b772e8e44",
     "semantic_hash": ""
   },
   "src/routes/$locale/(account)/account.orders.index.test.tsx": {
-    "mtime": 1787126094.3528666,
-    "ast_hash": "a7c4d0839276cf0418ddaf180a3b2a60",
+    "mtime": 1787561827.9201717,
+    "ast_hash": "f0a9e79478ed66c75d03094458d6814d",
     "semantic_hash": ""
   },
   "src/routes/$locale/(account)/account.orders.index.tsx": {
@@ -985,13 +985,13 @@
     "semantic_hash": ""
   },
   "src/i18n/resources.generated.ts": {
-    "mtime": 1787560102.2812421,
-    "ast_hash": "92bb12cad72397585ee3348427a90f88",
+    "mtime": 1787561803.727302,
+    "ast_hash": "df33a08b7488441cadad3ed183ce0faa",
     "semantic_hash": ""
   },
   "src/i18n/resources.ts": {
-    "mtime": 1787559840.2339146,
-    "ast_hash": "32b7d0cd08356a7bc1a7642d5d79e789",
+    "mtime": 1787561746.0405974,
+    "ast_hash": "d81b11793e2e08f801d8cf1dd9fc7906",
     "semantic_hash": ""
   },
   "src/routes/index.tsx": {
@@ -1105,8 +1105,48 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(checkout)/checkout.i18n.test.tsx": {
-    "mtime": 1787560042.771667,
-    "ast_hash": "7bd3639fc3c12c5f09f9958fe96088b5",
+    "mtime": 1787560920.0485656,
+    "ast_hash": "4e3e5f9822d0ef67f68efaaa22e93653",
+    "semantic_hash": ""
+  },
+  "src/i18n/formatDate.test.ts": {
+    "mtime": 1787561720.3337958,
+    "ast_hash": "a4f222b23c1dc9e8840f1e9bc575f067",
+    "semantic_hash": ""
+  },
+  "src/i18n/formatDate.ts": {
+    "mtime": 1787561702.8741877,
+    "ast_hash": "460f05cab352c320d50a547ac090fa3a",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/en-GB/orders.json": {
+    "mtime": 1787561729.4664135,
+    "ast_hash": "968e90ebe1b31d28ec005653a0f1d450",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/en-US/orders.json": {
+    "mtime": 1787561726.6156855,
+    "ast_hash": "8bd66d86b4190af986bf92257b5cd45f",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/fr-FR/orders.json": {
+    "mtime": 1787561731.8344128,
+    "ast_hash": "40941695c10ca199289a070f3b9230ca",
+    "semantic_hash": ""
+  },
+  "src/i18n/useFormatDate.ts": {
+    "mtime": 1787561705.223055,
+    "ast_hash": "d5fc4fb5c2df985876a43a41255da9f1",
+    "semantic_hash": ""
+  },
+  "src/modules/orders/statusLabel.ts": {
+    "mtime": 1787561759.7710195,
+    "ast_hash": "8ecd402803a4bfe3773495e0054fe7f7",
+    "semantic_hash": ""
+  },
+  "src/routes/$locale/(account)/orders.i18n.test.tsx": {
+    "mtime": 1787561852.4080224,
+    "ast_hash": "38f9ca0c2cfb892f4ec9ed1515dcc5d2",
     "semantic_hash": ""
   }
 }
