@@ -1,6 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { formatPrice } from "@/i18n/formatPrice";
+import enUSCart from "@/i18n/locales/en-US/cart.json";
+import enUSCheckout from "@/i18n/locales/en-US/checkout.json";
 import { renderRoute } from "../../../test-utils";
 import { addToCart, clearCart } from "../../../store/cart";
 
@@ -22,14 +25,21 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
+const shipping = enUSCheckout.shipping;
+
+/** The pay button names its own total, so the expected label has to be built the same way. */
+function payLabel(total: number): string {
+  return enUSCheckout.payment.pay.replace("{{total}}", formatPrice(total, "en-US"));
+}
+
 async function fillShippingForm(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(await screen.findByPlaceholderText("Full Name"), "Jane Doe");
-  await user.type(screen.getByPlaceholderText("Email"), "jane@example.com");
-  await user.type(screen.getByPlaceholderText("Street address"), "123 Main St");
-  await user.type(screen.getByPlaceholderText("City"), "Los Angeles");
-  await user.type(screen.getByPlaceholderText("State"), "CA");
-  await user.type(screen.getByPlaceholderText("Postal code"), "90001");
-  await user.type(screen.getByPlaceholderText("Country"), "US");
+  await user.type(await screen.findByPlaceholderText(shipping.fullName), "Jane Doe");
+  await user.type(screen.getByPlaceholderText(shipping.email), "jane@example.com");
+  await user.type(screen.getByPlaceholderText(shipping.addressPlaceholder), "123 Main St");
+  await user.type(screen.getByPlaceholderText(shipping.city), "Los Angeles");
+  await user.type(screen.getByPlaceholderText(shipping.state), "CA");
+  await user.type(screen.getByPlaceholderText(shipping.postalCodePlaceholder), "90001");
+  await user.type(screen.getByPlaceholderText(shipping.country), "US");
 }
 
 // ---------------------------------------------------------------------------
@@ -46,7 +56,7 @@ describe("Cart → Checkout navigation", () => {
     });
     renderRoute("/cart");
 
-    const btn = await screen.findByRole("link", { name: /proceed to checkout/i });
+    const btn = await screen.findByRole("link", { name: enUSCart.checkout });
     expect(btn).toBeInTheDocument();
   });
 });
@@ -86,9 +96,9 @@ describe("/checkout successful payment", () => {
     });
     renderRoute("/checkout");
     await fillShippingForm(user);
-    await user.click(screen.getByRole("button", { name: /pay/i }));
+    await user.click(screen.getByRole("button", { name: payLabel(59.99) }));
 
-    await screen.findByText(/order confirmed/i);
+    await screen.findByText(enUSCheckout.confirmation.title);
     expect(screen.getByText(/faker jersey/i)).toBeInTheDocument();
   });
 
@@ -107,7 +117,7 @@ describe("/checkout successful payment", () => {
     });
     renderRoute("/checkout");
     await fillShippingForm(user);
-    await user.click(screen.getByRole("button", { name: /pay/i }));
+    await user.click(screen.getByRole("button", { name: payLabel(59.99) }));
 
     // MSW fixture ord_001 carries stripePaymentIntentId "pi_test_001"
     expect(await screen.findByText("ord_001")).toBeInTheDocument();
@@ -131,11 +141,11 @@ describe("/checkout declined card", () => {
     });
     renderRoute("/checkout");
     await fillShippingForm(user);
-    await user.click(screen.getByRole("button", { name: /pay/i }));
+    await user.click(screen.getByRole("button", { name: payLabel(59.99) }));
 
     expect(await screen.findByTestId("payment-error")).toHaveTextContent("Your card was declined.");
-    expect(screen.getByPlaceholderText("Full Name")).toBeInTheDocument();
-    expect(screen.queryByText(/order confirmed/i)).not.toBeInTheDocument();
+    expect(screen.getByPlaceholderText(shipping.fullName)).toBeInTheDocument();
+    expect(screen.queryByText(enUSCheckout.confirmation.title)).not.toBeInTheDocument();
   });
 });
 
@@ -154,10 +164,10 @@ describe("/checkout shipping validation", () => {
     });
     renderRoute("/checkout");
 
-    const payBtn = await screen.findByRole("button", { name: /pay/i });
+    const payBtn = await screen.findByRole("button", { name: payLabel(59.99) });
     await user.click(payBtn);
 
-    expect(await screen.findByText(/full name is required/i)).toBeInTheDocument();
+    expect(await screen.findByText(enUSCheckout.validation.fullName)).toBeInTheDocument();
     expect(mockConfirmCardPayment).not.toHaveBeenCalled();
   });
 });

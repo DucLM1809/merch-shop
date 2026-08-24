@@ -1,11 +1,11 @@
-import { render, screen } from "@testing-library/react";
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import type { UseFormRegister } from "react-hook-form";
 
-import { expectNoA11yViolations } from "@/test-utils";
+import enUSCheckout from "@/i18n/locales/en-US/checkout.json";
+import { expectNoA11yViolations, priceText, renderWithProviders } from "@/test-utils";
 import { CheckoutFormView } from "./CheckoutFormView";
-import { schema } from "./CheckoutFormView.schema";
+import { schema, VALIDATION_KEYS } from "./CheckoutFormView.schema";
 import type { FormValues } from "./CheckoutFormView.schema";
 
 const mockRegister = ((name: string) => ({
@@ -26,11 +26,7 @@ function renderView(props: Partial<React.ComponentProps<typeof CheckoutFormView>
     cardSlot: <input data-testid="card-slot" aria-label="Card details" readOnly />,
     ...props,
   };
-  return render(
-    <ChakraProvider value={defaultSystem}>
-      <CheckoutFormView {...defaults} />
-    </ChakraProvider>
-  );
+  return renderWithProviders(<CheckoutFormView {...defaults} />);
 }
 
 // ---------------------------------------------------------------------------
@@ -61,6 +57,28 @@ describe("CheckoutFormView schema", () => {
     }
   });
 
+  it("reports translation keys rather than sentences", () => {
+    const result = schema.safeParse({
+      fullName: "",
+      email: "",
+      line1: "",
+      line2: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      country: "",
+    });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      const messages = result.error.issues.map((i) => i.message);
+      const keys: string[] = Object.values(VALIDATION_KEYS);
+
+      // A sentence leaking in here is a message that could never be translated.
+      expect(messages.every((message) => keys.includes(message))).toBe(true);
+    }
+  });
+
   it("accepts valid input (line2 optional)", () => {
     const result = schema.safeParse({
       fullName: "Jane Doe",
@@ -82,14 +100,28 @@ describe("CheckoutFormView schema", () => {
 describe("CheckoutFormView default state", () => {
   it("renders all shipping fields and pay button with total", () => {
     renderView();
-    expect(screen.getByPlaceholderText("Full Name")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Street address")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("City")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("State")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Postal code")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Country")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /pay \$59\.99/i })).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(enUSCheckout.shipping.fullName)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(enUSCheckout.shipping.email)).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(enUSCheckout.shipping.addressPlaceholder)
+    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(enUSCheckout.shipping.city)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(enUSCheckout.shipping.state)).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(enUSCheckout.shipping.postalCodePlaceholder)
+    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(enUSCheckout.shipping.country)).toBeInTheDocument();
+
+    const payLabel = enUSCheckout.payment.pay.replace("{{total}}", "$59.99");
+    expect(screen.getByRole("button", { name: payLabel })).toBeInTheDocument();
+  });
+
+  it("formats the pay button total for the active locale", () => {
+    renderView({ total: 1234.5 });
+
+    const button = screen.getByRole("button", { name: /1,234/ });
+
+    expect(priceText(1234.5, "en-US")(button.textContent?.replace(/^Pay /u, "") ?? "")).toBe(true);
   });
 
   it("renders card slot", () => {
@@ -109,22 +141,26 @@ describe("CheckoutFormView default state", () => {
 });
 
 describe("CheckoutFormView validation errors", () => {
-  it("displays field error messages from errors prop", () => {
+  it("translates the schema's keys into the active locale's sentences", () => {
     renderView({
       errors: {
-        fullName: { type: "required", message: "Full name is required" },
-        email: { type: "required", message: "Email is required" },
-        city: { type: "required", message: "City is required" },
+        fullName: { type: "required", message: VALIDATION_KEYS.fullName },
+        email: { type: "required", message: VALIDATION_KEYS.email },
+        city: { type: "required", message: VALIDATION_KEYS.city },
       },
     });
-    expect(screen.getByText("Full name is required")).toBeInTheDocument();
-    expect(screen.getByText("Email is required")).toBeInTheDocument();
-    expect(screen.getByText("City is required")).toBeInTheDocument();
+    expect(screen.getByText(enUSCheckout.validation.fullName)).toBeInTheDocument();
+    expect(screen.getByText(enUSCheckout.validation.email)).toBeInTheDocument();
+    expect(screen.getByText(enUSCheckout.validation.city)).toBeInTheDocument();
+
+    // The key itself must never reach the page.
+    expect(screen.queryByText(VALIDATION_KEYS.fullName)).not.toBeInTheDocument();
   });
 });
 
 describe("CheckoutFormView payment declined", () => {
   it("shows payment-error with message", () => {
+    // Stripe's own decline copy, passed through rather than translated.
     renderView({ paymentError: "Your card was declined." });
     expect(screen.getByTestId("payment-error")).toHaveTextContent("Your card was declined.");
   });

@@ -4,6 +4,7 @@ import { Input } from "@chakra-ui/react";
 import type { UseFormRegister } from "react-hook-form";
 
 import { CheckoutFormView } from "./CheckoutFormView";
+import { VALIDATION_KEYS } from "./CheckoutFormView.schema";
 import type { FormValues } from "./CheckoutFormView.schema";
 
 const mockRegister = ((name: string) => ({
@@ -32,16 +33,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Empty: Story = {};
 
+// The messages are keys, same as react-hook-form would carry them out of the schema — the
+// view is what turns them into sentences, and this story is where that shows.
 export const ValidationErrors: Story = {
   args: {
     errors: {
-      fullName: { type: "required", message: "Full name is required" },
-      email: { type: "required", message: "Email is required" },
-      line1: { type: "required", message: "Address is required" },
-      city: { type: "required", message: "City is required" },
-      state: { type: "required", message: "State is required" },
-      postalCode: { type: "required", message: "Postal code is required" },
-      country: { type: "required", message: "Country is required" },
+      fullName: { type: "required", message: VALIDATION_KEYS.fullName },
+      email: { type: "required", message: VALIDATION_KEYS.email },
+      line1: { type: "required", message: VALIDATION_KEYS.line1 },
+      city: { type: "required", message: VALIDATION_KEYS.city },
+      state: { type: "required", message: VALIDATION_KEYS.state },
+      postalCode: { type: "required", message: VALIDATION_KEYS.postalCode },
+      country: { type: "required", message: VALIDATION_KEYS.country },
     },
   },
 };

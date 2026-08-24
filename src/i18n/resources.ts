@@ -1,11 +1,14 @@
 import enGBCart from "./locales/en-GB/cart.json";
 import enGBCatalog from "./locales/en-GB/catalog.json";
+import enGBCheckout from "./locales/en-GB/checkout.json";
 import enGBCommon from "./locales/en-GB/common.json";
 import enUSCart from "./locales/en-US/cart.json";
 import enUSCatalog from "./locales/en-US/catalog.json";
+import enUSCheckout from "./locales/en-US/checkout.json";
 import enUSCommon from "./locales/en-US/common.json";
 import frFRCart from "./locales/fr-FR/cart.json";
 import frFRCatalog from "./locales/fr-FR/catalog.json";
+import frFRCheckout from "./locales/fr-FR/checkout.json";
 import frFRCommon from "./locales/fr-FR/common.json";
 
 import type { SupportedLocale } from "./locales";
@@ -15,7 +18,7 @@ import type { SupportedLocale } from "./locales";
  * Domain namespaces arrive with the ticket that translates that domain; admin has none —
  * it stays English-only (ADR-0017).
  */
-export const NAMESPACES = ["common", "catalog", "cart"] as const;
+export const NAMESPACES = ["common", "catalog", "cart", "checkout"] as const;
 
 export type Namespace = (typeof NAMESPACES)[number];
 
@@ -30,7 +33,7 @@ export type ResourceTree = Record<string, unknown>;
  * `SUPPORTED_LOCALES` without adding its files is a compile error, not a runtime fallback.
  */
 export const resources: Record<SupportedLocale, Record<Namespace, ResourceTree>> = {
-  "en-US": { common: enUSCommon, catalog: enUSCatalog, cart: enUSCart },
-  "en-GB": { common: enGBCommon, catalog: enGBCatalog, cart: enGBCart },
-  "fr-FR": { common: frFRCommon, catalog: frFRCatalog, cart: frFRCart },
+  "en-US": { common: enUSCommon, catalog: enUSCatalog, cart: enUSCart, checkout: enUSCheckout },
+  "en-GB": { common: enGBCommon, catalog: enGBCatalog, cart: enGBCart, checkout: enGBCheckout },
+  "fr-FR": { common: frFRCommon, catalog: frFRCatalog, cart: frFRCart, checkout: frFRCheckout },
 };

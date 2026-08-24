@@ -7,6 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { client } from "@/api/client";
@@ -22,6 +23,7 @@ const stripePromise = loadStripe(
 
 function CheckoutForm() {
   const navigate = useNavigate();
+  const { t } = useTranslation("checkout");
   const locale = useLocale();
   const stripe = useStripe();
   const elements = useElements();
@@ -55,7 +57,8 @@ function CheckoutForm() {
       });
 
       if (result.error || !result.paymentIntent) {
-        setPaymentError(result.error?.message ?? "Payment failed");
+        // Stripe localizes its own decline messages, so its wording wins when it gives us one.
+        setPaymentError(result.error?.message ?? t("payment.declined"));
         return;
       }
 
@@ -68,7 +71,7 @@ function CheckoutForm() {
         search: { paymentIntentId: result.paymentIntent.id, items: JSON.stringify(items) },
       });
     } catch {
-      setPaymentError("Something went wrong. Please try again.");
+      setPaymentError(t("payment.unexpected"));
     }
   }
 

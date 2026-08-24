@@ -115,8 +115,8 @@
     "semantic_hash": ""
   },
   "src/modules/cart/components/CartView.tsx": {
-    "mtime": 1787556559.2460139,
-    "ast_hash": "c76986a37ded0486e2979260318bd73b",
+    "mtime": 1787557060.5020294,
+    "ast_hash": "beeb804f34e0a0fd74be914679faa926",
     "semantic_hash": ""
   },
   "src/modules/cart/index.ts": {
@@ -260,18 +260,18 @@
     "semantic_hash": ""
   },
   "src/modules/checkout/components/CheckoutFormView.stories.tsx": {
-    "mtime": 1786418777.8629508,
-    "ast_hash": "9237eeb958e56e870c0185709d814aaf",
-    "semantic_hash": "9237eeb958e56e870c0185709d814aaf"
+    "mtime": 1787559959.4573116,
+    "ast_hash": "55b4674d5a6adc202cf155e69322a7e7",
+    "semantic_hash": ""
   },
   "src/modules/checkout/components/CheckoutFormView.tsx": {
-    "mtime": 1786418777.8635259,
-    "ast_hash": "d627a64ca8d495312d943d1a531499a1",
-    "semantic_hash": "d627a64ca8d495312d943d1a531499a1"
+    "mtime": 1787559871.8273442,
+    "ast_hash": "80280cb11e99f1ffdf37d6fc07e189d3",
+    "semantic_hash": ""
   },
   "src/modules/checkout/components/CheckoutPage.tsx": {
-    "mtime": 1787125794.0703528,
-    "ast_hash": "51fc11566670ebf5e9789f332f5c1d03",
+    "mtime": 1787559888.5879872,
+    "ast_hash": "cb42a44c6ba7db9613ddce8e3569cc50",
     "semantic_hash": ""
   },
   "src/modules/checkout/index.ts": {
@@ -280,8 +280,8 @@
     "semantic_hash": "f00bdbec8eff3190757d422cd893563e"
   },
   "src/modules/orders/components/OrderConfirmationPage.tsx": {
-    "mtime": 1787126298.6045313,
-    "ast_hash": "61db650b28e9820f062912f23583855d",
+    "mtime": 1787559901.89344,
+    "ast_hash": "bcec8c7ddb603d7f3e4a8169be28bbee",
     "semantic_hash": ""
   },
   "src/modules/orders/hooks/index.ts": {
@@ -400,9 +400,9 @@
     "semantic_hash": "a24e1cf77213acb48bd3160276d41cb9"
   },
   "src/modules/checkout/components/CheckoutFormView.schema.ts": {
-    "mtime": 1786418777.8627334,
-    "ast_hash": "37ab78807cfbb4ac6f0361a2ae0e973f",
-    "semantic_hash": "37ab78807cfbb4ac6f0361a2ae0e973f"
+    "mtime": 1787559856.003626,
+    "ast_hash": "50497525dd6402966549239ee263605a",
+    "semantic_hash": ""
   },
   "src/test-setup.tsx": {
     "mtime": 1786436681.5026457,
@@ -440,13 +440,13 @@
     "semantic_hash": ""
   },
   "src/modules/checkout/components/CheckoutFormView.test.tsx": {
-    "mtime": 1786418777.863387,
-    "ast_hash": "aa4c82507bce671ba86ed495aa1ed528",
+    "mtime": 1787559948.5733547,
+    "ast_hash": "3e4b20994cdbfa4f552a429e17e2d168",
     "semantic_hash": ""
   },
   "src/modules/orders/components/OrderConfirmationPage.test.tsx": {
-    "mtime": 1786418777.864003,
-    "ast_hash": "1d4a8fd7a180cbba0bfe8c9d3060b583",
+    "mtime": 1787559974.9758914,
+    "ast_hash": "0128776abf3a7c462ecb9bcfd9e32adb",
     "semantic_hash": ""
   },
   "src/modules/orders/hooks/index.test.ts": {
@@ -900,8 +900,8 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(checkout)/checkout.test.tsx": {
-    "mtime": 1787125645.1385646,
-    "ast_hash": "019ead1fcaf101e6fd797c976268db73",
+    "mtime": 1787560013.0625079,
+    "ast_hash": "21ebfce03ee7d1b284b6762fc874992e",
     "semantic_hash": ""
   },
   "src/routes/$locale/(checkout)/checkout.tsx": {
@@ -985,13 +985,13 @@
     "semantic_hash": ""
   },
   "src/i18n/resources.generated.ts": {
-    "mtime": 1787556566.9561563,
-    "ast_hash": "24e211baa8978cc9c22db588330468ad",
+    "mtime": 1787560102.2812421,
+    "ast_hash": "92bb12cad72397585ee3348427a90f88",
     "semantic_hash": ""
   },
   "src/i18n/resources.ts": {
-    "mtime": 1787556539.4643273,
-    "ast_hash": "e3f41b7de4c7225f63a2381667aec0ea",
+    "mtime": 1787559840.2339146,
+    "ast_hash": "32b7d0cd08356a7bc1a7642d5d79e789",
     "semantic_hash": ""
   },
   "src/routes/index.tsx": {
@@ -1087,6 +1087,26 @@
   "src/routes/$locale/(catalog)/catalog.i18n.test.tsx": {
     "mtime": 1787296857.9285643,
     "ast_hash": "d3e8f51a9139efbfcecd67446a24e925",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/en-GB/checkout.json": {
+    "mtime": 1787559820.2641642,
+    "ast_hash": "f27315117104930dfacff3c851ea8bf8",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/en-US/checkout.json": {
+    "mtime": 1787559816.0336914,
+    "ast_hash": "39230200dc4f2a34e47a995c9e82f1a6",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/fr-FR/checkout.json": {
+    "mtime": 1787560079.11252,
+    "ast_hash": "279d3fac5f058c13ab0706f9dc224a4e",
+    "semantic_hash": ""
+  },
+  "src/routes/$locale/(checkout)/checkout.i18n.test.tsx": {
+    "mtime": 1787560042.771667,
+    "ast_hash": "7bd3639fc3c12c5f09f9958fe96088b5",
     "semantic_hash": ""
   }
 }

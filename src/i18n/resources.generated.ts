@@ -53,6 +53,46 @@ export interface GeneratedResources {
       publisher: "Failed to load publisher.";
     };
   };
+  checkout: {
+    title: "Checkout";
+    shipping: {
+      heading: "Shipping";
+      fullName: "Full Name";
+      email: "Email";
+      address: "Address";
+      addressPlaceholder: "Street address";
+      line2Placeholder: "Apartment, suite, etc. (optional)";
+      city: "City";
+      state: "State";
+      postalCode: "Postal Code";
+      postalCodePlaceholder: "Postal code";
+      country: "Country";
+    };
+    payment: {
+      heading: "Payment";
+      pay: "Pay {{total}}";
+      declined: "Payment failed";
+      unexpected: "Something went wrong. Please try again.";
+    };
+    validation: {
+      fullName: "Full name is required";
+      email: "Email is required";
+      line1: "Address is required";
+      city: "City is required";
+      state: "State is required";
+      postalCode: "Postal code is required";
+      country: "Country is required";
+    };
+    confirmation: {
+      title: "Order Confirmed";
+      orderId: "Order ID:";
+      resolving: "Confirming your order…";
+      emailSoon: "We'll email your order confirmation shortly.";
+      itemsPurchased: "Items Purchased";
+      total: "Total";
+      continueShopping: "Continue Shopping";
+    };
+  };
   common: {
     brand: "Merch Shop";
     nav: {

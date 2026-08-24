@@ -1,0 +1,40 @@
+{
+  "title": "Checkout",
+  "shipping": {
+    "heading": "Delivery",
+    "fullName": "Full Name",
+    "email": "Email",
+    "address": "Address",
+    "addressPlaceholder": "Street address",
+    "line2Placeholder": "Flat, suite, etc. (optional)",
+    "city": "Town or City",
+    "state": "County",
+    "postalCode": "Postcode",
+    "postalCodePlaceholder": "Postcode",
+    "country": "Country"
+  },
+  "payment": {
+    "heading": "Payment",
+    "pay": "Pay {{total}}",
+    "declined": "Payment failed",
+    "unexpected": "Something went wrong. Please try again."
+  },
+  "validation": {
+    "fullName": "Full name is required",
+    "email": "Email is required",
+    "line1": "Address is required",
+    "city": "Town or city is required",
+    "state": "County is required",
+    "postalCode": "Postcode is required",
+    "country": "Country is required"
+  },
+  "confirmation": {
+    "title": "Order Confirmed",
+    "orderId": "Order ID:",
+    "resolving": "Confirming your order…",
+    "emailSoon": "We'll email your order confirmation shortly.",
+    "itemsPurchased": "Items Purchased",
+    "total": "Total",
+    "continueShopping": "Continue Shopping"
+  }
+}

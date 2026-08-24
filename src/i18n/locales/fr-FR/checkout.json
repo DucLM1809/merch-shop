@@ -1,0 +1,40 @@
+{
+  "title": "Finaliser la commande",
+  "shipping": {
+    "heading": "Livraison",
+    "fullName": "Nom complet",
+    "email": "E-mail",
+    "address": "Adresse",
+    "addressPlaceholder": "Numéro et nom de rue",
+    "line2Placeholder": "Appartement, bâtiment, etc. (facultatif)",
+    "city": "Ville",
+    "state": "Région",
+    "postalCode": "Code postal",
+    "postalCodePlaceholder": "Code postal",
+    "country": "Pays"
+  },
+  "payment": {
+    "heading": "Paiement",
+    "pay": "Payer {{total}}",
+    "declined": "Le paiement a échoué",
+    "unexpected": "Une erreur est survenue. Veuillez réessayer."
+  },
+  "validation": {
+    "fullName": "Le nom complet est obligatoire",
+    "email": "L'e-mail est obligatoire",
+    "line1": "L'adresse est obligatoire",
+    "city": "La ville est obligatoire",
+    "state": "La région est obligatoire",
+    "postalCode": "Le code postal est obligatoire",
+    "country": "Le pays est obligatoire"
+  },
+  "confirmation": {
+    "title": "Commande confirmée",
+    "orderId": "Numéro de commande :",
+    "resolving": "Confirmation de votre commande…",
+    "emailSoon": "Vous recevrez votre confirmation de commande par e-mail sous peu.",
+    "itemsPurchased": "Articles commandés",
+    "total": "Total",
+    "continueShopping": "Continuer mes achats"
+  }
+}
