@@ -1,7 +1,9 @@
 import { Box, Button, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import type { CartItem } from "@/store/cart";
 import { getSubtotal } from "@/store/cart";
+import { useFormatPrice } from "@/i18n/useFormatPrice";
 import { useLocale } from "@/i18n/useLocale";
 
 interface Props {
@@ -11,20 +13,22 @@ interface Props {
 }
 
 export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
+  const { t } = useTranslation("cart");
+  const formatPrice = useFormatPrice();
   const locale = useLocale();
 
   if (items.length === 0) {
     return (
       <Box p={8} textAlign="center" pt={20}>
         <Text color="gray.500" fontSize="lg" fontWeight="600">
-          Your cart is empty
+          {t("empty.title")}
         </Text>
         <Text color="gray.600" fontSize="sm" mt={1} mb={6}>
-          Add some gear to get started
+          {t("empty.hint")}
         </Text>
         <Button variant="outline" colorPalette="blue" asChild>
           <Link to="/$locale" params={{ locale }}>
-            Continue Shopping
+            {t("empty.continueShopping")}
           </Link>
         </Button>
       </Box>
@@ -37,84 +41,21 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
     <Box p={8} maxW="3xl" mx="auto">
       <Flex align="baseline" gap={3} mb={6}>
         <Heading size="xl" color="white" fontWeight="800" letterSpacing="-0.025em">
-          Cart
+          {t("title")}
         </Heading>
         <Text fontSize="sm" color="gray.500" fontWeight="600">
-          {items.length} {items.length === 1 ? "item" : "items"}
+          {t("itemCount", { count: items.length })}
         </Text>
       </Flex>
 
       <Flex direction="column" gap={3}>
         {items.map((item) => (
-          <Flex
+          <CartRow
             key={item.skuId}
-            bg="gray.900"
-            borderRadius="lg"
-            p={4}
-            gap={4}
-            align="center"
-            borderTop="1px solid"
-            borderColor="gray.800"
-            transition="border-color 0.15s"
-            _hover={{ borderColor: "gray.700" }}
-          >
-            <Box flex="1" minW={0}>
-              <Text color="white" fontWeight="600" truncate fontSize="sm">
-                {item.productName}
-              </Text>
-              <Text
-                color="gray.500"
-                fontSize="xs"
-                mt={0.5}
-                textTransform="uppercase"
-                letterSpacing="0.05em"
-              >
-                {item.variant}
-              </Text>
-              <Text color="gray.400" fontSize="sm" mt={1} fontWeight="600">
-                ${item.price.toFixed(2)}
-              </Text>
-            </Box>
-
-            <Flex align="center" gap={1}>
-              <IconButton
-                size="sm"
-                variant="ghost"
-                colorPalette="gray"
-                aria-label="Decrease quantity"
-                onClick={() => onUpdateQuantity(item.skuId, item.quantity - 1)}
-              >
-                -
-              </IconButton>
-              <Text color="white" minW={6} textAlign="center" fontWeight="700" fontSize="sm">
-                {item.quantity}
-              </Text>
-              <IconButton
-                size="sm"
-                variant="ghost"
-                colorPalette="gray"
-                aria-label="Increase quantity"
-                onClick={() => onUpdateQuantity(item.skuId, item.quantity + 1)}
-              >
-                +
-              </IconButton>
-            </Flex>
-
-            <Text color="white" fontWeight="700" minW={16} textAlign="right" fontSize="sm">
-              ${(item.price * item.quantity).toFixed(2)}
-            </Text>
-
-            <Button
-              size="sm"
-              variant="ghost"
-              colorPalette="red"
-              aria-label="Remove"
-              onClick={() => onRemove(item.skuId)}
-              fontSize="xs"
-            >
-              Remove
-            </Button>
-          </Flex>
+            item={item}
+            onUpdateQuantity={onUpdateQuantity}
+            onRemove={onRemove}
+          />
         ))}
       </Flex>
 
@@ -133,7 +74,7 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
           textTransform="uppercase"
           letterSpacing="0.05em"
         >
-          Subtotal
+          {t("subtotal")}
         </Text>
         <Text
           color="white"
@@ -142,7 +83,7 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
           letterSpacing="-0.02em"
           data-testid="cart-subtotal"
         >
-          ${subtotal.toFixed(2)}
+          {formatPrice(subtotal)}
         </Text>
       </Flex>
 
@@ -156,9 +97,95 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
         asChild
       >
         <Link to="/$locale/checkout" params={{ locale }}>
-          Proceed to Checkout
+          {t("checkout")}
         </Link>
       </Button>
     </Box>
+  );
+}
+
+type CartRowProps = {
+  item: CartItem;
+  onUpdateQuantity: (skuId: string, quantity: number) => void;
+  onRemove: (skuId: string) => void;
+};
+
+function CartRow({ item, onUpdateQuantity, onRemove }: CartRowProps) {
+  const { t } = useTranslation("cart");
+  const formatPrice = useFormatPrice();
+
+  const handleDecrease = () => onUpdateQuantity(item.skuId, item.quantity - 1);
+  const handleIncrease = () => onUpdateQuantity(item.skuId, item.quantity + 1);
+  const handleRemove = () => onRemove(item.skuId);
+
+  return (
+    <Flex
+      bg="gray.900"
+      borderRadius="lg"
+      p={4}
+      gap={4}
+      align="center"
+      borderTop="1px solid"
+      borderColor="gray.800"
+      transition="border-color 0.15s"
+      _hover={{ borderColor: "gray.700" }}
+    >
+      <Box flex="1" minW={0}>
+        <Text color="white" fontWeight="600" truncate fontSize="sm">
+          {item.productName}
+        </Text>
+        <Text
+          color="gray.500"
+          fontSize="xs"
+          mt={0.5}
+          textTransform="uppercase"
+          letterSpacing="0.05em"
+        >
+          {item.variant}
+        </Text>
+        <Text color="gray.400" fontSize="sm" mt={1} fontWeight="600">
+          {formatPrice(item.price)}
+        </Text>
+      </Box>
+
+      <Flex align="center" gap={1}>
+        <IconButton
+          size="sm"
+          variant="ghost"
+          colorPalette="gray"
+          aria-label={t("item.decreaseQuantity")}
+          onClick={handleDecrease}
+        >
+          -
+        </IconButton>
+        <Text color="white" minW={6} textAlign="center" fontWeight="700" fontSize="sm">
+          {item.quantity}
+        </Text>
+        <IconButton
+          size="sm"
+          variant="ghost"
+          colorPalette="gray"
+          aria-label={t("item.increaseQuantity")}
+          onClick={handleIncrease}
+        >
+          +
+        </IconButton>
+      </Flex>
+
+      <Text color="white" fontWeight="700" minW={16} textAlign="right" fontSize="sm">
+        {formatPrice(item.price * item.quantity)}
+      </Text>
+
+      <Button
+        size="sm"
+        variant="ghost"
+        colorPalette="red"
+        aria-label={t("item.remove")}
+        onClick={handleRemove}
+        fontSize="xs"
+      >
+        {t("item.remove")}
+      </Button>
+    </Flex>
   );
 }

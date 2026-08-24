@@ -51,7 +51,14 @@
   "49": "admin.orders.tsx",
   "50": "$locale/index.tsx",
   "51": "ProductDetailView.tsx",
+  "52": "admin.products.test.tsx",
   "53": "SignInForm.tsx",
   "54": "SignUpForm.tsx",
-  "57": "admin.orders.test.tsx"
+  "55": "OptimizedImage.tsx",
+  "56": "client",
+  "57": "admin.orders.test.tsx",
+  "58": "admin.orders.tsx",
+  "59": "Route",
+  "60": "Route",
+  "61": "Route"
 }

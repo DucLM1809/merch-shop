@@ -2,7 +2,9 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
-import { renderRoute } from "../../../test-utils";
+import enUSCart from "@/i18n/locales/en-US/cart.json";
+import enUSCommon from "@/i18n/locales/en-US/common.json";
+import { priceText, renderRoute } from "../../../test-utils";
 import { addToCart, clearCart, updateQuantity } from "../../../store/cart";
 import { server } from "../../../mocks/server";
 import { BASE_URL } from "../../../api/client";
@@ -15,7 +17,7 @@ beforeEach(() => clearCart());
 describe("/cart route", () => {
   it("shows empty cart message when no items", async () => {
     renderRoute("/cart");
-    await screen.findByText(/your cart is empty/i);
+    await screen.findByText(enUSCart.empty.title);
   });
 
   it("adds two SKUs, updates quantity, removes one, asserts correct subtotal", async () => {
@@ -42,16 +44,18 @@ describe("/cart route", () => {
     expect(jerseyItems).toHaveLength(2);
 
     const subtotal = await screen.findByTestId("cart-subtotal");
-    expect(subtotal).toHaveTextContent("$182.97");
+    expect(priceText(182.97, "en-US")(subtotal.textContent ?? "")).toBe(true);
 
     // Remove first item (S / Black qty 2)
     const user = userEvent.setup();
-    const removeButtons = await screen.findAllByRole("button", { name: /remove/i });
+    const removeButtons = await screen.findAllByRole("button", { name: enUSCart.item.remove });
     await user.click(removeButtons[0]);
 
     // Subtotal drops to 62.99
     await waitFor(() => {
-      expect(screen.getByTestId("cart-subtotal")).toHaveTextContent("$62.99");
+      const updated = screen.getByTestId("cart-subtotal");
+
+      expect(priceText(62.99, "en-US")(updated.textContent ?? "")).toBe(true);
     });
   });
 
@@ -82,10 +86,12 @@ describe("/cart route", () => {
     await screen.findByText("Faker Jersey");
 
     const user = userEvent.setup();
-    const decrementButton = await screen.findByRole("button", { name: /decrease quantity/i });
+    const decrementButton = await screen.findByRole("button", {
+      name: enUSCart.item.decreaseQuantity,
+    });
     await user.click(decrementButton);
 
-    await screen.findByText(/your cart is empty/i);
+    await screen.findByText(enUSCart.empty.title);
   });
 });
 
@@ -138,7 +144,7 @@ describe("cart merge on sign-in", () => {
 
     // Subtotal: 59.99×3 + 62.99×1 = 242.96
     const subtotal = await screen.findByTestId("cart-subtotal");
-    expect(subtotal).toHaveTextContent("$242.96");
+    expect(priceText(242.96, "en-US")(subtotal.textContent ?? "")).toBe(true);
   });
 
   it("preserves guest cart items when sync endpoint returns an error", async () => {
@@ -159,6 +165,6 @@ describe("cart merge on sign-in", () => {
     // Guest item still present
     await screen.findByText("Faker Jersey");
     // Error banner surfaced
-    await screen.findByText(/cart sync failed/i);
+    await screen.findByText(enUSCommon.cartSync.failed);
   });
 });

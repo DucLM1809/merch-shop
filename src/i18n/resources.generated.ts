@@ -2,6 +2,23 @@
 
 /** The default locale's resources, as literal types — the shape every locale must match. */
 export interface GeneratedResources {
+  cart: {
+    title: "Cart";
+    itemCount_one: "{{count}} item";
+    itemCount_other: "{{count}} items";
+    empty: {
+      title: "Your cart is empty";
+      hint: "Add some gear to get started";
+      continueShopping: "Continue Shopping";
+    };
+    item: {
+      decreaseQuantity: "Decrease quantity";
+      increaseQuantity: "Increase quantity";
+      remove: "Remove";
+    };
+    subtotal: "Subtotal";
+    checkout: "Proceed to Checkout";
+  };
   catalog: {
     home: {
       title: "All Products";
