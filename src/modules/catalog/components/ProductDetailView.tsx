@@ -1,8 +1,10 @@
 import { useState, useMemo } from "react";
 import { Box, Button, Flex, Heading, Skeleton, Text, Wrap, WrapItem } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import type { Product, SKU } from "@/api/types";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { QueryError } from "@/components/QueryError";
+import { useFormatPrice } from "@/i18n/useFormatPrice";
 
 const HERO_IMAGE_WIDTH = 960;
 
@@ -33,6 +35,10 @@ function DimButton({
   selected: boolean;
   onToggle: () => void;
 }) {
+  const { t } = useTranslation("catalog");
+
+  const handleClick = () => available && onToggle();
+
   return (
     <WrapItem>
       <Button
@@ -42,9 +48,12 @@ function DimButton({
         disabled={!available}
         aria-pressed={selected}
         aria-disabled={!available}
+        // Sold-out options are marked only by opacity and a strikethrough, neither of which
+        // reaches a screen reader — the label is where availability gets said out loud.
+        aria-label={available ? undefined : t("product.optionUnavailable", { option: label })}
         opacity={!available ? 0.3 : 1}
         textDecoration={!available ? "line-through" : "none"}
-        onClick={() => available && onToggle()}
+        onClick={handleClick}
       >
         {label}
       </Button>
@@ -59,6 +68,9 @@ export function ProductDetailView({
   onRetry,
   onAddToCart,
 }: ProductDetailViewProps) {
+  const { t } = useTranslation("catalog");
+  const formatPrice = useFormatPrice();
+
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedEdition, setSelectedEdition] = useState<string | null>(null);
@@ -102,11 +114,13 @@ export function ProductDetailView({
   }
 
   if (isError || !product) {
-    return <QueryError message="Failed to load product." onRetry={onRetry} />;
+    return <QueryError message={t("errors.product")} onRetry={onRetry} />;
   }
 
   const canAddToCart = selectedSku?.available === true;
   const accent = product.accentColor ?? "#0094e0";
+
+  const handleAddToCart = () => selectedSku && onAddToCart?.(selectedSku);
 
   return (
     <Box p={{ base: 6, md: 8 }} maxW="5xl" mx="auto">
@@ -153,7 +167,7 @@ export function ProductDetailView({
               borderColor="gray.800"
             >
               <Text color="gray.600" fontSize="sm" textTransform="uppercase" letterSpacing="wider">
-                No image
+                {t("product.noImage")}
               </Text>
             </Box>
           )}
@@ -189,7 +203,7 @@ export function ProductDetailView({
             mb={6}
             letterSpacing="-0.03em"
           >
-            ${displayPrice?.toFixed(2)}
+            {displayPrice === undefined ? null : formatPrice(displayPrice)}
           </Text>
 
           {sizes.length > 0 && (
@@ -202,7 +216,7 @@ export function ProductDetailView({
                 letterSpacing="0.1em"
                 fontWeight="700"
               >
-                Size
+                {t("product.size")}
               </Text>
               <Wrap>
                 {sizes.map((size) => (
@@ -228,7 +242,7 @@ export function ProductDetailView({
                 letterSpacing="0.1em"
                 fontWeight="700"
               >
-                Color
+                {t("product.color")}
               </Text>
               <Wrap>
                 {colors.map((color) => (
@@ -254,7 +268,7 @@ export function ProductDetailView({
                 letterSpacing="0.1em"
                 fontWeight="700"
               >
-                Edition
+                {t("product.edition")}
               </Text>
               <Wrap>
                 {editions.map((edition) => (
@@ -281,9 +295,9 @@ export function ProductDetailView({
             aria-disabled={!canAddToCart}
             fontWeight="700"
             letterSpacing="0.02em"
-            onClick={() => selectedSku && onAddToCart?.(selectedSku)}
+            onClick={handleAddToCart}
           >
-            Add to Cart
+            {t("product.addToCart")}
           </Button>
         </Box>
       </Flex>

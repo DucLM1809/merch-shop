@@ -1,0 +1,35 @@
+{
+  "home": {
+    "title": "Tous les produits",
+    "eyebrow": "Produits officiels",
+    "subtitle": "Des articles de vos jeux et de vos équipes préférés"
+  },
+  "filters": {
+    "game": "Jeu",
+    "team": "Équipe",
+    "character": "Personnage"
+  },
+  "product": {
+    "noImage": "Aucune image",
+    "size": "Taille",
+    "color": "Couleur",
+    "edition": "Édition",
+    "optionUnavailable": "{{option}} (indisponible)",
+    "addToCart": "Ajouter au panier"
+  },
+  "empty": {
+    "title": "Aucun produit trouvé.",
+    "hint": "Revenez bientôt pour découvrir les nouveautés."
+  },
+  "publisher": {
+    "gameCount_one": "{{count}} jeu",
+    "gameCount_many": "{{count}} jeux",
+    "gameCount_other": "{{count}} jeux"
+  },
+  "errors": {
+    "products": "Échec du chargement des produits.",
+    "product": "Échec du chargement du produit.",
+    "game": "Échec du chargement du jeu.",
+    "publisher": "Échec du chargement de l'éditeur."
+  }
+}

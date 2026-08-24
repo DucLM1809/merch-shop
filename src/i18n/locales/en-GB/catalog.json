@@ -1,0 +1,34 @@
+{
+  "home": {
+    "title": "All Products",
+    "eyebrow": "Official Merch",
+    "subtitle": "Gear from your favourite games and teams"
+  },
+  "filters": {
+    "game": "Game",
+    "team": "Team",
+    "character": "Character"
+  },
+  "product": {
+    "noImage": "No image",
+    "size": "Size",
+    "color": "Colour",
+    "edition": "Edition",
+    "optionUnavailable": "{{option}} (unavailable)",
+    "addToCart": "Add to Basket"
+  },
+  "empty": {
+    "title": "No products found.",
+    "hint": "Check back soon for new merch."
+  },
+  "publisher": {
+    "gameCount_one": "{{count}} game",
+    "gameCount_other": "{{count}} games"
+  },
+  "errors": {
+    "products": "Failed to load products.",
+    "product": "Failed to load product.",
+    "game": "Failed to load game.",
+    "publisher": "Failed to load publisher."
+  }
+}

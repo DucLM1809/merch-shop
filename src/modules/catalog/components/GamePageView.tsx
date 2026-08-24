@@ -1,4 +1,5 @@
 import { Box, Heading, Skeleton, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { QueryError } from "@/components/QueryError";
 
 export interface GamePageViewProps {
@@ -18,7 +19,10 @@ export function GamePageView({
   isError,
   onRetry,
 }: GamePageViewProps) {
-  if (isError) return <QueryError message="Failed to load game." onRetry={onRetry} />;
+  const { t } = useTranslation("catalog");
+
+  if (isError) return <QueryError message={t("errors.game")} onRetry={onRetry} />;
+
   return (
     <Box
       px={8}

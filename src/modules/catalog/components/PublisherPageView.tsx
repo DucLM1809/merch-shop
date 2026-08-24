@@ -1,4 +1,5 @@
 import { Box, Flex, Heading, HStack, Skeleton, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import type { Publisher } from "@/api/types";
 import { QueryError } from "@/components/QueryError";
 
@@ -15,7 +16,10 @@ export function PublisherPageView({
   isError,
   onRetry,
 }: PublisherPageViewProps) {
-  if (isError) return <QueryError message="Failed to load publisher." onRetry={onRetry} />;
+  const { t } = useTranslation("catalog");
+
+  if (isError) return <QueryError message={t("errors.publisher")} onRetry={onRetry} />;
+
   const accent = publisher?.accentColor;
 
   return (
@@ -94,7 +98,7 @@ export function PublisherPageView({
               letterSpacing="0.08em"
               fontWeight="600"
             >
-              {publisher?.games?.length ?? 0} {publisher?.games?.length === 1 ? "game" : "games"}
+              {t("publisher.gameCount", { count: publisher?.games?.length ?? 0 })}
             </Text>
           </Box>
         </HStack>

@@ -20,5 +20,9 @@
   },
   "cartSync": {
     "failed": "Basket sync failed — your items have been preserved."
+  },
+  "queryError": {
+    "message": "Something went wrong.",
+    "retry": "Try again"
   }
 }

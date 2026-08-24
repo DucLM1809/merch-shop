@@ -1,7 +1,12 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
+import catalogCopy from "@/i18n/locales/en-US/catalog.json";
 import { renderRoute } from "../../../test-utils";
+
+/** The accessible name a sold-out variant carries — the copy, not a literal repeated here. */
+const unavailable = (option: string) =>
+  catalogCopy.product.optionUnavailable.replace("{{option}}", option);
 
 // The real backend doesn't return a distinct product slug — /products/:id
 // expects the DB id, so the route param is the fixture product's id ("1").
@@ -21,15 +26,15 @@ describe("Product detail page", () => {
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "S" })).toBeInTheDocument();
       expect(screen.getByRole("button", { name: "M" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "L" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: unavailable("L") })).toBeInTheDocument();
       expect(screen.getByRole("button", { name: "Black" })).toBeInTheDocument();
       expect(screen.getByRole("button", { name: "White" })).toBeInTheDocument();
     });
   });
 
-  it("unavailable size L is disabled", async () => {
+  it("unavailable size L is disabled and says so in its accessible name", async () => {
     renderRoute(PRODUCT_ROUTE);
-    const lBtn = await screen.findByRole("button", { name: "L" });
+    const lBtn = await screen.findByRole("button", { name: unavailable("L") });
     expect(lBtn).toBeDisabled();
   });
 

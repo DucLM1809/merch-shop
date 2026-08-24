@@ -1,5 +1,6 @@
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 import { useLocale } from "@/i18n/useLocale";
 import { FacetFilter, ProductCatalog } from "@/modules/catalog";
@@ -9,6 +10,7 @@ export const Route = createLazyFileRoute("/$locale/")({
 });
 
 function HomePage() {
+  const { t } = useTranslation("catalog");
   const { game, team, character } = Route.useSearch();
   const locale = useLocale();
 
@@ -33,7 +35,7 @@ function HomePage() {
         />
         <Flex align="baseline" gap={3} pl={4}>
           <Heading size="2xl" color="white" fontWeight="800" letterSpacing="-0.03em" lineHeight="1">
-            All Products
+            {t("home.title")}
           </Heading>
           <Text
             fontSize="xs"
@@ -43,11 +45,11 @@ function HomePage() {
             letterSpacing="0.1em"
             mt={1}
           >
-            Official Merch
+            {t("home.eyebrow")}
           </Text>
         </Flex>
         <Text color="gray.500" fontSize="sm" mt={2} pl={4}>
-          Gear from your favorite games and teams
+          {t("home.subtitle")}
         </Text>
       </Box>
       <Box display="flex" flex="1">

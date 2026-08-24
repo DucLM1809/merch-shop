@@ -1,8 +1,13 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
+import catalogCopy from "@/i18n/locales/en-US/catalog.json";
+import { formatPrice } from "@/i18n/formatPrice";
 import { renderWithProviders } from "@/test-utils";
 import { ProductDetailView } from "./ProductDetailView";
+
+const unavailable = (option: string) =>
+  catalogCopy.product.optionUnavailable.replace("{{option}}", option);
 
 const product = {
   id: "1",
@@ -30,7 +35,7 @@ describe("ProductDetailView", () => {
 
   it("shows error message when isError", () => {
     renderWithProviders(<ProductDetailView product={undefined} isLoading={false} isError={true} />);
-    expect(screen.getByText(/failed to load product/i)).toBeInTheDocument();
+    expect(screen.getByText(catalogCopy.errors.product)).toBeInTheDocument();
   });
 
   it("renders product name as heading", () => {
@@ -38,21 +43,21 @@ describe("ProductDetailView", () => {
     expect(screen.getByRole("heading", { name: "Faker Jersey" })).toBeInTheDocument();
   });
 
-  it("renders product price", () => {
+  it("renders the price formatted for the rendering locale", () => {
     renderWithProviders(<ProductDetailView product={product} isLoading={false} isError={false} />);
-    expect(screen.getByTestId("product-price")).toHaveTextContent("$59.99");
+    expect(screen.getByTestId("product-price")).toHaveTextContent(formatPrice(59.99, "en-US"));
   });
 
-  it("renders all size options", () => {
+  it("renders all size options, naming the sold-out one as unavailable", () => {
     renderWithProviders(<ProductDetailView product={product} isLoading={false} isError={false} />);
     expect(screen.getByRole("button", { name: "S" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "M" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "L" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: unavailable("L") })).toBeInTheDocument();
   });
 
   it("Add to Cart is disabled when no SKU fully selected", () => {
     renderWithProviders(<ProductDetailView product={product} isLoading={false} isError={false} />);
-    expect(screen.getByRole("button", { name: /add to cart/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: catalogCopy.product.addToCart })).toBeDisabled();
   });
 
   it("enables Add to Cart and calls onAddToCart when a valid SKU is selected", async () => {
@@ -68,7 +73,7 @@ describe("ProductDetailView", () => {
     );
     await user.click(screen.getByRole("button", { name: "S" }));
     await user.click(screen.getByRole("button", { name: "Black" }));
-    const addBtn = screen.getByRole("button", { name: /add to cart/i });
+    const addBtn = screen.getByRole("button", { name: catalogCopy.product.addToCart });
     expect(addBtn).not.toBeDisabled();
     await user.click(addBtn);
     expect(onAddToCart).toHaveBeenCalledWith(
@@ -79,9 +84,9 @@ describe("ProductDetailView", () => {
   it("unavailable SKU keeps Add to Cart disabled", async () => {
     const user = userEvent.setup();
     renderWithProviders(<ProductDetailView product={product} isLoading={false} isError={false} />);
-    await user.click(screen.getByRole("button", { name: "L" }));
+    await user.click(screen.getByRole("button", { name: unavailable("L") }));
     await user.click(screen.getByRole("button", { name: "Black" }));
-    expect(screen.getByRole("button", { name: /add to cart/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: catalogCopy.product.addToCart })).toBeDisabled();
   });
 
   it("renders description when provided", () => {

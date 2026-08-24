@@ -21,5 +21,9 @@
   },
   "cartSync": {
     "failed": "Échec de la synchronisation du panier — vos articles ont été conservés."
+  },
+  "queryError": {
+    "message": "Une erreur est survenue.",
+    "retry": "Réessayer"
   }
 }

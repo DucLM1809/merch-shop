@@ -9,9 +9,11 @@ import {
   Skeleton,
   Text,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import type { Product } from "@/api/types";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { QueryError } from "@/components/QueryError";
+import { useFormatPrice } from "@/i18n/useFormatPrice";
 
 const CARD_IMAGE_WIDTH = 480;
 
@@ -30,6 +32,8 @@ export function ProductCatalogView({
   onRetry,
   renderLink,
 }: ProductCatalogViewProps) {
+  const { t } = useTranslation("catalog");
+
   if (isLoading) {
     return (
       <Box p={8}>
@@ -43,17 +47,17 @@ export function ProductCatalogView({
   }
 
   if (isError) {
-    return <QueryError message="Failed to load products." onRetry={onRetry} />;
+    return <QueryError message={t("errors.products")} onRetry={onRetry} />;
   }
 
   if (!products?.length) {
     return (
       <Box p={8} textAlign="center" py={20}>
         <Text color="gray.500" fontSize="lg">
-          No products found.
+          {t("empty.title")}
         </Text>
         <Text color="gray.600" fontSize="sm" mt={1}>
-          Check back soon for new merch.
+          {t("empty.hint")}
         </Text>
       </Box>
     );
@@ -77,7 +81,11 @@ function ProductCard({
   product: Product;
   renderLink?: (product: Product, children: ReactNode) => ReactNode;
 }) {
+  const { t } = useTranslation("catalog");
+  const formatPrice = useFormatPrice();
+
   const accent = product.accentColor ?? "#1a9fff";
+  const price = formatPrice(product.price);
 
   const imageSection = (
     <Box h="52" bg="gray.800" overflow="hidden" position="relative">
@@ -106,7 +114,7 @@ function ProductCard({
       ) : (
         <Flex h="full" align="center" justify="center">
           <Text color="gray.600" fontSize="xs" letterSpacing="wider" textTransform="uppercase">
-            No image
+            {t("product.noImage")}
           </Text>
         </Flex>
       )}
@@ -121,7 +129,7 @@ function ProductCard({
           {product.name}
         </Heading>
         <Text color="gray.300" fontWeight="700" fontSize="sm">
-          ${product.price.toFixed(2)}
+          {price}
         </Text>
       </Box>
     </>
@@ -158,7 +166,7 @@ function ProductCard({
             )}
           </LinkOverlay>
           <Text color="gray.300" fontWeight="700" fontSize="sm">
-            ${product.price.toFixed(2)}
+            {price}
           </Text>
         </Box>
       </LinkBox>

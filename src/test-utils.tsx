@@ -12,8 +12,11 @@ import type { ReactElement } from "react";
 import { expect } from "vitest";
 import { axe } from "vitest-axe";
 import { DEFAULT_LOCALE } from "./i18n/locales";
+import { formatPrice } from "./i18n/formatPrice";
 import { getI18n } from "./i18n/i18n";
 import { routeTree } from "./routeTree.gen";
+
+import type { SupportedLocale } from "./i18n/locales";
 
 /**
  * Render a component outside the route tree, against the real default-locale resources —
@@ -70,6 +73,26 @@ export function renderRoute(path = "/") {
     router,
     queryClient,
   };
+}
+
+/** Every kind of space `Intl` may emit, flattened to one plain space. */
+function flattenSpaces(text: string): string {
+  return text.replace(/\s+/gu, " ").trim();
+}
+
+/**
+ * A Testing Library text matcher for a locale-formatted price.
+ *
+ * `Intl` separates a French amount from its currency symbol with a narrow no-break space
+ * (U+202F). Testing Library's default normalizer collapses that in the DOM text but leaves
+ * it intact in the expected string, so `getByText(formatPrice(59.99, "fr-FR"))` misses a
+ * page that rendered exactly the right thing. Comparing with every space flattened asserts
+ * what the reader actually sees.
+ */
+export function priceText(amount: number, locale: SupportedLocale): (content: string) => boolean {
+  const expected = flattenSpaces(formatPrice(amount, locale));
+
+  return (content: string) => flattenSpaces(content) === expected;
 }
 
 /** Assert zero axe accessibility violations against rendered DOM. Fails the test on violation. */

@@ -2,6 +2,40 @@
 
 /** The default locale's resources, as literal types — the shape every locale must match. */
 export interface GeneratedResources {
+  catalog: {
+    home: {
+      title: "All Products";
+      eyebrow: "Official Merch";
+      subtitle: "Gear from your favorite games and teams";
+    };
+    filters: {
+      game: "Game";
+      team: "Team";
+      character: "Character";
+    };
+    product: {
+      noImage: "No image";
+      size: "Size";
+      color: "Color";
+      edition: "Edition";
+      optionUnavailable: "{{option}} (unavailable)";
+      addToCart: "Add to Cart";
+    };
+    empty: {
+      title: "No products found.";
+      hint: "Check back soon for new merch.";
+    };
+    publisher: {
+      gameCount_one: "{{count}} game";
+      gameCount_other: "{{count}} games";
+    };
+    errors: {
+      products: "Failed to load products.";
+      product: "Failed to load product.";
+      game: "Failed to load game.";
+      publisher: "Failed to load publisher.";
+    };
+  };
   common: {
     brand: "Merch Shop";
     nav: {
@@ -24,6 +58,10 @@ export interface GeneratedResources {
     };
     cartSync: {
       failed: "Cart sync failed — your items have been preserved.";
+    };
+    queryError: {
+      message: "Something went wrong.";
+      retry: "Try again";
     };
   };
 }
