@@ -1,13 +1,16 @@
+import enGBAccount from "./locales/en-GB/account.json";
 import enGBCart from "./locales/en-GB/cart.json";
 import enGBCatalog from "./locales/en-GB/catalog.json";
 import enGBCheckout from "./locales/en-GB/checkout.json";
 import enGBCommon from "./locales/en-GB/common.json";
 import enGBOrders from "./locales/en-GB/orders.json";
+import enUSAccount from "./locales/en-US/account.json";
 import enUSCart from "./locales/en-US/cart.json";
 import enUSCatalog from "./locales/en-US/catalog.json";
 import enUSCheckout from "./locales/en-US/checkout.json";
 import enUSCommon from "./locales/en-US/common.json";
 import enUSOrders from "./locales/en-US/orders.json";
+import frFRAccount from "./locales/fr-FR/account.json";
 import frFRCart from "./locales/fr-FR/cart.json";
 import frFRCatalog from "./locales/fr-FR/catalog.json";
 import frFRCheckout from "./locales/fr-FR/checkout.json";
@@ -21,7 +24,7 @@ import type { SupportedLocale } from "./locales";
  * Domain namespaces arrive with the ticket that translates that domain; admin has none —
  * it stays English-only (ADR-0017).
  */
-export const NAMESPACES = ["common", "catalog", "cart", "checkout", "orders"] as const;
+export const NAMESPACES = ["common", "catalog", "cart", "checkout", "orders", "account"] as const;
 
 export type Namespace = (typeof NAMESPACES)[number];
 
@@ -42,6 +45,7 @@ export const resources: Record<SupportedLocale, Record<Namespace, ResourceTree>>
     cart: enUSCart,
     checkout: enUSCheckout,
     orders: enUSOrders,
+    account: enUSAccount,
   },
   "en-GB": {
     common: enGBCommon,
@@ -49,6 +53,7 @@ export const resources: Record<SupportedLocale, Record<Namespace, ResourceTree>>
     cart: enGBCart,
     checkout: enGBCheckout,
     orders: enGBOrders,
+    account: enGBAccount,
   },
   "fr-FR": {
     common: frFRCommon,
@@ -56,5 +61,6 @@ export const resources: Record<SupportedLocale, Record<Namespace, ResourceTree>>
     cart: frFRCart,
     checkout: frFRCheckout,
     orders: frFROrders,
+    account: frFRAccount,
   },
 };

@@ -1,0 +1,46 @@
+{
+  "fields": {
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Mot de passe ({{min}} caractères min.)"
+  },
+  "signIn": {
+    "title": "Connexion",
+    "submit": "Se connecter",
+    "forgotPassword": "Mot de passe oublié ?",
+    "failed": "E-mail ou mot de passe incorrect"
+  },
+  "signUp": {
+    "title": "Créer un compte",
+    "submit": "Créer un compte",
+    "failed": "Impossible de créer le compte. Cette adresse e-mail est peut-être déjà utilisée."
+  },
+  "forgotPassword": {
+    "title": "Mot de passe oublié",
+    "submit": "Envoyer le lien de réinitialisation",
+    "sentTitle": "Consultez votre messagerie",
+    "sentBody": "Si un compte existe pour cette adresse e-mail, nous avons envoyé un lien de réinitialisation."
+  },
+  "resetPassword": {
+    "title": "Réinitialiser le mot de passe",
+    "submit": "Réinitialiser le mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Nouveau mot de passe ({{min}} caractères min.)",
+    "doneTitle": "Mot de passe réinitialisé",
+    "doneBody": "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter.",
+    "goToSignIn": "Aller à la connexion",
+    "failed": "Ce lien de réinitialisation est invalide ou a expiré."
+  },
+  "verifyEmail": {
+    "failedTitle": "Échec de la vérification",
+    "failedBody": "Ce lien de vérification est invalide ou a expiré.",
+    "successTitle": "E-mail vérifié",
+    "successBody": "Votre e-mail a été vérifié.",
+    "continue": "Continuer"
+  },
+  "validation": {
+    "email": "L'e-mail est obligatoire",
+    "password": "Le mot de passe est obligatoire",
+    "passwordMin": "Le mot de passe doit contenir au moins {{min}} caractères"
+  }
+}

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
+import enUSAccount from "@/i18n/locales/en-US/account.json";
 import { renderRoute } from "../../../test-utils";
 import { server } from "../../../mocks/server";
 import { envelope } from "../../../mocks/handlers";
@@ -91,7 +92,7 @@ describe("/sign-in route", () => {
     });
   });
 
-  it("shows 'Invalid email or password' on invalid credentials", async () => {
+  it("shows the sign-in failure message on invalid credentials", async () => {
     server.use(http.post(`${BASE_URL}/auth/login`, () => new HttpResponse(null, { status: 401 })));
     const user = userEvent.setup();
     renderRoute("/sign-in");
@@ -101,8 +102,6 @@ describe("/sign-in route", () => {
     await user.type(screen.getByLabelText(/password/i), "wrong-password");
     await user.click(screen.getByRole("button", { name: /sign in/i }));
 
-    expect(await screen.findByTestId("sign-in-error")).toHaveTextContent(
-      "Invalid email or password"
-    );
+    expect(await screen.findByTestId("sign-in-error")).toHaveTextContent(enUSAccount.signIn.failed);
   });
 });

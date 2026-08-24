@@ -4,10 +4,12 @@ import { Box, Button, Heading, Input, Text, VStack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { FormField } from "@/components/FormField";
 import { useLocale } from "@/i18n/useLocale";
 import { useResetPassword } from "../hooks";
+import { PASSWORD_MIN_LENGTH } from "../passwordPolicy";
 import { schema, DEFAULTS, type FormValues } from "./ResetPasswordForm.schema";
 
 type Props = {
@@ -15,6 +17,7 @@ type Props = {
 };
 
 export function ResetPasswordForm({ token }: Props): JSX.Element {
+  const { t } = useTranslation("account");
   const resetPassword = useResetPassword();
   const locale = useLocale();
   const {
@@ -32,7 +35,7 @@ export function ResetPasswordForm({ token }: Props): JSX.Element {
     try {
       await resetPassword.mutateAsync({ token, newPassword: values.newPassword });
     } catch {
-      setError("root", { message: "This reset link is invalid or has expired." });
+      setError("root", { message: t("resetPassword.failed") });
     }
   }
 
@@ -40,13 +43,13 @@ export function ResetPasswordForm({ token }: Props): JSX.Element {
     return (
       <Box w="full" maxW="360px" textAlign="center">
         <Heading size="lg" color="white" fontWeight="800" mb={3}>
-          Password reset
+          {t("resetPassword.doneTitle")}
         </Heading>
         <Text color="gray.400" mb={4} data-testid="reset-password-success">
-          Your password has been reset. You can now sign in.
+          {t("resetPassword.doneBody")}
         </Text>
         <Link to="/$locale/sign-in" params={{ locale }}>
-          <Button colorPalette="blue">Go to sign in</Button>
+          <Button colorPalette="blue">{t("resetPassword.goToSignIn")}</Button>
         </Link>
       </Box>
     );
@@ -56,14 +59,18 @@ export function ResetPasswordForm({ token }: Props): JSX.Element {
     <Box as="form" onSubmit={handleSubmit(onSubmit)} w="full" maxW="360px">
       <VStack gap={4} align="stretch">
         <Heading size="lg" color="white" fontWeight="800">
-          Reset password
+          {t("resetPassword.title")}
         </Heading>
 
-        <FormField name="newPassword" label="New password" error={errors.newPassword}>
+        <FormField
+          name="newPassword"
+          label={t("resetPassword.newPassword")}
+          error={errors.newPassword && t("validation.passwordMin", { min: PASSWORD_MIN_LENGTH })}
+        >
           <Input
             id="newPassword"
             type="password"
-            placeholder="New password (min. 12 characters)"
+            placeholder={t("resetPassword.newPasswordPlaceholder", { min: PASSWORD_MIN_LENGTH })}
             {...register("newPassword")}
           />
         </FormField>
@@ -75,7 +82,7 @@ export function ResetPasswordForm({ token }: Props): JSX.Element {
         )}
 
         <Button type="submit" colorPalette="blue" size="lg" fontWeight="700" loading={isSubmitting}>
-          Reset password
+          {t("resetPassword.submit")}
         </Button>
       </VStack>
     </Box>

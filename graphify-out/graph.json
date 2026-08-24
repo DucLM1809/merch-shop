@@ -87,8 +87,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_api_client_refreshaccesstoken",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "refreshaccesstoken()"
     },
     {
@@ -263,8 +263,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_api_types_sku",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "sku"
     },
     {
@@ -373,8 +373,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_api_types_game",
-      "community": 4,
-      "community_name": "Publisher Nav UI",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "game"
     },
     {
@@ -384,8 +384,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "src_api_types_creategamedto",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "creategamedto"
     },
     {
@@ -406,8 +406,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "src_api_types_team",
-      "community": 4,
-      "community_name": "Publisher Nav UI",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "team"
     },
     {
@@ -417,8 +417,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "src_api_types_character",
-      "community": 4,
-      "community_name": "Publisher Nav UI",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "character"
     },
     {
@@ -428,8 +428,8 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "src_api_types_createskudto",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "createskudto"
     },
     {
@@ -439,8 +439,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "src_api_types_skufacet",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "skufacet"
     },
     {
@@ -450,8 +450,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "src_api_types_bulkavailabilitydto",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "bulkavailabilitydto"
     },
     {
@@ -461,8 +461,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "src_api_types_createproductdto",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "createproductdto"
     },
     {
@@ -538,8 +538,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "src_api_types_order",
-      "community": 57,
-      "community_name": "admin.orders.test.tsx",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "order"
     },
     {
@@ -604,8 +604,8 @@
       "source_location": "L244",
       "_origin": "ast",
       "id": "src_api_types_synccartresponse",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 4,
+      "community_name": "Publisher Nav UI",
       "norm_label": "synccartresponse"
     },
     {
@@ -637,8 +637,8 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "src_api_types_createteamdto",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "createteamdto"
     },
     {
@@ -648,8 +648,8 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "src_api_types_createcharacterdto",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "createcharacterdto"
     },
     {
@@ -714,8 +714,8 @@
       "source_location": "L297",
       "_origin": "ast",
       "id": "src_api_types_registerdto",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 4,
+      "community_name": "Publisher Nav UI",
       "norm_label": "registerdto"
     },
     {
@@ -725,8 +725,8 @@
       "source_location": "L299",
       "_origin": "ast",
       "id": "src_api_types_logindto",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 4,
+      "community_name": "Publisher Nav UI",
       "norm_label": "logindto"
     },
     {
@@ -736,8 +736,8 @@
       "source_location": "L301",
       "_origin": "ast",
       "id": "src_api_types_forgotpassworddto",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 4,
+      "community_name": "Publisher Nav UI",
       "norm_label": "forgotpassworddto"
     },
     {
@@ -747,8 +747,8 @@
       "source_location": "L303",
       "_origin": "ast",
       "id": "src_api_types_resetpassworddto",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 4,
+      "community_name": "Publisher Nav UI",
       "norm_label": "resetpassworddto"
     },
     {
@@ -758,8 +758,8 @@
       "source_location": "L305",
       "_origin": "ast",
       "id": "src_api_types_verifyemaildto",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 4,
+      "community_name": "Publisher Nav UI",
       "norm_label": "verifyemaildto"
     },
     {
@@ -945,8 +945,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_localeswitcher_test",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "localeswitcher.test.tsx"
     },
     {
@@ -956,8 +956,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_components_localeswitcher_test_localecookie",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "localecookie()"
     },
     {
@@ -967,8 +967,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_components_localeswitcher_test_switcher",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "switcher()"
     },
     {
@@ -1055,8 +1055,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_optimizedimage_test",
-      "community": 55,
-      "community_name": "OptimizedImage.tsx",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "optimizedimage.test.tsx"
     },
     {
@@ -1066,8 +1066,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_optimizedimage",
-      "community": 55,
-      "community_name": "OptimizedImage.tsx",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "optimizedimage.tsx"
     },
     {
@@ -1077,8 +1077,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_optimizedimage_buildoptimizedimageurl",
-      "community": 55,
-      "community_name": "OptimizedImage.tsx",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "buildoptimizedimageurl()"
     },
     {
@@ -1088,8 +1088,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_optimizedimage_optimizedimageprops",
-      "community": 55,
-      "community_name": "OptimizedImage.tsx",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "optimizedimageprops"
     },
     {
@@ -1099,8 +1099,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_optimizedimage_optimizedimage",
-      "community": 55,
-      "community_name": "OptimizedImage.tsx",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "optimizedimage()"
     },
     {
@@ -1110,8 +1110,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_queryerror",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "queryerror.tsx"
     },
     {
@@ -1121,8 +1121,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_queryerror_props",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "props"
     },
     {
@@ -1132,8 +1132,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_queryerror_queryerror",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "queryerror()"
     },
     {
@@ -1143,8 +1143,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_env",
-      "community": 13,
-      "community_name": "Community 13",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "env.ts"
     },
     {
@@ -1154,8 +1154,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_env_env",
-      "community": 13,
-      "community_name": "Community 13",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "env"
     },
     {
@@ -1231,8 +1231,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_formatprice_test",
-      "community": 32,
-      "community_name": "Route",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "formatprice.test.ts"
     },
     {
@@ -1242,8 +1242,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_formatprice",
-      "community": 32,
-      "community_name": "Route",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "formatprice.ts"
     },
     {
@@ -1253,8 +1253,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_i18n_formatprice_formatters",
-      "community": 32,
-      "community_name": "Route",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "formatters"
     },
     {
@@ -1286,8 +1286,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_i18n_formatprice_pricelocaleof",
-      "community": 32,
-      "community_name": "Route",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "pricelocaleof()"
     },
     {
@@ -1297,8 +1297,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_i18n_formatprice_ts_docref_adr_0017",
-      "community": 32,
-      "community_name": "Route",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "adr-0017"
     },
     {
@@ -1550,8 +1550,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_localecookie",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "localecookie.ts"
     },
     {
@@ -1561,8 +1561,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_i18n_localecookie_readlocalecookie",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "readlocalecookie()"
     },
     {
@@ -1572,8 +1572,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_i18n_localecookie_writelocalecookie",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "writelocalecookie()"
     },
     {
@@ -1583,8 +1583,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_localehints",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "localehints.ts"
     },
     {
@@ -1638,8 +1638,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_locales",
-      "community": 6,
-      "community_name": "Product Detail View",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "locales.ts"
     },
     {
@@ -1649,8 +1649,8 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "src_i18n_locales_supported_locales",
-      "community": 6,
-      "community_name": "Product Detail View",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "supported_locales"
     },
     {
@@ -1660,8 +1660,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_i18n_locales_supportedlocale",
-      "community": 6,
-      "community_name": "Product Detail View",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "supportedlocale"
     },
     {
@@ -1671,8 +1671,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_i18n_locales_issupportedlocale",
-      "community": 32,
-      "community_name": "Route",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "issupportedlocale()"
     },
     {
@@ -1833,7 +1833,7 @@
       "label": "NAMESPACES",
       "file_type": "code",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L24",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "src_i18n_resources_namespaces",
       "community": 5,
@@ -1844,7 +1844,7 @@
       "label": "Namespace",
       "file_type": "code",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L26",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "src_i18n_resources_namespace",
       "community": 5,
@@ -1855,7 +1855,7 @@
       "label": "ResourceTree",
       "file_type": "code",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L29",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "src_i18n_resources_resourcetree",
       "community": 5,
@@ -1866,7 +1866,7 @@
       "label": "resources",
       "file_type": "code",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L38",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "src_i18n_resources_resources",
       "community": 5,
@@ -1877,7 +1877,7 @@
       "label": "ADR-0017",
       "file_type": "concept",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L22",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "src_i18n_resources_ts_docref_adr_0017",
       "community": 5,
@@ -1935,8 +1935,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_i18n_uselocale",
-      "community": 6,
-      "community_name": "Product Detail View",
+      "community": 16,
+      "community_name": "Community 16",
       "norm_label": "uselocale.ts"
     },
     {
@@ -1957,8 +1957,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_integrations_tanstack_query_devtools",
-      "community": 13,
-      "community_name": "Community 13",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "devtools.tsx"
     },
     {
@@ -2232,8 +2232,8 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "src_mocks_handlers_toraworder",
-      "community": 57,
-      "community_name": "admin.orders.test.tsx",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "toraworder()"
     },
     {
@@ -2243,8 +2243,8 @@
       "source_location": "L297",
       "_origin": "ast",
       "id": "src_mocks_handlers_mockaccount",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "mockaccount"
     },
     {
@@ -2265,8 +2265,8 @@
       "source_location": "L306",
       "_origin": "ast",
       "id": "src_mocks_handlers_resetauthmockstate",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 24,
+      "community_name": "Community 24",
       "norm_label": "resetauthmockstate()"
     },
     {
@@ -2309,8 +2309,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_stories",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "authpageview.stories.tsx"
     },
     {
@@ -2320,8 +2320,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_stories_story",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "story"
     },
     {
@@ -2331,8 +2331,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_stories_authformplaceholder",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "authformplaceholder()"
     },
     {
@@ -2342,8 +2342,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_stories_signin",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "signin"
     },
     {
@@ -2353,8 +2353,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_stories_signup",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "signup"
     },
     {
@@ -2364,8 +2364,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_test",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "authpageview.test.tsx"
     },
     {
@@ -2375,8 +2375,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_test_renderview",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "renderview()"
     },
     {
@@ -2386,8 +2386,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "authpageview.tsx"
     },
     {
@@ -2397,8 +2397,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_props",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "props"
     },
     {
@@ -2408,8 +2408,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_modules_account_components_authpageview_authpageview",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 15,
+      "community_name": "Community 15",
       "norm_label": "authpageview()"
     },
     {
@@ -2419,41 +2419,41 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_account_components_forgotpasswordform_schema",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
       "norm_label": "forgotpasswordform.schema.ts"
     },
     {
       "label": "schema",
       "file_type": "code",
       "source_file": "src/modules/account/components/ForgotPasswordForm.schema.ts",
-      "source_location": "L3",
+      "source_location": "L5",
       "_origin": "ast",
       "id": "src_modules_account_components_forgotpasswordform_schema_schema",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
       "norm_label": "schema"
     },
     {
       "label": "FormValues",
       "file_type": "code",
       "source_file": "src/modules/account/components/ForgotPasswordForm.schema.ts",
-      "source_location": "L7",
+      "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_account_components_forgotpasswordform_schema_formvalues",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
       "norm_label": "formvalues"
     },
     {
       "label": "DEFAULTS",
       "file_type": "code",
       "source_file": "src/modules/account/components/ForgotPasswordForm.schema.ts",
-      "source_location": "L9",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_account_components_forgotpasswordform_schema_defaults",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
       "norm_label": "defaults"
     },
     {
@@ -2463,19 +2463,19 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_account_components_forgotpasswordform",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
       "norm_label": "forgotpasswordform.tsx"
     },
     {
       "label": "ForgotPasswordForm()",
       "file_type": "code",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "src_modules_account_components_forgotpasswordform_forgotpasswordform",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "forgotpasswordform()"
     },
     {
@@ -2493,7 +2493,7 @@
       "label": "schema",
       "file_type": "code",
       "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
-      "source_location": "L3",
+      "source_location": "L6",
       "_origin": "ast",
       "id": "src_modules_account_components_resetpasswordform_schema_schema",
       "community": 47,
@@ -2504,7 +2504,7 @@
       "label": "FormValues",
       "file_type": "code",
       "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
-      "source_location": "L7",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "src_modules_account_components_resetpasswordform_schema_formvalues",
       "community": 47,
@@ -2515,7 +2515,7 @@
       "label": "DEFAULTS",
       "file_type": "code",
       "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
-      "source_location": "L9",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "src_modules_account_components_resetpasswordform_schema_defaults",
       "community": 47,
@@ -2537,7 +2537,7 @@
       "label": "Props",
       "file_type": "code",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L13",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "src_modules_account_components_resetpasswordform_props",
       "community": 47,
@@ -2548,7 +2548,7 @@
       "label": "ResetPasswordForm()",
       "file_type": "code",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L17",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "src_modules_account_components_resetpasswordform_resetpasswordform",
       "community": 25,
@@ -2570,7 +2570,7 @@
       "label": "schema",
       "file_type": "code",
       "source_file": "src/modules/account/components/SignInForm.schema.ts",
-      "source_location": "L3",
+      "source_location": "L5",
       "_origin": "ast",
       "id": "src_modules_account_components_signinform_schema_schema",
       "community": 47,
@@ -2581,7 +2581,7 @@
       "label": "FormValues",
       "file_type": "code",
       "source_file": "src/modules/account/components/SignInForm.schema.ts",
-      "source_location": "L8",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "src_modules_account_components_signinform_schema_formvalues",
       "community": 47,
@@ -2592,7 +2592,7 @@
       "label": "DEFAULTS",
       "file_type": "code",
       "source_file": "src/modules/account/components/SignInForm.schema.ts",
-      "source_location": "L10",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "src_modules_account_components_signinform_schema_defaults",
       "community": 47,
@@ -2614,11 +2614,11 @@
       "label": "SignInForm()",
       "file_type": "code",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "src_modules_account_components_signinform_signinform",
-      "community": 25,
-      "community_name": "Community 25",
+      "community": 16,
+      "community_name": "Community 16",
       "norm_label": "signinform()"
     },
     {
@@ -2636,7 +2636,7 @@
       "label": "schema",
       "file_type": "code",
       "source_file": "src/modules/account/components/SignUpForm.schema.ts",
-      "source_location": "L3",
+      "source_location": "L6",
       "_origin": "ast",
       "id": "src_modules_account_components_signupform_schema_schema",
       "community": 47,
@@ -2647,7 +2647,7 @@
       "label": "FormValues",
       "file_type": "code",
       "source_file": "src/modules/account/components/SignUpForm.schema.ts",
-      "source_location": "L8",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_account_components_signupform_schema_formvalues",
       "community": 47,
@@ -2658,7 +2658,7 @@
       "label": "DEFAULTS",
       "file_type": "code",
       "source_file": "src/modules/account/components/SignUpForm.schema.ts",
-      "source_location": "L10",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "src_modules_account_components_signupform_schema_defaults",
       "community": 47,
@@ -2680,7 +2680,7 @@
       "label": "SignUpForm()",
       "file_type": "code",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "src_modules_account_components_signupform_signupform",
       "community": 25,
@@ -2702,7 +2702,7 @@
       "label": "Props",
       "file_type": "code",
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_account_components_verifyemailview_props",
       "community": 25,
@@ -2713,7 +2713,7 @@
       "label": "VerifyEmailView()",
       "file_type": "code",
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "src_modules_account_components_verifyemailview_verifyemailview",
       "community": 25,
@@ -2727,8 +2727,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_account_hooks_index_test",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "account/hooks/index.test.ts"
     },
     {
@@ -2738,8 +2738,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_modules_account_hooks_index_test_makewrapper",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "makewrapper()"
     },
     {
@@ -2749,8 +2749,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_account_hooks_index",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 4,
+      "community_name": "Publisher Nav UI",
       "norm_label": "account/hooks/index.ts"
     },
     {
@@ -2760,8 +2760,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_modules_account_hooks_index_accountkeys",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "accountkeys"
     },
     {
@@ -2782,8 +2782,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_modules_account_hooks_index_usedeleteaccount",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "usedeleteaccount()"
     },
     {
@@ -2837,8 +2837,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "src_modules_account_hooks_index_useforgotpassword",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "useforgotpassword()"
     },
     {
@@ -2870,8 +2870,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "src_modules_account_hooks_index_bootstrapauth",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "bootstrapauth()"
     },
     {
@@ -2886,14 +2886,58 @@
       "norm_label": "account/index.ts"
     },
     {
+      "label": "passwordPolicy.ts",
+      "file_type": "code",
+      "source_file": "src/modules/account/passwordPolicy.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_account_passwordpolicy",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
+      "norm_label": "passwordpolicy.ts"
+    },
+    {
+      "label": "validationKeys.ts",
+      "file_type": "code",
+      "source_file": "src/modules/account/validationKeys.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_account_validationkeys",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
+      "norm_label": "validationkeys.ts"
+    },
+    {
+      "label": "ACCOUNT_VALIDATION_KEYS",
+      "file_type": "code",
+      "source_file": "src/modules/account/validationKeys.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "src_modules_account_validationkeys_account_validation_keys",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
+      "norm_label": "account_validation_keys"
+    },
+    {
+      "label": "AccountValidationKey",
+      "file_type": "code",
+      "source_file": "src/modules/account/validationKeys.ts",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "src_modules_account_validationkeys_accountvalidationkey",
+      "community": 47,
+      "community_name": "ResetPasswordForm.tsx",
+      "norm_label": "accountvalidationkey"
+    },
+    {
       "label": "AdminCharactersView.schema.ts",
       "file_type": "code",
       "source_file": "src/modules/admin/components/AdminCharactersView.schema.ts",
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_admincharactersview_schema",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admincharactersview.schema.ts"
     },
     {
@@ -2903,8 +2947,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_modules_admin_components_admincharactersview_schema_schema",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "schema"
     },
     {
@@ -2914,8 +2958,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_admin_components_admincharactersview_schema_formvalues",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "formvalues"
     },
     {
@@ -2925,8 +2969,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_admin_components_admincharactersview_schema_defaults",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "defaults"
     },
     {
@@ -2936,8 +2980,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_admincharactersview",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admincharactersview.tsx"
     },
     {
@@ -2947,8 +2991,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_modules_admin_components_admincharactersview_selectstyle",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "selectstyle"
     },
     {
@@ -2958,8 +3002,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_modules_admin_components_admincharactersview_admincharactersview",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admincharactersview()"
     },
     {
@@ -2969,8 +3013,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_admingamesview_schema",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admingamesview.schema.ts"
     },
     {
@@ -2980,8 +3024,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_modules_admin_components_admingamesview_schema_schema",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "schema"
     },
     {
@@ -2991,8 +3035,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_admin_components_admingamesview_schema_formvalues",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "formvalues"
     },
     {
@@ -3002,8 +3046,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_admin_components_admingamesview_schema_defaults",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "defaults"
     },
     {
@@ -3013,8 +3057,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_admingamesview",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admingamesview.tsx"
     },
     {
@@ -3024,8 +3068,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_modules_admin_components_admingamesview_selectstyle",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "selectstyle"
     },
     {
@@ -3035,8 +3079,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_modules_admin_components_admingamesview_admingamesview",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admingamesview()"
     },
     {
@@ -3189,8 +3233,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminproductsview_schema",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "adminproductsview.schema.ts"
     },
     {
@@ -3200,8 +3244,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminproductsview_schema_schema",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "schema"
     },
     {
@@ -3211,8 +3255,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminproductsview_schema_formvalues",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "formvalues"
     },
     {
@@ -3222,8 +3266,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminproductsview_schema_defaults",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "defaults"
     },
     {
@@ -3233,8 +3277,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminproductsview",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "adminproductsview.tsx"
     },
     {
@@ -3244,8 +3288,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminproductsview_selectstyle",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "selectstyle"
     },
     {
@@ -3255,8 +3299,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminproductsview_adminproductsview",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "adminproductsview()"
     },
     {
@@ -3332,8 +3376,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminskusview_schema",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "adminskusview.schema.ts"
     },
     {
@@ -3343,8 +3387,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminskusview_schema_schema",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "schema"
     },
     {
@@ -3354,8 +3398,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminskusview_schema_formvalues",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "formvalues"
     },
     {
@@ -3365,8 +3409,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminskusview_schema_defaults",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "defaults"
     },
     {
@@ -3376,8 +3420,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminskusview",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "adminskusview.tsx"
     },
     {
@@ -3387,8 +3431,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminskusview_enrichedsku",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "enrichedsku"
     },
     {
@@ -3398,8 +3442,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminskusview_adminskusview",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "adminskusview()"
     },
     {
@@ -3409,8 +3453,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminteamsview_schema",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "adminteamsview.schema.ts"
     },
     {
@@ -3420,8 +3464,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminteamsview_schema_schema",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "schema"
     },
     {
@@ -3431,8 +3475,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminteamsview_schema_formvalues",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "formvalues"
     },
     {
@@ -3442,8 +3486,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminteamsview_schema_defaults",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "defaults"
     },
     {
@@ -3453,8 +3497,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminteamsview",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "adminteamsview.tsx"
     },
     {
@@ -3464,8 +3508,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminteamsview_selectstyle",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "selectstyle"
     },
     {
@@ -3475,8 +3519,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_modules_admin_components_adminteamsview_adminteamsview",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "adminteamsview()"
     },
     {
@@ -3486,8 +3530,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admin/hooks/index.ts"
     },
     {
@@ -3530,8 +3574,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usecreategame",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usecreategame()"
     },
     {
@@ -3541,8 +3585,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_useupdategame",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "useupdategame()"
     },
     {
@@ -3552,8 +3596,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usedeletegame",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usedeletegame()"
     },
     {
@@ -3563,8 +3607,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usecreateteam",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usecreateteam()"
     },
     {
@@ -3574,8 +3618,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_useupdateteam",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "useupdateteam()"
     },
     {
@@ -3585,8 +3629,8 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usedeleteteam",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usedeleteteam()"
     },
     {
@@ -3596,8 +3640,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usecreatecharacter",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usecreatecharacter()"
     },
     {
@@ -3607,8 +3651,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_useupdatecharacter",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "useupdatecharacter()"
     },
     {
@@ -3618,8 +3662,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usedeletecharacter",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usedeletecharacter()"
     },
     {
@@ -3629,8 +3673,8 @@
       "source_location": "L141",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usecreateproduct",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "usecreateproduct()"
     },
     {
@@ -3640,8 +3684,8 @@
       "source_location": "L151",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_useupdateproduct",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "useupdateproduct()"
     },
     {
@@ -3651,8 +3695,8 @@
       "source_location": "L162",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usedeleteproduct",
-      "community": 15,
-      "community_name": "Community 15",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "usedeleteproduct()"
     },
     {
@@ -3662,8 +3706,8 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usecreatesku",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usecreatesku()"
     },
     {
@@ -3673,8 +3717,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usesetskuavailability",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usesetskuavailability()"
     },
     {
@@ -3684,8 +3728,8 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usedeletesku",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usedeletesku()"
     },
     {
@@ -3695,8 +3739,8 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "src_modules_admin_hooks_index_usebulksetskuavailability",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usebulksetskuavailability()"
     },
     {
@@ -3805,7 +3849,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_cart_components_cartview_test",
-      "community": 46,
+      "community": 32,
       "community_name": "Route",
       "norm_label": "cartview.test.tsx"
     },
@@ -3816,7 +3860,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_modules_cart_components_cartview_test_items",
-      "community": 46,
+      "community": 32,
       "community_name": "Route",
       "norm_label": "items"
     },
@@ -3827,7 +3871,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_modules_cart_components_cartview_test_itemcount",
-      "community": 46,
+      "community": 32,
       "community_name": "Route",
       "norm_label": "itemcount()"
     },
@@ -3849,8 +3893,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_cart_components_cartview_props",
-      "community": 1,
-      "community_name": "HTTP Client & API Types",
+      "community": 32,
+      "community_name": "Route",
       "norm_label": "props"
     },
     {
@@ -4124,8 +4168,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_test",
-      "community": 46,
-      "community_name": "Route",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "facetfilterview.test.tsx"
     },
     {
@@ -4135,8 +4179,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_test_games",
-      "community": 46,
-      "community_name": "Route",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "games"
     },
     {
@@ -4146,8 +4190,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_test_teams",
-      "community": 46,
-      "community_name": "Route",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "teams"
     },
     {
@@ -4157,8 +4201,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_test_characters",
-      "community": 46,
-      "community_name": "Route",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "characters"
     },
     {
@@ -4168,8 +4212,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_test_renderfilter",
-      "community": 46,
-      "community_name": "Route",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "renderfilter()"
     },
     {
@@ -4179,8 +4223,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview",
-      "community": 2,
-      "community_name": "Catalog Browse Components",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "facetfilterview.tsx"
     },
     {
@@ -4190,8 +4234,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_facetfilterviewprops",
-      "community": 4,
-      "community_name": "Publisher Nav UI",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "facetfilterviewprops"
     },
     {
@@ -4201,8 +4245,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_facetfilterview",
-      "community": 2,
-      "community_name": "Catalog Browse Components",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "facetfilterview()"
     },
     {
@@ -4212,8 +4256,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_facetgroupprops",
-      "community": 2,
-      "community_name": "Catalog Browse Components",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "facetgroupprops"
     },
     {
@@ -4223,8 +4267,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "src_modules_catalog_components_facetfilterview_facetgroup",
-      "community": 2,
-      "community_name": "Catalog Browse Components",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "facetgroup()"
     },
     {
@@ -4234,8 +4278,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepage_test",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "gamepage.test.tsx"
     },
     {
@@ -4245,8 +4289,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepage",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "gamepage.tsx"
     },
     {
@@ -4256,8 +4300,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepage_props",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "props"
     },
     {
@@ -4267,8 +4311,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepage_gamepage",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "gamepage()"
     },
     {
@@ -4278,8 +4322,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview_stories",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "gamepageview.stories.tsx"
     },
     {
@@ -4289,8 +4333,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview_stories_meta",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "meta"
     },
     {
@@ -4300,8 +4344,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview_stories_story",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "story"
     },
     {
@@ -4311,8 +4355,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview_stories_loading",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "loading"
     },
     {
@@ -4322,8 +4366,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview_stories_loaded",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "loaded"
     },
     {
@@ -4333,8 +4377,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview_test",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "gamepageview.test.tsx"
     },
     {
@@ -4344,8 +4388,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "gamepageview.tsx"
     },
     {
@@ -4355,8 +4399,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview_gamepageviewprops",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "gamepageviewprops"
     },
     {
@@ -4366,8 +4410,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_modules_catalog_components_gamepageview_gamepageview",
-      "community": 21,
-      "community_name": "Community 21",
+      "community": 27,
+      "community_name": "Community 27",
       "norm_label": "gamepageview()"
     },
     {
@@ -4597,8 +4641,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "productdetailview.stories.tsx"
     },
     {
@@ -4608,8 +4652,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories_product",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "product"
     },
     {
@@ -4619,8 +4663,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories_story",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "story"
     },
     {
@@ -4630,8 +4674,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories_loading",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "loading"
     },
     {
@@ -4641,8 +4685,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories_error",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "error"
     },
     {
@@ -4652,8 +4696,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories_default",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "default"
     },
     {
@@ -4663,8 +4707,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories_noimage",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "noimage"
     },
     {
@@ -4674,8 +4718,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories_noskus",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "noskus"
     },
     {
@@ -4685,8 +4729,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_stories_editionvariants",
-      "community": 30,
-      "community_name": "Community 30",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "editionvariants"
     },
     {
@@ -4696,8 +4740,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_test",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "productdetailview.test.tsx"
     },
     {
@@ -4707,8 +4751,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_test_unavailable",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "unavailable()"
     },
     {
@@ -4718,8 +4762,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_test_product",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "product"
     },
     {
@@ -4729,8 +4773,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "productdetailview.tsx"
     },
     {
@@ -4740,8 +4784,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_productdetailviewprops",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "productdetailviewprops"
     },
     {
@@ -4751,8 +4795,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_uniquevalues",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "uniquevalues()"
     },
     {
@@ -4762,8 +4806,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_isoptionavailable",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "isoptionavailable()"
     },
     {
@@ -4773,8 +4817,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_dimbutton",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "dimbutton()"
     },
     {
@@ -4784,8 +4828,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "src_modules_catalog_components_productdetailview_productdetailview",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 19,
+      "community_name": "Community 19",
       "norm_label": "productdetailview()"
     },
     {
@@ -4795,8 +4839,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publishernav_test",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "publishernav.test.tsx"
     },
     {
@@ -4806,8 +4850,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publishernav",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "publishernav.tsx"
     },
     {
@@ -4817,8 +4861,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publishernav_navlink",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "navlink"
     },
     {
@@ -4828,8 +4872,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publishernav_props",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "props"
     },
     {
@@ -4839,8 +4883,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publishernav_publishernav",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "publishernav()"
     },
     {
@@ -4982,8 +5026,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publisherpage_test",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "publisherpage.test.tsx"
     },
     {
@@ -4993,8 +5037,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publisherpage",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "publisherpage.tsx"
     },
     {
@@ -5004,8 +5048,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publisherpage_props",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "props"
     },
     {
@@ -5015,8 +5059,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_modules_catalog_components_publisherpage_publisherpage",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "publisherpage()"
     },
     {
@@ -5213,8 +5257,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_modules_catalog_hooks_index_usepublishers",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "usepublishers()"
     },
     {
@@ -5224,8 +5268,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "src_modules_catalog_hooks_index_usepublisher",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "usepublisher()"
     },
     {
@@ -5235,8 +5279,8 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "src_modules_catalog_hooks_index_usegames",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "usegames()"
     },
     {
@@ -5290,8 +5334,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_catalog_seo",
-      "community": 37,
-      "community_name": "order-confirmation.tsx",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "seo.ts"
     },
     {
@@ -5301,8 +5345,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_modules_catalog_seo_breadcrumbitem",
-      "community": 37,
-      "community_name": "order-confirmation.tsx",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "breadcrumbitem"
     },
     {
@@ -5312,8 +5356,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_catalog_seo_breadcrumbjsonld",
-      "community": 37,
-      "community_name": "order-confirmation.tsx",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "breadcrumbjsonld()"
     },
     {
@@ -5323,8 +5367,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_modules_catalog_seo_slugtotitle",
-      "community": 37,
-      "community_name": "order-confirmation.tsx",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "slugtotitle()"
     },
     {
@@ -5334,8 +5378,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_modules_catalog_seo_gameheadparams",
-      "community": 37,
-      "community_name": "order-confirmation.tsx",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "gameheadparams"
     },
     {
@@ -5345,8 +5389,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_modules_catalog_seo_buildgameheadmeta",
-      "community": 37,
-      "community_name": "order-confirmation.tsx",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "buildgameheadmeta()"
     },
     {
@@ -5356,8 +5400,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "src_modules_catalog_seo_buildproductheadmeta",
-      "community": 37,
-      "community_name": "order-confirmation.tsx",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "buildproductheadmeta()"
     },
     {
@@ -5532,8 +5576,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_modules_checkout_components_checkoutformview_test_renderview",
-      "community": 46,
-      "community_name": "Route",
+      "community": 11,
+      "community_name": "App Shell & Theme",
       "norm_label": "renderview()"
     },
     {
@@ -5631,8 +5675,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_orders_components_orderconfirmationpage_test",
-      "community": 1,
-      "community_name": "HTTP Client & API Types",
+      "community": 3,
+      "community_name": "Cart View & Stories",
       "norm_label": "orderconfirmationpage.test.tsx"
     },
     {
@@ -5642,8 +5686,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_orders_components_orderconfirmationpage_test_singleitem",
-      "community": 1,
-      "community_name": "HTTP Client & API Types",
+      "community": 3,
+      "community_name": "Cart View & Stories",
       "norm_label": "singleitem"
     },
     {
@@ -5653,8 +5697,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_modules_orders_components_orderconfirmationpage_test_multiitems",
-      "community": 1,
-      "community_name": "HTTP Client & API Types",
+      "community": 3,
+      "community_name": "Cart View & Stories",
       "norm_label": "multiitems"
     },
     {
@@ -5664,8 +5708,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_orders_components_orderconfirmationpage",
-      "community": 1,
-      "community_name": "HTTP Client & API Types",
+      "community": 32,
+      "community_name": "Route",
       "norm_label": "orderconfirmationpage.tsx"
     },
     {
@@ -5675,8 +5719,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_modules_orders_components_orderconfirmationpage_props",
-      "community": 1,
-      "community_name": "HTTP Client & API Types",
+      "community": 32,
+      "community_name": "Route",
       "norm_label": "props"
     },
     {
@@ -5686,8 +5730,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_modules_orders_components_orderconfirmationpage_orderconfirmationpage",
-      "community": 1,
-      "community_name": "HTTP Client & API Types",
+      "community": 32,
+      "community_name": "Route",
       "norm_label": "orderconfirmationpage()"
     },
     {
@@ -6489,8 +6533,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_test",
-      "community": 6,
-      "community_name": "Product Detail View",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "$locale.test.tsx"
     },
     {
@@ -6500,8 +6544,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_locale_test_empty_cart_title",
-      "community": 6,
-      "community_name": "Product Detail View",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "empty_cart_title"
     },
     {
@@ -6511,8 +6555,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_routes_locale_test_setlocalecookie",
-      "community": 6,
-      "community_name": "Product Detail View",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "setlocalecookie()"
     },
     {
@@ -6533,8 +6577,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_routes_locale_route",
-      "community": 14,
-      "community_name": "Community 14",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "route"
     },
     {
@@ -6632,8 +6676,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_lazy",
-      "community": 16,
-      "community_name": "Community 16",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "account.orders.index.lazy.tsx"
     },
     {
@@ -6643,8 +6687,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_lazy_route",
-      "community": 16,
-      "community_name": "Community 16",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "route"
     },
     {
@@ -6665,8 +6709,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_lazy_ordercard",
-      "community": 16,
-      "community_name": "Community 16",
+      "community": 36,
+      "community_name": "verify-email.tsx",
       "norm_label": "ordercard()"
     },
     {
@@ -6676,8 +6720,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_test",
-      "community": 57,
-      "community_name": "admin.orders.test.tsx",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "account.orders.index.test.tsx"
     },
     {
@@ -6687,8 +6731,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_test_twoorders",
-      "community": 57,
-      "community_name": "admin.orders.test.tsx",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "twoorders"
     },
     {
@@ -6698,8 +6742,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_test_ordernumber",
-      "community": 57,
-      "community_name": "admin.orders.test.tsx",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "ordernumber()"
     },
     {
@@ -6808,8 +6852,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_characters_lazy",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admin.characters.lazy.tsx"
     },
     {
@@ -6819,8 +6863,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_characters_lazy_route",
-      "community": 23,
-      "community_name": "Community 23",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "route"
     },
     {
@@ -6830,8 +6874,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_characters_test",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "admin.characters.test.tsx"
     },
     {
@@ -6841,8 +6885,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_characters_test_mockgames",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "mockgames"
     },
     {
@@ -6852,8 +6896,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_characters_test_twocharacters",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 12,
+      "community_name": "Checkout Form Stories",
       "norm_label": "twocharacters"
     },
     {
@@ -6863,8 +6907,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_characters",
-      "community": 14,
-      "community_name": "Community 14",
+      "community": 17,
+      "community_name": "Community 17",
       "norm_label": "admin.characters.tsx"
     },
     {
@@ -6874,8 +6918,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_characters_route",
-      "community": 14,
-      "community_name": "Community 14",
+      "community": 17,
+      "community_name": "Community 17",
       "norm_label": "route"
     },
     {
@@ -6885,8 +6929,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_games_lazy",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admin.games.lazy.tsx"
     },
     {
@@ -6896,8 +6940,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_games_lazy_route",
-      "community": 22,
-      "community_name": "Community 22",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "route"
     },
     {
@@ -6940,8 +6984,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_games",
-      "community": 49,
-      "community_name": "admin.orders.tsx",
+      "community": 14,
+      "community_name": "Community 14",
       "norm_label": "admin.games.tsx"
     },
     {
@@ -6951,8 +6995,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_games_route",
-      "community": 49,
-      "community_name": "admin.orders.tsx",
+      "community": 14,
+      "community_name": "Community 14",
       "norm_label": "route"
     },
     {
@@ -7017,8 +7061,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_orders_test",
-      "community": 57,
-      "community_name": "admin.orders.test.tsx",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "admin.orders.test.tsx"
     },
     {
@@ -7028,8 +7072,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_orders_test_testorders",
-      "community": 57,
-      "community_name": "admin.orders.test.tsx",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "testorders"
     },
     {
@@ -7039,8 +7083,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_orders_test_adminordersenvelope",
-      "community": 57,
-      "community_name": "admin.orders.test.tsx",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "adminordersenvelope()"
     },
     {
@@ -7149,8 +7193,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_products",
-      "community": 14,
-      "community_name": "Community 14",
+      "community": 18,
+      "community_name": "Community 18",
       "norm_label": "admin.products.tsx"
     },
     {
@@ -7160,8 +7204,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_products_route",
-      "community": 14,
-      "community_name": "Community 14",
+      "community": 18,
+      "community_name": "Community 18",
       "norm_label": "route"
     },
     {
@@ -7215,8 +7259,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_publishers",
-      "community": 52,
-      "community_name": "admin.products.test.tsx",
+      "community": 14,
+      "community_name": "Community 14",
       "norm_label": "admin.publishers.tsx"
     },
     {
@@ -7226,8 +7270,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_publishers_route",
-      "community": 52,
-      "community_name": "admin.products.test.tsx",
+      "community": 14,
+      "community_name": "Community 14",
       "norm_label": "route"
     },
     {
@@ -7237,8 +7281,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_skus_lazy",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admin.skus.lazy.tsx"
     },
     {
@@ -7248,8 +7292,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_skus_lazy_route",
-      "community": 17,
-      "community_name": "Community 17",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "route"
     },
     {
@@ -7303,8 +7347,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_teams_lazy",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "admin.teams.lazy.tsx"
     },
     {
@@ -7314,8 +7358,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_teams_lazy_route",
-      "community": 20,
-      "community_name": "Community 20",
+      "community": 7,
+      "community_name": "Account & Auth UI",
       "norm_label": "route"
     },
     {
@@ -7407,14 +7451,36 @@
       "norm_label": "adminguard()"
     },
     {
+      "label": "account.i18n.test.tsx",
+      "file_type": "code",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_routes_locale_auth_account_i18n_test",
+      "community": 3,
+      "community_name": "Cart View & Stories",
+      "norm_label": "account.i18n.test.tsx"
+    },
+    {
+      "label": "passwordMin()",
+      "file_type": "code",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "src_routes_locale_auth_account_i18n_test_passwordmin",
+      "community": 3,
+      "community_name": "Cart View & Stories",
+      "norm_label": "passwordmin()"
+    },
+    {
       "label": "forgot-password.lazy.tsx",
       "file_type": "code",
       "source_file": "src/routes/$locale/(auth)/forgot-password.lazy.tsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_auth_forgot_password_lazy",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "forgot-password.lazy.tsx"
     },
     {
@@ -7424,8 +7490,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_routes_locale_auth_forgot_password_lazy_route",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "route"
     },
     {
@@ -7435,8 +7501,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_routes_locale_auth_forgot_password_lazy_forgotpasswordpage",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 25,
+      "community_name": "Community 25",
       "norm_label": "forgotpasswordpage()"
     },
     {
@@ -7677,8 +7743,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_auth_sign_up",
-      "community": 54,
-      "community_name": "SignUpForm.tsx",
+      "community": 14,
+      "community_name": "Community 14",
       "norm_label": "sign-up.tsx"
     },
     {
@@ -7688,8 +7754,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_routes_locale_auth_sign_up_route",
-      "community": 54,
-      "community_name": "SignUpForm.tsx",
+      "community": 14,
+      "community_name": "Community 14",
       "norm_label": "route"
     },
     {
@@ -7776,8 +7842,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_cart_cart_i18n_test",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "cart.i18n.test.tsx"
     },
     {
@@ -7787,8 +7853,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_locale_cart_cart_i18n_test_jersey",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "jersey"
     },
     {
@@ -7820,8 +7886,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_cart_cart_test",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "cart.test.tsx"
     },
     {
@@ -7853,8 +7919,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_catalog_publisherslug_gameslug_index_lazy",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "$publisherslug.$gameslug.index.lazy.tsx"
     },
     {
@@ -7864,8 +7930,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_routes_locale_catalog_publisherslug_gameslug_index_lazy_route",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "route"
     },
     {
@@ -7875,8 +7941,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_routes_locale_catalog_publisherslug_gameslug_index_lazy_routecomponent",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "routecomponent()"
     },
     {
@@ -8040,8 +8106,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_catalog_publisherslug_index_lazy",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "$publisherslug.index.lazy.tsx"
     },
     {
@@ -8051,8 +8117,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_routes_locale_catalog_publisherslug_index_lazy_route",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "route"
     },
     {
@@ -8062,8 +8128,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_routes_locale_catalog_publisherslug_index_lazy_routecomponent",
-      "community": 12,
-      "community_name": "Checkout Form Stories",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "routecomponent()"
     },
     {
@@ -8161,8 +8227,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_checkout_checkout_i18n_test",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "checkout.i18n.test.tsx"
     },
     {
@@ -8172,8 +8238,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_routes_locale_checkout_checkout_i18n_test_mockconfirmcardpayment",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "mockconfirmcardpayment"
     },
     {
@@ -8183,8 +8249,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_routes_locale_checkout_checkout_i18n_test_jersey",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "jersey"
     },
     {
@@ -8216,8 +8282,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_checkout_checkout_test",
-      "community": 32,
-      "community_name": "Route",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "checkout.test.tsx"
     },
     {
@@ -8227,8 +8293,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_routes_locale_checkout_checkout_test_mockconfirmcardpayment",
-      "community": 32,
-      "community_name": "Route",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "mockconfirmcardpayment"
     },
     {
@@ -8238,8 +8304,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_routes_locale_checkout_checkout_test_mockstripe",
-      "community": 32,
-      "community_name": "Route",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "mockstripe"
     },
     {
@@ -8249,8 +8315,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_routes_locale_checkout_checkout_test_paylabel",
-      "community": 32,
-      "community_name": "Route",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "paylabel()"
     },
     {
@@ -8260,8 +8326,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_routes_locale_checkout_checkout_test_fillshippingform",
-      "community": 32,
-      "community_name": "Route",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "fillshippingform()"
     },
     {
@@ -8447,8 +8513,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_root",
-      "community": 13,
-      "community_name": "Community 13",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "__root.tsx"
     },
     {
@@ -8458,8 +8524,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_routes_root_myroutercontext",
-      "community": 13,
-      "community_name": "Community 13",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "myroutercontext"
     },
     {
@@ -8491,8 +8557,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "src_routes_root_authbootstrapeffect",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "authbootstrapeffect()"
     },
     {
@@ -8524,8 +8590,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_routes_index_route",
-      "community": 14,
-      "community_name": "Community 14",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "route"
     },
     {
@@ -8623,8 +8689,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_store_authtoken",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "authtoken.ts"
     },
     {
@@ -8634,8 +8700,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_store_authtoken_authstate",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "authstate"
     },
     {
@@ -8645,8 +8711,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_store_authtoken_authstore",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 24,
+      "community_name": "Community 24",
       "norm_label": "authstore"
     },
     {
@@ -8656,8 +8722,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_store_authtoken_registerhardsignouthandler",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "registerhardsignouthandler()"
     },
     {
@@ -8667,8 +8733,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_store_authtoken_getaccesstoken",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "getaccesstoken()"
     },
     {
@@ -8678,8 +8744,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_store_authtoken_setsession",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "setsession()"
     },
     {
@@ -8689,8 +8755,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_store_authtoken_clearsession",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "clearsession()"
     },
     {
@@ -8700,8 +8766,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_store_authtoken_forcesignout",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "forcesignout()"
     },
     {
@@ -8711,8 +8777,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_store_authtoken_setloaded",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "setloaded()"
     },
     {
@@ -8766,8 +8832,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_store_cart_cartitem",
-      "community": 1,
-      "community_name": "HTTP Client & API Types",
+      "community": 32,
+      "community_name": "Route",
       "norm_label": "cartitem"
     },
     {
@@ -8810,8 +8876,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_store_cart_addtocart",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "addtocart()"
     },
     {
@@ -8843,8 +8909,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "src_store_cart_clearcart",
-      "community": 3,
-      "community_name": "Cart View & Stories",
+      "community": 13,
+      "community_name": "Community 13",
       "norm_label": "clearcart()"
     },
     {
@@ -8898,8 +8964,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_store_locale_test",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "locale.test.ts"
     },
     {
@@ -8909,8 +8975,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_store_locale_test_loadstore",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "loadstore()"
     },
     {
@@ -8920,8 +8986,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_store_locale",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "locale.ts"
     },
     {
@@ -8931,8 +8997,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_store_locale_localestate",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "localestate"
     },
     {
@@ -8942,8 +9008,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_store_locale_load",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "load()"
     },
     {
@@ -8953,8 +9019,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_store_locale_localestore",
-      "community": 18,
-      "community_name": "Community 18",
+      "community": 6,
+      "community_name": "Product Detail View",
       "norm_label": "localestore"
     },
     {
@@ -8975,8 +9041,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_test_setup",
-      "community": 31,
-      "community_name": "Community 31",
+      "community": 24,
+      "community_name": "Community 24",
       "norm_label": "test-setup.tsx"
     },
     {
@@ -8997,8 +9063,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_test_utils_renderwithproviders",
-      "community": 46,
-      "community_name": "Route",
+      "community": 9,
+      "community_name": "Orders Module",
       "norm_label": "renderwithproviders()"
     },
     {
@@ -9052,8 +9118,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_theme",
-      "community": 13,
-      "community_name": "Community 13",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "theme.ts"
     },
     {
@@ -9063,8 +9129,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_theme_system",
-      "community": 13,
-      "community_name": "Community 13",
+      "community": 5,
+      "community_name": "Catalog View Tests",
       "norm_label": "system"
     },
     {
@@ -10179,8 +10245,20 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_account_i18n_test",
+      "target": "src_api_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -12859,7 +12937,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -12871,7 +12949,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -12883,7 +12961,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -12895,7 +12973,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
@@ -12991,7 +13069,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -13003,7 +13081,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -13015,7 +13093,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -13027,7 +13105,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
@@ -15668,7 +15746,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L17",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_i18n_resources",
@@ -15800,7 +15878,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L17",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_i18n_resources",
@@ -16186,7 +16264,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L26",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_i18n_resources",
@@ -16197,7 +16275,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L24",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_i18n_resources",
@@ -16208,7 +16286,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L38",
+      "source_location": "L41",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_i18n_resources",
@@ -16219,7 +16297,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L29",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_i18n_resources",
@@ -16230,7 +16308,7 @@
       "relation": "cites",
       "confidence": "EXTRACTED",
       "source_file": "src/i18n/resources.ts",
-      "source_location": "L22",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_i18n_resources",
@@ -16611,7 +16689,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -16623,7 +16701,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -16635,7 +16713,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_verifyemailview",
@@ -16791,7 +16869,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -16804,7 +16882,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L19",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform_resetpasswordform",
@@ -16815,7 +16893,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -16828,7 +16906,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform_signinform",
@@ -16839,7 +16917,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_verifyemailview",
@@ -16852,7 +16930,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L16",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_verifyemailview_verifyemailview",
@@ -17482,7 +17560,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -17494,7 +17572,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-up.test.tsx",
-      "source_location": "L5",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_up_test",
@@ -17602,7 +17680,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -17722,7 +17800,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -17734,7 +17812,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-up.test.tsx",
-      "source_location": "L5",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_up_test",
@@ -17890,7 +17968,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -17902,7 +17980,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-up.test.tsx",
-      "source_location": "L5",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_up_test",
@@ -18350,6 +18428,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_account_i18n_test",
+      "target": "src_mocks_handlers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/reset-password.test.tsx",
       "source_location": "L5",
       "weight": 1.0,
@@ -18363,7 +18453,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -18567,7 +18657,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -18865,8 +18955,20 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_account_i18n_test",
+      "target": "src_mocks_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -19057,8 +19159,20 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_account_i18n_test",
+      "target": "src_mocks_server_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -19327,7 +19441,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -19338,7 +19452,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.schema.ts",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform_schema",
@@ -19349,7 +19463,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.schema.ts",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform_schema",
@@ -19358,13 +19472,37 @@
     },
     {
       "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/ForgotPasswordForm.schema.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_forgotpasswordform_schema",
+      "target": "src_modules_account_components_forgotpasswordform_schema_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.schema.ts",
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform_schema",
-      "target": "src_modules_account_components_forgotpasswordform_schema_schema",
+      "target": "src_modules_account_validationkeys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/ForgotPasswordForm.schema.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_forgotpasswordform_schema",
+      "target": "src_modules_account_validationkeys_account_validation_keys",
       "confidence_score": 1.0
     },
     {
@@ -19372,7 +19510,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -19384,7 +19522,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -19396,7 +19534,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -19407,7 +19545,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -19419,7 +19557,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -19431,7 +19569,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform",
@@ -19456,7 +19594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/account/components/ForgotPasswordForm.tsx",
-      "source_location": "L12",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_forgotpasswordform_forgotpasswordform",
@@ -19491,7 +19629,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -19502,7 +19640,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
-      "source_location": "L9",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform_schema",
@@ -19513,7 +19651,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
-      "source_location": "L7",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform_schema",
@@ -19522,13 +19660,49 @@
     },
     {
       "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_resetpasswordform_schema",
+      "target": "src_modules_account_components_resetpasswordform_schema_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform_schema",
-      "target": "src_modules_account_components_resetpasswordform_schema_schema",
+      "target": "src_modules_account_passwordpolicy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_resetpasswordform_schema",
+      "target": "src_modules_account_validationkeys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/ResetPasswordForm.schema.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_resetpasswordform_schema",
+      "target": "src_modules_account_validationkeys_account_validation_keys",
       "confidence_score": 1.0
     },
     {
@@ -19536,7 +19710,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -19548,7 +19722,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -19560,7 +19734,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -19571,7 +19745,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L13",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -19582,7 +19756,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L17",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -19594,7 +19768,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
@@ -19606,11 +19780,23 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform",
       "target": "src_modules_account_hooks_index_useresetpassword",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_resetpasswordform",
+      "target": "src_modules_account_passwordpolicy",
       "confidence_score": 1.0
     },
     {
@@ -19631,7 +19817,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/account/components/ResetPasswordForm.tsx",
-      "source_location": "L18",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_resetpasswordform_resetpasswordform",
@@ -19666,7 +19852,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -19677,7 +19863,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.schema.ts",
-      "source_location": "L10",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform_schema",
@@ -19688,7 +19874,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.schema.ts",
-      "source_location": "L8",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform_schema",
@@ -19697,13 +19883,37 @@
     },
     {
       "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/SignInForm.schema.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_signinform_schema",
+      "target": "src_modules_account_components_signinform_schema_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.schema.ts",
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform_schema",
-      "target": "src_modules_account_components_signinform_schema_schema",
+      "target": "src_modules_account_validationkeys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/SignInForm.schema.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_signinform_schema",
+      "target": "src_modules_account_validationkeys_account_validation_keys",
       "confidence_score": 1.0
     },
     {
@@ -19711,7 +19921,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -19723,7 +19933,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -19735,7 +19945,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -19746,7 +19956,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -19758,7 +19968,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -19770,7 +19980,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform",
@@ -19795,7 +20005,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/account/components/SignInForm.tsx",
-      "source_location": "L14",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signinform_signinform",
@@ -19830,7 +20040,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
@@ -19841,7 +20051,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.schema.ts",
-      "source_location": "L10",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform_schema",
@@ -19852,7 +20062,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.schema.ts",
-      "source_location": "L8",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform_schema",
@@ -19861,13 +20071,49 @@
     },
     {
       "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/SignUpForm.schema.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_signupform_schema",
+      "target": "src_modules_account_components_signupform_schema_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.schema.ts",
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform_schema",
-      "target": "src_modules_account_components_signupform_schema_schema",
+      "target": "src_modules_account_passwordpolicy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/SignUpForm.schema.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_signupform_schema",
+      "target": "src_modules_account_validationkeys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/SignUpForm.schema.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_signupform_schema",
+      "target": "src_modules_account_validationkeys_account_validation_keys",
       "confidence_score": 1.0
     },
     {
@@ -19875,7 +20121,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
@@ -19887,7 +20133,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
@@ -19899,7 +20145,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
@@ -19910,7 +20156,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
@@ -19922,7 +20168,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
@@ -19934,11 +20180,23 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform",
       "target": "src_modules_account_hooks_index_useregister",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/components/SignUpForm.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_components_signupform",
+      "target": "src_modules_account_passwordpolicy",
       "confidence_score": 1.0
     },
     {
@@ -19959,7 +20217,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/account/components/SignUpForm.tsx",
-      "source_location": "L12",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_signupform_signupform",
@@ -19993,7 +20251,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_verifyemailview",
@@ -20004,7 +20262,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_verifyemailview",
@@ -20016,7 +20274,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_verifyemailview",
@@ -20028,7 +20286,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_verifyemailview",
@@ -20053,7 +20311,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/modules/account/components/VerifyEmailView.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_account_components_verifyemailview_verifyemailview",
@@ -21029,6 +21287,52 @@
       "_origin": "ast",
       "source": "src_routes_root",
       "target": "src_modules_account_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_account_i18n_test",
+      "target": "src_modules_account_passwordpolicy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/sign-up.test.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_sign_up_test",
+      "target": "src_modules_account_passwordpolicy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/validationKeys.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_validationkeys",
+      "target": "src_modules_account_validationkeys_account_validation_keys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/account/validationKeys.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_account_validationkeys",
+      "target": "src_modules_account_validationkeys_accountvalidationkey",
       "confidence_score": 1.0
     },
     {
@@ -30880,6 +31184,41 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_account_i18n_test",
+      "target": "src_routes_locale_auth_account_i18n_test_passwordmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_account_i18n_test",
+      "target": "src_test_utils",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/routes/$locale/(auth)/account.i18n.test.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_routes_locale_auth_account_i18n_test",
+      "target": "src_test_utils_renderroute",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "src/routes/$locale/(auth)/forgot-password.lazy.tsx",
@@ -31034,7 +31373,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -31046,7 +31385,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-in.test.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_in_test",
@@ -31103,7 +31442,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-up.test.tsx",
-      "source_location": "L4",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_up_test",
@@ -31115,7 +31454,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/$locale/(auth)/sign-up.test.tsx",
-      "source_location": "L4",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_locale_auth_sign_up_test",
@@ -32847,5 +33186,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "5a1b52edaf8e638a8cd09c313c415a2c70de6c4b"
+  "built_at_commit": "7193f65e575aeb8f97e6ceeff8497cc39db98a0d"
 }

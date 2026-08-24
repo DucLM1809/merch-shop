@@ -1,8 +1,11 @@
 import { z } from "zod";
 
+import { PASSWORD_MIN_LENGTH } from "../passwordPolicy";
+import { ACCOUNT_VALIDATION_KEYS } from "../validationKeys";
+
 export const schema = z.object({
-  email: z.string().min(1, "Email is required"),
-  password: z.string().min(12, "Password must be at least 12 characters"),
+  email: z.string().min(1, ACCOUNT_VALIDATION_KEYS.email),
+  password: z.string().min(PASSWORD_MIN_LENGTH, ACCOUNT_VALIDATION_KEYS.passwordMin),
 });
 
 export type FormValues = z.infer<typeof schema>;

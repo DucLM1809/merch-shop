@@ -1,0 +1,46 @@
+{
+  "fields": {
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "Password (min. {{min}} characters)"
+  },
+  "signIn": {
+    "title": "Sign in",
+    "submit": "Sign in",
+    "forgotPassword": "Forgot password?",
+    "failed": "Invalid email or password"
+  },
+  "signUp": {
+    "title": "Sign up",
+    "submit": "Sign up",
+    "failed": "Could not create account. The email may already be in use."
+  },
+  "forgotPassword": {
+    "title": "Forgot password",
+    "submit": "Send reset link",
+    "sentTitle": "Check your email",
+    "sentBody": "If an account exists for that email, we've sent a link to reset your password."
+  },
+  "resetPassword": {
+    "title": "Reset password",
+    "submit": "Reset password",
+    "newPassword": "New password",
+    "newPasswordPlaceholder": "New password (min. {{min}} characters)",
+    "doneTitle": "Password reset",
+    "doneBody": "Your password has been reset. You can now sign in.",
+    "goToSignIn": "Go to sign in",
+    "failed": "This reset link is invalid or has expired."
+  },
+  "verifyEmail": {
+    "failedTitle": "Verification failed",
+    "failedBody": "This verification link is invalid or has expired.",
+    "successTitle": "Email verified",
+    "successBody": "Your email has been verified.",
+    "continue": "Continue"
+  },
+  "validation": {
+    "email": "Email is required",
+    "password": "Password is required",
+    "passwordMin": "Password must be at least {{min}} characters"
+  }
+}

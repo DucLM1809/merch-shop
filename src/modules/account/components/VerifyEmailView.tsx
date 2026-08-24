@@ -2,6 +2,7 @@ import { useEffect, useRef, type JSX } from "react";
 
 import { Box, Button, Heading, Spinner, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import { useLocale } from "@/i18n/useLocale";
 
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export function VerifyEmailView({ token }: Props): JSX.Element {
+  const { t } = useTranslation("account");
   const verifyEmail = useVerifyEmail();
   const locale = useLocale();
   const requested = useRef(false);
@@ -26,10 +28,10 @@ export function VerifyEmailView({ token }: Props): JSX.Element {
     return (
       <Box w="full" maxW="360px" textAlign="center">
         <Heading size="lg" color="white" fontWeight="800" mb={3}>
-          Verification failed
+          {t("verifyEmail.failedTitle")}
         </Heading>
         <Text color="gray.400" data-testid="verify-email-error">
-          This verification link is invalid or has expired.
+          {t("verifyEmail.failedBody")}
         </Text>
       </Box>
     );
@@ -39,13 +41,13 @@ export function VerifyEmailView({ token }: Props): JSX.Element {
     return (
       <Box w="full" maxW="360px" textAlign="center">
         <Heading size="lg" color="white" fontWeight="800" mb={3}>
-          Email verified
+          {t("verifyEmail.successTitle")}
         </Heading>
         <Text color="gray.400" mb={4} data-testid="verify-email-success">
-          Your email has been verified.
+          {t("verifyEmail.successBody")}
         </Text>
         <Link to="/$locale" params={{ locale }}>
-          <Button colorPalette="blue">Continue</Button>
+          <Button colorPalette="blue">{t("verifyEmail.continue")}</Button>
         </Link>
       </Box>
     );

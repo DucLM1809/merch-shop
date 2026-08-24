@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import enUSAccount from "@/i18n/locales/en-US/account.json";
+import { PASSWORD_MIN_LENGTH } from "@/modules/account/passwordPolicy";
 import { renderRoute } from "../../../test-utils";
 import { buyerAccount, mockSignedIn } from "../../../mocks/fixtures";
 
@@ -36,7 +38,12 @@ describe("/sign-up route", () => {
     await user.type(screen.getByLabelText(/password/i), "short");
     await user.click(screen.getByRole("button", { name: /sign up/i }));
 
-    expect(await screen.findByText(/at least 12 characters/i)).toBeInTheDocument();
+    const expected = enUSAccount.validation.passwordMin.replace(
+      "{{min}}",
+      String(PASSWORD_MIN_LENGTH)
+    );
+
+    expect(await screen.findByText(expected)).toBeInTheDocument();
   });
 
   it("redirects to / when already signed in", async () => {

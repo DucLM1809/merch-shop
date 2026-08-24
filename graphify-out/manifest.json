@@ -480,48 +480,48 @@
     "semantic_hash": ""
   },
   "src/modules/account/components/ForgotPasswordForm.schema.ts": {
-    "mtime": 1786436681.5290122,
-    "ast_hash": "5e8d6e0dc219ff444e5a35734f46eefe",
+    "mtime": 1787563327.5410078,
+    "ast_hash": "f74866aa8bc89ced8fb692a958f2db9b",
     "semantic_hash": ""
   },
   "src/modules/account/components/ForgotPasswordForm.tsx": {
-    "mtime": 1786436681.529159,
-    "ast_hash": "8923c8758c29217dbd4b9c65bacf6197",
+    "mtime": 1787563327.5412898,
+    "ast_hash": "046c34af82818ee9c287612fc949a832",
     "semantic_hash": ""
   },
   "src/modules/account/components/ResetPasswordForm.schema.ts": {
-    "mtime": 1786436681.529298,
-    "ast_hash": "c2de8c9e52195d8d92975e5afab8b65b",
+    "mtime": 1787563327.5415678,
+    "ast_hash": "8e92e0c2801bb20dad87fdb9d50c3a4e",
     "semantic_hash": ""
   },
   "src/modules/account/components/ResetPasswordForm.tsx": {
-    "mtime": 1787125800.9085538,
-    "ast_hash": "f2076cac414d4c95d92740943ae0b99a",
+    "mtime": 1787563327.5418794,
+    "ast_hash": "77d70c18d9de802a59bd8233709ba3a1",
     "semantic_hash": ""
   },
   "src/modules/account/components/SignInForm.schema.ts": {
-    "mtime": 1786436681.5295615,
-    "ast_hash": "cd211b55e0614c103b124bca60fb0607",
+    "mtime": 1787563327.5423326,
+    "ast_hash": "ff5cdb90fa5702ba05471ce81f66541f",
     "semantic_hash": ""
   },
   "src/modules/account/components/SignInForm.tsx": {
-    "mtime": 1787125794.0725737,
-    "ast_hash": "e818bbd4a5f7a31c4dd2bb38580ab8de",
+    "mtime": 1787563327.5427232,
+    "ast_hash": "d562e6fab380d1df0fd32819d36e5abf",
     "semantic_hash": ""
   },
   "src/modules/account/components/SignUpForm.schema.ts": {
-    "mtime": 1786436681.529841,
-    "ast_hash": "7d58003c29bf749c8950f12d67a1ef15",
+    "mtime": 1787563327.5432222,
+    "ast_hash": "e398240763ef44384ddf1a7c082e02dd",
     "semantic_hash": ""
   },
   "src/modules/account/components/SignUpForm.tsx": {
-    "mtime": 1786436681.529977,
-    "ast_hash": "bafc1aaea6d46f8cdc31aa7a4b35b276",
+    "mtime": 1787563327.5436614,
+    "ast_hash": "d08e4511c2d871c90ffd6be6a69de700",
     "semantic_hash": ""
   },
   "src/modules/account/components/VerifyEmailView.tsx": {
-    "mtime": 1787125794.0733008,
-    "ast_hash": "106812a3da74209f9723d0124d230fef",
+    "mtime": 1787563327.5442772,
+    "ast_hash": "21e23bd2f6cbcfffacdcf4044f7e3de3",
     "semantic_hash": ""
   },
   "src/modules/account/hooks/index.test.ts": {
@@ -540,8 +540,8 @@
     "semantic_hash": ""
   },
   "src/modules/orders/components/OrderDetailPage.tsx": {
-    "mtime": 1787561779.2771933,
-    "ast_hash": "d598984948fd2b031add0241f7d859d8",
+    "mtime": 1787562319.5763996,
+    "ast_hash": "44f1bd18f9b60ef59b177f8173a5c94f",
     "semantic_hash": ""
   },
   "src/modules/orders/statusColor.ts": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(account)/account.orders.index.test.tsx": {
-    "mtime": 1787561827.9201717,
-    "ast_hash": "f0a9e79478ed66c75d03094458d6814d",
+    "mtime": 1787562319.6680367,
+    "ast_hash": "725fcd98bb6f6fdf6276056b7b74a14a",
     "semantic_hash": ""
   },
   "src/routes/$locale/(account)/account.orders.index.tsx": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(auth)/sign-in.test.tsx": {
-    "mtime": 1787126094.353061,
-    "ast_hash": "3c202e55580840355c10e9376ed056cc",
+    "mtime": 1787563327.544937,
+    "ast_hash": "22da79163b9b06f168c0a223cfc61d18",
     "semantic_hash": ""
   },
   "src/routes/$locale/(auth)/sign-in.tsx": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(auth)/sign-up.test.tsx": {
-    "mtime": 1787126024.4407136,
-    "ast_hash": "6fd940ffb191218dde1d052bf974db55",
+    "mtime": 1787563327.5454557,
+    "ast_hash": "d36f8846d4f19f57637a7651791cbb76",
     "semantic_hash": ""
   },
   "src/routes/$locale/(auth)/sign-up.tsx": {
@@ -985,13 +985,13 @@
     "semantic_hash": ""
   },
   "src/i18n/resources.generated.ts": {
-    "mtime": 1787561803.727302,
-    "ast_hash": "df33a08b7488441cadad3ed183ce0faa",
+    "mtime": 1787563327.5400193,
+    "ast_hash": "f02aaef99349c6a367c9896deab9906b",
     "semantic_hash": ""
   },
   "src/i18n/resources.ts": {
-    "mtime": 1787561746.0405974,
-    "ast_hash": "d81b11793e2e08f801d8cf1dd9fc7906",
+    "mtime": 1787563327.5406797,
+    "ast_hash": "fe12072c073cae7ea712e7e687565fc4",
     "semantic_hash": ""
   },
   "src/routes/index.tsx": {
@@ -1145,8 +1145,38 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(account)/orders.i18n.test.tsx": {
-    "mtime": 1787561852.4080224,
-    "ast_hash": "38f9ca0c2cfb892f4ec9ed1515dcc5d2",
+    "mtime": 1787562319.6971552,
+    "ast_hash": "f3b73dc546d35e60e6e1450e95febcf1",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/en-GB/account.json": {
+    "mtime": 1787563327.5774558,
+    "ast_hash": "3aa711b1eb95de62e9789b3e532b3a03",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/en-US/account.json": {
+    "mtime": 1787563327.5779562,
+    "ast_hash": "c801d687d77efe5fb938491a87e8846e",
+    "semantic_hash": ""
+  },
+  "src/i18n/locales/fr-FR/account.json": {
+    "mtime": 1787563327.5783088,
+    "ast_hash": "074011e62ab720ad43c6f9676136e1ad",
+    "semantic_hash": ""
+  },
+  "src/modules/account/passwordPolicy.ts": {
+    "mtime": 1787563327.5787003,
+    "ast_hash": "e90231a4bd83816f9bd7865eedc5c513",
+    "semantic_hash": ""
+  },
+  "src/modules/account/validationKeys.ts": {
+    "mtime": 1787563327.579152,
+    "ast_hash": "f9051d0818a99a95213f65d73e43524a",
+    "semantic_hash": ""
+  },
+  "src/routes/$locale/(auth)/account.i18n.test.tsx": {
+    "mtime": 1787563327.5797443,
+    "ast_hash": "540979c9f14d18697f603179e5212daf",
     "semantic_hash": ""
   }
 }

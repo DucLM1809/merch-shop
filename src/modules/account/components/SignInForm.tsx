@@ -4,6 +4,7 @@ import { Box, Button, Flex, Heading, Input, Text, VStack } from "@chakra-ui/reac
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { FormField } from "@/components/FormField";
 import { useLocale } from "@/i18n/useLocale";
@@ -11,6 +12,7 @@ import { useLogin } from "../hooks";
 import { schema, DEFAULTS, type FormValues } from "./SignInForm.schema";
 
 export function SignInForm(): JSX.Element {
+  const { t } = useTranslation("account");
   const login = useLogin();
   const locale = useLocale();
   const {
@@ -28,7 +30,7 @@ export function SignInForm(): JSX.Element {
     try {
       await login.mutateAsync(values);
     } catch {
-      setError("root", { message: "Invalid email or password" });
+      setError("root", { message: t("signIn.failed") });
     }
   }
 
@@ -36,15 +38,28 @@ export function SignInForm(): JSX.Element {
     <Box as="form" onSubmit={handleSubmit(onSubmit)} w="full" maxW="360px">
       <VStack gap={4} align="stretch">
         <Heading size="lg" color="white" fontWeight="800">
-          Sign in
+          {t("signIn.title")}
         </Heading>
 
-        <FormField name="email" label="Email" error={errors.email}>
-          <Input id="email" type="email" placeholder="Email" {...register("email")} />
+        <FormField
+          name="email"
+          label={t("fields.email")}
+          error={errors.email && t("validation.email")}
+        >
+          <Input id="email" type="email" placeholder={t("fields.email")} {...register("email")} />
         </FormField>
 
-        <FormField name="password" label="Password" error={errors.password}>
-          <Input id="password" type="password" placeholder="Password" {...register("password")} />
+        <FormField
+          name="password"
+          label={t("fields.password")}
+          error={errors.password && t("validation.password")}
+        >
+          <Input
+            id="password"
+            type="password"
+            placeholder={t("fields.password")}
+            {...register("password")}
+          />
         </FormField>
 
         {errors.root && (
@@ -54,13 +69,13 @@ export function SignInForm(): JSX.Element {
         )}
 
         <Button type="submit" colorPalette="blue" size="lg" fontWeight="700" loading={isSubmitting}>
-          Sign in
+          {t("signIn.submit")}
         </Button>
 
         <Flex justify="center">
           <Link to="/$locale/forgot-password" params={{ locale }}>
             <Text fontSize="sm" color="gray.400" _hover={{ color: "white" }}>
-              Forgot password?
+              {t("signIn.forgotPassword")}
             </Text>
           </Link>
         </Flex>
