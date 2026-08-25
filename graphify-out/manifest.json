@@ -205,13 +205,13 @@
     "semantic_hash": ""
   },
   "src/modules/catalog/components/PublisherNav.test.tsx": {
-    "mtime": 1786418777.8597412,
-    "ast_hash": "6970472ca8eb6d0c14c3b2b24a9010ec",
-    "semantic_hash": "6970472ca8eb6d0c14c3b2b24a9010ec"
+    "mtime": 1787623800.963911,
+    "ast_hash": "83e390c2ab924366abe842b472725f57",
+    "semantic_hash": ""
   },
   "src/modules/catalog/components/PublisherNav.tsx": {
-    "mtime": 1786418777.8598516,
-    "ast_hash": "ffcfaeff91b185bc8f268df02eba22ea",
+    "mtime": 1787630642.2678125,
+    "ast_hash": "3983e65e834f98bb5e1918227eee1dfb",
     "semantic_hash": ""
   },
   "src/modules/catalog/components/PublisherNavView.stories.tsx": {
@@ -225,9 +225,9 @@
     "semantic_hash": ""
   },
   "src/modules/catalog/components/PublisherNavView.tsx": {
-    "mtime": 1786418777.8604374,
-    "ast_hash": "82f7e66a91443a759d04ce1571c48342",
-    "semantic_hash": "82f7e66a91443a759d04ce1571c48342"
+    "mtime": 1787625350.1534393,
+    "ast_hash": "fb92c0c126ea6b9b927dc76e55dc4cf5",
+    "semantic_hash": ""
   },
   "src/modules/catalog/components/PublisherPage.tsx": {
     "mtime": 1786418777.8610334,
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "src/test-setup.tsx": {
-    "mtime": 1786436681.5026457,
-    "ast_hash": "b0caf0243a3c150a3d86c2d32ed77b11",
+    "mtime": 1787627069.0000374,
+    "ast_hash": "1030de10c4a9b244acf0e08a222ebd19",
     "semantic_hash": ""
   },
   "src/components/GlobalNav.test.tsx": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(auth)/sign-in.test.tsx": {
-    "mtime": 1787563327.544937,
-    "ast_hash": "22da79163b9b06f168c0a223cfc61d18",
+    "mtime": 1787563380.7322967,
+    "ast_hash": "63574af7564b142915e7df336a411678",
     "semantic_hash": ""
   },
   "src/routes/$locale/(auth)/sign-in.tsx": {
@@ -950,8 +950,8 @@
     "semantic_hash": ""
   },
   "src/i18n/localeHints.ts": {
-    "mtime": 1787295436.154873,
-    "ast_hash": "40eea549141c949de30dbeef2f37d345",
+    "mtime": 1787626764.7285938,
+    "ast_hash": "e3138a4f6ff9a680c63e296fb6d6e08a",
     "semantic_hash": ""
   },
   "src/i18n/localeRedirect.ts": {
@@ -1175,8 +1175,13 @@
     "semantic_hash": ""
   },
   "src/routes/$locale/(auth)/account.i18n.test.tsx": {
-    "mtime": 1787563327.5797443,
-    "ast_hash": "540979c9f14d18697f603179e5212daf",
+    "mtime": 1787563380.7106948,
+    "ast_hash": "90fe76e891463b152b01cab456b619e2",
+    "semantic_hash": ""
+  },
+  "src/routes/localeLinkGuard.test.tsx": {
+    "mtime": 1787630639.190823,
+    "ast_hash": "d985dd811de67475ee3b33dea10a3951",
     "semantic_hash": ""
   }
 }
