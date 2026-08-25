@@ -35,14 +35,14 @@ test.describe("Admin product CRUD", () => {
     await expect(admin.rowById(productId)).toBeHidden();
   });
 
-  // Uses the default (buyer) storageState, which is authenticated but not admin — this
-  // covers the AdminGuard component's role check, not just the guest-redirect case
-  // already covered by auth-redirect.spec.ts.
-  test("redirects a non-admin signed-in user away from /admin", async ({ page }) => {
+  // Uses the worker-scoped buyer session (authenticated but not admin) instead of the
+  // default storageState — this covers the AdminGuard component's role check, not just
+  // the guest-redirect case already covered by auth-redirect.spec.ts.
+  test("redirects a non-admin signed-in user away from /admin", async ({ authenticatedPage }) => {
     // Act
-    await page.goto("/en-US/admin/products");
+    await authenticatedPage.goto("/en-US/admin/products");
 
     // Assert
-    await expect(page).toHaveURL("/en-US/");
+    await expect(authenticatedPage).toHaveURL("/en-US");
   });
 });
