@@ -10,6 +10,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import { GlobalNav } from "../components/GlobalNav";
+import { Toaster } from "../components/Toaster";
 import { env } from "../env";
 import { getI18n } from "../i18n/i18n";
 import { useLocale } from "../i18n/useLocale";
@@ -100,34 +101,65 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // In the real app the rendered <html> below *is* document.documentElement (SSR
+  // hydrates/replaces the whole document), so these land there implicitly. The
+  // Vitest unit project skips that element entirely (see below), so set them
+  // explicitly here to keep the two paths equivalent.
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.documentElement.className = "dark";
+  }, [locale]);
+
+  const body = (
+    <I18nextProvider i18n={i18n}>
+      <ChakraProvider value={system}>
+        <AuthBootstrapEffect />
+        <CartSyncEffect />
+        <GlobalNav />
+        {children}
+        <Toaster />
+      </ChakraProvider>
+    </I18nextProvider>
+  );
+
+  // The unit project renders this tree with Testing Library's render(), which mounts
+  // into a <div> under the real jsdom document — nesting a second <html> inside that
+  // div corrupts jsdom's parentNode chain for descendant nodes (jsdom itself warns
+  // "<html> cannot be a child of <div>"), and React DOM's event dispatch walks that
+  // chain to find the nearest fiber, so a click can spin forever with no macrotask
+  // ever running to time it out. Skip the outer <html>/<body> under Vitest, but keep
+  // a bare <head> so HeadContent's <title>/<meta>/<script> tags still have a real
+  // head element to land in — only <html> triggers the parentNode corruption above.
+  if (import.meta.env.VITEST) {
+    return (
+      <>
+        <head>
+          <HeadContent />
+        </head>
+        {body}
+      </>
+    );
+  }
+
   return (
     <html lang={locale} className="dark">
       <head>
         <HeadContent />
       </head>
       <body>
-        <I18nextProvider i18n={i18n}>
-          <ChakraProvider value={system}>
-            <AuthBootstrapEffect />
-            <CartSyncEffect />
-            <GlobalNav />
-            {children}
-          </ChakraProvider>
-        </I18nextProvider>
-        {!import.meta.env.VITEST && (
-          <TanStackDevtools
-            config={{
-              position: "bottom-right",
-            }}
-            plugins={[
-              {
-                name: "Tanstack Router",
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              TanStackQueryDevtools,
-            ]}
-          />
-        )}
+        {body}
+        <TanStackDevtools
+          config={{
+            position: "bottom-right",
+          }}
+          plugins={[
+            {
+              name: "Tanstack Router",
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+            TanStackQueryDevtools,
+          ]}
+        />
         <SpeedInsights />
         <Scripts />
       </body>

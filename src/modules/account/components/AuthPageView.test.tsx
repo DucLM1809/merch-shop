@@ -1,12 +1,13 @@
 import { render, screen } from "@testing-library/react";
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { describe, it, expect } from "vitest";
 
+import { system } from "@/theme";
 import { AuthPageView } from "./AuthPageView";
 
 function renderView(children: React.ReactNode) {
   return render(
-    <ChakraProvider value={defaultSystem}>
+    <ChakraProvider value={system}>
       <AuthPageView>{children}</AuthPageView>
     </ChakraProvider>
   );

@@ -1,6 +1,6 @@
 import { act } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { RouterContextProvider, createMemoryHistory, createRouter } from "@tanstack/react-router";
 import { screen, within } from "@testing-library/react";
 import { hydrateRoot } from "react-dom/client";
@@ -14,6 +14,7 @@ import frFR from "../i18n/locales/fr-FR/common.json";
 import { routeTree } from "../routeTree.gen";
 import { clearCart, setItems } from "../store/cart";
 import { renderRoute, expectNoA11yViolations } from "../test-utils";
+import { system } from "../theme";
 import { GlobalNav } from "./GlobalNav";
 
 const seededItem = {
@@ -38,7 +39,7 @@ function buildTree() {
   return (
     <RouterContextProvider router={router}>
       <I18nextProvider i18n={getI18n(DEFAULT_LOCALE)}>
-        <ChakraProvider value={defaultSystem}>
+        <ChakraProvider value={system}>
           <QueryClientProvider client={queryClient}>
             <GlobalNav />
           </QueryClientProvider>

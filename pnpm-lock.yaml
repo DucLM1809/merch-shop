@@ -19,6 +19,9 @@ importers:
       "@fontsource-variable/geist":
         specifier: ^5.2.9
         version: 5.2.9
+      "@fontsource/rajdhani":
+        specifier: ^5.3.0
+        version: 5.3.0
       "@hookform/resolvers":
         specifier: ^5.4.0
         version: 5.4.0(react-hook-form@7.80.0(react@19.2.7))
@@ -964,6 +967,12 @@ packages:
     resolution:
       {
         integrity: sha512-TP+QSBG3wxKGPE33CbMy/L0Nu3qvJ6Fy81Yc4LnQ95xH+i+cfEp8fyU8/kfV14YwszxIFPhnoMTbjL71waVpyQ==,
+      }
+
+  "@fontsource/rajdhani@5.3.0":
+    resolution:
+      {
+        integrity: sha512-oBJgSIibWJvVBKseme1JczqPLoDHN97LHti4uh0LjfcJqQoVmnQQlRKIpEjTJV559rmVQ6qbVZZwKwk2wkBTtw==,
       }
 
   "@formatjs/ecma402-abstract@2.3.6":
@@ -9549,6 +9558,8 @@ snapshots:
   "@floating-ui/utils@0.2.11": {}
 
   "@fontsource-variable/geist@5.2.9": {}
+
+  "@fontsource/rajdhani@5.3.0": {}
 
   "@formatjs/ecma402-abstract@2.3.6":
     dependencies:

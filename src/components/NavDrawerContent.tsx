@@ -5,6 +5,7 @@ import { Gamepad2, LogIn, LogOut, ShoppingCart, User, UserPlus } from "lucide-re
 import { useTranslation } from "react-i18next";
 
 import { useLocale } from "../i18n/useLocale";
+import { Badge } from "./Badge";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 
 type NavDrawerContentProps = {
@@ -73,23 +74,10 @@ export function NavDrawerContent({
   }, [onClose]);
 
   const cartBadge = itemCount > 0 && (
-    <Box
-      position="absolute"
-      top="-8px"
-      right="-10px"
-      bg="blue.500"
-      color="white"
-      borderRadius="full"
-      minW="18px"
-      h="18px"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      px="3px"
-    >
-      <Text fontSize="10px" fontWeight="800" lineHeight="1">
+    <Box position="absolute" top="-8px" right="-10px">
+      <Badge variant="count" tone="signal">
         {itemCount}
-      </Text>
+      </Badge>
     </Box>
   );
 
@@ -113,7 +101,7 @@ export function NavDrawerContent({
         top={0}
         bottom={0}
         w="280px"
-        bg="gray.900"
+        bg="bg.panel"
         zIndex="modal"
         display="flex"
         flexDirection="column"
@@ -122,8 +110,8 @@ export function NavDrawerContent({
           align="center"
           justify="space-between"
           p={4}
-          borderBottom="1px solid"
-          borderColor="gray.800"
+          borderBottomWidth="1px"
+          borderColor="border.muted"
         >
           <Link to="/$locale" params={{ locale }} onClick={onClose}>
             <Flex align="center" gap={2.5}>
@@ -131,8 +119,9 @@ export function NavDrawerContent({
                 <Gamepad2 size={18} strokeWidth={2} />
               </Box>
               <Text
-                color="white"
-                fontWeight="800"
+                color="fg"
+                fontFamily="heading"
+                fontWeight="700"
                 fontSize="sm"
                 letterSpacing="0.1em"
                 textTransform="uppercase"
@@ -149,8 +138,8 @@ export function NavDrawerContent({
             <Flex
               align="center"
               gap={2.5}
-              color={itemCount > 0 ? "white" : "gray.500"}
-              _hover={{ color: "white" }}
+              color={itemCount > 0 ? "fg" : "fg.subtle"}
+              _hover={{ color: "fg" }}
               transition="color 0.15s"
               data-testid="drawer-cart-link"
             >
@@ -166,7 +155,7 @@ export function NavDrawerContent({
 
           {isLoaded && isSignedIn ? (
             <Flex direction="column" gap={4}>
-              <Flex align="center" gap={2} color="gray.300">
+              <Flex align="center" gap={2} color="fg.muted">
                 <User size={16} strokeWidth={1.5} />
                 <Text fontSize="sm" fontWeight="600" data-testid="drawer-username">
                   {userDisplayName}
@@ -178,8 +167,8 @@ export function NavDrawerContent({
                 display="flex"
                 alignItems="center"
                 gap={1.5}
-                color="gray.500"
-                _hover={{ color: "white" }}
+                color="fg.subtle"
+                _hover={{ color: "fg" }}
                 transition="color 0.15s"
                 cursor="pointer"
                 aria-label={t("nav.signOut")}
@@ -197,8 +186,8 @@ export function NavDrawerContent({
                 <Flex
                   align="center"
                   gap={1.5}
-                  color="gray.400"
-                  _hover={{ color: "white" }}
+                  color="fg.muted"
+                  _hover={{ color: "fg" }}
                   transition="color 0.15s"
                 >
                   <LogIn size={16} strokeWidth={1.5} />

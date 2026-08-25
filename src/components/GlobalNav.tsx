@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useLocale } from "../i18n/useLocale";
 import { useAccount, useAuth, useLogout } from "../modules/account";
 import { cartStore } from "../store/cart";
+import { Badge } from "./Badge";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { NavDrawerContent } from "./NavDrawerContent";
 import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart, User, UserPlus } from "lucide-react";
@@ -32,23 +33,10 @@ export function GlobalNav(): JSX.Element {
   const userDisplayName = account?.email;
 
   const cartBadge = displayItemCount > 0 && (
-    <Box
-      position="absolute"
-      top="-8px"
-      right="-10px"
-      bg="blue.500"
-      color="white"
-      borderRadius="full"
-      minW="18px"
-      h="18px"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      px="3px"
-    >
-      <Text fontSize="10px" fontWeight="800" lineHeight="1">
+    <Box position="absolute" top="-8px" right="-10px">
+      <Badge variant="count" tone="signal">
         {displayItemCount}
-      </Text>
+      </Badge>
     </Box>
   );
 
@@ -58,8 +46,9 @@ export function GlobalNav(): JSX.Element {
         <Gamepad2 size={18} strokeWidth={2} />
       </Box>
       <Text
-        color="white"
-        fontWeight="800"
+        color="fg"
+        fontFamily="heading"
+        fontWeight="700"
         fontSize="sm"
         letterSpacing="0.1em"
         textTransform="uppercase"
@@ -76,11 +65,12 @@ export function GlobalNav(): JSX.Element {
         position="sticky"
         top={0}
         zIndex={10}
-        borderBottom="1px solid"
-        borderColor="gray.800"
+        borderBottomWidth="2px"
+        borderBottomColor="signal.solid"
         px={6}
         py={3.5}
-        style={{ backgroundColor: "rgba(6, 6, 10, 0.95)", backdropFilter: "blur(12px)" }}
+        bg="bg/95"
+        backdropFilter="blur(12px)"
       >
         <Flex align="center" justify="space-between" maxW="7xl" mx="auto">
           <Link to="/$locale" params={{ locale }}>
@@ -102,8 +92,8 @@ export function GlobalNav(): JSX.Element {
               <Flex
                 align="center"
                 gap={2.5}
-                color={displayItemCount > 0 ? "white" : "gray.500"}
-                _hover={{ color: "white" }}
+                color={displayItemCount > 0 ? "fg" : "fg.subtle"}
+                _hover={{ color: "fg" }}
                 transition="color 0.15s"
               >
                 <Box position="relative" display="flex" alignItems="center">
@@ -118,7 +108,7 @@ export function GlobalNav(): JSX.Element {
 
             {isLoaded && isSignedIn ? (
               <Flex align="center" gap={3}>
-                <Flex align="center" gap={2} color="gray.300" data-testid="nav-account-menu">
+                <Flex align="center" gap={2} color="fg.muted" data-testid="nav-account-menu">
                   <User size={16} strokeWidth={1.5} />
                   <Text fontSize="sm" fontWeight="600">
                     {userDisplayName}
@@ -130,8 +120,8 @@ export function GlobalNav(): JSX.Element {
                   display="flex"
                   alignItems="center"
                   gap={1.5}
-                  color="gray.500"
-                  _hover={{ color: "white" }}
+                  color="fg.subtle"
+                  _hover={{ color: "fg" }}
                   transition="color 0.15s"
                   cursor="pointer"
                   aria-label={t("nav.signOut")}
@@ -149,8 +139,8 @@ export function GlobalNav(): JSX.Element {
                   <Flex
                     align="center"
                     gap={1.5}
-                    color="gray.400"
-                    _hover={{ color: "white" }}
+                    color="fg.muted"
+                    _hover={{ color: "fg" }}
                     transition="color 0.15s"
                   >
                     <LogIn size={16} strokeWidth={1.5} />
@@ -180,7 +170,7 @@ export function GlobalNav(): JSX.Element {
           <IconButton
             aria-label={t("nav.openMenu")}
             variant="ghost"
-            color="gray.400"
+            color="fg.muted"
             hideFrom="sm"
             onClick={handleOpenDrawer}
             data-testid="mobile-menu-button"

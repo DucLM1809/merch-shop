@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import {
   RouterContextProvider,
   RouterProvider,
@@ -15,6 +15,7 @@ import { DEFAULT_LOCALE } from "./i18n/locales";
 import { formatPrice } from "./i18n/formatPrice";
 import { getI18n } from "./i18n/i18n";
 import { routeTree } from "./routeTree.gen";
+import { system } from "./theme";
 
 import type { SupportedLocale } from "./i18n/locales";
 
@@ -37,7 +38,7 @@ export function renderWithProviders(ui: ReactElement) {
   return render(
     <RouterContextProvider router={router}>
       <I18nextProvider i18n={getI18n(DEFAULT_LOCALE)}>
-        <ChakraProvider value={defaultSystem}>
+        <ChakraProvider value={system}>
           <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
         </ChakraProvider>
       </I18nextProvider>
@@ -65,7 +66,7 @@ export function renderRoute(path = "/") {
   return {
     ...render(
       <QueryClientProvider client={queryClient}>
-        <ChakraProvider value={defaultSystem}>
+        <ChakraProvider value={system}>
           <RouterProvider router={router} />
         </ChakraProvider>
       </QueryClientProvider>
