@@ -1,18 +1,38 @@
 import { Box, HStack, Skeleton, VStack } from "@chakra-ui/react";
 import type { Publisher } from "@/api/types";
+import type { FileRouteTypes } from "@/routeTree.gen";
 import type { ReactNode } from "react";
+
+// Route ids sourced from the generated route tree, not hand-maintained: if either id is
+// renamed or removed, the Extract below resolves to `never` and every callsite that still
+// names the old id fails to compile.
+export type CatalogPublisherTo = Extract<FileRouteTypes["to"], "/$locale/$publisherSlug">;
+export type CatalogGameTo = Extract<FileRouteTypes["to"], "/$locale/$publisherSlug/$gameSlug">;
+
+export type CatalogPublisherLinkParams = { publisherSlug: string };
+export type CatalogGameLinkParams = { publisherSlug: string; gameSlug: string };
+
+export interface CatalogNavLinkRenderer {
+  (
+    to: CatalogPublisherTo,
+    params: CatalogPublisherLinkParams,
+    children: ReactNode,
+    ariaCurrent?: "page" | undefined
+  ): ReactNode;
+  (
+    to: CatalogGameTo,
+    params: CatalogGameLinkParams,
+    children: ReactNode,
+    ariaCurrent?: "page" | undefined
+  ): ReactNode;
+}
 
 export interface PublisherNavViewProps {
   publishers: Publisher[] | undefined;
   isLoading: boolean;
   activePublisherSlug?: string;
   activeGameSlug?: string;
-  renderLink: (
-    to: string,
-    params: Record<string, string>,
-    children: ReactNode,
-    ariaCurrent?: "page" | undefined
-  ) => ReactNode;
+  renderLink: CatalogNavLinkRenderer;
 }
 
 export function PublisherNavView({

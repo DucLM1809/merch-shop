@@ -1,11 +1,17 @@
 import type { JSX, ReactNode } from "react";
 
 import { chakra } from "@chakra-ui/react";
-import { Link } from "@tanstack/react-router";
+import { Link, type CreateLinkProps } from "@tanstack/react-router";
 
 import { useLocale } from "@/i18n/useLocale";
 
-import { PublisherNavView } from "./PublisherNavView";
+import {
+  PublisherNavView,
+  type CatalogGameLinkParams,
+  type CatalogGameTo,
+  type CatalogPublisherLinkParams,
+  type CatalogPublisherTo,
+} from "./PublisherNavView";
 
 import { usePublishers } from "../hooks";
 
@@ -21,8 +27,8 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
   const locale = useLocale();
 
   function renderLink(
-    to: string,
-    params: Record<string, string>,
+    to: CatalogPublisherTo | CatalogGameTo,
+    params: CatalogPublisherLinkParams | CatalogGameLinkParams,
     children: ReactNode,
     ariaCurrent?: "page" | undefined
   ): ReactNode {
@@ -32,8 +38,15 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
     // The view names the full locale-prefixed route id and supplies the catalog params;
     // the locale itself is chrome-level state, so it's filled in here rather than
     // threaded through the presentational layer.
-    // chakra() erases TanStack Router's typed `to`/`params` generics; casts required
-    const sharedNavProps = { to: to as any, params: { locale, ...params } as any };
+    // chakra() erases TanStack Router's typed `to`/`params` generics down to its wrapped
+    // component's default signature; casting to the router's own link-prop shape (rather
+    // than `any`, and narrowed to just these two keys so the cast doesn't also pull in
+    // Link's `mask` option, which collides with Chakra's own `mask` style prop below) is
+    // required at this boundary.
+    const sharedNavProps = { to, params: { locale, ...params } } as Pick<
+      CreateLinkProps,
+      "to" | "params"
+    >;
 
     if (isGame) {
       return (
