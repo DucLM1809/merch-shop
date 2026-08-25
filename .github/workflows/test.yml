@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  pull_request:
+
+jobs:
+  vitest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # ADR-0009: Vitest is the mandatory test surface. Previously only enforced by the
+      # local pre-commit hook, which a --no-verify commit or a skipped `pnpm install`
+      # bypasses entirely. This is the gate that can't be skipped.
+      - run: pnpm test

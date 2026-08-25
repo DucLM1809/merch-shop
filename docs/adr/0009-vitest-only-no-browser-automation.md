@@ -10,6 +10,8 @@ The frontend is a Vite + TanStack Router SPA with MSW mocking. `renderRoute` int
 
 - Every new feature requires at least one Vitest test covering the new behavior before merge.
 - "Done" = Vitest passes **and** the developer manually verifies the golden path in the browser (or runs `/verify`). Playwright is **not** part of the done criteria.
+- The unit suite (`pnpm test`) runs in CI (`.github/workflows/test.yml`) on every PR and fails the check on a red test — this is the gate that can't be bypassed by a skipped or `--no-verify`'d pre-commit hook. The `test:storybook` project and the `vite.config.ts` coverage thresholds are not enforced in CI yet.
+- The `.husky/pre-commit` hook still runs `pnpm test` locally, unchanged — it gives fast feedback before a push; CI is the backstop that can't be skipped.
 - `renderRoute` integration tests are first-class — they are not a substitute for "real" tests, they are the real tests.
 - Playwright tests are written manually, at lowest priority, only when an issue is explicitly labeled `needs-e2e` by human triage.
 - Playwright tests are never auto-generated as part of issue resolution loops.
