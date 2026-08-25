@@ -1,4 +1,4 @@
-import { useState, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { Box, Flex, IconButton, Portal, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
@@ -19,12 +19,19 @@ export function GlobalNav(): JSX.Element {
   const locale = useLocale();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // The guest cart lives in sessionStorage, which the server can't see — it always
+  // renders a count of 0. The client's first paint must match that, or React discards
+  // and regenerates the tree on hydration; the real count only appears once mounted.
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => setHasMounted(true), []);
+  const displayItemCount = hasMounted ? itemCount : 0;
+
   const handleSignOut = () => logout.mutate();
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
   const userDisplayName = account?.email;
 
-  const cartBadge = itemCount > 0 && (
+  const cartBadge = displayItemCount > 0 && (
     <Box
       position="absolute"
       top="-8px"
@@ -40,7 +47,7 @@ export function GlobalNav(): JSX.Element {
       px="3px"
     >
       <Text fontSize="10px" fontWeight="800" lineHeight="1">
-        {itemCount}
+        {displayItemCount}
       </Text>
     </Box>
   );
@@ -90,12 +97,12 @@ export function GlobalNav(): JSX.Element {
             <Link
               to="/$locale/cart"
               params={{ locale }}
-              aria-label={t("nav.cartItems", { count: itemCount })}
+              aria-label={t("nav.cartItems", { count: displayItemCount })}
             >
               <Flex
                 align="center"
                 gap={2.5}
-                color={itemCount > 0 ? "white" : "gray.500"}
+                color={displayItemCount > 0 ? "white" : "gray.500"}
                 _hover={{ color: "white" }}
                 transition="color 0.15s"
               >
