@@ -3,6 +3,8 @@ import type { JSX, ReactNode } from "react";
 import { chakra } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 
+import { useLocale } from "@/i18n/useLocale";
+
 import { PublisherNavView } from "./PublisherNavView";
 
 import { usePublishers } from "../hooks";
@@ -16,6 +18,7 @@ type Props = {
 
 export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}): JSX.Element {
   const { data: publishers, isLoading } = usePublishers();
+  const locale = useLocale();
 
   function renderLink(
     to: string,
@@ -26,8 +29,11 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
     const isActive = ariaCurrent === "page";
     const isGame = "gameSlug" in params;
 
+    // The view names the full locale-prefixed route id and supplies the catalog params;
+    // the locale itself is chrome-level state, so it's filled in here rather than
+    // threaded through the presentational layer.
     // chakra() erases TanStack Router's typed `to`/`params` generics; casts required
-    const sharedNavProps = { to: to as any, params: params as any };
+    const sharedNavProps = { to: to as any, params: { locale, ...params } as any };
 
     if (isGame) {
       return (
