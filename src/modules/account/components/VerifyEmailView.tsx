@@ -1,4 +1,4 @@
-import { useEffect, useRef, type JSX } from "react";
+import { useEffect, useRef, useState, type JSX } from "react";
 
 import { Box, Button, Heading, Spinner, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
@@ -12,11 +12,22 @@ type Props = {
   token: string;
 };
 
+type VerifyStatus = "pending" | "success" | "error";
+
 export function VerifyEmailView({ token }: Props): JSX.Element {
   const { t } = useTranslation("account");
-  const verifyEmail = useVerifyEmail();
   const locale = useLocale();
   const requested = useRef(false);
+  // Driven off useVerifyEmail's own onSuccess/onError (see merch-shop-bz7) rather
+  // than the mutation's reactive isError/isSuccess snapshot, which isn't reliable
+  // for a mutation fired from an effect on mount instead of a user event.
+  const [status, setStatus] = useState<VerifyStatus>(token ? "pending" : "error");
+  const handleVerifySuccess = (): void => setStatus("success");
+  const handleVerifyError = (): void => setStatus("error");
+  const verifyEmail = useVerifyEmail({
+    onSuccess: handleVerifySuccess,
+    onError: handleVerifyError,
+  });
 
   useEffect(() => {
     if (requested.current || !token) return;
@@ -24,7 +35,7 @@ export function VerifyEmailView({ token }: Props): JSX.Element {
     verifyEmail.mutate({ token });
   }, [token, verifyEmail]);
 
-  if (!token || verifyEmail.isError) {
+  if (status === "error") {
     return (
       <Box w="full" maxW="360px" textAlign="center">
         <Heading size="lg" color="white" fontWeight="800" mb={3}>
@@ -37,7 +48,7 @@ export function VerifyEmailView({ token }: Props): JSX.Element {
     );
   }
 
-  if (verifyEmail.isSuccess) {
+  if (status === "success") {
     return (
       <Box w="full" maxW="360px" textAlign="center">
         <Heading size="lg" color="white" fontWeight="800" mb={3}>

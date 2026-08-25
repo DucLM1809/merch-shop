@@ -338,7 +338,20 @@ export const handlers = [
 
   http.post(`${BASE_URL}/auth/verify-email`, async ({ request }) => {
     const body = (await request.json()) as VerifyEmailDto;
-    if (body.token !== VALID_TOKEN) return new HttpResponse(null, { status: 400 });
+    // Matches the real backend's actual error envelope for this endpoint
+    // (confirmed against a live backend while fixing merch-shop-bz7) rather than
+    // a bare 400 with no body — the real shape is what tripped up the fix.
+    if (body.token !== VALID_TOKEN) {
+      return HttpResponse.json(
+        {
+          success: false,
+          code: "INVALID_OR_EXPIRED_TOKEN",
+          message: "Token is invalid or has expired",
+          timestamp: new Date().toISOString(),
+        },
+        { status: 400 }
+      );
+    }
     return HttpResponse.json({ success: true });
   }),
 

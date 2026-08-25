@@ -79,9 +79,23 @@ export function useResetPassword() {
   });
 }
 
-export function useVerifyEmail() {
+type UseVerifyEmailCallbacks = {
+  onSuccess?: () => void;
+  onError?: () => void;
+};
+
+// Callers pass onSuccess/onError here (hook-level useMutation options) rather than
+// as the mutate() call's own second argument. This mutation fires from an effect on
+// mount, not a user event, and mutate()-level callbacks share the same reactive
+// subscription as isError/isSuccess, which can miss a notification when the mutation
+// settles right after a dev-mode effect double-invocation resubscribes it. The
+// useMutation-level onSuccess/onError below are invoked directly off the mutation's
+// own settlement instead, so they aren't affected. See merch-shop-bz7.
+export function useVerifyEmail(callbacks?: UseVerifyEmailCallbacks) {
   return useMutation({
     mutationFn: (body: VerifyEmailDto) => client.verifyEmail(body),
+    onSuccess: callbacks?.onSuccess,
+    onError: callbacks?.onError,
   });
 }
 

@@ -15,4 +15,12 @@ describe("/verify-email route", () => {
 
     expect(await screen.findByTestId("verify-email-error")).toBeInTheDocument();
   });
+
+  it("stops spinning once the API rejects the token (merch-shop-bz7)", async () => {
+    renderRoute("/verify-email?token=bad-token");
+
+    await screen.findByTestId("verify-email-error");
+
+    expect(screen.queryByTestId("verify-email-loading")).not.toBeInTheDocument();
+  });
 });
