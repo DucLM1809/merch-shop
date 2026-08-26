@@ -11,19 +11,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const AuthFormPlaceholder = ({ label }: { label: string }) => (
-  <Box
-    p={8}
-    borderRadius="xl"
-    bg="gray.900"
-    w="400px"
-    border="1px solid"
-    borderColor="gray.800"
-    textAlign="center"
-  >
-    <Text color="white" fontWeight="700" mb={2}>
+  <Box w="360px" textAlign="center">
+    <Text color="fg" fontWeight="700" mb={2}>
       {label}
     </Text>
-    <Text color="gray.500" fontSize="sm">
+    <Text color="fg.subtle" fontSize="sm">
       Auth form renders here
     </Text>
   </Box>
