@@ -209,7 +209,7 @@ describe("/admin/orders", () => {
     await waitFor(() => expect(requestedPage).toBe("2"));
   });
 
-  it("Retry Fulfillment fires POST /orders/:id/retry-fulfillment", async () => {
+  it("Retry Fulfillment requires confirmation before firing POST /orders/:id/retry-fulfillment", async () => {
     server.use(
       http.get(`${BASE_URL}/orders`, () =>
         HttpResponse.json(adminOrdersEnvelope(testOrders, { total: 2, page: 1, limit: 20 }))
@@ -229,6 +229,11 @@ describe("/admin/orders", () => {
     const user = userEvent.setup();
     await user.click(await screen.findByText("#ord_001"));
     await user.click(screen.getByRole("button", { name: /retry fulfillment/i }));
+
+    // Arming the retry must not fire the request on its own.
+    expect(calledId).toBeNull();
+
+    await user.click(screen.getByRole("button", { name: /^confirm$/i }));
 
     await waitFor(() => expect(calledId).toBe("ord_001"));
   });

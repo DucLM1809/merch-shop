@@ -19,8 +19,15 @@ import {
   useSetSkuAvailability,
 } from "../hooks";
 
+import { AdminConfirmButton } from "./AdminConfirmButton";
 import { AdminFormSheet } from "./AdminFormSheet";
-import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
+import {
+  AdminRowActions,
+  AdminTable,
+  AdminTableCell,
+  AdminTableRow,
+  type AdminColumn,
+} from "./AdminTable";
 import { schema, DEFAULTS } from "./AdminSkusView.schema";
 
 import type { FormValues } from "./AdminSkusView.schema";
@@ -30,7 +37,7 @@ type EnrichedSku = SKU & { productId: string; productName: string };
 
 const COLUMNS: AdminColumn[] = [
   { key: "product", label: "Product" },
-  { key: "price", label: "Price" },
+  { key: "price", label: "Price", align: "right" },
   { key: "size", label: "Size" },
   { key: "color", label: "Color" },
   { key: "edition", label: "Edition" },
@@ -233,15 +240,15 @@ export function AdminSkusView(): React.JSX.Element {
             <NativeSelect.Indicator />
           </NativeSelect.Root>
 
-          <Button
+          <AdminConfirmButton
             size="sm"
             colorPalette="blue"
             disabled={!bulkFacetId}
-            loading={bulk.isPending}
-            onClick={handleApplyBulk}
+            pending={bulk.isPending}
+            onConfirm={handleApplyBulk}
           >
             Apply
-          </Button>
+          </AdminConfirmButton>
         </HStack>
       </Card>
 
@@ -268,8 +275,8 @@ export function AdminSkusView(): React.JSX.Element {
                     {sku.productName}
                   </Text>
                 </AdminTableCell>
-                <AdminTableCell>
-                  <Text fontSize="sm" color="fg.muted">
+                <AdminTableCell align="right">
+                  <Text fontSize="sm" color="fg" fontVariantNumeric="tabular-nums">
                     ${sku.price.toFixed(2)}
                   </Text>
                 </AdminTableCell>
@@ -290,45 +297,23 @@ export function AdminSkusView(): React.JSX.Element {
                 </AdminTableCell>
                 <AdminTableCell align="right">
                   <HStack justify="flex-end" gap={1}>
-                    <Button
-                      size="xs"
+                    <AdminConfirmButton
                       colorPalette={sku.available ? "success" : "gray"}
+                      confirmColorPalette={sku.available ? "danger" : "success"}
                       variant="subtle"
-                      loading={toggle.isPending && toggle.variables?.id === sku.id}
-                      onClick={handleToggle}
+                      pending={toggle.isPending && toggle.variables?.id === sku.id}
+                      onConfirm={handleToggle}
                     >
                       {sku.available ? "Available" : "Unavailable"}
-                    </Button>
+                    </AdminConfirmButton>
 
-                    {confirmDelete === sku.id ? (
-                      <HStack gap={1}>
-                        <Button
-                          size="xs"
-                          colorPalette="danger"
-                          loading={del.isPending}
-                          onClick={handleDeleteConfirm}
-                        >
-                          Confirm
-                        </Button>
-                        <Button
-                          size="xs"
-                          variant="ghost"
-                          color="fg.subtle"
-                          onClick={handleDeleteCancel}
-                        >
-                          ✕
-                        </Button>
-                      </HStack>
-                    ) : (
-                      <Button
-                        size="xs"
-                        variant="ghost"
-                        colorPalette="danger"
-                        onClick={handleDeleteStart}
-                      >
-                        Delete
-                      </Button>
-                    )}
+                    <AdminRowActions
+                      onDeleteStart={handleDeleteStart}
+                      onDeleteCancel={handleDeleteCancel}
+                      onDeleteConfirm={handleDeleteConfirm}
+                      confirming={confirmDelete === sku.id}
+                      deleting={del.isPending}
+                    />
                   </HStack>
                 </AdminTableCell>
               </AdminTableRow>

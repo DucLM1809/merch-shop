@@ -117,7 +117,7 @@ describe("/admin/skus", () => {
     await waitFor(() => expect(posted).toBe(true));
   });
 
-  it("availability toggle fires PATCH /skus/:id/availability", async () => {
+  it("availability toggle requires confirmation before firing PATCH /skus/:id/availability", async () => {
     mockSignedIn(adminAccount);
     server.use(
       http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
@@ -138,10 +138,15 @@ describe("/admin/skus", () => {
     const availableBtns = await screen.findAllByRole("button", { name: /^available$/i });
     await user.click(availableBtns[0]);
 
+    // Arming the toggle must not fire the request on its own.
+    expect(patched).toBe(false);
+
+    await user.click(screen.getByRole("button", { name: /^confirm$/i }));
+
     await waitFor(() => expect(patched).toBe(true));
   });
 
-  it("bulk apply fires PATCH /skus/availability/bulk", async () => {
+  it("bulk apply requires confirmation before firing PATCH /skus/availability/bulk", async () => {
     mockSignedIn(adminAccount);
     server.use(
       http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
@@ -161,6 +166,11 @@ describe("/admin/skus", () => {
     await screen.findByRole("option", { name: "League of Legends" });
     await user.selectOptions(screen.getByLabelText("Facet value"), "lol");
     await user.click(screen.getByRole("button", { name: /^apply$/i }));
+
+    // Arming the bulk action must not fire the request on its own.
+    expect(patchedBody).toBeNull();
+
+    await user.click(screen.getByRole("button", { name: /^confirm$/i }));
 
     await waitFor(() =>
       expect(patchedBody).toEqual({ facet: "game", facetId: "lol", available: true })

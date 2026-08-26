@@ -26,7 +26,13 @@ import { PageContainer } from "@/components/PageContainer";
 
 import { useCreateProduct, useDeleteProduct, useUpdateProduct } from "../hooks";
 import { AdminFormSheet } from "./AdminFormSheet";
-import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
+import {
+  AdminRowActions,
+  AdminTable,
+  AdminTableCell,
+  AdminTableRow,
+  type AdminColumn,
+} from "./AdminTable";
 import { schema, DEFAULTS } from "./AdminProductsView.schema";
 
 import type { CreateProductDto, Product } from "@/api/types";
@@ -35,10 +41,17 @@ import type { FormValues } from "./AdminProductsView.schema";
 const COLUMNS: AdminColumn[] = [
   { key: "name", label: "Name" },
   { key: "id", label: "ID" },
-  { key: "price", label: "Price" },
+  { key: "price", label: "Price", align: "right" },
   { key: "publisher", label: "Publisher" },
   { key: "game", label: "Game" },
 ];
+
+// Cuid-style ids run ~25 characters — full-length in a table cell was the single
+// biggest source of the "wall of text" feeling. The leading slice is still enough
+// to eyeball-match against a URL or API response; `title` carries the full value.
+function shortId(id: string): string {
+  return id.length > 10 ? `${id.slice(0, 10)}…` : id;
+}
 
 const SECTION_LABEL_PROPS = {
   fontSize: "xs",
@@ -318,12 +331,22 @@ export function AdminProductsView(): React.JSX.Element {
                   </Text>
                 </AdminTableCell>
                 <AdminTableCell>
-                  <Text fontSize="sm" color="fg.muted" fontFamily="mono">
-                    {product.id}
+                  <Text
+                    as="span"
+                    fontSize="xs"
+                    color="fg.muted"
+                    fontFamily="mono"
+                    bg="bg.muted"
+                    px={1.5}
+                    py={0.5}
+                    borderRadius="sm"
+                    title={product.id}
+                  >
+                    {shortId(product.id)}
                   </Text>
                 </AdminTableCell>
-                <AdminTableCell>
-                  <Text fontSize="sm" color="fg.muted">
+                <AdminTableCell align="right">
+                  <Text fontSize="sm" color="fg" fontVariantNumeric="tabular-nums">
                     ${product.price.toFixed(2)}
                   </Text>
                 </AdminTableCell>
@@ -338,41 +361,14 @@ export function AdminProductsView(): React.JSX.Element {
                   </Text>
                 </AdminTableCell>
                 <AdminTableCell align="right">
-                  <HStack justify="flex-end" gap={1}>
-                    <Button size="xs" variant="ghost" color="fg.muted" onClick={handleEdit}>
-                      Edit
-                    </Button>
-
-                    {confirmDelete === product.id ? (
-                      <HStack gap={1}>
-                        <Button
-                          size="xs"
-                          colorPalette="danger"
-                          loading={del.isPending}
-                          onClick={handleDeleteConfirm}
-                        >
-                          Confirm
-                        </Button>
-                        <Button
-                          size="xs"
-                          variant="ghost"
-                          color="fg.subtle"
-                          onClick={handleDeleteCancel}
-                        >
-                          ✕
-                        </Button>
-                      </HStack>
-                    ) : (
-                      <Button
-                        size="xs"
-                        variant="ghost"
-                        colorPalette="danger"
-                        onClick={handleDeleteStart}
-                      >
-                        Delete
-                      </Button>
-                    )}
-                  </HStack>
+                  <AdminRowActions
+                    onEdit={handleEdit}
+                    onDeleteStart={handleDeleteStart}
+                    onDeleteCancel={handleDeleteCancel}
+                    onDeleteConfirm={handleDeleteConfirm}
+                    confirming={confirmDelete === product.id}
+                    deleting={del.isPending}
+                  />
                 </AdminTableCell>
               </AdminTableRow>
             );

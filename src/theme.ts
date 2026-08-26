@@ -1,4 +1,4 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+import { createSystem, defaultConfig, defineConfig, defineRecipe } from "@chakra-ui/react";
 
 // Design identity: a licensed esports-merch storefront. Dark is the only mode
 // (see `__root.tsx`'s hardcoded `className="dark"`), so every semantic token
@@ -70,6 +70,16 @@ const config = defineConfig({
         cardRest: { value: "0 1px 2px rgba(0, 0, 0, 0.45)" },
         cardHover: {
           value: "0 10px 28px -10px rgba(43, 140, 255, 0.35), 0 4px 10px rgba(0, 0, 0, 0.55)",
+        },
+        // Beacon glow for primary (solid blue) CTAs — on a near-black canvas a flat
+        // fill reads as just another dark panel, so the halo is what actually pulls
+        // the eye. Kept off every other variant/colorPalette so it stays a primary-
+        // action signal rather than decoration.
+        ctaRest: {
+          value: "0 0 0 1px rgba(61, 150, 255, 0.5), 0 6px 18px -6px rgba(43, 140, 255, 0.6)",
+        },
+        ctaHover: {
+          value: "0 0 0 1px rgba(61, 150, 255, 0.75), 0 10px 26px -6px rgba(43, 140, 255, 0.8)",
         },
       },
     },
@@ -194,6 +204,27 @@ const config = defineConfig({
           letterSpacing: "0.01em",
         },
       },
+    },
+    recipes: {
+      // Primary storefront/admin actions (Add to Cart, Checkout, Save...) all use
+      // `colorPalette="blue"` with the default `solid` variant. Chakra's stock
+      // recipe renders that as a flat fill, which loses definition against this
+      // theme's near-black surfaces — bumping weight and adding the glow shadow
+      // above is what makes it actually read as *the* button on the page.
+      button: defineRecipe({
+        compoundVariants: [
+          {
+            colorPalette: "blue",
+            variant: "solid",
+            css: {
+              fontWeight: "bold",
+              shadow: "ctaRest",
+              _hover: { shadow: "ctaHover" },
+              _expanded: { shadow: "ctaHover" },
+            },
+          },
+        ],
+      }),
     },
   },
   globalCss: {

@@ -13,7 +13,13 @@ import { PageContainer } from "@/components/PageContainer";
 
 import { useCreateTeam, useDeleteTeam, useUpdateTeam } from "../hooks";
 import { AdminFormSheet } from "./AdminFormSheet";
-import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
+import {
+  AdminRowActions,
+  AdminTable,
+  AdminTableCell,
+  AdminTableRow,
+  type AdminColumn,
+} from "./AdminTable";
 import { schema, DEFAULTS } from "./AdminTeamsView.schema";
 
 import type { CreateTeamDto, Team } from "@/api/types";
@@ -186,41 +192,14 @@ export function AdminTeamsView(): React.JSX.Element {
                   </Text>
                 </AdminTableCell>
                 <AdminTableCell align="right">
-                  <HStack justify="flex-end" gap={1}>
-                    <Button size="xs" variant="ghost" color="fg.muted" onClick={handleEdit}>
-                      Edit
-                    </Button>
-
-                    {confirmDelete === team.id ? (
-                      <HStack gap={1}>
-                        <Button
-                          size="xs"
-                          colorPalette="danger"
-                          loading={del.isPending}
-                          onClick={handleDeleteConfirm}
-                        >
-                          Confirm
-                        </Button>
-                        <Button
-                          size="xs"
-                          variant="ghost"
-                          color="fg.subtle"
-                          onClick={handleDeleteCancel}
-                        >
-                          ✕
-                        </Button>
-                      </HStack>
-                    ) : (
-                      <Button
-                        size="xs"
-                        variant="ghost"
-                        colorPalette="danger"
-                        onClick={handleDeleteStart}
-                      >
-                        Delete
-                      </Button>
-                    )}
-                  </HStack>
+                  <AdminRowActions
+                    onEdit={handleEdit}
+                    onDeleteStart={handleDeleteStart}
+                    onDeleteCancel={handleDeleteCancel}
+                    onDeleteConfirm={handleDeleteConfirm}
+                    confirming={confirmDelete === team.id}
+                    deleting={del.isPending}
+                  />
                 </AdminTableCell>
               </AdminTableRow>
             );

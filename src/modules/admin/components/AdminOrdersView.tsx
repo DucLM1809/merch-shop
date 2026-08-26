@@ -1,5 +1,5 @@
-import { Fragment, useState, type MouseEvent } from "react";
-import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Fragment, useState } from "react";
+import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { ShoppingBag } from "lucide-react";
 
 import type { Order, OrderStatus } from "@/api/types";
@@ -7,6 +7,7 @@ import { Badge } from "@/components/Badge";
 import { EmptyState } from "@/components/EmptyState";
 import { ORDER_STATUS_TONE, useRetryFulfillment } from "@/modules/orders";
 
+import { AdminConfirmButton } from "./AdminConfirmButton";
 import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
 
 type Props = { orders: Order[] };
@@ -44,10 +45,7 @@ export function AdminOrdersView({ orders }: Props): React.JSX.Element {
       {orders.map((order) => {
         const isExpanded = expanded === order.id;
         const toggle = () => setExpanded(isExpanded ? null : order.id);
-        const handleRetry = (e: MouseEvent<HTMLButtonElement>) => {
-          e.stopPropagation();
-          mutation.mutate(order.id);
-        };
+        const handleRetry = () => mutation.mutate(order.id);
 
         return (
           <Fragment key={order.id}>
@@ -145,16 +143,16 @@ export function AdminOrdersView({ orders }: Props): React.JSX.Element {
                   </HStack>
 
                   {RETRYABLE_STATUSES.includes(order.status) && (
-                    <Button
+                    <AdminConfirmButton
                       mt={4}
                       size="sm"
                       colorPalette="blue"
                       variant="outline"
-                      loading={busy(order.id)}
-                      onClick={handleRetry}
+                      pending={busy(order.id)}
+                      onConfirm={handleRetry}
                     >
                       Retry Fulfillment
-                    </Button>
+                    </AdminConfirmButton>
                   )}
                 </AdminTableCell>
               </AdminTableRow>

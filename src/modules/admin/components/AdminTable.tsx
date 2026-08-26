@@ -1,4 +1,5 @@
-import { Box, chakra, type BoxProps } from "@chakra-ui/react";
+import { Box, chakra, HStack, IconButton, type BoxProps } from "@chakra-ui/react";
+import { Check, Pencil, Trash2, X } from "lucide-react";
 import type { JSX, ReactNode } from "react";
 
 import { Card } from "@/components/Card";
@@ -29,7 +30,7 @@ type AdminTableProps = {
  */
 export function AdminTable({ columns, hasActionsColumn, children }: AdminTableProps): JSX.Element {
   return (
-    <Card p={0}>
+    <Card p={0} clipCorner={false}>
       <Box overflowX="auto">
         <Box as="table" w="full" borderCollapse="collapse">
           <Box as="thead" bg="bg.muted">
@@ -99,5 +100,87 @@ export function AdminTableCell({ align, colSpan, ...rest }: AdminTableCellProps)
       verticalAlign="middle"
       {...rest}
     />
+  );
+}
+
+type AdminRowActionsProps = {
+  /** Omit for rows with no edit affordance (e.g. SKUs, which only toggle availability or delete). */
+  onEdit?: () => void;
+  onDeleteStart: () => void;
+  onDeleteCancel: () => void;
+  onDeleteConfirm: () => void;
+  /** True while this row's delete is asking "are you sure" — swaps Edit/Delete for Cancel/Confirm. */
+  confirming: boolean;
+  deleting?: boolean;
+};
+
+/**
+ * Every Admin CRUD view ended each row with the same "Edit" / "Delete" text
+ * buttons (plus a "Confirm" / "✕" pair once delete was armed) — repeating two
+ * or three words on every single row is most of what made the tables read as
+ * a wall of prose. Icon-only actions carry the same meaning at a glance
+ * without the repetition; `title` keeps them discoverable on hover and
+ * `aria-label` keeps them named for tests and screen readers.
+ */
+export function AdminRowActions({
+  onEdit,
+  onDeleteStart,
+  onDeleteCancel,
+  onDeleteConfirm,
+  confirming,
+  deleting,
+}: AdminRowActionsProps): JSX.Element {
+  if (confirming) {
+    return (
+      <HStack justify="flex-end" gap={1}>
+        <IconButton
+          size="xs"
+          variant="ghost"
+          color="fg.muted"
+          title="Cancel"
+          aria-label="Cancel"
+          onClick={onDeleteCancel}
+        >
+          <X size={14} />
+        </IconButton>
+        <IconButton
+          size="xs"
+          colorPalette="danger"
+          title="Confirm"
+          aria-label="Confirm"
+          loading={deleting}
+          onClick={onDeleteConfirm}
+        >
+          <Check size={14} />
+        </IconButton>
+      </HStack>
+    );
+  }
+
+  return (
+    <HStack justify="flex-end" gap={0.5}>
+      {onEdit && (
+        <IconButton
+          size="xs"
+          variant="ghost"
+          color="fg.muted"
+          title="Edit"
+          aria-label="Edit"
+          onClick={onEdit}
+        >
+          <Pencil size={14} />
+        </IconButton>
+      )}
+      <IconButton
+        size="xs"
+        variant="ghost"
+        colorPalette="danger"
+        title="Delete"
+        aria-label="Delete"
+        onClick={onDeleteStart}
+      >
+        <Trash2 size={14} />
+      </IconButton>
+    </HStack>
   );
 }
