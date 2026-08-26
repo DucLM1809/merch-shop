@@ -52,6 +52,22 @@ describe("/admin/games", () => {
     expect(screen.getByText("valorant")).toBeInTheDocument();
   });
 
+  it("renders games as a real table with column headers and rows", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope(twoGames))));
+
+    renderRoute("/admin/games");
+
+    await screen.findByText("League of Legends");
+
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Name" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Slug" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Publisher" })).toBeInTheDocument();
+    // Header row + one row per game.
+    expect(screen.getAllByRole("row")).toHaveLength(1 + twoGames.length);
+  });
+
   it("shows empty state when no games", async () => {
     mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/games`, () => HttpResponse.json(envelope([]))));

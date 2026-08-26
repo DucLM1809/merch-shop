@@ -95,6 +95,27 @@ describe("/admin/orders", () => {
     expect(screen.getByTestId("order-status-ord_002")).toHaveTextContent("FORWARDED");
   });
 
+  it("renders orders as a real table with column headers and rows", async () => {
+    server.use(
+      http.get(`${BASE_URL}/orders`, () =>
+        HttpResponse.json(adminOrdersEnvelope(testOrders, { total: 2, page: 1, limit: 20 }))
+      )
+    );
+
+    renderRoute("/admin/orders");
+
+    await screen.findByText("#ord_001");
+
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Order" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Customer" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Date" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Total" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Status" })).toBeInTheDocument();
+    // Header row + one row per order (no rows expanded yet).
+    expect(screen.getAllByRole("row")).toHaveLength(1 + testOrders.length);
+  });
+
   it("shows empty state when no orders", async () => {
     server.use(http.get(`${BASE_URL}/orders`, () => HttpResponse.json(envelope([]))));
 

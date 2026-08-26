@@ -3,6 +3,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import { Box, Button, Heading, HStack, Text } from "@chakra-ui/react";
 
 import { ORDER_STATUSES, type OrderStatus } from "@/api/types";
+import { PageContainer } from "@/components/PageContainer";
 import { AdminOrdersView } from "@/modules/admin";
 import { useAdminOrders } from "@/modules/orders";
 
@@ -31,9 +32,9 @@ function AdminOrdersPage(): React.JSX.Element {
   }
 
   return (
-    <Box p={8}>
+    <PageContainer size="lg" py={8}>
       <HStack mb={6} justify="space-between">
-        <Heading size="lg" color="white">
+        <Heading textStyle="h1" color="fg">
           Orders
         </Heading>
         {meta && (
@@ -41,8 +42,8 @@ function AdminOrdersPage(): React.JSX.Element {
             px={3}
             py={1}
             borderRadius="full"
-            bg="gray.800"
-            color="gray.400"
+            bg="bg.muted"
+            color="fg.muted"
             fontSize="xs"
             fontWeight="700"
           >
@@ -63,8 +64,8 @@ function AdminOrdersPage(): React.JSX.Element {
         ))}
       </HStack>
 
-      {isLoading && <Text color="gray.500">Loading…</Text>}
-      {error && <Text color="red.400">Failed to load orders.</Text>}
+      {isLoading && <Text color="fg.muted">Loading…</Text>}
+      {error && <Text color="danger.fg">Failed to load orders.</Text>}
       {!isLoading && !error && <AdminOrdersView orders={safeOrders} />}
 
       {!isLoading && !error && totalPages > 1 && (
@@ -77,7 +78,7 @@ function AdminOrdersPage(): React.JSX.Element {
           >
             Previous
           </Button>
-          <Text fontSize="sm" color="gray.400">
+          <Text fontSize="sm" color="fg.muted">
             Page {page} of {totalPages}
           </Text>
           <Button
@@ -90,7 +91,7 @@ function AdminOrdersPage(): React.JSX.Element {
           </Button>
         </HStack>
       )}
-    </Box>
+    </PageContainer>
   );
 }
 

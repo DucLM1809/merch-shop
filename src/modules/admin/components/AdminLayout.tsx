@@ -27,9 +27,9 @@ export function AdminLayout({ children }: Props): React.JSX.Element {
       <Box
         as="nav"
         w="220px"
-        bg="gray.900"
+        bg="bg.panel"
         borderRight="1px solid"
-        borderColor="gray.800"
+        borderColor="border.default"
         flexShrink={0}
         py={6}
       >
@@ -40,7 +40,7 @@ export function AdminLayout({ children }: Props): React.JSX.Element {
           fontWeight="800"
           letterSpacing="0.12em"
           textTransform="uppercase"
-          color="gray.500"
+          color="fg.subtle"
         >
           Admin
         </Text>
@@ -54,12 +54,12 @@ export function AdminLayout({ children }: Props): React.JSX.Element {
                     gap={3}
                     px={5}
                     py={2.5}
-                    bg={isActive ? "blue.950" : "transparent"}
-                    color={isActive ? "blue.300" : "gray.500"}
-                    _hover={{ bg: "gray.800", color: "white" }}
+                    bg={isActive ? "signal.subtle" : "transparent"}
+                    color={isActive ? "signal.fg" : "fg.subtle"}
+                    _hover={{ bg: "bg.muted", color: "fg" }}
                     transition="all 0.1s"
                     borderLeft="2px solid"
-                    borderColor={isActive ? "blue.400" : "transparent"}
+                    borderColor={isActive ? "signal.solid" : "transparent"}
                   >
                     <Icon size={15} strokeWidth={1.75} />
                     <Text fontSize="sm" fontWeight={isActive ? "600" : "500"}>
@@ -75,7 +75,8 @@ export function AdminLayout({ children }: Props): React.JSX.Element {
                 gap={3}
                 px={5}
                 py={2.5}
-                color="gray.700"
+                color="fg.subtle"
+                opacity={0.5}
                 cursor="not-allowed"
                 borderLeft="2px solid"
                 borderColor="transparent"
@@ -91,7 +92,7 @@ export function AdminLayout({ children }: Props): React.JSX.Element {
         </VStack>
       </Box>
 
-      <Box as="main" flex={1} overflow="auto">
+      <Box as="main" flex={1} overflow="auto" bg="bg">
         {children}
       </Box>
     </Flex>
