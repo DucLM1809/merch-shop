@@ -38,10 +38,10 @@ export function VerifyEmailView({ token }: Props): JSX.Element {
   if (status === "error") {
     return (
       <Box w="full" maxW="360px" textAlign="center">
-        <Heading size="lg" color="white" fontWeight="800" mb={3}>
+        <Heading size="lg" color="fg" fontWeight="800" mb={3}>
           {t("verifyEmail.failedTitle")}
         </Heading>
-        <Text color="gray.400" data-testid="verify-email-error">
+        <Text color="fg.muted" data-testid="verify-email-error">
           {t("verifyEmail.failedBody")}
         </Text>
       </Box>
@@ -51,10 +51,10 @@ export function VerifyEmailView({ token }: Props): JSX.Element {
   if (status === "success") {
     return (
       <Box w="full" maxW="360px" textAlign="center">
-        <Heading size="lg" color="white" fontWeight="800" mb={3}>
+        <Heading size="lg" color="fg" fontWeight="800" mb={3}>
           {t("verifyEmail.successTitle")}
         </Heading>
-        <Text color="gray.400" mb={4} data-testid="verify-email-success">
+        <Text color="fg.muted" mb={4} data-testid="verify-email-success">
           {t("verifyEmail.successBody")}
         </Text>
         <Link to="/$locale" params={{ locale }}>

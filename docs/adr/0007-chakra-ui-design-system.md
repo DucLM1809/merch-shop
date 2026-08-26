@@ -17,7 +17,7 @@ Chakra UI v3 ships fully accessible, composable components built on Ark UI, with
 
 - **Version**: v3 (Ark UI + Panda CSS internals; no Emotion dependency).
 - **Theme**: default Chakra system for now; extend with brand tokens when design identity is defined.
-- **Color mode**: dark default, no user toggle for now.
+- **Color mode**: dark default, retained; a System/Light/Dark toggle was added afterward (see `merch-shop-0lf.16` and `src/colorMode/`) — a visitor can follow their OS live or override it explicitly, persisted via a cookie resolved server-side before render, the same pattern as the locale cookie.
 - **Migration**: big-bang — one component existed at migration time, no coexistence debt.
 
 ## Consequences

@@ -21,7 +21,7 @@ function HomePage() {
         pt={8}
         pb={6}
         borderBottom="1px solid"
-        borderColor="gray.800"
+        borderColor="border"
         position="relative"
         overflow="hidden"
       >
@@ -31,10 +31,12 @@ function HomePage() {
           left={0}
           bottom={0}
           w="3px"
-          style={{ background: "linear-gradient(to bottom, #0094e0, transparent)" }}
+          bgGradient="to-b"
+          gradientFrom={{ base: "blue.600", _dark: "#0094e0" }}
+          gradientTo="transparent"
         />
         <Flex align="baseline" gap={3} pl={4}>
-          <Heading size="2xl" color="white" fontWeight="800" letterSpacing="-0.03em" lineHeight="1">
+          <Heading size="2xl" color="fg" fontWeight="800" letterSpacing="-0.03em" lineHeight="1">
             {t("home.title")}
           </Heading>
           <Text
@@ -48,7 +50,7 @@ function HomePage() {
             {t("home.eyebrow")}
           </Text>
         </Flex>
-        <Text color="gray.500" fontSize="sm" mt={2} pl={4}>
+        <Text color="fg.subtle" fontSize="sm" mt={2} pl={4}>
           {t("home.subtitle")}
         </Text>
       </Box>

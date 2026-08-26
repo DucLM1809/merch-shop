@@ -38,11 +38,11 @@ export function LocaleSwitcher({ onChanged }: LocaleSwitcherProps): JSX.Element 
         value={locale}
         onChange={handleChange}
         aria-label={t("localeSwitcher.label")}
-        color="gray.400"
+        color="fg.muted"
         fontSize="sm"
         fontWeight="600"
         cursor="pointer"
-        _hover={{ color: "white" }}
+        _hover={{ color: "fg" }}
         data-testid="locale-switcher"
       >
         {SUPPORTED_LOCALES.map((supported) => (
@@ -51,7 +51,7 @@ export function LocaleSwitcher({ onChanged }: LocaleSwitcherProps): JSX.Element 
           </option>
         ))}
       </NativeSelect.Field>
-      <NativeSelect.Indicator color="gray.500" />
+      <NativeSelect.Indicator color="fg.subtle" />
     </NativeSelect.Root>
   );
 }

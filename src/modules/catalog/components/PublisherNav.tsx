@@ -59,10 +59,10 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
           fontSize="sm"
           textDecoration="none"
           transition="background 0.15s, color 0.15s"
-          color={isActive ? "blue.300" : "gray.500"}
+          color={isActive ? "blue.300" : "fg.subtle"}
           bg={isActive ? "blue.950" : "transparent"}
           fontWeight={isActive ? "600" : "400"}
-          _hover={{ color: "gray.200", bg: "gray.800" }}
+          _hover={{ color: "fg", bg: "bg.muted" }}
           aria-current={ariaCurrent}
         >
           {children}
@@ -79,11 +79,11 @@ export function PublisherNav({ activePublisherSlug, activeGameSlug }: Props = {}
         borderRadius="md"
         textDecoration="none"
         transition="background 0.15s, color 0.15s"
-        color={isActive ? "white" : "gray.400"}
-        bg={isActive ? "gray.800" : "transparent"}
+        color={isActive ? "fg" : "fg.muted"}
+        bg={isActive ? "bg.muted" : "transparent"}
         borderLeft={isActive ? "2px solid" : "2px solid transparent"}
         borderColor={isActive ? "blue.500" : "transparent"}
-        _hover={{ color: "white", bg: "gray.800" }}
+        _hover={{ color: "fg", bg: "bg.muted" }}
         aria-current={ariaCurrent}
       >
         {children}

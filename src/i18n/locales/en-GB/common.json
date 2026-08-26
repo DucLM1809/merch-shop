@@ -18,6 +18,14 @@
       "fr-FR": "French"
     }
   },
+  "colorModeToggle": {
+    "label": "Colour mode",
+    "options": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  },
   "cartSync": {
     "failed": "Basket sync failed — your items have been preserved."
   },

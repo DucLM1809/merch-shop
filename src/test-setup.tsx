@@ -27,6 +27,21 @@ vi.mock("@tanstack/react-start", async (importOriginal) => {
   };
 });
 
+// jsdom doesn't implement `matchMedia` at all — `useColorMode`'s "System" tracking calls
+// it unconditionally, which would otherwise throw inside `RootDocument` on every render.
+// A fixed `matches: false` is fine for tests: it resolves to dark, the same default the
+// server falls back to, so it doesn't fight the loader's own initial value.
+if (typeof window !== "undefined" && !window.matchMedia) {
+  window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }));
+}
+
 expect.extend(axeMatchers);
 
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));

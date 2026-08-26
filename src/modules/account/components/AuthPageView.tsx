@@ -11,7 +11,12 @@ type Props = {
 // A faint access-panel grid, masked so it fades out toward the edges rather than
 // hard-cropping — decorative texture only, not a semantic UI color, so a literal
 // rgba value here follows the same convention as the rgba shadow tokens in theme.ts.
-const GRID_PATTERN = "radial-gradient(circle, rgba(123, 130, 150, 0.5) 1px, transparent 1px)";
+// The dot itself is tuned per mode (the same dark-canvas gray reads too faint against a
+// white canvas), via a conditional style value rather than a second component variant.
+const GRID_PATTERN = {
+  base: "radial-gradient(circle, rgba(91, 97, 120, 0.35) 1px, transparent 1px)",
+  _dark: "radial-gradient(circle, rgba(123, 130, 150, 0.5) 1px, transparent 1px)",
+};
 const GRID_MASK = "radial-gradient(ellipse 60% 55% at 50% 42%, black 0%, transparent 75%)";
 
 export function AuthPageView({ children }: Props): JSX.Element {

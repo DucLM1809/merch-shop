@@ -44,7 +44,7 @@ export function PublisherNavView({
 }: PublisherNavViewProps) {
   if (isLoading) {
     return (
-      <Box w="56" p={4} borderRight="1px solid" borderColor="gray.800" minH="100dvh" flexShrink={0}>
+      <Box w="56" p={4} borderRight="1px solid" borderColor="border" minH="100dvh" flexShrink={0}>
         <VStack gap={3} align="stretch" pt={2}>
           {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton key={i} h="5" borderRadius="md" />
@@ -61,7 +61,7 @@ export function PublisherNavView({
       py={5}
       px={3}
       borderRight="1px solid"
-      borderColor="gray.800"
+      borderColor="border"
       minH="100dvh"
       flexShrink={0}
     >

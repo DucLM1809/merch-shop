@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { useLocale } from "../i18n/useLocale";
 import { Badge } from "./Badge";
+import { ColorModeToggle } from "./ColorModeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 
 type NavDrawerContentProps = {
@@ -213,7 +214,17 @@ export function NavDrawerContent({
             </Flex>
           ) : null}
 
-          <LocaleSwitcher onChanged={onClose} />
+          <Flex align="center" gap={4}>
+            <ColorModeToggle
+              label={t("colorModeToggle.label")}
+              options={{
+                system: t("colorModeToggle.options.system"),
+                light: t("colorModeToggle.options.light"),
+                dark: t("colorModeToggle.options.dark"),
+              }}
+            />
+            <LocaleSwitcher onChanged={onClose} />
+          </Flex>
         </Flex>
       </Box>
     </>

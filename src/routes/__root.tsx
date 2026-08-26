@@ -11,6 +11,9 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import { GlobalNav } from "../components/GlobalNav";
 import { Toaster } from "../components/Toaster";
+import { readColorModeHints } from "../colorMode/colorModeHints";
+import { resolveColorMode } from "../colorMode/resolveColorMode";
+import { useColorMode } from "../colorMode/useColorMode";
 import { env } from "../env";
 import { getI18n } from "../i18n/i18n";
 import { useLocale } from "../i18n/useLocale";
@@ -48,6 +51,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       },
     ],
   }),
+  loader: async () => ({ colorMode: resolveColorMode(await readColorModeHints()) }),
   shellComponent: RootDocument,
 });
 
@@ -92,6 +96,8 @@ function AuthBootstrapEffect() {
 function RootDocument({ children }: { children: React.ReactNode }) {
   const locale = useLocale();
   const i18n = getI18n(locale);
+  const { colorMode: ssrColorMode } = Route.useLoaderData();
+  const { mode: colorMode } = useColorMode(ssrColorMode);
 
   useEffect(() => {
     if (env.VITE_ENABLE_MSW) {
@@ -107,8 +113,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   // explicitly here to keep the two paths equivalent.
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.documentElement.className = "dark";
-  }, [locale]);
+    document.documentElement.className = colorMode;
+  }, [locale, colorMode]);
 
   const body = (
     <I18nextProvider i18n={i18n}>
@@ -142,7 +148,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <html lang={locale} className="dark">
+    <html lang={locale} className={colorMode}>
       <head>
         <HeadContent />
       </head>

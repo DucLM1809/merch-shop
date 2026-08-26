@@ -1,0 +1,75 @@
+import { useEffect, useState } from "react";
+import { NativeSelect } from "@chakra-ui/react";
+import { useStore } from "@tanstack/react-store";
+
+import { colorModeStore, setPreferredColorMode, setSystemColorMode } from "../store/colorMode";
+
+import type { ChangeEvent, JSX } from "react";
+import type { ColorMode } from "../colorMode/resolveColorMode";
+
+type ColorModeOption = "system" | ColorMode;
+
+function isColorModeOption(value: string): value is ColorModeOption {
+  return value === "system" || value === "light" || value === "dark";
+}
+
+type ColorModeToggleProps = {
+  /** Accessible name for the control. */
+  label: string;
+  /** Option copy, in System / Light / Dark order — each caller supplies its own since
+   * Admin stays hardcoded English while the storefront translates (see CLAUDE.md's i18n
+   * conventions), and this component has no opinion on either. */
+  options: { system: string; light: string; dark: string };
+};
+
+/**
+ * System / Light / Dark control, same `NativeSelect` widget `LocaleSwitcher` uses.
+ * "System" is `preferred === undefined` in the store — selecting it clears the stored
+ * override so the page goes back to following the OS live (see `useColorMode`).
+ */
+export function ColorModeToggle({ label, options }: ColorModeToggleProps): JSX.Element {
+  const preferred = useStore(colorModeStore, (state) => state.preferred);
+
+  // The cookie lives in the request the server already has, but `colorModeStore` is a
+  // plain module-level singleton with no per-request access to it (unlike the root
+  // loader, which reads it correctly via `getCookie`) — so the server always renders this
+  // control as "System", regardless of any actual cookie. Matching that on the very first
+  // client paint, then correcting once mounted, avoids a React hydration mismatch on the
+  // native `<select>` (which — unlike other controls — doesn't reliably self-correct
+  // during hydration); same idea as the guest cart count in `GlobalNav.tsx`.
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => setHasMounted(true), []);
+  const selected: ColorModeOption = hasMounted ? (preferred ?? "system") : "system";
+
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
+    const chosen = event.target.value;
+    if (!isColorModeOption(chosen)) return;
+
+    if (chosen === "system") {
+      setSystemColorMode();
+    } else {
+      setPreferredColorMode(chosen);
+    }
+  };
+
+  return (
+    <NativeSelect.Root size="sm" width="auto" variant="plain">
+      <NativeSelect.Field
+        value={selected}
+        onChange={handleChange}
+        aria-label={label}
+        color="fg.muted"
+        fontSize="sm"
+        fontWeight="600"
+        cursor="pointer"
+        _hover={{ color: "fg" }}
+        data-testid="color-mode-toggle"
+      >
+        <option value="system">{options.system}</option>
+        <option value="light">{options.light}</option>
+        <option value="dark">{options.dark}</option>
+      </NativeSelect.Field>
+      <NativeSelect.Indicator color="fg.subtle" />
+    </NativeSelect.Root>
+  );
+}

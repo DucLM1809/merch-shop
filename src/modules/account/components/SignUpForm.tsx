@@ -35,7 +35,7 @@ export function SignUpForm(): JSX.Element {
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} w="full" maxW="360px">
       <VStack gap={4} align="stretch">
-        <Heading size="lg" color="white" fontWeight="800">
+        <Heading size="lg" color="fg" fontWeight="800">
           {t("signUp.title")}
         </Heading>
 

@@ -28,7 +28,7 @@ export function PublisherPageView({
       pt={7}
       pb={6}
       borderBottom="1px solid"
-      borderColor="gray.800"
+      borderColor="border"
       position="relative"
       overflow="hidden"
     >
@@ -83,7 +83,7 @@ export function PublisherPageView({
           <Box>
             <Heading
               size="xl"
-              color="white"
+              color="fg"
               lineHeight="tight"
               fontWeight="800"
               letterSpacing="-0.025em"
@@ -92,7 +92,7 @@ export function PublisherPageView({
             </Heading>
             <Text
               fontSize="xs"
-              color="gray.500"
+              color="fg.subtle"
               mt={0.5}
               textTransform="uppercase"
               letterSpacing="0.08em"

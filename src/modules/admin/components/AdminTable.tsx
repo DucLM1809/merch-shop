@@ -74,7 +74,7 @@ export function AdminTableRow({ clickable, active, ...rest }: AdminTableRowProps
     <Box
       as="tr"
       borderBottom="1px solid"
-      borderColor="border.default"
+      borderColor="border"
       bg={active ? "bg.muted" : undefined}
       cursor={clickable ? "pointer" : undefined}
       _hover={clickable ? { bg: "bg.muted" } : undefined}

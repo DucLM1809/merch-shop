@@ -29,10 +29,10 @@ export function ForgotPasswordForm(): JSX.Element {
   if (forgotPassword.isSuccess) {
     return (
       <Box w="full" maxW="360px" textAlign="center">
-        <Heading size="lg" color="white" fontWeight="800" mb={3}>
+        <Heading size="lg" color="fg" fontWeight="800" mb={3}>
           {t("forgotPassword.sentTitle")}
         </Heading>
-        <Text color="gray.400" data-testid="forgot-password-success">
+        <Text color="fg.muted" data-testid="forgot-password-success">
           {t("forgotPassword.sentBody")}
         </Text>
       </Box>
@@ -42,7 +42,7 @@ export function ForgotPasswordForm(): JSX.Element {
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} w="full" maxW="360px">
       <VStack gap={4} align="stretch">
-        <Heading size="lg" color="white" fontWeight="800">
+        <Heading size="lg" color="fg" fontWeight="800">
           {t("forgotPassword.title")}
         </Heading>
 

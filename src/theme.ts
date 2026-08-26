@@ -1,10 +1,9 @@
 import { createSystem, defaultConfig, defineConfig, defineRecipe } from "@chakra-ui/react";
 
-// Design identity: a licensed esports-merch storefront. Dark is the only mode
-// (see `__root.tsx`'s hardcoded `className="dark"`), so every semantic token
-// below only needs its `_dark` branch to ever be seen — `_light` values are kept
-// close to Chakra's own defaults purely so the shape stays valid if dark mode is
-// ever toggled off, not because light mode is a supported surface.
+// Design identity: a licensed esports-merch storefront. Dark is the default mode, but a
+// visitor can switch to light or follow their OS live (see `src/colorMode/`) — the class
+// Chakra reads to pick a branch is set in `__root.tsx`. Both `_light` and `_dark` values
+// below are real, deliberately authored palettes, not filler.
 
 // `gray` and `blue` are Chakra's own built-in scales, referenced everywhere in
 // the app via bare literals (`gray.900`, `blue.400`, `colorPalette="blue"`).
@@ -66,24 +65,43 @@ const config = defineConfig({
         blue,
         signal,
       },
-      shadows: {
-        cardRest: { value: "0 1px 2px rgba(0, 0, 0, 0.45)" },
-        cardHover: {
-          value: "0 10px 28px -10px rgba(43, 140, 255, 0.35), 0 4px 10px rgba(0, 0, 0, 0.55)",
-        },
-        // Beacon glow for primary (solid blue) CTAs — on a near-black canvas a flat
-        // fill reads as just another dark panel, so the halo is what actually pulls
-        // the eye. Kept off every other variant/colorPalette so it stays a primary-
-        // action signal rather than decoration.
-        ctaRest: {
-          value: "0 0 0 1px rgba(61, 150, 255, 0.5), 0 6px 18px -6px rgba(43, 140, 255, 0.6)",
-        },
-        ctaHover: {
-          value: "0 0 0 1px rgba(61, 150, 255, 0.75), 0 10px 26px -6px rgba(43, 140, 255, 0.8)",
-        },
-      },
     },
     semanticTokens: {
+      shadows: {
+        // Elevation lift for the `Card` treatment. Dark needs a real black shadow to read
+        // against a near-black canvas; light needs a much softer, cooler-tinted one or the
+        // same black values just look like dirt on white.
+        cardRest: {
+          value: {
+            _light: "0 1px 2px rgba(15, 23, 42, 0.08)",
+            _dark: "0 1px 2px rgba(0, 0, 0, 0.45)",
+          },
+        },
+        cardHover: {
+          value: {
+            _light: "0 10px 28px -10px rgba(43, 140, 255, 0.2), 0 4px 10px rgba(15, 23, 42, 0.12)",
+            _dark: "0 10px 28px -10px rgba(43, 140, 255, 0.35), 0 4px 10px rgba(0, 0, 0, 0.55)",
+          },
+        },
+        // Beacon glow for primary (solid blue) CTAs — on a near-black canvas a flat fill
+        // reads as just another dark panel, so the halo is what actually pulls the eye. On
+        // a light canvas a solid blue button already has natural contrast, so the same glow
+        // would just look muddy — light gets flat `solid` contrast instead, no glow. Kept
+        // off every other variant/colorPalette so it stays a primary-action signal rather
+        // than decoration.
+        ctaRest: {
+          value: {
+            _light: "none",
+            _dark: "0 0 0 1px rgba(61, 150, 255, 0.5), 0 6px 18px -6px rgba(43, 140, 255, 0.6)",
+          },
+        },
+        ctaHover: {
+          value: {
+            _light: "none",
+            _dark: "0 0 0 1px rgba(61, 150, 255, 0.75), 0 10px 26px -6px rgba(43, 140, 255, 0.8)",
+          },
+        },
+      },
       colors: {
         signal: {
           contrast: { value: { _light: "white", _dark: "white" } },

@@ -47,7 +47,7 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
   if (isLoading) {
     return (
       <OrdersLayout>
-        <Text color="gray.400">{t("loading")}</Text>
+        <Text color="fg.muted">{t("loading")}</Text>
       </OrdersLayout>
     );
   }
@@ -63,7 +63,7 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
   return (
     <OrdersLayout>
       <Link to="/$locale/account/orders" params={{ locale }}>
-        <Text color="gray.400" fontSize="sm" mb={4} _hover={{ color: "white" }}>
+        <Text color="fg.muted" fontSize="sm" mb={4} _hover={{ color: "fg" }}>
           ← {t("backToHistory")}
         </Text>
       </Link>
@@ -75,14 +75,14 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
         </Box>
       </Flex>
 
-      <Text color="gray.400" fontSize="sm" mb={6}>
+      <Text color="fg.muted" fontSize="sm" mb={6}>
         {t("placed", { date: formatDate(order.createdAt) })}
       </Text>
 
       <Box mb={6}>
         <Heading
           size="sm"
-          color="gray.400"
+          color="fg.muted"
           fontWeight="600"
           textTransform="uppercase"
           letterSpacing="0.05em"
@@ -96,19 +96,19 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
               key={line.skuId}
               justify="space-between"
               align="center"
-              bg="gray.900"
+              bg="bg.panel"
               borderRadius="md"
               p={3}
             >
               <Box>
-                <Text color="white" fontWeight="600" fontSize="sm">
+                <Text color="fg" fontWeight="600" fontSize="sm">
                   {line.productName ?? line.skuId}
                 </Text>
-                <Text color="gray.500" fontSize="xs">
+                <Text color="fg.subtle" fontSize="xs">
                   {line.variant ?? "—"} × {line.quantity}
                 </Text>
               </Box>
-              <Text color="white" fontWeight="700" fontSize="sm">
+              <Text color="fg" fontWeight="700" fontSize="sm">
                 {line.price !== undefined ? formatPrice(line.price * line.quantity) : NO_AMOUNT}
               </Text>
             </Flex>
@@ -119,7 +119,7 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
       <Box mb={6}>
         <Heading
           size="sm"
-          color="gray.400"
+          color="fg.muted"
           fontWeight="600"
           textTransform="uppercase"
           letterSpacing="0.05em"
@@ -129,31 +129,31 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
         </Heading>
         {order.shipping ? (
           <>
-            <Text fontSize="sm" color="gray.200">
+            <Text fontSize="sm" color="fg">
               {order.shipping.fullName}
             </Text>
-            <Text fontSize="sm" color="gray.400">
+            <Text fontSize="sm" color="fg.muted">
               {order.shipping.line1}
             </Text>
-            <Text fontSize="sm" color="gray.400">
+            <Text fontSize="sm" color="fg.muted">
               {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}
             </Text>
-            <Text fontSize="sm" color="gray.400">
+            <Text fontSize="sm" color="fg.muted">
               {order.shipping.country}
             </Text>
           </>
         ) : (
-          <Text fontSize="sm" color="gray.500">
+          <Text fontSize="sm" color="fg.subtle">
             {t("noShipping")}
           </Text>
         )}
       </Box>
 
-      <Flex justify="space-between" pt={4} borderTop="1px solid" borderColor="gray.700">
-        <Text color="gray.400" fontWeight="600" textTransform="uppercase" fontSize="sm">
+      <Flex justify="space-between" pt={4} borderTop="1px solid" borderColor="border.emphasized">
+        <Text color="fg.muted" fontWeight="600" textTransform="uppercase" fontSize="sm">
           {t("total")}
         </Text>
-        <Text data-testid="order-total" color="white" fontWeight="800" fontSize="xl">
+        <Text data-testid="order-total" color="fg" fontWeight="800" fontSize="xl">
           {order.total !== undefined ? formatPrice(order.total) : NO_AMOUNT}
         </Text>
       </Flex>

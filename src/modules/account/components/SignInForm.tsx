@@ -37,7 +37,7 @@ export function SignInForm(): JSX.Element {
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} w="full" maxW="360px">
       <VStack gap={4} align="stretch">
-        <Heading size="lg" color="white" fontWeight="800">
+        <Heading size="lg" color="fg" fontWeight="800">
           {t("signIn.title")}
         </Heading>
 
@@ -74,7 +74,7 @@ export function SignInForm(): JSX.Element {
 
         <Flex justify="center">
           <Link to="/$locale/forgot-password" params={{ locale }}>
-            <Text fontSize="sm" color="gray.400" _hover={{ color: "white" }}>
+            <Text fontSize="sm" color="fg.muted" _hover={{ color: "fg" }}>
               {t("signIn.forgotPassword")}
             </Text>
           </Link>

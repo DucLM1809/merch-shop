@@ -18,7 +18,7 @@ export function FormField({ name, label, error, children, flex }: Props): JSX.El
   return (
     <Box flex={flex}>
       {label && (
-        <Label htmlFor={name} fontSize="sm" color="gray.400" display="block" mb={1}>
+        <Label htmlFor={name} fontSize="sm" color="fg.muted" display="block" mb={1}>
           {label}
         </Label>
       )}

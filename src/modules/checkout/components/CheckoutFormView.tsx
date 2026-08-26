@@ -39,7 +39,7 @@ export function CheckoutFormView({
   return (
     <Box as="form" onSubmit={onSubmit}>
       <VStack gap={4} align="stretch">
-        <Heading size="xl" color="white" fontWeight="800">
+        <Heading size="xl" color="fg" fontWeight="800">
           {t("title")}
         </Heading>
 
@@ -47,7 +47,7 @@ export function CheckoutFormView({
 
         <Heading
           size="sm"
-          color="gray.400"
+          color="fg.muted"
           fontWeight="600"
           textTransform="uppercase"
           letterSpacing="0.05em"
@@ -107,7 +107,7 @@ export function CheckoutFormView({
 
         <Heading
           size="sm"
-          color="gray.400"
+          color="fg.muted"
           fontWeight="600"
           textTransform="uppercase"
           letterSpacing="0.05em"
@@ -115,7 +115,13 @@ export function CheckoutFormView({
         >
           {t("payment.heading")}
         </Heading>
-        <Box p={3} borderRadius="md" border="1px solid" borderColor="gray.700" bg="gray.900">
+        <Box
+          p={3}
+          borderRadius="md"
+          border="1px solid"
+          borderColor="border.emphasized"
+          bg="bg.panel"
+        >
           {cardSlot}
         </Box>
 

@@ -7,6 +7,7 @@ import { useLocale } from "../i18n/useLocale";
 import { useAccount, useAuth, useLogout } from "../modules/account";
 import { cartStore } from "../store/cart";
 import { Badge } from "./Badge";
+import { ColorModeToggle } from "./ColorModeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { NavDrawerContent } from "./NavDrawerContent";
 import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart, User, UserPlus } from "lucide-react";
@@ -80,6 +81,14 @@ export function GlobalNav(): JSX.Element {
           </Link>
 
           <Flex align="center" gap={4} hideBelow="sm">
+            <ColorModeToggle
+              label={t("colorModeToggle.label")}
+              options={{
+                system: t("colorModeToggle.options.system"),
+                light: t("colorModeToggle.options.light"),
+                dark: t("colorModeToggle.options.dark"),
+              }}
+            />
             <LocaleSwitcher />
 
             {/* The badge digit renders inside the link, so its computed name would

@@ -42,7 +42,7 @@ function AccountOrdersPage() {
     <OrdersLayout>
       <Heading mb={6}>{t("history.title")}</Heading>
       {orders.length === 0 ? (
-        <Text color="gray.400">{t("history.empty")}</Text>
+        <Text color="fg.muted">{t("history.empty")}</Text>
       ) : (
         <VStack gap={6} align="stretch">
           {orders.map((order) => (
@@ -65,10 +65,10 @@ function OrderCard({ order }: { order: Order }) {
       as="article"
       data-testid={`order-row-${order.id}`}
       border="1px solid"
-      borderColor="gray.700"
+      borderColor="border"
       borderRadius="md"
       p={4}
-      _hover={{ borderColor: "gray.500" }}
+      _hover={{ borderColor: "border.emphasized" }}
     >
       <Flex justify="space-between" align="start">
         <Box>
@@ -77,7 +77,7 @@ function OrderCard({ order }: { order: Order }) {
               <Text fontWeight="bold">{t("orderNumber", { id: order.id })}</Text>
             </Link>
           </LinkOverlay>
-          <Text color="gray.400" fontSize="sm">
+          <Text color="fg.muted" fontSize="sm">
             {formatDate(order.createdAt)}
           </Text>
         </Box>

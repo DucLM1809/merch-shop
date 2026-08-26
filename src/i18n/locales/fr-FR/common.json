@@ -19,6 +19,14 @@
       "fr-FR": "Français"
     }
   },
+  "colorModeToggle": {
+    "label": "Thème",
+    "options": {
+      "system": "Système",
+      "light": "Clair",
+      "dark": "Sombre"
+    }
+  },
   "cartSync": {
     "failed": "Échec de la synchronisation du panier — vos articles ont été conservés."
   },

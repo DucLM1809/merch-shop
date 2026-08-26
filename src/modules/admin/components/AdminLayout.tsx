@@ -3,6 +3,7 @@ import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { Gamepad2, List, Package, ShoppingBag, Tags, TrendingUp, Users } from "lucide-react";
 
+import { ColorModeToggle } from "@/components/ColorModeToggle";
 import { useLocale } from "@/i18n/useLocale";
 
 type NavItem = { label: string; to: string; icon: React.ElementType; live: boolean };
@@ -29,21 +30,25 @@ export function AdminLayout({ children }: Props): React.JSX.Element {
         w="220px"
         bg="bg.panel"
         borderRight="1px solid"
-        borderColor="border.default"
+        borderColor="border"
         flexShrink={0}
         py={6}
       >
-        <Text
-          px={5}
-          mb={4}
-          fontSize="xs"
-          fontWeight="800"
-          letterSpacing="0.12em"
-          textTransform="uppercase"
-          color="fg.subtle"
-        >
-          Admin
-        </Text>
+        <Flex align="center" justify="space-between" px={5} mb={4}>
+          <Text
+            fontSize="xs"
+            fontWeight="800"
+            letterSpacing="0.12em"
+            textTransform="uppercase"
+            color="fg.subtle"
+          >
+            Admin
+          </Text>
+          <ColorModeToggle
+            label="Theme"
+            options={{ system: "System", light: "Light", dark: "Dark" }}
+          />
+        </Flex>
         <VStack gap={0} align="stretch">
           {NAV_ITEMS.map(({ label, to, icon: Icon, live }) =>
             live ? (

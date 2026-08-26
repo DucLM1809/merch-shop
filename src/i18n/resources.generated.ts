@@ -170,6 +170,14 @@ export interface GeneratedResources {
         "fr-FR": "French";
       };
     };
+    colorModeToggle: {
+      label: "Color mode";
+      options: {
+        system: "System";
+        light: "Light";
+        dark: "Dark";
+      };
+    };
     cartSync: {
       failed: "Cart sync failed — your items have been preserved.";
     };
