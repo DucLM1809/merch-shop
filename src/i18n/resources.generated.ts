@@ -75,6 +75,7 @@ export interface GeneratedResources {
       game: "Game";
       team: "Team";
       character: "Character";
+      title: "Filters";
     };
     product: {
       noImage: "No image";
@@ -83,6 +84,13 @@ export interface GeneratedResources {
       edition: "Edition";
       optionUnavailable: "{{option}} (unavailable)";
       addToCart: "Add to Cart";
+      addingToCart: "Adding…";
+      addedToCart: "Added to cart";
+      addedToCartDetail: "{{quantity}} × {{name}}";
+      quantity: "Quantity";
+      decreaseQuantity: "Decrease quantity";
+      increaseQuantity: "Increase quantity";
+      viewImage: "View image {{index}}";
     };
     empty: {
       title: "No products found.";
@@ -101,6 +109,9 @@ export interface GeneratedResources {
   };
   checkout: {
     title: "Checkout";
+    steps: {
+      label: "Checkout steps";
+    };
     shipping: {
       heading: "Shipping";
       fullName: "Full Name";
@@ -122,7 +133,7 @@ export interface GeneratedResources {
     };
     validation: {
       fullName: "Full name is required";
-      email: "Email is required";
+      email: "Enter a valid email address";
       line1: "Address is required";
       city: "City is required";
       state: "State is required";

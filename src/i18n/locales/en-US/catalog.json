@@ -7,7 +7,8 @@
   "filters": {
     "game": "Game",
     "team": "Team",
-    "character": "Character"
+    "character": "Character",
+    "title": "Filters"
   },
   "product": {
     "noImage": "No image",
@@ -15,7 +16,14 @@
     "color": "Color",
     "edition": "Edition",
     "optionUnavailable": "{{option}} (unavailable)",
-    "addToCart": "Add to Cart"
+    "addToCart": "Add to Cart",
+    "addingToCart": "Adding…",
+    "addedToCart": "Added to cart",
+    "addedToCartDetail": "{{quantity}} × {{name}}",
+    "quantity": "Quantity",
+    "decreaseQuantity": "Decrease quantity",
+    "increaseQuantity": "Increase quantity",
+    "viewImage": "View image {{index}}"
   },
   "empty": {
     "title": "No products found.",

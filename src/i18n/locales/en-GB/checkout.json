@@ -1,5 +1,8 @@
 {
   "title": "Checkout",
+  "steps": {
+    "label": "Checkout steps"
+  },
   "shipping": {
     "heading": "Delivery",
     "fullName": "Full Name",
@@ -21,7 +24,7 @@
   },
   "validation": {
     "fullName": "Full name is required",
-    "email": "Email is required",
+    "email": "Enter a valid email address",
     "line1": "Address is required",
     "city": "Town or city is required",
     "state": "County is required",

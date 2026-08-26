@@ -7,7 +7,8 @@
   "filters": {
     "game": "Jeu",
     "team": "Équipe",
-    "character": "Personnage"
+    "character": "Personnage",
+    "title": "Filtres"
   },
   "product": {
     "noImage": "Aucune image",
@@ -15,7 +16,14 @@
     "color": "Couleur",
     "edition": "Édition",
     "optionUnavailable": "{{option}} (indisponible)",
-    "addToCart": "Ajouter au panier"
+    "addToCart": "Ajouter au panier",
+    "addingToCart": "Ajout en cours…",
+    "addedToCart": "Ajouté au panier",
+    "addedToCartDetail": "{{quantity}} × {{name}}",
+    "quantity": "Quantité",
+    "decreaseQuantity": "Diminuer la quantité",
+    "increaseQuantity": "Augmenter la quantité",
+    "viewImage": "Voir l'image {{index}}"
   },
   "empty": {
     "title": "Aucun produit trouvé.",

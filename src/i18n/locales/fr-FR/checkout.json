@@ -1,5 +1,8 @@
 {
   "title": "Finaliser la commande",
+  "steps": {
+    "label": "Étapes de la commande"
+  },
   "shipping": {
     "heading": "Livraison",
     "fullName": "Nom complet",
@@ -21,7 +24,7 @@
   },
   "validation": {
     "fullName": "Le nom complet est obligatoire",
-    "email": "L'e-mail est obligatoire",
+    "email": "Saisissez une adresse e-mail valide",
     "line1": "L'adresse est obligatoire",
     "city": "La ville est obligatoire",
     "state": "La région est obligatoire",
