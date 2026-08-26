@@ -19,6 +19,7 @@ import {
   useSetSkuAvailability,
 } from "../hooks";
 
+import { AdminFormSheet } from "./AdminFormSheet";
 import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
 import { schema, DEFAULTS } from "./AdminSkusView.schema";
 
@@ -124,20 +125,17 @@ export function AdminSkusView(): React.JSX.Element {
       </HStack>
 
       {showForm && (
-        <Card mb={6} p={5}>
-          <Text
-            fontSize="xs"
-            fontWeight="700"
-            color="fg.muted"
-            textTransform="uppercase"
-            letterSpacing="0.08em"
-            mb={4}
+        <AdminFormSheet open onOpenChange={cancel} title="New SKU">
+          <Box
+            as="form"
+            onSubmit={handleSubmit(onSubmit)}
+            display="flex"
+            flexDirection="column"
+            flex="1"
+            minH={0}
+            overflow="auto"
           >
-            New SKU
-          </Text>
-
-          <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-            <VStack gap={3} align="stretch">
+            <VStack gap={3} align="stretch" maxW="xl" w="full" mx="auto" p={6}>
               <FormField name="productId" label="Product" error={errors.productId}>
                 <NativeSelect.Root>
                   <NativeSelect.Field id="productId" {...register("productId")}>
@@ -168,7 +166,7 @@ export function AdminSkusView(): React.JSX.Element {
                 <Input id="edition" placeholder="Edition (optional)" {...register("edition")} />
               </FormField>
 
-              <HStack justify="flex-end">
+              <HStack justify="flex-end" pt={2}>
                 <Button size="sm" variant="ghost" color="fg.muted" onClick={cancel}>
                   Cancel
                 </Button>
@@ -178,7 +176,7 @@ export function AdminSkusView(): React.JSX.Element {
               </HStack>
             </VStack>
           </Box>
-        </Card>
+        </AdminFormSheet>
       )}
 
       <Card mb={6} p={4}>

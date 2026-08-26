@@ -7,12 +7,12 @@ import { Box, Button, Heading, HStack, Input, NativeSelect, Text, VStack } from 
 import { Gamepad2 } from "lucide-react";
 
 import { useGames, usePublishers } from "@/modules/catalog";
-import { Card } from "@/components/Card";
 import { EmptyState } from "@/components/EmptyState";
 import { FormField } from "@/components/FormField";
 import { PageContainer } from "@/components/PageContainer";
 
 import { useCreateGame, useDeleteGame, useUpdateGame } from "../hooks";
+import { AdminFormSheet } from "./AdminFormSheet";
 import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
 import { schema, DEFAULTS } from "./AdminGamesView.schema";
 
@@ -96,20 +96,21 @@ export function AdminGamesView(): React.JSX.Element {
       </HStack>
 
       {mode !== "idle" && (
-        <Card mb={6} p={5}>
-          <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-            <Text
-              fontSize="xs"
-              fontWeight="700"
-              color="fg.muted"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-              mb={4}
-            >
-              {typeof mode === "object" ? "Edit Game" : "New Game"}
-            </Text>
-
-            <VStack gap={3} align="stretch">
+        <AdminFormSheet
+          open
+          onOpenChange={cancel}
+          title={typeof mode === "object" ? "Edit Game" : "New Game"}
+        >
+          <Box
+            as="form"
+            onSubmit={handleSubmit(onSubmit)}
+            display="flex"
+            flexDirection="column"
+            flex="1"
+            minH={0}
+            overflow="auto"
+          >
+            <VStack gap={3} align="stretch" maxW="xl" w="full" mx="auto" p={6}>
               <FormField name="name" label="Name" error={errors.name}>
                 <Input id="name" placeholder="Name" {...register("name")} />
               </FormField>
@@ -142,7 +143,7 @@ export function AdminGamesView(): React.JSX.Element {
                 </Text>
               )}
 
-              <HStack justify="flex-end">
+              <HStack justify="flex-end" pt={2}>
                 <Button size="sm" variant="ghost" color="fg.muted" type="button" onClick={cancel}>
                   Cancel
                 </Button>
@@ -152,7 +153,7 @@ export function AdminGamesView(): React.JSX.Element {
               </HStack>
             </VStack>
           </Box>
-        </Card>
+        </AdminFormSheet>
       )}
 
       {isLoading && <Text color="fg.muted">Loading…</Text>}
