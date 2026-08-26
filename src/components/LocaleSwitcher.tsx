@@ -1,5 +1,6 @@
-import { NativeSelect } from "@chakra-ui/react";
+import { Flex, NativeSelect } from "@chakra-ui/react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { SUPPORTED_LOCALES, isSupportedLocale } from "../i18n/locales";
@@ -33,25 +34,39 @@ export function LocaleSwitcher({ onChanged }: LocaleSwitcherProps): JSX.Element 
   };
 
   return (
-    <NativeSelect.Root size="sm" width="auto" variant="plain">
-      <NativeSelect.Field
-        value={locale}
-        onChange={handleChange}
-        aria-label={t("localeSwitcher.label")}
-        color="fg.muted"
-        fontSize="sm"
-        fontWeight="600"
-        cursor="pointer"
-        _hover={{ color: "fg" }}
-        data-testid="locale-switcher"
-      >
-        {SUPPORTED_LOCALES.map((supported) => (
-          <option key={supported} value={supported}>
-            {t(`localeSwitcher.options.${supported}`)}
-          </option>
-        ))}
-      </NativeSelect.Field>
-      <NativeSelect.Indicator color="fg.subtle" />
-    </NativeSelect.Root>
+    <Flex
+      align="center"
+      gap={1.5}
+      color="fg.subtle"
+      borderRadius="md"
+      _focusWithin={{
+        outline: "2px solid",
+        outlineColor: "colorPalette.focusRing",
+        outlineOffset: "2px",
+      }}
+    >
+      <Globe size={16} strokeWidth={1.5} aria-hidden />
+      <NativeSelect.Root size="sm" width="auto" variant="plain">
+        <NativeSelect.Field
+          value={locale}
+          onChange={handleChange}
+          aria-label={t("localeSwitcher.label")}
+          color="fg.muted"
+          fontSize="sm"
+          fontWeight="600"
+          cursor="pointer"
+          _hover={{ color: "fg" }}
+          focusVisibleRing="none"
+          data-testid="locale-switcher"
+        >
+          {SUPPORTED_LOCALES.map((supported) => (
+            <option key={supported} value={supported}>
+              {t(`localeSwitcher.options.${supported}`)}
+            </option>
+          ))}
+        </NativeSelect.Field>
+        <NativeSelect.Indicator color="fg.subtle" />
+      </NativeSelect.Root>
+    </Flex>
   );
 }

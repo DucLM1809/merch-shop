@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { NativeSelect } from "@chakra-ui/react";
+import { Flex, NativeSelect } from "@chakra-ui/react";
 import { useStore } from "@tanstack/react-store";
+import { Monitor, Moon, Sun } from "lucide-react";
 
 import { colorModeStore, setPreferredColorMode, setSystemColorMode } from "../store/colorMode";
 
@@ -12,6 +13,10 @@ type ColorModeOption = "system" | ColorMode;
 function isColorModeOption(value: string): value is ColorModeOption {
   return value === "system" || value === "light" || value === "dark";
 }
+
+// The leading icon tracks the selected mode, so this control reads apart from
+// `LocaleSwitcher`'s static globe at a glance, not just by its text.
+const MODE_ICON = { system: Monitor, light: Sun, dark: Moon };
 
 type ColorModeToggleProps = {
   /** Accessible name for the control. */
@@ -52,24 +57,40 @@ export function ColorModeToggle({ label, options }: ColorModeToggleProps): JSX.E
     }
   };
 
+  const ModeIcon = MODE_ICON[selected];
+
   return (
-    <NativeSelect.Root size="sm" width="auto" variant="plain">
-      <NativeSelect.Field
-        value={selected}
-        onChange={handleChange}
-        aria-label={label}
-        color="fg.muted"
-        fontSize="sm"
-        fontWeight="600"
-        cursor="pointer"
-        _hover={{ color: "fg" }}
-        data-testid="color-mode-toggle"
-      >
-        <option value="system">{options.system}</option>
-        <option value="light">{options.light}</option>
-        <option value="dark">{options.dark}</option>
-      </NativeSelect.Field>
-      <NativeSelect.Indicator color="fg.subtle" />
-    </NativeSelect.Root>
+    <Flex
+      align="center"
+      gap={1.5}
+      color="fg.subtle"
+      borderRadius="md"
+      _focusWithin={{
+        outline: "2px solid",
+        outlineColor: "colorPalette.focusRing",
+        outlineOffset: "2px",
+      }}
+    >
+      <ModeIcon size={16} strokeWidth={1.5} aria-hidden />
+      <NativeSelect.Root size="sm" width="auto" variant="plain">
+        <NativeSelect.Field
+          value={selected}
+          onChange={handleChange}
+          aria-label={label}
+          color="fg.muted"
+          fontSize="sm"
+          fontWeight="600"
+          cursor="pointer"
+          _hover={{ color: "fg" }}
+          focusVisibleRing="none"
+          data-testid="color-mode-toggle"
+        >
+          <option value="system">{options.system}</option>
+          <option value="light">{options.light}</option>
+          <option value="dark">{options.dark}</option>
+        </NativeSelect.Field>
+        <NativeSelect.Indicator color="fg.subtle" />
+      </NativeSelect.Root>
+    </Flex>
   );
 }
