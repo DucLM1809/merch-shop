@@ -52,7 +52,7 @@ function HomePage() {
           {t("home.subtitle")}
         </Text>
       </Box>
-      <Box display="flex" flex="1">
+      <Box display="flex" flexDirection={{ base: "column", md: "row" }} flex="1">
         <FacetFilter />
         <Box flex="1" minW={0}>
           <ProductCatalog

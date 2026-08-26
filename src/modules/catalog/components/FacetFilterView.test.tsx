@@ -1,8 +1,8 @@
-import { screen } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import catalogCopy from "@/i18n/locales/en-US/catalog.json";
-import { renderWithProviders } from "@/test-utils";
+import { expectNoA11yViolations, renderWithProviders } from "@/test-utils";
 import { FacetFilterView } from "./FacetFilterView";
 
 const games = [
@@ -76,5 +76,81 @@ describe("FacetFilterView", () => {
     renderFilter({ onCharacterChange });
     await userEvent.click(screen.getByRole("checkbox", { name: "Azir" }));
     expect(onCharacterChange).toHaveBeenCalledWith("azir");
+  });
+
+  it("does not render the mobile filter trigger when there are no facets", () => {
+    renderFilter({ games: [], teams: [], characters: [] });
+    expect(
+      screen.queryByRole("button", { name: catalogCopy.filters.title })
+    ).not.toBeInTheDocument();
+  });
+
+  describe("mobile drawer", () => {
+    it("opens a drawer with the same filters when the trigger is clicked", async () => {
+      const user = userEvent.setup();
+      renderFilter();
+
+      await user.click(screen.getByRole("button", { name: catalogCopy.filters.title }));
+
+      const dialog = screen.getByRole("dialog", { name: catalogCopy.filters.title });
+      expect(dialog).toHaveAttribute("aria-modal", "true");
+      expect(
+        within(dialog).getByRole("checkbox", { name: "League of Legends" })
+      ).toBeInTheDocument();
+    });
+
+    it("calls the change handler when a checkbox inside the drawer is clicked", async () => {
+      const onGameChange = vi.fn();
+      const user = userEvent.setup();
+      renderFilter({ onGameChange });
+
+      await user.click(screen.getByRole("button", { name: catalogCopy.filters.title }));
+      const dialog = screen.getByRole("dialog");
+      await user.click(within(dialog).getByRole("checkbox", { name: "League of Legends" }));
+
+      expect(onGameChange).toHaveBeenCalledWith("lol");
+    });
+
+    it("closes when the close button is clicked", async () => {
+      const user = userEvent.setup();
+      renderFilter();
+
+      await user.click(screen.getByRole("button", { name: catalogCopy.filters.title }));
+      const dialog = screen.getByRole("dialog");
+      await user.click(within(dialog).getByRole("button", { name: "Close" }));
+
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+
+    it("closes on Escape", async () => {
+      const user = userEvent.setup();
+      renderFilter();
+
+      await user.click(screen.getByRole("button", { name: catalogCopy.filters.title }));
+      expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+      fireEvent.keyDown(document, { key: "Escape" });
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+
+    it("closes when the overlay is clicked", async () => {
+      const user = userEvent.setup();
+      renderFilter();
+
+      await user.click(screen.getByRole("button", { name: catalogCopy.filters.title }));
+      await user.click(screen.getByTestId("facet-drawer-overlay"));
+
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+
+    it("has no axe violations", async () => {
+      const user = userEvent.setup();
+      renderFilter();
+
+      await user.click(screen.getByRole("button", { name: catalogCopy.filters.title }));
+      // The drawer renders through a Portal, outside the render container, so scan
+      // the dialog itself rather than the container.
+      await expectNoA11yViolations(screen.getByRole("dialog"));
+    });
   });
 });

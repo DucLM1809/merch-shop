@@ -1,16 +1,10 @@
 import { type ReactNode } from "react";
-import {
-  Box,
-  Flex,
-  Heading,
-  LinkBox,
-  LinkOverlay,
-  SimpleGrid,
-  Skeleton,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, LinkOverlay, SimpleGrid, Skeleton, Text } from "@chakra-ui/react";
+import { ImageOff, PackageX } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/api/types";
+import { Card } from "@/components/Card";
+import { EmptyState } from "@/components/EmptyState";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { QueryError } from "@/components/QueryError";
 import { useFormatPrice } from "@/i18n/useFormatPrice";
@@ -52,13 +46,12 @@ export function ProductCatalogView({
 
   if (!products?.length) {
     return (
-      <Box p={8} textAlign="center" py={20}>
-        <Text color="gray.500" fontSize="lg">
-          {t("empty.title")}
-        </Text>
-        <Text color="gray.600" fontSize="sm" mt={1}>
-          {t("empty.hint")}
-        </Text>
+      <Box p={8} py={20}>
+        <EmptyState
+          title={t("empty.title")}
+          description={t("empty.hint")}
+          icon={<PackageX size={32} strokeWidth={1.5} />}
+        />
       </Box>
     );
   }
@@ -74,21 +67,18 @@ export function ProductCatalogView({
   );
 }
 
-function ProductCard({
-  product,
-  renderLink,
-}: {
+type ProductCardProps = {
   product: Product;
   renderLink?: (product: Product, children: ReactNode) => ReactNode;
-}) {
+};
+
+function ProductCard({ product, renderLink }: ProductCardProps) {
   const { t } = useTranslation("catalog");
   const formatPrice = useFormatPrice();
-
-  const accent = product.accentColor ?? "#1a9fff";
   const price = formatPrice(product.price);
 
   const imageSection = (
-    <Box h="52" bg="gray.800" overflow="hidden" position="relative">
+    <Box h="52" bg="bg.muted" overflow="hidden" position="relative">
       {product.imageUrl ? (
         <>
           <OptimizedImage
@@ -108,74 +98,73 @@ function ProductCard({
             right={0}
             h="45%"
             pointerEvents="none"
-            style={{ background: "linear-gradient(to top, rgba(8,8,12,0.9), transparent)" }}
+            bgGradient="to-t"
+            gradientFrom="blackAlpha.900"
+            gradientTo="transparent"
           />
         </>
       ) : (
         <Flex h="full" align="center" justify="center">
-          <Text color="gray.600" fontSize="xs" letterSpacing="wider" textTransform="uppercase">
-            {t("product.noImage")}
-          </Text>
+          <EmptyState
+            title={t("product.noImage")}
+            icon={<ImageOff size={22} strokeWidth={1.5} />}
+          />
         </Flex>
+      )}
+      {product.accentColor && (
+        <Box
+          position="absolute"
+          top={3}
+          right={3}
+          w="10px"
+          h="10px"
+          borderRadius="full"
+          borderWidth="2px"
+          borderColor="bg.panel"
+          // `accentColor` is an API-supplied per-Product value, not yet a design token —
+          // this is the one exception ADR 0008 allows for dynamic runtime colors.
+          style={{ background: product.accentColor }}
+          aria-hidden="true"
+          data-testid="product-accent-dot"
+        />
       )}
     </Box>
   );
 
-  const cardBody = (
-    <>
-      {imageSection}
-      <Box p={4} pt={3}>
-        <Heading size="sm" color="white" fontWeight="600" lineHeight="snug" mb={1.5}>
-          {product.name}
-        </Heading>
-        <Text color="gray.300" fontWeight="700" fontSize="sm">
-          {price}
-        </Text>
-      </Box>
-    </>
+  const priceText = (
+    <Text color="fg.muted" fontWeight="700" fontSize="sm">
+      {price}
+    </Text>
   );
-
-  const cardStyles = {
-    borderRadius: "lg",
-    overflow: "hidden",
-    position: "relative" as const,
-    borderTop: "2px solid",
-    transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s",
-    className: "group",
-    _hover: {
-      transform: "translateY(-4px)",
-      boxShadow: "0 20px 48px rgba(0,0,0,0.7)",
-    },
-    style: {
-      borderTopColor: accent,
-      background: `linear-gradient(180deg, ${accent}0d 0%, #0e0e12 28%)`,
-    },
-  };
 
   if (renderLink) {
     return (
-      <LinkBox as="article" {...cardStyles}>
+      <Card as="article" interactive clipCorner className="group">
         {imageSection}
         <Box p={4} pt={3}>
           <LinkOverlay asChild>
             {renderLink(
               product,
-              <Heading size="sm" color="white" fontWeight="600" lineHeight="snug" mb={1.5}>
+              <Heading textStyle="h3" color="fg" mb={1.5}>
                 {product.name}
               </Heading>
             )}
           </LinkOverlay>
-          <Text color="gray.300" fontWeight="700" fontSize="sm">
-            {price}
-          </Text>
+          {priceText}
         </Box>
-      </LinkBox>
+      </Card>
     );
   }
 
   return (
-    <Box as="article" {...cardStyles}>
-      {cardBody}
-    </Box>
+    <Card as="article" clipCorner className="group">
+      {imageSection}
+      <Box p={4} pt={3}>
+        <Heading textStyle="h3" color="fg" mb={1.5}>
+          {product.name}
+        </Heading>
+        {priceText}
+      </Box>
+    </Card>
   );
 }

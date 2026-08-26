@@ -100,7 +100,7 @@ describe("ProductCatalogView", () => {
     expect(screen.getByText(catalogCopy.product.noImage)).toBeInTheDocument();
   });
 
-  it("applies custom accentColor to card border style", () => {
+  it("shows an accent indicator dot when the product has an accentColor", () => {
     const accentProduct: Product[] = [
       {
         id: "3",
@@ -117,11 +117,10 @@ describe("ProductCatalogView", () => {
     renderWithProviders(
       <ProductCatalogView products={accentProduct} isLoading={false} isError={false} />
     );
-    const card = screen.getByText("Accent Product").closest("article");
-    expect(card).toHaveStyle({ borderTopColor: "#ff0000" });
+    expect(screen.getByTestId("product-accent-dot")).toHaveStyle({ background: "#ff0000" });
   });
 
-  it("falls back to default accent #1a9fff when accentColor is absent", () => {
+  it("renders no accent indicator when accentColor is absent, and the card still looks designed", () => {
     const noAccentProduct: Product[] = [
       {
         id: "4",
@@ -137,8 +136,9 @@ describe("ProductCatalogView", () => {
     renderWithProviders(
       <ProductCatalogView products={noAccentProduct} isLoading={false} isError={false} />
     );
+    expect(screen.queryByTestId("product-accent-dot")).not.toBeInTheDocument();
     const card = screen.getByText("No Accent Product").closest("article");
-    expect(card).toHaveStyle({ borderTopColor: "#1a9fff" });
+    expect(card).toHaveStyle({ boxShadow: expect.stringContaining("rgba") as string });
   });
 
   it("has no axe violations", async () => {
