@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import type { JSX, ReactNode } from "react";
 import type { FieldError, FieldErrors, UseFormRegister } from "react-hook-form";
 
+import { Badge } from "@/components/Badge";
 import { FormField } from "@/components/FormField";
 import { useFormatPrice } from "@/i18n/useFormatPrice";
 import type { FormValues, ValidationKey } from "./CheckoutFormView.schema";
@@ -41,6 +42,8 @@ export function CheckoutFormView({
         <Heading size="xl" color="white" fontWeight="800">
           {t("title")}
         </Heading>
+
+        <CheckoutSteps />
 
         <Heading
           size="sm"
@@ -134,5 +137,23 @@ export function CheckoutFormView({
         </Button>
       </VStack>
     </Box>
+  );
+}
+
+// Visual/structural only — the two badges below reflect the Shipping-then-Payment order the
+// fields already appear in on this single page; submission stays a single onSubmit call.
+function CheckoutSteps(): JSX.Element {
+  const { t } = useTranslation("checkout");
+
+  return (
+    <Flex role="list" aria-label={t("steps.label")} align="center" gap={3}>
+      <Box role="listitem" aria-current="step">
+        <Badge tone="signal">{`1 · ${t("shipping.heading")}`}</Badge>
+      </Box>
+      <Box flex="1" h="1px" bg="border.muted" aria-hidden="true" />
+      <Box role="listitem">
+        <Badge tone="neutral">{`2 · ${t("payment.heading")}`}</Badge>
+      </Box>
+    </Flex>
   );
 }

@@ -2,6 +2,7 @@ import { screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 
 import enUSCheckout from "@/i18n/locales/en-US/checkout.json";
+import enUSOrders from "@/i18n/locales/en-US/orders.json";
 import { priceText, renderWithProviders } from "@/test-utils";
 
 import { OrderConfirmationPage } from "./OrderConfirmationPage";
@@ -92,5 +93,31 @@ describe("OrderConfirmationPage", () => {
     renderWithProviders(<OrderConfirmationPage isResolving items={singleItem} />);
     expect(screen.getByText(enUSCheckout.confirmation.resolving)).toBeInTheDocument();
     expect(screen.queryByText(enUSCheckout.confirmation.emailSoon)).not.toBeInTheDocument();
+  });
+
+  it("shows a success icon regardless of whether the order id has resolved yet", () => {
+    renderWithProviders(<OrderConfirmationPage isResolving items={singleItem} />);
+    // Payment already succeeded to reach this page — the checkmark isn't conditional on
+    // the async order-id lookup finishing.
+    expect(screen.getByTestId("confirmation-success-icon")).toBeInTheDocument();
+  });
+
+  it("shows a translated status badge when status is known", () => {
+    renderWithProviders(
+      <OrderConfirmationPage orderId="ORD-123" status="CONFIRMED" items={singleItem} />
+    );
+    expect(screen.getByText(enUSOrders.status.CONFIRMED)).toBeInTheDocument();
+  });
+
+  it("shows no status badge when status is not yet known", () => {
+    renderWithProviders(<OrderConfirmationPage orderId="ORD-123" items={singleItem} />);
+    Object.values(enUSOrders.status).forEach((label) => {
+      expect(screen.queryByText(label)).not.toBeInTheDocument();
+    });
+  });
+
+  it("renders each purchased item on the shared Card primitive", () => {
+    renderWithProviders(<OrderConfirmationPage orderId="ORD-456" items={multiItems} />);
+    expect(screen.getAllByRole("article")).toHaveLength(multiItems.length);
   });
 });

@@ -2,13 +2,19 @@ import type { JSX } from "react";
 
 import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
+import { CheckCircle2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { OrderStatus } from "@/api/types";
+import { Badge } from "@/components/Badge";
+import { Card } from "@/components/Card";
+import { PageContainer } from "@/components/PageContainer";
 import { useFormatPrice } from "@/i18n/useFormatPrice";
 import { useLocale } from "@/i18n/useLocale";
 
 import type { CartItem } from "@/store/cart";
+import { ORDER_STATUS_KEY } from "../statusLabel";
+import { ORDER_STATUS_TONE } from "../statusTone";
 
 type Props = {
   orderId?: string;
@@ -22,26 +28,51 @@ type Props = {
 // rest of that flow. The order history and detail screens are the orders namespace's job.
 export function OrderConfirmationPage({ orderId, status, isResolving, items }: Props): JSX.Element {
   const { t } = useTranslation("checkout");
+  // The order-status vocabulary itself (`status.PENDING`, etc.) belongs to the `orders`
+  // namespace, unlike the rest of this page's copy — see `ORDER_STATUS_KEY`.
+  const { t: tOrders } = useTranslation("orders");
   const formatPrice = useFormatPrice();
   const locale = useLocale();
 
   const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
 
   return (
-    <Box p={8} maxW="2xl" mx="auto">
+    <PageContainer size="sm" py={8}>
       <VStack gap={6} align="stretch">
-        <Box>
-          <Heading size="xl" color="white" fontWeight="800">
+        <Card
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          textAlign="center"
+          gap={3}
+          py={10}
+          px={6}
+        >
+          <Flex
+            w={14}
+            h={14}
+            borderRadius="full"
+            bg="success.subtle"
+            color="success.fg"
+            align="center"
+            justify="center"
+            aria-hidden="true"
+            data-testid="confirmation-success-icon"
+          >
+            <CheckCircle2 size={30} strokeWidth={1.75} />
+          </Flex>
+
+          <Heading textStyle="h1" color="fg">
             {t("confirmation.title")}
           </Heading>
-          <Text color="gray.400" mt={1} fontSize="sm">
+
+          <Text color="fg.muted" fontSize="sm">
             {orderId ? (
               <>
                 {t("confirmation.orderId")}{" "}
-                <Box as="span" color="white" fontWeight="700">
+                <Box as="span" color="fg" fontWeight="700">
                   {orderId}
                 </Box>
-                {status && ` (${status})`}
               </>
             ) : isResolving ? (
               t("confirmation.resolving")
@@ -49,12 +80,16 @@ export function OrderConfirmationPage({ orderId, status, isResolving, items }: P
               t("confirmation.emailSoon")
             )}
           </Text>
-        </Box>
+
+          {status && (
+            <Badge tone={ORDER_STATUS_TONE[status]}>{tOrders(ORDER_STATUS_KEY[status])}</Badge>
+          )}
+        </Card>
 
         <Box>
           <Heading
             size="sm"
-            color="gray.400"
+            color="fg.muted"
             fontWeight="600"
             textTransform="uppercase"
             letterSpacing="0.05em"
@@ -62,37 +97,37 @@ export function OrderConfirmationPage({ orderId, status, isResolving, items }: P
           >
             {t("confirmation.itemsPurchased")}
           </Heading>
-          <VStack gap={2} align="stretch">
+          <VStack gap={3} align="stretch">
             {items.map((item) => (
-              <Flex
+              <Card
                 key={item.skuId}
-                justify="space-between"
-                align="center"
-                bg="gray.900"
-                borderRadius="md"
+                as="article"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
                 p={3}
               >
                 <Box>
-                  <Text color="white" fontWeight="600" fontSize="sm">
+                  <Text color="fg" fontWeight="600" fontSize="sm">
                     {item.productName}
                   </Text>
-                  <Text color="gray.500" fontSize="xs">
+                  <Text color="fg.subtle" fontSize="xs">
                     {item.variant} × {item.quantity}
                   </Text>
                 </Box>
-                <Text color="white" fontWeight="700" fontSize="sm">
+                <Text color="fg" fontWeight="700" fontSize="sm">
                   {formatPrice(item.price * item.quantity)}
                 </Text>
-              </Flex>
+              </Card>
             ))}
           </VStack>
         </Box>
 
-        <Flex justify="space-between" pt={4} borderTop="1px solid" borderColor="gray.700">
-          <Text color="gray.400" fontWeight="600" textTransform="uppercase" fontSize="sm">
+        <Flex justify="space-between" pt={4} borderTop="1px solid" borderColor="border.emphasized">
+          <Text color="fg.muted" fontWeight="600" textTransform="uppercase" fontSize="sm">
             {t("confirmation.total")}
           </Text>
-          <Text color="white" fontWeight="800" fontSize="xl">
+          <Text color="fg" fontWeight="800" fontSize="xl">
             {formatPrice(total)}
           </Text>
         </Flex>
@@ -103,6 +138,6 @@ export function OrderConfirmationPage({ orderId, status, isResolving, items }: P
           </Link>
         </Button>
       </VStack>
-    </Box>
+    </PageContainer>
   );
 }

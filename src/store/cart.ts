@@ -43,17 +43,17 @@ cartStore.subscribe(() => {
   }
 });
 
-export function addToCart(item: Omit<CartItem, "quantity">) {
+export function addToCart(item: Omit<CartItem, "quantity">, quantity = 1) {
   cartStore.setState((s) => {
     const existing = s.items.find((i) => i.skuId === item.skuId);
     if (existing) {
       return {
         items: s.items.map((i) =>
-          i.skuId === item.skuId ? { ...i, quantity: i.quantity + 1 } : i
+          i.skuId === item.skuId ? { ...i, quantity: i.quantity + quantity } : i
         ),
       };
     }
-    return { items: [...s.items, { ...item, quantity: 1 }] };
+    return { items: [...s.items, { ...item, quantity }] };
   });
 }
 

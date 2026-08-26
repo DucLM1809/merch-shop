@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import type { JSX, ReactNode } from "react";
 
-type BadgeTone = "neutral" | "accent" | "signal" | "success" | "danger" | "warning";
+export type BadgeTone = "neutral" | "accent" | "signal" | "success" | "danger" | "warning";
 
 const TONE_PALETTE: Record<BadgeTone, string> = {
   neutral: "gray",

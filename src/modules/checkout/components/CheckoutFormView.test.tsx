@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import type { UseFormRegister } from "react-hook-form";
 
@@ -92,6 +92,24 @@ describe("CheckoutFormView schema", () => {
     });
     expect(result.success).toBe(true);
   });
+
+  it("rejects a non-empty but malformed email, reporting the same translation key", () => {
+    const result = schema.safeParse({
+      fullName: "Jane Doe",
+      email: "not-an-email",
+      line1: "123 Main St",
+      line2: "",
+      city: "Los Angeles",
+      state: "CA",
+      postalCode: "90001",
+      country: "US",
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      const emailIssue = result.error.issues.find((i) => i.path[0] === "email");
+      expect(emailIssue?.message).toBe(VALIDATION_KEYS.email);
+    }
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -137,6 +155,25 @@ describe("CheckoutFormView default state", () => {
   it("does not show payment-error by default", () => {
     renderView();
     expect(screen.queryByTestId("payment-error")).not.toBeInTheDocument();
+  });
+
+  it("shows a non-navigable Shipping → Payment step indicator", () => {
+    renderView();
+    const steps = screen.getByRole("list", { name: enUSCheckout.steps.label });
+    const items = within(steps).getAllByRole("listitem");
+
+    expect(items).toHaveLength(2);
+    expect(
+      within(items[0]).getByText(new RegExp(enUSCheckout.shipping.heading))
+    ).toBeInTheDocument();
+    expect(
+      within(items[1]).getByText(new RegExp(enUSCheckout.payment.heading))
+    ).toBeInTheDocument();
+    expect(items[0]).toHaveAttribute("aria-current", "step");
+    expect(items[1]).not.toHaveAttribute("aria-current");
+    // Structural only — never a link/button a user could jump ahead with.
+    expect(within(steps).queryByRole("link")).not.toBeInTheDocument();
+    expect(within(steps).queryByRole("button")).not.toBeInTheDocument();
   });
 });
 

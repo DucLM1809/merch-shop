@@ -3,6 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import type { CartItem } from "@/store/cart";
 import { getSubtotal } from "@/store/cart";
+import { Card } from "@/components/Card";
+import { PageContainer } from "@/components/PageContainer";
 import { useFormatPrice } from "@/i18n/useFormatPrice";
 import { useLocale } from "@/i18n/useLocale";
 
@@ -20,10 +22,10 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
   if (items.length === 0) {
     return (
       <Box p={8} textAlign="center" pt={20}>
-        <Text color="gray.500" fontSize="lg" fontWeight="600">
+        <Text color="fg.muted" fontSize="lg" fontWeight="600">
           {t("empty.title")}
         </Text>
-        <Text color="gray.600" fontSize="sm" mt={1} mb={6}>
+        <Text color="fg.subtle" fontSize="sm" mt={1} mb={6}>
           {t("empty.hint")}
         </Text>
         <Button variant="outline" colorPalette="blue" asChild>
@@ -38,12 +40,12 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
   const subtotal = getSubtotal(items);
 
   return (
-    <Box p={8} maxW="3xl" mx="auto">
+    <PageContainer size="sm" py={8}>
       <Flex align="baseline" gap={3} mb={6}>
-        <Heading size="xl" color="white" fontWeight="800" letterSpacing="-0.025em">
+        <Heading textStyle="h1" color="fg">
           {t("title")}
         </Heading>
-        <Text fontSize="sm" color="gray.500" fontWeight="600">
+        <Text fontSize="sm" color="fg.muted" fontWeight="600">
           {t("itemCount", { count: items.length })}
         </Text>
       </Flex>
@@ -65,10 +67,10 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
         mt={6}
         pt={5}
         borderTop="1px solid"
-        borderColor="gray.700"
+        borderColor="border.emphasized"
       >
         <Text
-          color="gray.500"
+          color="fg.muted"
           fontSize="sm"
           fontWeight="600"
           textTransform="uppercase"
@@ -77,7 +79,7 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
           {t("subtotal")}
         </Text>
         <Text
-          color="white"
+          color="fg"
           fontSize="2xl"
           fontWeight="800"
           letterSpacing="-0.02em"
@@ -100,7 +102,7 @@ export function CartView({ items, onUpdateQuantity, onRemove }: Props) {
           {t("checkout")}
         </Link>
       </Button>
-    </Box>
+    </PageContainer>
   );
 }
 
@@ -119,23 +121,13 @@ function CartRow({ item, onUpdateQuantity, onRemove }: CartRowProps) {
   const handleRemove = () => onRemove(item.skuId);
 
   return (
-    <Flex
-      bg="gray.900"
-      borderRadius="lg"
-      p={4}
-      gap={4}
-      align="center"
-      borderTop="1px solid"
-      borderColor="gray.800"
-      transition="border-color 0.15s"
-      _hover={{ borderColor: "gray.700" }}
-    >
+    <Card as="article" interactive display="flex" alignItems="center" gap={4} p={4}>
       <Box flex="1" minW={0}>
-        <Text color="white" fontWeight="600" truncate fontSize="sm">
+        <Text color="fg" fontWeight="600" truncate fontSize="sm">
           {item.productName}
         </Text>
         <Text
-          color="gray.500"
+          color="fg.subtle"
           fontSize="xs"
           mt={0.5}
           textTransform="uppercase"
@@ -143,7 +135,7 @@ function CartRow({ item, onUpdateQuantity, onRemove }: CartRowProps) {
         >
           {item.variant}
         </Text>
-        <Text color="gray.400" fontSize="sm" mt={1} fontWeight="600">
+        <Text color="fg.muted" fontSize="sm" mt={1} fontWeight="600">
           {formatPrice(item.price)}
         </Text>
       </Box>
@@ -158,7 +150,7 @@ function CartRow({ item, onUpdateQuantity, onRemove }: CartRowProps) {
         >
           -
         </IconButton>
-        <Text color="white" minW={6} textAlign="center" fontWeight="700" fontSize="sm">
+        <Text color="fg" minW={6} textAlign="center" fontWeight="700" fontSize="sm">
           {item.quantity}
         </Text>
         <IconButton
@@ -172,20 +164,20 @@ function CartRow({ item, onUpdateQuantity, onRemove }: CartRowProps) {
         </IconButton>
       </Flex>
 
-      <Text color="white" fontWeight="700" minW={16} textAlign="right" fontSize="sm">
+      <Text color="fg" fontWeight="700" minW={16} textAlign="right" fontSize="sm">
         {formatPrice(item.price * item.quantity)}
       </Text>
 
       <Button
         size="sm"
         variant="ghost"
-        colorPalette="red"
+        colorPalette="danger"
         aria-label={t("item.remove")}
         onClick={handleRemove}
         fontSize="xs"
       >
         {t("item.remove")}
       </Button>
-    </Flex>
+    </Card>
   );
 }

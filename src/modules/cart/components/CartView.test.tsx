@@ -91,4 +91,11 @@ describe("CartView", () => {
     );
     expect(screen.getByText(itemCount(1))).toBeInTheDocument();
   });
+
+  it("renders each line item on the shared Card primitive", () => {
+    renderWithProviders(<CartView items={items} onUpdateQuantity={vi.fn()} onRemove={vi.fn()} />);
+    // Card renders as a clipped-corner <article>, the same wrapper ProductCatalogView's
+    // cards use — one per line item confirms the row itself is a Card, not a plain Flex.
+    expect(screen.getAllByRole("article")).toHaveLength(items.length);
+  });
 });

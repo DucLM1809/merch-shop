@@ -23,7 +23,10 @@ export type ValidationKey = (typeof VALIDATION_KEYS)[keyof typeof VALIDATION_KEY
 
 export const schema = z.object({
   fullName: z.string().min(1, VALIDATION_KEYS.fullName),
-  email: z.string().min(1, VALIDATION_KEYS.email),
+  // `z.email()` (not the deprecated `.string().email()` chain) rejects both blank and
+  // malformed input against one message key — a country's postal/state format varies too
+  // widely to validate generically, so email is the one field with a real format check.
+  email: z.email(VALIDATION_KEYS.email),
   line1: z.string().min(1, VALIDATION_KEYS.line1),
   line2: z.string(),
   city: z.string().min(1, VALIDATION_KEYS.city),
