@@ -100,6 +100,22 @@ describe("/admin/products", () => {
     expect(await screen.findByText(/no products yet/i)).toBeInTheDocument();
   });
 
+  it("live preview reflects the name typed into the form", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));
+
+    renderRoute("/admin/products");
+
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole("button", { name: /\+ new product/i }));
+
+    expect(screen.getByText("Untitled product")).toBeInTheDocument();
+
+    await user.type(screen.getByPlaceholderText("Name"), "Sample Product");
+
+    expect(screen.getByText("Sample Product")).toBeInTheDocument();
+  });
+
   it("create form fires POST /products", async () => {
     mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));

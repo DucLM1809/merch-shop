@@ -1,10 +1,24 @@
 import { useState } from "react";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Box, Button, Heading, HStack, Input, NativeSelect, Text, VStack } from "@chakra-ui/react";
-import { Package } from "lucide-react";
+import {
+  Badge,
+  Box,
+  Button,
+  Drawer,
+  Grid,
+  Heading,
+  HStack,
+  IconButton,
+  Image,
+  Input,
+  NativeSelect,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { ImageOff, Package, X } from "lucide-react";
 
 import { useCharacters, useGames, useProducts, usePublishers, useTeams } from "@/modules/catalog";
 import { Card } from "@/components/Card";
@@ -27,6 +41,14 @@ const COLUMNS: AdminColumn[] = [
   { key: "game", label: "Game" },
 ];
 
+const SECTION_LABEL_PROPS = {
+  fontSize: "xs",
+  fontWeight: "700",
+  color: "fg.muted",
+  textTransform: "uppercase" as const,
+  letterSpacing: "0.08em",
+};
+
 export function AdminProductsView(): React.JSX.Element {
   const { data: products = [], isLoading, error } = useProducts();
   const { data: publishers = [] } = usePublishers();
@@ -46,12 +68,18 @@ export function AdminProductsView(): React.JSX.Element {
     handleSubmit,
     reset,
     setError,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onTouched",
     defaultValues: DEFAULTS,
   });
+
+  const preview = useWatch({ control });
+  const previewGame = games.find((g) => g.id === preview.gameId);
+  const previewTeam = teams.find((t) => t.id === preview.teamId);
+  const previewCharacter = characters.find((c) => c.id === preview.characterId);
 
   function openCreate() {
     setMode("create");
@@ -112,91 +140,204 @@ export function AdminProductsView(): React.JSX.Element {
       </HStack>
 
       {mode !== "idle" && (
-        <Card mb={6} p={5}>
-          <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-            <Text
-              fontSize="xs"
-              fontWeight="700"
-              color="fg.muted"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-              mb={4}
+        <Drawer.Root open placement="bottom" onOpenChange={cancel}>
+          <Drawer.Backdrop />
+          <Drawer.Positioner>
+            <Drawer.Content
+              bg="bg.panel"
+              borderWidth="1px"
+              borderColor="border.muted"
+              borderBottomWidth={0}
+              borderTopRadius="xl"
+              w="full"
+              h="80vh"
+              overflow="hidden"
             >
-              {typeof mode === "object" ? "Edit Product" : "New Product"}
-            </Text>
-
-            <VStack gap={3} align="stretch">
-              <FormField name="name" label="Name" error={errors.name}>
-                <Input id="name" placeholder="Name" {...register("name")} />
-              </FormField>
-
-              <FormField name="description" label="Description" error={errors.description}>
-                <Input
-                  id="description"
-                  placeholder="Description (optional)"
-                  {...register("description")}
+              <Box
+                as="form"
+                onSubmit={handleSubmit(onSubmit)}
+                display="flex"
+                flexDirection="column"
+                minH={0}
+                h="full"
+              >
+                <Box
+                  w="10"
+                  h="1"
+                  bg="border.emphasized"
+                  borderRadius="full"
+                  mx="auto"
+                  mt={3}
+                  mb={1}
                 />
-              </FormField>
 
-              <FormField name="imageUrl" label="Image URL" error={errors.imageUrl}>
-                <Input id="imageUrl" placeholder="Image URL (optional)" {...register("imageUrl")} />
-              </FormField>
+                <HStack
+                  justify="space-between"
+                  px={6}
+                  pt={2}
+                  pb={4}
+                  borderBottomWidth="1px"
+                  borderColor="border.muted"
+                >
+                  <Drawer.Title textStyle="h3" color="fg">
+                    {typeof mode === "object" ? "Edit Product" : "New Product"}
+                  </Drawer.Title>
+                  <Drawer.CloseTrigger asChild>
+                    <IconButton aria-label="Close" size="xs" variant="ghost" color="fg.muted">
+                      <X size={14} />
+                    </IconButton>
+                  </Drawer.CloseTrigger>
+                </HStack>
 
-              <FormField name="gameId" label="Game" error={errors.gameId}>
-                <NativeSelect.Root>
-                  <NativeSelect.Field id="gameId" {...register("gameId")}>
-                    <option value="">Game…</option>
-                    {games.map((g) => (
-                      <option key={g.id} value={g.id}>
-                        {g.name}
-                      </option>
-                    ))}
-                  </NativeSelect.Field>
-                  <NativeSelect.Indicator />
-                </NativeSelect.Root>
-              </FormField>
+                <Grid
+                  templateColumns={{ base: "1fr", md: "1.3fr 1fr" }}
+                  flex="1"
+                  minH={0}
+                  overflow="auto"
+                  maxW="6xl"
+                  w="full"
+                  mx="auto"
+                >
+                  <VStack gap={4} align="stretch" p={6}>
+                    <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr" }} gap={4}>
+                      <FormField name="name" label="Name" error={errors.name}>
+                        <Input id="name" placeholder="Name" {...register("name")} />
+                      </FormField>
+                      <FormField name="gameId" label="Game" error={errors.gameId}>
+                        <NativeSelect.Root>
+                          <NativeSelect.Field id="gameId" {...register("gameId")}>
+                            <option value="">Game…</option>
+                            {games.map((g) => (
+                              <option key={g.id} value={g.id}>
+                                {g.name}
+                              </option>
+                            ))}
+                          </NativeSelect.Field>
+                          <NativeSelect.Indicator />
+                        </NativeSelect.Root>
+                      </FormField>
+                    </Grid>
 
-              <NativeSelect.Root>
-                <NativeSelect.Field {...register("teamId")}>
-                  <option value="">Team (optional)…</option>
-                  {teams.map((t) => (
-                    <option key={t.id} value={t.id}>
-                      {t.name}
-                    </option>
-                  ))}
-                </NativeSelect.Field>
-                <NativeSelect.Indicator />
-              </NativeSelect.Root>
+                    <FormField name="description" label="Description" error={errors.description}>
+                      <Input
+                        id="description"
+                        placeholder="Description (optional)"
+                        {...register("description")}
+                      />
+                    </FormField>
 
-              <NativeSelect.Root>
-                <NativeSelect.Field {...register("characterId")}>
-                  <option value="">Character (optional)…</option>
-                  {characters.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </NativeSelect.Field>
-                <NativeSelect.Indicator />
-              </NativeSelect.Root>
+                    <FormField name="imageUrl" label="Image URL" error={errors.imageUrl}>
+                      <Input
+                        id="imageUrl"
+                        placeholder="Image URL (optional)"
+                        {...register("imageUrl")}
+                      />
+                    </FormField>
 
-              {errors.root && (
-                <Text color="danger.fg" fontSize="sm">
-                  {errors.root.message}
-                </Text>
-              )}
+                    <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr" }} gap={4}>
+                      <FormField name="teamId" label="Team">
+                        <NativeSelect.Root>
+                          <NativeSelect.Field id="teamId" {...register("teamId")}>
+                            <option value="">Team (optional)…</option>
+                            {teams.map((t) => (
+                              <option key={t.id} value={t.id}>
+                                {t.name}
+                              </option>
+                            ))}
+                          </NativeSelect.Field>
+                          <NativeSelect.Indicator />
+                        </NativeSelect.Root>
+                      </FormField>
+                      <FormField name="characterId" label="Character">
+                        <NativeSelect.Root>
+                          <NativeSelect.Field id="characterId" {...register("characterId")}>
+                            <option value="">Character (optional)…</option>
+                            {characters.map((c) => (
+                              <option key={c.id} value={c.id}>
+                                {c.name}
+                              </option>
+                            ))}
+                          </NativeSelect.Field>
+                          <NativeSelect.Indicator />
+                        </NativeSelect.Root>
+                      </FormField>
+                    </Grid>
 
-              <HStack justify="flex-end">
-                <Button size="sm" variant="ghost" color="fg.muted" type="button" onClick={cancel}>
-                  Cancel
-                </Button>
-                <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
-                  Save
-                </Button>
-              </HStack>
-            </VStack>
-          </Box>
-        </Card>
+                    {errors.root && (
+                      <Text color="danger.fg" fontSize="sm">
+                        {errors.root.message}
+                      </Text>
+                    )}
+
+                    <HStack justify="flex-end" pt={2}>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        color="fg.muted"
+                        type="button"
+                        onClick={cancel}
+                      >
+                        Cancel
+                      </Button>
+                      <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
+                        Save
+                      </Button>
+                    </HStack>
+                  </VStack>
+
+                  <Box
+                    bg="bg.muted"
+                    p={6}
+                    borderLeftWidth={{ base: 0, md: "1px" }}
+                    borderColor="border.muted"
+                  >
+                    <Text {...SECTION_LABEL_PROPS} mb={3}>
+                      Preview
+                    </Text>
+                    <Card p={4}>
+                      <Box
+                        bg="bg.subtle"
+                        borderRadius="md"
+                        mb={3}
+                        h="140px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        overflow="hidden"
+                        color="fg.subtle"
+                      >
+                        {preview.imageUrl ? (
+                          <Image
+                            src={preview.imageUrl}
+                            alt={preview.name || "Product preview"}
+                            objectFit="cover"
+                            w="full"
+                            h="full"
+                          />
+                        ) : (
+                          <ImageOff size={28} />
+                        )}
+                      </Box>
+                      <Text fontWeight="700" color="fg" mb={1}>
+                        {preview.name || "Untitled product"}
+                      </Text>
+                      <Text fontSize="sm" color="fg.muted" mb={3}>
+                        {preview.description || "No description yet."}
+                      </Text>
+                      <HStack gap={2} flexWrap="wrap">
+                        {previewGame && <Badge colorPalette="blue">{previewGame.name}</Badge>}
+                        {previewTeam && <Badge colorPalette="signal">{previewTeam.name}</Badge>}
+                        {previewCharacter && (
+                          <Badge variant="outline">{previewCharacter.name}</Badge>
+                        )}
+                      </HStack>
+                    </Card>
+                  </Box>
+                </Grid>
+              </Box>
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Drawer.Root>
       )}
 
       {isLoading && <Text color="fg.muted">Loading…</Text>}
