@@ -3,38 +3,27 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  Input,
-  NativeSelectField,
-  NativeSelectRoot,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, HStack, Input, NativeSelect, Text, VStack } from "@chakra-ui/react";
+import { List } from "lucide-react";
 
 import { useCharacters, useGames } from "@/modules/catalog";
+import { Card } from "@/components/Card";
+import { EmptyState } from "@/components/EmptyState";
 import { FormField } from "@/components/FormField";
+import { PageContainer } from "@/components/PageContainer";
 
 import { useCreateCharacter, useDeleteCharacter, useUpdateCharacter } from "../hooks";
+import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
 import { schema, DEFAULTS } from "./AdminCharactersView.schema";
 
 import type { Character, CreateCharacterDto } from "@/api/types";
 import type { FormValues } from "./AdminCharactersView.schema";
 
-const selectStyle = {
-  bg: "gray.800",
-  border: "1px solid",
-  borderColor: "gray.700",
-  borderRadius: "md",
-  color: "white",
-  px: 3,
-  py: 2,
-  fontSize: "sm",
-};
+const COLUMNS: AdminColumn[] = [
+  { key: "name", label: "Name" },
+  { key: "slug", label: "Slug" },
+  { key: "game", label: "Game" },
+];
 
 export function AdminCharactersView(): React.JSX.Element {
   const { data: characters = [], isLoading, error } = useCharacters();
@@ -93,9 +82,9 @@ export function AdminCharactersView(): React.JSX.Element {
   }
 
   return (
-    <Box p={8}>
+    <PageContainer size="lg" py={8}>
       <HStack mb={6} justify="space-between">
-        <Heading size="lg" color="white">
+        <Heading textStyle="h1" color="fg">
           Characters
         </Heading>
 
@@ -107,125 +96,71 @@ export function AdminCharactersView(): React.JSX.Element {
       </HStack>
 
       {mode !== "idle" && (
-        <Box
-          as="form"
-          onSubmit={handleSubmit(onSubmit)}
-          mb={6}
-          p={5}
-          bg="gray.900"
-          borderRadius="lg"
-          border="1px solid"
-          borderColor="gray.700"
-        >
-          <Text
-            fontSize="xs"
-            fontWeight="700"
-            color="gray.500"
-            textTransform="uppercase"
-            letterSpacing="0.08em"
-            mb={4}
-          >
-            {typeof mode === "object" ? "Edit Character" : "New Character"}
-          </Text>
+        <Card mb={6} p={5}>
+          <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+            <Text
+              fontSize="xs"
+              fontWeight="700"
+              color="fg.muted"
+              textTransform="uppercase"
+              letterSpacing="0.08em"
+              mb={4}
+            >
+              {typeof mode === "object" ? "Edit Character" : "New Character"}
+            </Text>
 
-          <VStack gap={3} align="stretch">
-            <FormField name="name" label="Name" error={errors.name}>
-              <Input
-                id="name"
-                placeholder="Name"
-                {...register("name")}
-                bg="gray.800"
-                borderColor="gray.700"
-                color="white"
-              />
-            </FormField>
+            <VStack gap={3} align="stretch">
+              <FormField name="name" label="Name" error={errors.name}>
+                <Input id="name" placeholder="Name" {...register("name")} />
+              </FormField>
 
-            <FormField name="slug" label="Slug" error={errors.slug}>
-              <Input
-                id="slug"
-                placeholder="Slug (e.g. jinx)"
-                {...register("slug")}
-                bg="gray.800"
-                borderColor="gray.700"
-                color="white"
-              />
-            </FormField>
+              <FormField name="slug" label="Slug" error={errors.slug}>
+                <Input id="slug" placeholder="Slug (e.g. jinx)" {...register("slug")} />
+              </FormField>
 
-            <FormField name="gameId" label="Game" error={errors.gameId}>
-              <NativeSelectRoot unstyled>
-                <NativeSelectField id="gameId" {...register("gameId")} {...selectStyle}>
-                  <option value="">Game…</option>
-                  {games.map((g) => (
-                    <option key={g.id} value={g.id}>
-                      {g.name}
-                    </option>
-                  ))}
-                </NativeSelectField>
-              </NativeSelectRoot>
-            </FormField>
+              <FormField name="gameId" label="Game" error={errors.gameId}>
+                <NativeSelect.Root>
+                  <NativeSelect.Field id="gameId" {...register("gameId")}>
+                    <option value="">Game…</option>
+                    {games.map((g) => (
+                      <option key={g.id} value={g.id}>
+                        {g.name}
+                      </option>
+                    ))}
+                  </NativeSelect.Field>
+                  <NativeSelect.Indicator />
+                </NativeSelect.Root>
+              </FormField>
 
-            {errors.root && (
-              <Text color="red.400" fontSize="sm">
-                {errors.root.message}
-              </Text>
-            )}
+              {errors.root && (
+                <Text color="danger.fg" fontSize="sm">
+                  {errors.root.message}
+                </Text>
+              )}
 
-            <HStack justify="flex-end">
-              <Button size="sm" variant="ghost" color="gray.400" type="button" onClick={cancel}>
-                Cancel
-              </Button>
-              <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
-                Save
-              </Button>
-            </HStack>
-          </VStack>
-        </Box>
+              <HStack justify="flex-end">
+                <Button size="sm" variant="ghost" color="fg.muted" type="button" onClick={cancel}>
+                  Cancel
+                </Button>
+                <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
+                  Save
+                </Button>
+              </HStack>
+            </VStack>
+          </Box>
+        </Card>
       )}
 
-      {isLoading && <Text color="gray.500">Loading…</Text>}
-      {error && <Text color="red.400">Failed to load characters.</Text>}
+      {isLoading && <Text color="fg.muted">Loading…</Text>}
+      {error && <Text color="danger.fg">Failed to load characters.</Text>}
 
       {!isLoading && !error && characters.length === 0 && (
-        <Text color="gray.400">No characters yet.</Text>
+        <EmptyState title="No characters yet." icon={<List size={28} strokeWidth={1.5} />} />
       )}
 
       {!isLoading && !error && characters.length > 0 && (
-        <Box border="1px solid" borderColor="gray.800" borderRadius="lg" overflow="hidden">
-          <Flex px={4} py={3} bg="gray.900" borderBottom="1px solid" borderColor="gray.800">
-            <Text
-              flex={1.5}
-              fontSize="xs"
-              fontWeight="700"
-              color="gray.500"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-            >
-              Name
-            </Text>
-            <Text
-              flex={1.5}
-              fontSize="xs"
-              fontWeight="700"
-              color="gray.500"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-            >
-              Slug
-            </Text>
-            <Text
-              flex={1}
-              fontSize="xs"
-              fontWeight="700"
-              color="gray.500"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-            >
-              Game
-            </Text>
-            <Box w="160px" />
-          </Flex>
-
-          {characters.map((character, i) => {
+        <AdminTable columns={COLUMNS} hasActionsColumn>
+          {characters.map((character) => {
             const game = games.find((g) => g.id === character.gameId);
             const handleEdit = () => openEdit(character);
             const handleDeleteStart = () => setConfirmDelete(character.id);
@@ -233,72 +168,64 @@ export function AdminCharactersView(): React.JSX.Element {
             const handleDeleteConfirm = () =>
               void del.mutateAsync(character.id).then(() => setConfirmDelete(null));
             return (
-              <Flex
-                key={character.id}
-                data-testid={`character-row-${character.id}`}
-                px={4}
-                py={3.5}
-                align="center"
-                borderBottom={i < characters.length - 1 ? "1px solid" : "none"}
-                borderColor="gray.800"
-              >
-                <Text flex={1.5} fontSize="sm" color="white" fontWeight="600">
-                  {character.name}
-                </Text>
-                <Text flex={1.5} fontSize="sm" color="gray.400" fontFamily="mono">
-                  {character.slug}
-                </Text>
-                <Text flex={1} fontSize="sm" color="gray.400">
-                  {game?.name ?? character.gameId}
-                </Text>
+              <AdminTableRow key={character.id} data-testid={`character-row-${character.id}`}>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg" fontWeight="600">
+                    {character.name}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg.muted" fontFamily="mono">
+                    {character.slug}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg.muted">
+                    {game?.name ?? character.gameId}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell align="right">
+                  <HStack justify="flex-end" gap={1}>
+                    <Button size="xs" variant="ghost" color="fg.muted" onClick={handleEdit}>
+                      Edit
+                    </Button>
 
-                <HStack w="160px" justify="flex-end" gap={1}>
-                  <Button
-                    size="xs"
-                    variant="ghost"
-                    color="gray.400"
-                    _hover={{ color: "white" }}
-                    onClick={handleEdit}
-                  >
-                    Edit
-                  </Button>
-
-                  {confirmDelete === character.id ? (
-                    <HStack gap={1}>
-                      <Button
-                        size="xs"
-                        colorPalette="red"
-                        loading={del.isPending}
-                        onClick={handleDeleteConfirm}
-                      >
-                        Confirm
-                      </Button>
+                    {confirmDelete === character.id ? (
+                      <HStack gap={1}>
+                        <Button
+                          size="xs"
+                          colorPalette="danger"
+                          loading={del.isPending}
+                          onClick={handleDeleteConfirm}
+                        >
+                          Confirm
+                        </Button>
+                        <Button
+                          size="xs"
+                          variant="ghost"
+                          color="fg.subtle"
+                          onClick={handleDeleteCancel}
+                        >
+                          ✕
+                        </Button>
+                      </HStack>
+                    ) : (
                       <Button
                         size="xs"
                         variant="ghost"
-                        color="gray.500"
-                        onClick={handleDeleteCancel}
+                        colorPalette="danger"
+                        onClick={handleDeleteStart}
                       >
-                        ✕
+                        Delete
                       </Button>
-                    </HStack>
-                  ) : (
-                    <Button
-                      size="xs"
-                      variant="ghost"
-                      color="gray.600"
-                      _hover={{ color: "red.400" }}
-                      onClick={handleDeleteStart}
-                    >
-                      Delete
-                    </Button>
-                  )}
-                </HStack>
-              </Flex>
+                    )}
+                  </HStack>
+                </AdminTableCell>
+              </AdminTableRow>
             );
           })}
-        </Box>
+        </AdminTable>
       )}
-    </Box>
+    </PageContainer>
   );
 }

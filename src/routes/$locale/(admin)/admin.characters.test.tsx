@@ -54,6 +54,24 @@ describe("/admin/characters", () => {
     expect(screen.getByText("azir")).toBeInTheDocument();
   });
 
+  it("renders characters as a real table with column headers and rows", async () => {
+    mockSignedIn(adminAccount);
+    server.use(
+      http.get(`${BASE_URL}/characters`, () => HttpResponse.json(envelope(twoCharacters)))
+    );
+
+    renderRoute("/admin/characters");
+
+    await screen.findByText("Jinx");
+
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Name" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Slug" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Game" })).toBeInTheDocument();
+    // Header row + one row per character.
+    expect(screen.getAllByRole("row")).toHaveLength(1 + twoCharacters.length);
+  });
+
   it("shows empty state when no characters", async () => {
     mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/characters`, () => HttpResponse.json(envelope([]))));

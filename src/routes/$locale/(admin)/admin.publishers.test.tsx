@@ -49,6 +49,24 @@ describe("/admin/publishers", () => {
     expect(screen.getByText("valve")).toBeInTheDocument();
   });
 
+  it("renders publishers as a real table with column headers and rows", async () => {
+    mockSignedIn(adminAccount);
+    server.use(
+      http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope(twoPublishers)))
+    );
+
+    renderRoute("/admin/publishers");
+
+    await screen.findByText("Riot Games");
+
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Name" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Slug" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Logo" })).toBeInTheDocument();
+    // Header row + one row per publisher.
+    expect(screen.getAllByRole("row")).toHaveLength(1 + twoPublishers.length);
+  });
+
   it("shows empty state when no publishers", async () => {
     mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/publishers`, () => HttpResponse.json(envelope([]))));

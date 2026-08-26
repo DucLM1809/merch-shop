@@ -57,6 +57,26 @@ describe("/admin/skus", () => {
     expect(screen.getByText("$29.99")).toBeInTheDocument();
   });
 
+  it("renders SKUs as a real table with column headers and rows", async () => {
+    mockSignedIn(adminAccount);
+    server.use(
+      http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([productWithSkus])))
+    );
+
+    renderRoute("/admin/skus");
+
+    await screen.findByText("$49.99");
+
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Product" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Price" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Size" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Color" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Edition" })).toBeInTheDocument();
+    // Header row + one row per SKU.
+    expect(screen.getAllByRole("row")).toHaveLength(1 + (productWithSkus.skus?.length ?? 0));
+  });
+
   it("shows empty state when no SKUs", async () => {
     mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));

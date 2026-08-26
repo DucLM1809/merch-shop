@@ -52,6 +52,22 @@ describe("/admin/teams", () => {
     expect(screen.getByText("cloud9")).toBeInTheDocument();
   });
 
+  it("renders teams as a real table with column headers and rows", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope(twoTeams))));
+
+    renderRoute("/admin/teams");
+
+    await screen.findByText("T1");
+
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Name" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Slug" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Game" })).toBeInTheDocument();
+    // Header row + one row per team.
+    expect(screen.getAllByRole("row")).toHaveLength(1 + twoTeams.length);
+  });
+
   it("shows empty state when no teams", async () => {
     mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/teams`, () => HttpResponse.json(envelope([]))));

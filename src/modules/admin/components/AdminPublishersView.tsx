@@ -3,16 +3,27 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Box, Button, Flex, Heading, HStack, Input, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Heading, HStack, Input, Text, VStack } from "@chakra-ui/react";
+import { TrendingUp } from "lucide-react";
 
 import { usePublishers } from "@/modules/catalog";
+import { Card } from "@/components/Card";
+import { EmptyState } from "@/components/EmptyState";
 import { FormField } from "@/components/FormField";
+import { PageContainer } from "@/components/PageContainer";
 
 import { useCreatePublisher, useDeletePublisher, useUpdatePublisher } from "../hooks";
+import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
 import { schema, DEFAULTS } from "./AdminPublishersView.schema";
 
 import type { CreatePublisherDto, Publisher } from "@/api/types";
 import type { FormValues } from "./AdminPublishersView.schema";
+
+const COLUMNS: AdminColumn[] = [
+  { key: "name", label: "Name" },
+  { key: "slug", label: "Slug" },
+  { key: "logo", label: "Logo" },
+];
 
 export function AdminPublishersView(): React.JSX.Element {
   const { data: publishers = [], isLoading, error } = usePublishers();
@@ -70,9 +81,9 @@ export function AdminPublishersView(): React.JSX.Element {
   }
 
   return (
-    <Box p={8}>
+    <PageContainer size="lg" py={8}>
       <HStack mb={6} justify="space-between">
-        <Heading size="lg" color="white">
+        <Heading textStyle="h1" color="fg">
           Publishers
         </Heading>
 
@@ -84,202 +95,131 @@ export function AdminPublishersView(): React.JSX.Element {
       </HStack>
 
       {mode !== "idle" && (
-        <Box
-          as="form"
-          onSubmit={handleSubmit(onSubmit)}
-          mb={6}
-          p={5}
-          bg="gray.900"
-          borderRadius="lg"
-          border="1px solid"
-          borderColor="gray.700"
-        >
-          <Text
-            fontSize="xs"
-            fontWeight="700"
-            color="gray.500"
-            textTransform="uppercase"
-            letterSpacing="0.08em"
-            mb={4}
-          >
-            {typeof mode === "object" ? "Edit Publisher" : "New Publisher"}
-          </Text>
+        <Card mb={6} p={5}>
+          <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+            <Text
+              fontSize="xs"
+              fontWeight="700"
+              color="fg.muted"
+              textTransform="uppercase"
+              letterSpacing="0.08em"
+              mb={4}
+            >
+              {typeof mode === "object" ? "Edit Publisher" : "New Publisher"}
+            </Text>
 
-          <VStack gap={3} align="stretch">
-            <FormField name="name" label="Name" error={errors.name}>
-              <Input
-                id="name"
-                placeholder="Name"
-                {...register("name")}
-                bg="gray.800"
-                borderColor="gray.700"
-                color="white"
-              />
-            </FormField>
+            <VStack gap={3} align="stretch">
+              <FormField name="name" label="Name" error={errors.name}>
+                <Input id="name" placeholder="Name" {...register("name")} />
+              </FormField>
 
-            <FormField name="slug" label="Slug" error={errors.slug}>
-              <Input
-                id="slug"
-                placeholder="Slug (e.g. riot-games)"
-                {...register("slug")}
-                bg="gray.800"
-                borderColor="gray.700"
-                color="white"
-              />
-            </FormField>
+              <FormField name="slug" label="Slug" error={errors.slug}>
+                <Input id="slug" placeholder="Slug (e.g. riot-games)" {...register("slug")} />
+              </FormField>
 
-            <FormField name="logoUrl" label="Logo URL" error={errors.logoUrl}>
-              <Input
-                id="logoUrl"
-                placeholder="Logo URL (optional)"
-                {...register("logoUrl")}
-                bg="gray.800"
-                borderColor="gray.700"
-                color="white"
-              />
-            </FormField>
+              <FormField name="logoUrl" label="Logo URL" error={errors.logoUrl}>
+                <Input id="logoUrl" placeholder="Logo URL (optional)" {...register("logoUrl")} />
+              </FormField>
 
-            {errors.root && (
-              <Text color="red.400" fontSize="sm">
-                {errors.root.message}
-              </Text>
-            )}
+              {errors.root && (
+                <Text color="danger.fg" fontSize="sm">
+                  {errors.root.message}
+                </Text>
+              )}
 
-            <HStack justify="flex-end">
-              <Button size="sm" variant="ghost" color="gray.400" type="button" onClick={cancel}>
-                Cancel
-              </Button>
-              <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
-                Save
-              </Button>
-            </HStack>
-          </VStack>
-        </Box>
+              <HStack justify="flex-end">
+                <Button size="sm" variant="ghost" color="fg.muted" type="button" onClick={cancel}>
+                  Cancel
+                </Button>
+                <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
+                  Save
+                </Button>
+              </HStack>
+            </VStack>
+          </Box>
+        </Card>
       )}
 
-      {isLoading && <Text color="gray.500">Loading…</Text>}
-      {error && <Text color="red.400">Failed to load publishers.</Text>}
+      {isLoading && <Text color="fg.muted">Loading…</Text>}
+      {error && <Text color="danger.fg">Failed to load publishers.</Text>}
 
       {!isLoading && !error && publishers.length === 0 && (
-        <Text color="gray.400">No publishers yet.</Text>
+        <EmptyState title="No publishers yet." icon={<TrendingUp size={28} strokeWidth={1.5} />} />
       )}
 
       {!isLoading && !error && publishers.length > 0 && (
-        <Box border="1px solid" borderColor="gray.800" borderRadius="lg" overflow="hidden">
-          <Flex px={4} py={3} bg="gray.900" borderBottom="1px solid" borderColor="gray.800">
-            <Text
-              flex={1.5}
-              fontSize="xs"
-              fontWeight="700"
-              color="gray.500"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-            >
-              Name
-            </Text>
-            <Text
-              flex={1.5}
-              fontSize="xs"
-              fontWeight="700"
-              color="gray.500"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-            >
-              Slug
-            </Text>
-            <Text
-              flex={2}
-              fontSize="xs"
-              fontWeight="700"
-              color="gray.500"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-            >
-              Logo
-            </Text>
-            <Box w="160px" />
-          </Flex>
-
-          {publishers.map((pub, i) => {
+        <AdminTable columns={COLUMNS} hasActionsColumn>
+          {publishers.map((pub) => {
             const handleEdit = () => openEdit(pub);
             const handleDeleteStart = () => setConfirmDelete(pub.id);
             const handleDeleteCancel = () => setConfirmDelete(null);
             const handleDeleteConfirm = () =>
               void del.mutateAsync(pub.id).then(() => setConfirmDelete(null));
             return (
-              <Flex
-                key={pub.id}
-                data-testid={`publisher-row-${pub.id}`}
-                px={4}
-                py={3.5}
-                align="center"
-                borderBottom={i < publishers.length - 1 ? "1px solid" : "none"}
-                borderColor="gray.800"
-              >
-                <Text flex={1.5} fontSize="sm" color="white" fontWeight="600">
-                  {pub.name}
-                </Text>
-                <Text flex={1.5} fontSize="sm" color="gray.400" fontFamily="mono">
-                  {pub.slug}
-                </Text>
-                <Text
-                  flex={2}
-                  fontSize="xs"
-                  color={pub.logoUrl ? "gray.500" : "gray.700"}
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                  whiteSpace="nowrap"
-                >
-                  {pub.logoUrl ?? "—"}
-                </Text>
-
-                <HStack w="160px" justify="flex-end" gap={1}>
-                  <Button
-                    size="xs"
-                    variant="ghost"
-                    color="gray.400"
-                    _hover={{ color: "white" }}
-                    onClick={handleEdit}
+              <AdminTableRow key={pub.id} data-testid={`publisher-row-${pub.id}`}>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg" fontWeight="600">
+                    {pub.name}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg.muted" fontFamily="mono">
+                    {pub.slug}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell>
+                  <Text
+                    fontSize="xs"
+                    color={pub.logoUrl ? "fg.muted" : "fg.subtle"}
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    whiteSpace="nowrap"
                   >
-                    Edit
-                  </Button>
+                    {pub.logoUrl ?? "—"}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell align="right">
+                  <HStack justify="flex-end" gap={1}>
+                    <Button size="xs" variant="ghost" color="fg.muted" onClick={handleEdit}>
+                      Edit
+                    </Button>
 
-                  {confirmDelete === pub.id ? (
-                    <HStack gap={1}>
-                      <Button
-                        size="xs"
-                        colorPalette="red"
-                        loading={del.isPending}
-                        onClick={handleDeleteConfirm}
-                      >
-                        Confirm
-                      </Button>
+                    {confirmDelete === pub.id ? (
+                      <HStack gap={1}>
+                        <Button
+                          size="xs"
+                          colorPalette="danger"
+                          loading={del.isPending}
+                          onClick={handleDeleteConfirm}
+                        >
+                          Confirm
+                        </Button>
+                        <Button
+                          size="xs"
+                          variant="ghost"
+                          color="fg.subtle"
+                          onClick={handleDeleteCancel}
+                        >
+                          ✕
+                        </Button>
+                      </HStack>
+                    ) : (
                       <Button
                         size="xs"
                         variant="ghost"
-                        color="gray.500"
-                        onClick={handleDeleteCancel}
+                        colorPalette="danger"
+                        onClick={handleDeleteStart}
                       >
-                        ✕
+                        Delete
                       </Button>
-                    </HStack>
-                  ) : (
-                    <Button
-                      size="xs"
-                      variant="ghost"
-                      color="gray.600"
-                      _hover={{ color: "red.400" }}
-                      onClick={handleDeleteStart}
-                    >
-                      Delete
-                    </Button>
-                  )}
-                </HStack>
-              </Flex>
+                    )}
+                  </HStack>
+                </AdminTableCell>
+              </AdminTableRow>
             );
           })}
-        </Box>
+        </AdminTable>
       )}
-    </Box>
+    </PageContainer>
   );
 }

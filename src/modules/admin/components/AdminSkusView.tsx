@@ -3,20 +3,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  Input,
-  NativeSelectField,
-  NativeSelectRoot,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, HStack, Input, NativeSelect, Text, VStack } from "@chakra-ui/react";
+import { Tags } from "lucide-react";
 
+import { Card } from "@/components/Card";
+import { EmptyState } from "@/components/EmptyState";
 import { FormField } from "@/components/FormField";
+import { PageContainer } from "@/components/PageContainer";
 import { useCharacters, useGames, useProducts, useTeams } from "@/modules/catalog";
 
 import {
@@ -26,12 +19,21 @@ import {
   useSetSkuAvailability,
 } from "../hooks";
 
+import { AdminTable, AdminTableCell, AdminTableRow, type AdminColumn } from "./AdminTable";
 import { schema, DEFAULTS } from "./AdminSkusView.schema";
 
 import type { FormValues } from "./AdminSkusView.schema";
 import type { CreateSkuDto, Product, SKU, SkuFacet } from "@/api/types";
 
 type EnrichedSku = SKU & { productId: string; productName: string };
+
+const COLUMNS: AdminColumn[] = [
+  { key: "product", label: "Product" },
+  { key: "price", label: "Price" },
+  { key: "size", label: "Size" },
+  { key: "color", label: "Color" },
+  { key: "edition", label: "Edition" },
+];
 
 export function AdminSkusView(): React.JSX.Element {
   const { data: products = [], isLoading, error } = useProducts({ includeUnavailable: true });
@@ -107,21 +109,10 @@ export function AdminSkusView(): React.JSX.Element {
     cancel();
   }
 
-  const selectStyle = {
-    bg: "gray.800",
-    border: "1px solid",
-    borderColor: "gray.700",
-    borderRadius: "md",
-    color: "white",
-    px: 3,
-    py: 2,
-    fontSize: "sm",
-  } as const;
-
   return (
-    <Box p={8}>
+    <PageContainer size="lg" py={8}>
       <HStack mb={6} justify="space-between">
-        <Heading size="lg" color="white">
+        <Heading textStyle="h1" color="fg">
           SKUs
         </Heading>
 
@@ -133,11 +124,11 @@ export function AdminSkusView(): React.JSX.Element {
       </HStack>
 
       {showForm && (
-        <Box mb={6} p={5} bg="gray.900" borderRadius="lg" border="1px solid" borderColor="gray.700">
+        <Card mb={6} p={5}>
           <Text
             fontSize="xs"
             fontWeight="700"
-            color="gray.500"
+            color="fg.muted"
             textTransform="uppercase"
             letterSpacing="0.08em"
             mb={4}
@@ -148,64 +139,37 @@ export function AdminSkusView(): React.JSX.Element {
           <Box as="form" onSubmit={handleSubmit(onSubmit)}>
             <VStack gap={3} align="stretch">
               <FormField name="productId" label="Product" error={errors.productId}>
-                <NativeSelectRoot unstyled>
-                  <NativeSelectField id="productId" {...register("productId")} {...selectStyle}>
+                <NativeSelect.Root>
+                  <NativeSelect.Field id="productId" {...register("productId")}>
                     <option value="">Product…</option>
                     {products.map((p) => (
                       <option key={p.id} value={p.id}>
                         {p.name}
                       </option>
                     ))}
-                  </NativeSelectField>
-                </NativeSelectRoot>
+                  </NativeSelect.Field>
+                  <NativeSelect.Indicator />
+                </NativeSelect.Root>
               </FormField>
 
               <FormField name="price" label="Price" error={errors.price}>
-                <Input
-                  id="price"
-                  placeholder="Price (e.g. 29.99)"
-                  {...register("price")}
-                  bg="gray.800"
-                  borderColor="gray.700"
-                  color="white"
-                />
+                <Input id="price" placeholder="Price (e.g. 29.99)" {...register("price")} />
               </FormField>
 
               <FormField name="size" label="Size" error={errors.size}>
-                <Input
-                  id="size"
-                  placeholder="Size (optional, e.g. M)"
-                  {...register("size")}
-                  bg="gray.800"
-                  borderColor="gray.700"
-                  color="white"
-                />
+                <Input id="size" placeholder="Size (optional, e.g. M)" {...register("size")} />
               </FormField>
 
               <FormField name="color" label="Color" error={errors.color}>
-                <Input
-                  id="color"
-                  placeholder="Color (optional)"
-                  {...register("color")}
-                  bg="gray.800"
-                  borderColor="gray.700"
-                  color="white"
-                />
+                <Input id="color" placeholder="Color (optional)" {...register("color")} />
               </FormField>
 
               <FormField name="edition" label="Edition" error={errors.edition}>
-                <Input
-                  id="edition"
-                  placeholder="Edition (optional)"
-                  {...register("edition")}
-                  bg="gray.800"
-                  borderColor="gray.700"
-                  color="white"
-                />
+                <Input id="edition" placeholder="Edition (optional)" {...register("edition")} />
               </FormField>
 
               <HStack justify="flex-end">
-                <Button size="sm" variant="ghost" color="gray.400" onClick={cancel}>
+                <Button size="sm" variant="ghost" color="fg.muted" onClick={cancel}>
                   Cancel
                 </Button>
                 <Button size="sm" colorPalette="blue" type="submit" loading={isSubmitting}>
@@ -214,14 +178,14 @@ export function AdminSkusView(): React.JSX.Element {
               </HStack>
             </VStack>
           </Box>
-        </Box>
+        </Card>
       )}
 
-      <Box mb={6} p={4} bg="gray.900" borderRadius="lg" border="1px solid" borderColor="gray.700">
+      <Card mb={6} p={4}>
         <Text
           fontSize="xs"
           fontWeight="700"
-          color="gray.500"
+          color="fg.muted"
           textTransform="uppercase"
           letterSpacing="0.08em"
           mb={3}
@@ -230,25 +194,24 @@ export function AdminSkusView(): React.JSX.Element {
         </Text>
 
         <HStack gap={3}>
-          <NativeSelectRoot unstyled>
-            <NativeSelectField
+          <NativeSelect.Root>
+            <NativeSelect.Field
               aria-label="Facet"
               value={bulkFacet}
               onChange={handleBulkFacetChange}
-              {...selectStyle}
             >
               <option value="game">Game</option>
               <option value="team">Team</option>
               <option value="character">Character</option>
-            </NativeSelectField>
-          </NativeSelectRoot>
+            </NativeSelect.Field>
+            <NativeSelect.Indicator />
+          </NativeSelect.Root>
 
-          <NativeSelectRoot unstyled>
-            <NativeSelectField
+          <NativeSelect.Root>
+            <NativeSelect.Field
               aria-label="Facet value"
               value={bulkFacetId}
               onChange={handleBulkFacetIdChange}
-              {...selectStyle}
             >
               <option value="">Select…</option>
               {bulkFacetOptions.map((o) => (
@@ -256,20 +219,21 @@ export function AdminSkusView(): React.JSX.Element {
                   {o.name}
                 </option>
               ))}
-            </NativeSelectField>
-          </NativeSelectRoot>
+            </NativeSelect.Field>
+            <NativeSelect.Indicator />
+          </NativeSelect.Root>
 
-          <NativeSelectRoot unstyled>
-            <NativeSelectField
+          <NativeSelect.Root>
+            <NativeSelect.Field
               aria-label="Available"
               value={String(bulkAvailable)}
               onChange={handleBulkAvailableChange}
-              {...selectStyle}
             >
               <option value="true">Available</option>
               <option value="false">Unavailable</option>
-            </NativeSelectField>
-          </NativeSelectRoot>
+            </NativeSelect.Field>
+            <NativeSelect.Indicator />
+          </NativeSelect.Root>
 
           <Button
             size="sm"
@@ -281,114 +245,99 @@ export function AdminSkusView(): React.JSX.Element {
             Apply
           </Button>
         </HStack>
-      </Box>
+      </Card>
 
-      {isLoading && <Text color="gray.500">Loading…</Text>}
-      {error && <Text color="red.400">Failed to load SKUs.</Text>}
+      {isLoading && <Text color="fg.muted">Loading…</Text>}
+      {error && <Text color="danger.fg">Failed to load SKUs.</Text>}
 
-      {!isLoading && !error && allSkus.length === 0 && <Text color="gray.400">No SKUs yet.</Text>}
+      {!isLoading && !error && allSkus.length === 0 && (
+        <EmptyState title="No SKUs yet." icon={<Tags size={28} strokeWidth={1.5} />} />
+      )}
 
       {!isLoading && !error && allSkus.length > 0 && (
-        <Box border="1px solid" borderColor="gray.800" borderRadius="lg" overflow="hidden">
-          <Flex px={4} py={3} bg="gray.900" borderBottom="1px solid" borderColor="gray.800">
-            {(
-              [
-                ["Product", 2],
-                ["Price", 1],
-                ["Size", 1],
-                ["Color", 1],
-                ["Edition", 1],
-              ] as [string, number][]
-            ).map(([label, flex]) => (
-              <Text
-                key={label}
-                flex={flex}
-                fontSize="xs"
-                fontWeight="700"
-                color="gray.500"
-                textTransform="uppercase"
-                letterSpacing="0.08em"
-              >
-                {label}
-              </Text>
-            ))}
-            <Box w="200px" />
-          </Flex>
-
-          {allSkus.map((sku, i) => (
-            <Flex
-              key={sku.id}
-              data-testid={`sku-row-${sku.id}`}
-              px={4}
-              py={3.5}
-              align="center"
-              borderBottom={i < allSkus.length - 1 ? "1px solid" : "none"}
-              borderColor="gray.800"
-            >
-              <Text flex={2} fontSize="sm" color="white" fontWeight="600">
-                {sku.productName}
-              </Text>
-              <Text flex={1} fontSize="sm" color="gray.400">
-                ${sku.price.toFixed(2)}
-              </Text>
-              <Text flex={1} fontSize="sm" color="gray.400">
-                {sku.size ?? "—"}
-              </Text>
-              <Text flex={1} fontSize="sm" color="gray.400">
-                {sku.color ?? "—"}
-              </Text>
-              <Text flex={1} fontSize="sm" color="gray.400">
-                {sku.edition ?? "—"}
-              </Text>
-
-              <HStack w="200px" justify="flex-end" gap={1}>
-                <Button
-                  size="xs"
-                  colorPalette={sku.available ? "green" : "gray"}
-                  variant="subtle"
-                  loading={toggle.isPending && toggle.variables?.id === sku.id}
-                  onClick={() => void toggle.mutateAsync({ id: sku.id, available: !sku.available })}
-                >
-                  {sku.available ? "Available" : "Unavailable"}
-                </Button>
-
-                {confirmDelete === sku.id ? (
-                  <HStack gap={1}>
+        <AdminTable columns={COLUMNS} hasActionsColumn>
+          {allSkus.map((sku) => {
+            const handleToggle = () =>
+              void toggle.mutateAsync({ id: sku.id, available: !sku.available });
+            const handleDeleteStart = () => setConfirmDelete(sku.id);
+            const handleDeleteCancel = () => setConfirmDelete(null);
+            const handleDeleteConfirm = () =>
+              void del.mutateAsync(sku.id).then(() => setConfirmDelete(null));
+            return (
+              <AdminTableRow key={sku.id} data-testid={`sku-row-${sku.id}`}>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg" fontWeight="600">
+                    {sku.productName}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg.muted">
+                    ${sku.price.toFixed(2)}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg.muted">
+                    {sku.size ?? "—"}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg.muted">
+                    {sku.color ?? "—"}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell>
+                  <Text fontSize="sm" color="fg.muted">
+                    {sku.edition ?? "—"}
+                  </Text>
+                </AdminTableCell>
+                <AdminTableCell align="right">
+                  <HStack justify="flex-end" gap={1}>
                     <Button
                       size="xs"
-                      colorPalette="red"
-                      loading={del.isPending}
-                      onClick={() =>
-                        void del.mutateAsync(sku.id).then(() => setConfirmDelete(null))
-                      }
+                      colorPalette={sku.available ? "success" : "gray"}
+                      variant="subtle"
+                      loading={toggle.isPending && toggle.variables?.id === sku.id}
+                      onClick={handleToggle}
                     >
-                      Confirm
+                      {sku.available ? "Available" : "Unavailable"}
                     </Button>
-                    <Button
-                      size="xs"
-                      variant="ghost"
-                      color="gray.500"
-                      onClick={() => setConfirmDelete(null)}
-                    >
-                      ✕
-                    </Button>
+
+                    {confirmDelete === sku.id ? (
+                      <HStack gap={1}>
+                        <Button
+                          size="xs"
+                          colorPalette="danger"
+                          loading={del.isPending}
+                          onClick={handleDeleteConfirm}
+                        >
+                          Confirm
+                        </Button>
+                        <Button
+                          size="xs"
+                          variant="ghost"
+                          color="fg.subtle"
+                          onClick={handleDeleteCancel}
+                        >
+                          ✕
+                        </Button>
+                      </HStack>
+                    ) : (
+                      <Button
+                        size="xs"
+                        variant="ghost"
+                        colorPalette="danger"
+                        onClick={handleDeleteStart}
+                      >
+                        Delete
+                      </Button>
+                    )}
                   </HStack>
-                ) : (
-                  <Button
-                    size="xs"
-                    variant="ghost"
-                    color="gray.600"
-                    _hover={{ color: "red.400" }}
-                    onClick={() => setConfirmDelete(sku.id)}
-                  >
-                    Delete
-                  </Button>
-                )}
-              </HStack>
-            </Flex>
-          ))}
-        </Box>
+                </AdminTableCell>
+              </AdminTableRow>
+            );
+          })}
+        </AdminTable>
       )}
-    </Box>
+    </PageContainer>
   );
 }

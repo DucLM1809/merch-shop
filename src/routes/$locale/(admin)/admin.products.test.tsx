@@ -73,6 +73,24 @@ describe("/admin/products", () => {
     expect(screen.getByText("Azir Tee")).toBeInTheDocument();
   });
 
+  it("renders products as a real table with column headers and rows", async () => {
+    mockSignedIn(adminAccount);
+    server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope(twoProducts))));
+
+    renderRoute("/admin/products");
+
+    await screen.findByText("Jinx Hoodie");
+
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Name" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "ID" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Price" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Publisher" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Game" })).toBeInTheDocument();
+    // Header row + one row per product.
+    expect(screen.getAllByRole("row")).toHaveLength(1 + twoProducts.length);
+  });
+
   it("shows empty state when no products", async () => {
     mockSignedIn(adminAccount);
     server.use(http.get(`${BASE_URL}/products`, () => HttpResponse.json(envelope([]))));
