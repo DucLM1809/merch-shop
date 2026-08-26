@@ -176,10 +176,10 @@ export function AdminProductsView(): React.JSX.Element {
             >
               <VStack gap={4} align="stretch" p={6}>
                 <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr" }} gap={4}>
-                  <FormField name="name" label="Name" error={errors.name}>
+                  <FormField name="name" label="Name" error={errors.name} required>
                     <Input id="name" placeholder="Name" {...register("name")} />
                   </FormField>
-                  <FormField name="gameId" label="Game" error={errors.gameId}>
+                  <FormField name="gameId" label="Game" error={errors.gameId} required>
                     <NativeSelect.Root>
                       <NativeSelect.Field id="gameId" {...register("gameId")}>
                         <option value="">Game…</option>

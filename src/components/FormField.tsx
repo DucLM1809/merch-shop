@@ -11,14 +11,23 @@ type Props = {
   error?: FieldError | string;
   children: ReactNode;
   flex?: string;
+  required?: boolean;
 };
 
-export function FormField({ name, label, error, children, flex }: Props): JSX.Element {
+export function FormField({ name, label, error, children, flex, required }: Props): JSX.Element {
   const message = typeof error === "string" ? error : error?.message;
   return (
     <Box flex={flex}>
       {label && (
-        <Label htmlFor={name} fontSize="sm" color="fg.muted" display="block" mb={1}>
+        <Label
+          htmlFor={name}
+          fontSize="sm"
+          color="fg.muted"
+          display="block"
+          mb={1}
+          data-required={required || undefined}
+          {...(required && { _after: { content: '"*"', color: "red.500", ms: 1 } })}
+        >
           {label}
         </Label>
       )}

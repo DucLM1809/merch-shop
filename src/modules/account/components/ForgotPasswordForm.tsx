@@ -50,6 +50,7 @@ export function ForgotPasswordForm(): JSX.Element {
           name="email"
           label={t("fields.email")}
           error={errors.email && t("validation.email")}
+          required
         >
           <Input id="email" type="email" placeholder={t("fields.email")} {...register("email")} />
         </FormField>

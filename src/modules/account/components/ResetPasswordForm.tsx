@@ -66,6 +66,7 @@ export function ResetPasswordForm({ token }: Props): JSX.Element {
           name="newPassword"
           label={t("resetPassword.newPassword")}
           error={errors.newPassword && t("validation.passwordMin", { min: PASSWORD_MIN_LENGTH })}
+          required
         >
           <Input
             id="newPassword"

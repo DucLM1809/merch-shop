@@ -43,6 +43,7 @@ export function SignUpForm(): JSX.Element {
           name="email"
           label={t("fields.email")}
           error={errors.email && t("validation.email")}
+          required
         >
           <Input id="email" type="email" placeholder={t("fields.email")} {...register("email")} />
         </FormField>
@@ -51,6 +52,7 @@ export function SignUpForm(): JSX.Element {
           name="password"
           label={t("fields.password")}
           error={errors.password && t("validation.passwordMin", { min: PASSWORD_MIN_LENGTH })}
+          required
         >
           <Input
             id="password"

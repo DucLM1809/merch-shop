@@ -59,18 +59,35 @@ export function CheckoutFormView({
           name="fullName"
           label={t("shipping.fullName")}
           error={errorText(errors.fullName)}
+          required
         >
           <Input id="fullName" placeholder={t("shipping.fullName")} {...register("fullName")} />
         </FormField>
-        <FormField name="email" label={t("shipping.email")} error={errorText(errors.email)}>
+        <FormField
+          name="email"
+          label={t("shipping.email")}
+          error={errorText(errors.email)}
+          required
+        >
           <Input id="email" placeholder={t("shipping.email")} type="email" {...register("email")} />
         </FormField>
-        <FormField name="line1" label={t("shipping.address")} error={errorText(errors.line1)}>
+        <FormField
+          name="line1"
+          label={t("shipping.address")}
+          error={errorText(errors.line1)}
+          required
+        >
           <Input id="line1" placeholder={t("shipping.addressPlaceholder")} {...register("line1")} />
         </FormField>
         <Input placeholder={t("shipping.line2Placeholder")} {...register("line2")} />
         <Flex gap={3}>
-          <FormField name="city" label={t("shipping.city")} error={errorText(errors.city)} flex="1">
+          <FormField
+            name="city"
+            label={t("shipping.city")}
+            error={errorText(errors.city)}
+            flex="1"
+            required
+          >
             <Input id="city" placeholder={t("shipping.city")} {...register("city")} />
           </FormField>
           <FormField
@@ -78,6 +95,7 @@ export function CheckoutFormView({
             label={t("shipping.state")}
             error={errorText(errors.state)}
             flex="1"
+            required
           >
             <Input id="state" placeholder={t("shipping.state")} {...register("state")} />
           </FormField>
@@ -88,6 +106,7 @@ export function CheckoutFormView({
             label={t("shipping.postalCode")}
             error={errorText(errors.postalCode)}
             flex="1"
+            required
           >
             <Input
               id="postalCode"
@@ -100,6 +119,7 @@ export function CheckoutFormView({
             label={t("shipping.country")}
             error={errorText(errors.country)}
             flex="1"
+            required
           >
             <Input id="country" placeholder={t("shipping.country")} {...register("country")} />
           </FormField>

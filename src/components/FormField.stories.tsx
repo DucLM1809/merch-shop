@@ -43,3 +43,10 @@ export const WithFlex: Story = {
     flex: "1",
   },
 };
+
+export const Required: Story = {
+  args: {
+    label: "Full Name",
+    required: true,
+  },
+};

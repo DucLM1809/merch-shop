@@ -117,11 +117,11 @@ export function AdminGamesView(): React.JSX.Element {
             overflow="auto"
           >
             <VStack gap={3} align="stretch" maxW="xl" w="full" mx="auto" p={6}>
-              <FormField name="name" label="Name" error={errors.name}>
+              <FormField name="name" label="Name" error={errors.name} required>
                 <Input id="name" placeholder="Name" {...register("name")} />
               </FormField>
 
-              <FormField name="slug" label="Slug" error={errors.slug}>
+              <FormField name="slug" label="Slug" error={errors.slug} required>
                 <Input
                   id="slug"
                   placeholder="Slug (e.g. league-of-legends)"
@@ -129,7 +129,7 @@ export function AdminGamesView(): React.JSX.Element {
                 />
               </FormField>
 
-              <FormField name="publisherId" label="Publisher" error={errors.publisherId}>
+              <FormField name="publisherId" label="Publisher" error={errors.publisherId} required>
                 <NativeSelect.Root>
                   <NativeSelect.Field id="publisherId" {...register("publisherId")}>
                     <option value="">Publisher…</option>

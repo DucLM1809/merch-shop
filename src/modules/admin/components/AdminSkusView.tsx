@@ -143,7 +143,7 @@ export function AdminSkusView(): React.JSX.Element {
             overflow="auto"
           >
             <VStack gap={3} align="stretch" maxW="xl" w="full" mx="auto" p={6}>
-              <FormField name="productId" label="Product" error={errors.productId}>
+              <FormField name="productId" label="Product" error={errors.productId} required>
                 <NativeSelect.Root>
                   <NativeSelect.Field id="productId" {...register("productId")}>
                     <option value="">Product…</option>
@@ -157,7 +157,7 @@ export function AdminSkusView(): React.JSX.Element {
                 </NativeSelect.Root>
               </FormField>
 
-              <FormField name="price" label="Price" error={errors.price}>
+              <FormField name="price" label="Price" error={errors.price} required>
                 <Input id="price" placeholder="Price (e.g. 29.99)" {...register("price")} />
               </FormField>
 

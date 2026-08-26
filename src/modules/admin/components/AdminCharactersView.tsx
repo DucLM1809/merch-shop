@@ -117,15 +117,15 @@ export function AdminCharactersView(): React.JSX.Element {
             overflow="auto"
           >
             <VStack gap={3} align="stretch" maxW="xl" w="full" mx="auto" p={6}>
-              <FormField name="name" label="Name" error={errors.name}>
+              <FormField name="name" label="Name" error={errors.name} required>
                 <Input id="name" placeholder="Name" {...register("name")} />
               </FormField>
 
-              <FormField name="slug" label="Slug" error={errors.slug}>
+              <FormField name="slug" label="Slug" error={errors.slug} required>
                 <Input id="slug" placeholder="Slug (e.g. jinx)" {...register("slug")} />
               </FormField>
 
-              <FormField name="gameId" label="Game" error={errors.gameId}>
+              <FormField name="gameId" label="Game" error={errors.gameId} required>
                 <NativeSelect.Root>
                   <NativeSelect.Field id="gameId" {...register("gameId")}>
                     <option value="">Game…</option>

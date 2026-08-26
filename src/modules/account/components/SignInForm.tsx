@@ -45,6 +45,7 @@ export function SignInForm(): JSX.Element {
           name="email"
           label={t("fields.email")}
           error={errors.email && t("validation.email")}
+          required
         >
           <Input id="email" type="email" placeholder={t("fields.email")} {...register("email")} />
         </FormField>
@@ -53,6 +54,7 @@ export function SignInForm(): JSX.Element {
           name="password"
           label={t("fields.password")}
           error={errors.password && t("validation.password")}
+          required
         >
           <Input
             id="password"

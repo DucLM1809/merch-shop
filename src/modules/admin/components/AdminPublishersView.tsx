@@ -116,11 +116,11 @@ export function AdminPublishersView(): React.JSX.Element {
             overflow="auto"
           >
             <VStack gap={3} align="stretch" maxW="xl" w="full" mx="auto" p={6}>
-              <FormField name="name" label="Name" error={errors.name}>
+              <FormField name="name" label="Name" error={errors.name} required>
                 <Input id="name" placeholder="Name" {...register("name")} />
               </FormField>
 
-              <FormField name="slug" label="Slug" error={errors.slug}>
+              <FormField name="slug" label="Slug" error={errors.slug} required>
                 <Input id="slug" placeholder="Slug (e.g. riot-games)" {...register("slug")} />
               </FormField>
 
