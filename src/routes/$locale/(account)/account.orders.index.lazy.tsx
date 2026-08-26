@@ -5,11 +5,12 @@ import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import type { Order } from "@/api/types";
+import { Badge } from "@/components/Badge";
 import { useAuth } from "@/modules/account";
 import { useFormatDate } from "@/i18n/useFormatDate";
 import { useFormatPrice } from "@/i18n/useFormatPrice";
 import { useLocale } from "@/i18n/useLocale";
-import { ORDER_STATUS_COLOR, ORDER_STATUS_KEY, useOrders } from "@/modules/orders";
+import { ORDER_STATUS_KEY, ORDER_STATUS_TONE, OrdersLayout, useOrders } from "@/modules/orders";
 
 /** Stands in for an amount the order wire shape didn't carry. */
 const NO_AMOUNT = "—";
@@ -38,7 +39,7 @@ function AccountOrdersPage() {
   if (!isLoaded || !isSignedIn) return null;
 
   return (
-    <Box p={8} maxW="800px" mx="auto">
+    <OrdersLayout>
       <Heading mb={6}>{t("history.title")}</Heading>
       {orders.length === 0 ? (
         <Text color="gray.400">{t("history.empty")}</Text>
@@ -49,7 +50,7 @@ function AccountOrdersPage() {
           ))}
         </VStack>
       )}
-    </Box>
+    </OrdersLayout>
   );
 }
 
@@ -80,16 +81,9 @@ function OrderCard({ order }: { order: Order }) {
             {formatDate(order.createdAt)}
           </Text>
         </Box>
-        <Text
-          data-testid={`order-status-${order.id}`}
-          fontSize="xs"
-          fontWeight="700"
-          color={ORDER_STATUS_COLOR[order.status]}
-          textTransform="uppercase"
-          letterSpacing="0.06em"
-        >
-          {t(ORDER_STATUS_KEY[order.status])}
-        </Text>
+        <Box data-testid={`order-status-${order.id}`}>
+          <Badge tone={ORDER_STATUS_TONE[order.status]}>{t(ORDER_STATUS_KEY[order.status])}</Badge>
+        </Box>
       </Flex>
       <VStack mt={3} gap={1} align="stretch">
         {order.lines.map((line) => (

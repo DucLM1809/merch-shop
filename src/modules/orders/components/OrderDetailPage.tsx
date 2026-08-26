@@ -5,14 +5,16 @@ import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
+import { Badge } from "@/components/Badge";
 import { useFormatDate } from "@/i18n/useFormatDate";
 import { useFormatPrice } from "@/i18n/useFormatPrice";
 import { useLocale } from "@/i18n/useLocale";
 import { useAuth } from "@/modules/account";
 
 import { useOrder } from "../hooks";
-import { ORDER_STATUS_COLOR } from "../statusColor";
 import { ORDER_STATUS_KEY } from "../statusLabel";
+import { ORDER_STATUS_TONE } from "../statusTone";
+import { OrdersLayout } from "./OrdersLayout";
 
 /** Stands in for an amount the order wire shape didn't carry. */
 const NO_AMOUNT = "—";
@@ -44,22 +46,22 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
 
   if (isLoading) {
     return (
-      <Box p={8} maxW="800px" mx="auto">
+      <OrdersLayout>
         <Text color="gray.400">{t("loading")}</Text>
-      </Box>
+      </OrdersLayout>
     );
   }
 
   if (error || !order) {
     return (
-      <Box p={8} maxW="800px" mx="auto">
+      <OrdersLayout>
         <Text color="red.400">{t("notFound")}</Text>
-      </Box>
+      </OrdersLayout>
     );
   }
 
   return (
-    <Box p={8} maxW="800px" mx="auto">
+    <OrdersLayout>
       <Link to="/$locale/account/orders" params={{ locale }}>
         <Text color="gray.400" fontSize="sm" mb={4} _hover={{ color: "white" }}>
           ← {t("backToHistory")}
@@ -68,16 +70,9 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
 
       <Flex justify="space-between" align="start" mt={4} mb={1}>
         <Heading>{t("orderNumber", { id: order.id })}</Heading>
-        <Text
-          data-testid="order-status"
-          fontSize="sm"
-          fontWeight="700"
-          color={ORDER_STATUS_COLOR[order.status]}
-          textTransform="uppercase"
-          letterSpacing="0.06em"
-        >
-          {t(ORDER_STATUS_KEY[order.status])}
-        </Text>
+        <Box data-testid="order-status">
+          <Badge tone={ORDER_STATUS_TONE[order.status]}>{t(ORDER_STATUS_KEY[order.status])}</Badge>
+        </Box>
       </Flex>
 
       <Text color="gray.400" fontSize="sm" mb={6}>
@@ -162,6 +157,6 @@ export function OrderDetailPage({ orderId }: Props): JSX.Element | null {
           {order.total !== undefined ? formatPrice(order.total) : NO_AMOUNT}
         </Text>
       </Flex>
-    </Box>
+    </OrdersLayout>
   );
 }

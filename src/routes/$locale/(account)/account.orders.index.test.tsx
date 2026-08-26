@@ -49,7 +49,7 @@ const twoOrders: Order[] = [
       postalCode: "00000",
       country: "KR",
     },
-    status: "PENDING",
+    status: "CONFIRMED",
     lines: [
       {
         skuId: "lol-hoodie-m",
@@ -109,7 +109,12 @@ describe("/account/orders", () => {
 
     await screen.findByText(/ord-001/);
 
+    // Distinct statuses across rows confirm each badge is wired through the shared
+    // status-tone mapping rather than a single hardcoded label.
     expect(screen.getByTestId("order-status-ord-001")).toHaveTextContent(enUSOrders.status.PENDING);
+    expect(screen.getByTestId("order-status-ord-002")).toHaveTextContent(
+      enUSOrders.status.CONFIRMED
+    );
     expect(screen.getByRole("link", { name: orderNumber("ord-001") })).toHaveAttribute(
       "href",
       "/en-US/account/orders/ord-001"

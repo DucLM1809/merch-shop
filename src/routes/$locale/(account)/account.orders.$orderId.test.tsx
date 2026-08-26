@@ -57,6 +57,20 @@ describe("/account/orders/$orderId", () => {
     expect(priceText(119.98, "en-US")(total.textContent ?? "")).toBe(true);
   });
 
+  it("renders a different status via the shared status-tone mapping", async () => {
+    mockSignedIn(buyerAccount);
+    const cancelledOrder: Order = { ...testOrder, status: "CANCELLED" };
+    server.use(
+      http.get(`${BASE_URL}/orders/:id`, () => HttpResponse.json(envelope(cancelledOrder)))
+    );
+
+    renderRoute("/account/orders/ord-001");
+
+    expect(await screen.findByTestId("order-status")).toHaveTextContent(
+      enUSOrders.status.CANCELLED
+    );
+  });
+
   it("shows a not-found message for an unknown order id", async () => {
     mockSignedIn(buyerAccount);
     server.use(http.get(`${BASE_URL}/orders/:id`, () => new HttpResponse(null, { status: 404 })));
