@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { PackageX } from "lucide-react";
 
@@ -26,5 +27,21 @@ export const WithIcon: Story = {
   args: {
     description: "Try removing a filter to see more results.",
     icon: <PackageX size={32} strokeWidth={1.5} />,
+  },
+};
+
+export const WithAction: Story = {
+  args: {
+    description: "Try removing a filter to see more results.",
+    icon: <PackageX size={32} strokeWidth={1.5} />,
+    children: <Button size="sm">Clear filters</Button>,
+  },
+};
+
+export const Small: Story = {
+  args: {
+    size: "sm",
+    description: "This image failed to load.",
+    icon: <PackageX size={22} strokeWidth={1.5} />,
   },
 };
