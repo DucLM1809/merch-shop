@@ -61,9 +61,10 @@ export function usePublishers() {
   });
 }
 
-export function usePublisher(slug: string) {
+export function usePublisher(slug: string, enabled = true) {
   return useQuery({
     ...publisherQueryOptions(slug),
+    enabled,
     select: (r) => r.data,
   });
 }

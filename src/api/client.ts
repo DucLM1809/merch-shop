@@ -175,6 +175,7 @@ async function normalizeProduct(raw: RawProduct): Promise<Product> {
     name: raw.name,
     description: raw.description,
     imageUrl: raw.images?.[0],
+    images: raw.images,
     price: skus.length ? Math.min(...skus.map((s) => s.price)) : 0,
     publisherId: publisher?.id ?? "",
     publisherSlug: publisher?.slug ?? "",

@@ -137,6 +137,20 @@ describe("Product detail page", () => {
     });
   });
 
+  it("renders a navigable Publisher → Game → Product breadcrumb", async () => {
+    renderRoute(PRODUCT_ROUTE);
+
+    expect(await screen.findByRole("link", { name: "Riot Games" })).toHaveAttribute(
+      "href",
+      "/en-US/riot"
+    );
+    expect(await screen.findByRole("link", { name: "League of Legends" })).toHaveAttribute(
+      "href",
+      "/en-US/riot/league-of-legends"
+    );
+    expect(screen.queryByRole("link", { name: /faker jersey/i })).not.toBeInTheDocument();
+  });
+
   it("emits a BreadcrumbList JSON-LD ending with the product name", async () => {
     renderRoute(PRODUCT_ROUTE);
     await waitFor(() => {

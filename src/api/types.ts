@@ -70,6 +70,9 @@ export type Product = {
   name: string;
   description?: string;
   imageUrl?: string;
+  // Same `raw.images` array `imageUrl` already derives its first entry from —
+  // exposed in full so the Product page can render a thumbnail rail.
+  images?: string[];
   // The backend only prices SKUs, not products — this is the lowest SKU price,
   // used for catalog display before a variant is selected.
   price: number;
