@@ -1,5 +1,5 @@
 import { useEffect, useState, type JSX } from "react";
-import { Box, Flex, IconButton, Portal, Text } from "@chakra-ui/react";
+import { Box, Flex, IconButton, Portal, Separator, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,8 @@ import { ColorModeToggle } from "./ColorModeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { NavDrawerContent } from "./NavDrawerContent";
 import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart, User, UserPlus } from "lucide-react";
+
+const UTILITY_DIVIDER_HEIGHT = "18px";
 
 export function GlobalNav(): JSX.Element {
   const { t } = useTranslation();
@@ -80,16 +82,24 @@ export function GlobalNav(): JSX.Element {
             </Box>
           </Link>
 
-          <Flex align="center" gap={4} hideBelow="sm">
-            <ColorModeToggle
-              label={t("colorModeToggle.label")}
-              options={{
-                system: t("colorModeToggle.options.system"),
-                light: t("colorModeToggle.options.light"),
-                dark: t("colorModeToggle.options.dark"),
-              }}
+          <Flex align="center" gap={5} hideBelow="lg">
+            <Flex align="center" gap={3}>
+              <ColorModeToggle
+                label={t("colorModeToggle.label")}
+                options={{
+                  system: t("colorModeToggle.options.system"),
+                  light: t("colorModeToggle.options.light"),
+                  dark: t("colorModeToggle.options.dark"),
+                }}
+              />
+              <LocaleSwitcher />
+            </Flex>
+
+            <Separator
+              orientation="vertical"
+              h={UTILITY_DIVIDER_HEIGHT}
+              borderColor="border.muted"
             />
-            <LocaleSwitcher />
 
             {/* The badge digit renders inside the link, so its computed name would
                 otherwise read "1 Cart" — spell the count out instead. */}
@@ -116,31 +126,30 @@ export function GlobalNav(): JSX.Element {
             </Link>
 
             {isLoaded && isSignedIn ? (
-              <Flex align="center" gap={3}>
-                <Flex align="center" gap={2} color="fg.muted" data-testid="nav-account-menu">
+              <Flex align="center" gap={2}>
+                <Flex
+                  align="center"
+                  gap={2}
+                  color="fg.muted"
+                  maxW="10rem"
+                  data-testid="nav-account-menu"
+                >
                   <User size={16} strokeWidth={1.5} />
-                  <Text fontSize="sm" fontWeight="600">
+                  <Text fontSize="sm" fontWeight="600" truncate>
                     {userDisplayName}
                   </Text>
                 </Flex>
-                <Box
-                  as="button"
+                <IconButton
+                  aria-label={t("nav.signOut")}
                   onClick={handleSignOut}
-                  display="flex"
-                  alignItems="center"
-                  gap={1.5}
+                  variant="ghost"
+                  size="sm"
                   color="fg.subtle"
                   _hover={{ color: "fg" }}
-                  transition="color 0.15s"
-                  cursor="pointer"
-                  aria-label={t("nav.signOut")}
                   data-testid="nav-sign-out"
                 >
                   <LogOut size={16} strokeWidth={1.5} />
-                  <Text fontSize="sm" fontWeight="600">
-                    {t("nav.signOut")}
-                  </Text>
-                </Box>
+                </IconButton>
               </Flex>
             ) : isLoaded ? (
               <Flex align="center" gap={3} data-testid="nav-guest-links">
@@ -180,7 +189,7 @@ export function GlobalNav(): JSX.Element {
             aria-label={t("nav.openMenu")}
             variant="ghost"
             color="fg.muted"
-            hideFrom="sm"
+            hideFrom="lg"
             onClick={handleOpenDrawer}
             data-testid="mobile-menu-button"
           >
