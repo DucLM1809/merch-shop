@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query";
 import { useStore } from "@tanstack/react-store";
 
-import { client } from "@/api/client";
+import { client, refreshAccessToken } from "@/api/client";
 import type {
   ForgotPasswordDto,
   LoginDto,
@@ -100,9 +100,18 @@ export function useVerifyEmail(callbacks?: UseVerifyEmailCallbacks) {
 }
 
 export async function bootstrapAuth(queryClient: QueryClient): Promise<void> {
+  // Goes through the same deduped refreshAccessToken() the response interceptor uses,
+  // rather than posting /auth/refresh directly — otherwise this call can race a
+  // request that 401s during the same boot (e.g. the account/cart queries below) for
+  // the single-use refresh-token cookie (ADR-0015), and the loser spuriously signs out
+  // a session that actually just refreshed fine. See merch-shop e2e admin-nav flakiness.
+  const token = await refreshAccessToken();
+  if (!token) {
+    clearSession();
+    setLoaded(true);
+    return;
+  }
   try {
-    const res = await client.refresh();
-    setSession(res.data.accessToken);
     await queryClient.fetchQuery({
       queryKey: accountKeys.me(),
       queryFn: () => client.getMyAccount(),

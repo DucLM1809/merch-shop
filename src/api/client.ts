@@ -55,7 +55,16 @@ http.interceptors.request.use((config) => {
 
 let refreshPromise: Promise<string | null> | null = null;
 
-function refreshAccessToken(): Promise<string | null> {
+// Exported so bootstrapAuth can share this dedupe: a fresh page load races its own
+// refresh call against whichever other request 401s first (e.g. the account/cart
+// queries it kicks off), and /auth/refresh's single-use refresh-token cookie (ADR-0015)
+// means a second concurrent call spuriously fails and signs the user back out.
+//
+// Deliberately has no opinion on what a failed refresh means for the session — that's
+// caller-specific (a cold-boot bootstrap failing is a quiet guest state, an
+// already-authenticated request 401ing mid-session is a hard sign-out) — so it just
+// resolves to the token or null and leaves the side effect to whoever's asking.
+export function refreshAccessToken(): Promise<string | null> {
   if (!refreshPromise) {
     refreshPromise = http
       .post<ApiResponse<AuthTokenResponse>>("/auth/refresh")
@@ -64,10 +73,7 @@ function refreshAccessToken(): Promise<string | null> {
         setSession(token);
         return token;
       })
-      .catch(() => {
-        forceSignOut();
-        return null;
-      })
+      .catch(() => null)
       .finally(() => {
         refreshPromise = null;
       });
@@ -90,6 +96,7 @@ http.interceptors.response.use(
     config._retry = true;
     const token = await refreshAccessToken();
     if (!token) {
+      forceSignOut();
       return Promise.reject(error);
     }
     config.headers.Authorization = `Bearer ${token}`;
@@ -246,9 +253,6 @@ export const client = {
 
   login: (body: LoginDto): Promise<ApiResponse<AuthTokenResponse>> =>
     wrapEnvelope(http.post<ApiResponse<AuthTokenResponse>>("/auth/login", body)),
-
-  refresh: (): Promise<ApiResponse<AuthTokenResponse>> =>
-    wrapEnvelope(http.post<ApiResponse<AuthTokenResponse>>("/auth/refresh")),
 
   logout: (): Promise<void> => wrap(http.post("/auth/logout").then(() => undefined)),
 
