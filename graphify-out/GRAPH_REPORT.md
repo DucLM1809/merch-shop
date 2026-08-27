@@ -1,7 +1,7 @@
-# Graph Report - merch-shop  (2026-08-26)
+# Graph Report - merch-shop  (2026-08-27)
 
 ## Corpus Check
-- 268 files · ~64,750 words
+- 268 files · ~64,757 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3785b39d`
+- Built from commit: `1c90982e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -107,9 +107,9 @@
   src/modules/checkout/components/CheckoutPage.tsx → src/i18n/useLocale.ts
 
 ## Import Cycles
+- 5-file cycle: `src/modules/catalog/components/PublisherNav.tsx -> src/modules/catalog/components/PublisherNavView.tsx -> src/routeTree.gen.ts -> src/routes/$locale/(catalog)/$publisherSlug.$gameSlug.products.$productSlug.tsx -> src/modules/catalog/index.ts -> src/modules/catalog/components/PublisherNav.tsx`
 - 5-file cycle: `src/modules/catalog/components/PublisherNav.tsx -> src/modules/catalog/components/PublisherNavView.tsx -> src/routeTree.gen.ts -> src/routes/$locale/index.tsx -> src/modules/catalog/index.ts -> src/modules/catalog/components/PublisherNav.tsx`
 - 5-file cycle: `src/modules/catalog/components/PublisherNav.tsx -> src/modules/catalog/components/PublisherNavView.tsx -> src/routeTree.gen.ts -> src/routes/$locale/(catalog)/$publisherSlug.$gameSlug.index.tsx -> src/modules/catalog/index.ts -> src/modules/catalog/components/PublisherNav.tsx`
-- 5-file cycle: `src/modules/catalog/components/PublisherNav.tsx -> src/modules/catalog/components/PublisherNavView.tsx -> src/routeTree.gen.ts -> src/routes/$locale/(catalog)/$publisherSlug.$gameSlug.products.$productSlug.tsx -> src/modules/catalog/index.ts -> src/modules/catalog/components/PublisherNav.tsx`
 - 5-file cycle: `src/modules/catalog/components/PublisherNav.tsx -> src/modules/catalog/components/PublisherNavView.tsx -> src/routeTree.gen.ts -> src/routes/$locale/(catalog)/$publisherSlug.index.tsx -> src/modules/catalog/index.ts -> src/modules/catalog/components/PublisherNav.tsx`
 
 ## Communities (67 total, 19 thin omitted)
@@ -156,7 +156,7 @@ Nodes (42): ProductFilters, FacetFilter(), GamePage(), Props, ProductCatalog(), 
 
 ### Community 10 - "Facet Filter Stories"
 Cohesion: 0.15
-Nodes (22): Order, adminAccount, buyerAccount, mockSignedIn(), envelope(), resetAuthMockState(), toRawOrder(), server (+14 more)
+Nodes (23): Publisher, adminAccount, buyerAccount, mockSignedIn(), envelope(), resetAuthMockState(), server, testOrder (+15 more)
 
 ### Community 11 - "App Shell & Theme"
 Cohesion: 0.18
@@ -168,7 +168,7 @@ Nodes (19): CheckoutFormView(), Props, DEFAULTS, FormValues, schema, VALIDATION_
 
 ### Community 14 - "Community 14"
 Cohesion: 0.11
-Nodes (13): Route, Route, Route, Route, Route, Route, Route, Route (+5 more)
+Nodes (14): Route, Route, Route, Route, Route, Route, Route, Route (+6 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.18
@@ -259,8 +259,8 @@ Cohesion: 0.07
 Nodes (39): SyncCartItem, clearColorModeCookie(), readColorModeCookie(), writeColorModeCookie(), readColorModeHints, COLOR_MODES, ColorMode, ColorModeHints (+31 more)
 
 ### Community 42 - "Route"
-Cohesion: 0.25
-Nodes (6): Publisher, mockPublishers, twoGames, mockGames, mockPublishers, twoProducts
+Cohesion: 0.29
+Nodes (5): Order, toRawOrder(), twoOrders, adminOrdersEnvelope(), testOrders
 
 ### Community 43 - "Route"
 Cohesion: 0.25

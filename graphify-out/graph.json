@@ -395,8 +395,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "src_api_types_publisher",
-      "community": 42,
-      "community_name": "Route",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "publisher"
     },
     {
@@ -538,8 +538,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "src_api_types_order",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 42,
+      "community_name": "Route",
       "norm_label": "order"
     },
     {
@@ -1547,7 +1547,7 @@
       "label": "EmptyState()",
       "file_type": "code",
       "source_file": "src/components/EmptyState.tsx",
-      "source_location": "L27",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "src_components_emptystate_emptystate",
       "community": 62,
@@ -1745,7 +1745,7 @@
       "label": "GlobalNav()",
       "file_type": "code",
       "source_file": "src/components/GlobalNav.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "src_components_globalnav_globalnav",
       "community": 47,
@@ -3189,8 +3189,8 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "src_mocks_handlers_toraworder",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 42,
+      "community_name": "Route",
       "norm_label": "toraworder()"
     },
     {
@@ -7732,8 +7732,8 @@
       "source_location": "L319",
       "_origin": "ast",
       "id": "src_routetree_gen_fileroutesbyid",
-      "community": 65,
-      "community_name": "Route",
+      "community": 14,
+      "community_name": "Community 14",
       "norm_label": "fileroutesbyid"
     },
     {
@@ -8161,8 +8161,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_test",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 42,
+      "community_name": "Route",
       "norm_label": "account.orders.index.test.tsx"
     },
     {
@@ -8172,8 +8172,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_test_twoorders",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 42,
+      "community_name": "Route",
       "norm_label": "twoorders"
     },
     {
@@ -8183,8 +8183,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "src_routes_locale_account_account_orders_index_test_ordernumber",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 42,
+      "community_name": "Route",
       "norm_label": "ordernumber()"
     },
     {
@@ -8392,8 +8392,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_games_test",
-      "community": 42,
-      "community_name": "Route",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "admin.games.test.tsx"
     },
     {
@@ -8403,8 +8403,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_games_test_mockpublishers",
-      "community": 42,
-      "community_name": "Route",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "mockpublishers"
     },
     {
@@ -8414,8 +8414,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_games_test_twogames",
-      "community": 42,
-      "community_name": "Route",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "twogames"
     },
     {
@@ -8502,8 +8502,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_orders_test",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 42,
+      "community_name": "Route",
       "norm_label": "admin.orders.test.tsx"
     },
     {
@@ -8513,8 +8513,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_orders_test_testorders",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 42,
+      "community_name": "Route",
       "norm_label": "testorders"
     },
     {
@@ -8524,8 +8524,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_orders_test_adminordersenvelope",
-      "community": 10,
-      "community_name": "Facet Filter Stories",
+      "community": 42,
+      "community_name": "Route",
       "norm_label": "adminordersenvelope()"
     },
     {
@@ -8590,8 +8590,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_products_test",
-      "community": 42,
-      "community_name": "Route",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "admin.products.test.tsx"
     },
     {
@@ -8601,8 +8601,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_products_test_mockpublishers",
-      "community": 42,
-      "community_name": "Route",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "mockpublishers"
     },
     {
@@ -8612,8 +8612,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_products_test_mockgames",
-      "community": 42,
-      "community_name": "Route",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "mockgames"
     },
     {
@@ -8623,8 +8623,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_routes_locale_admin_admin_products_test_twoproducts",
-      "community": 42,
-      "community_name": "Route",
+      "community": 10,
+      "community_name": "Facet Filter Stories",
       "norm_label": "twoproducts"
     },
     {
@@ -9624,8 +9624,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_locale_catalog_publisherslug",
-      "community": 14,
-      "community_name": "Community 14",
+      "community": 65,
+      "community_name": "Route",
       "norm_label": "$publisherslug.tsx"
     },
     {
@@ -9635,8 +9635,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_routes_locale_catalog_publisherslug_route",
-      "community": 14,
-      "community_name": "Community 14",
+      "community": 65,
+      "community_name": "Route",
       "norm_label": "route"
     },
     {
@@ -9976,8 +9976,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_routes_root_route",
-      "community": 65,
-      "community_name": "Route",
+      "community": 14,
+      "community_name": "Community 14",
       "norm_label": "route"
     },
     {
@@ -16329,7 +16329,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/EmptyState.tsx",
-      "source_location": "L27",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_emptystate",
@@ -17261,7 +17261,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/GlobalNav.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_globalnav",
@@ -17430,7 +17430,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GlobalNav.tsx",
-      "source_location": "L21",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_globalnav_globalnav",
@@ -17442,7 +17442,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GlobalNav.tsx",
-      "source_location": "L19",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_globalnav_globalnav",
@@ -17454,7 +17454,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GlobalNav.tsx",
-      "source_location": "L18",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_globalnav_globalnav",
@@ -17466,7 +17466,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GlobalNav.tsx",
-      "source_location": "L20",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_globalnav_globalnav",
@@ -39757,5 +39757,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3785b39d2d5e1f115d805156af713880712042dd"
+  "built_at_commit": "1c90982ebe9a2f017834e7990fff7c455df48d43"
 }
