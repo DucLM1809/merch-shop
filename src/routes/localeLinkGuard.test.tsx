@@ -6,6 +6,7 @@ import { NavDrawerContent } from "@/components/NavDrawerContent";
 import { BASE_URL } from "@/api/client";
 import { SUPPORTED_LOCALES } from "@/i18n/locales";
 import enUSAccount from "@/i18n/locales/en-US/account.json";
+import enUSCatalog from "@/i18n/locales/en-US/catalog.json";
 import enUSCart from "@/i18n/locales/en-US/cart.json";
 import enUSCheckout from "@/i18n/locales/en-US/checkout.json";
 import { GamePage, PublisherPage } from "@/modules/catalog";
@@ -34,7 +35,7 @@ import { renderRoute, renderWithProviders } from "@/test-utils";
  * under `renderRoute`) — so components that build their own `to`/`params` pair are rendered
  * here with `renderWithProviders` instead, outside of any matched route, where a missing
  * `locale` has nothing to inherit and shows up as a broken href instead of a masked one.
- * Pages with no such extracted, props-driven component (home, the account/admin route
+ * Pages with no such extracted, props-driven component (home, shop, the account/admin route
  * files below) still go through `renderRoute` — real coverage for a wrong route id or a
  * stray raw `<a>`, just not for this specific inheritance-masked case.
  */
@@ -69,12 +70,19 @@ function assertRenderedInternalLinksAreLocalePrefixed(): void {
 }
 
 describe("locale link guard", () => {
-  it("catalog home", async () => {
+  it("home (landing page)", async () => {
     renderRoute("/");
-    await screen.findByText("Faker Jersey");
+    await screen.findByRole("heading", { level: 1, name: enUSCatalog.home.hero.headline });
     // Also waits out the guest/signed-in branch race in GlobalNav, which renders on
     // every page — checking it once here covers it everywhere else too.
     await screen.findByTestId("nav-guest-links");
+
+    assertRenderedInternalLinksAreLocalePrefixed();
+  });
+
+  it("shop", async () => {
+    renderRoute("/shop");
+    await screen.findByText("Faker Jersey");
 
     assertRenderedInternalLinksAreLocalePrefixed();
   });

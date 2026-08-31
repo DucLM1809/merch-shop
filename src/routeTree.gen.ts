@@ -21,6 +21,7 @@ import { Route as LocaleauthSignUpRouteImport } from './routes/$locale/(auth)/si
 import { Route as LocaleauthVerifyEmailRouteImport } from './routes/$locale/(auth)/verify-email'
 import { Route as LocalecartCartRouteImport } from './routes/$locale/(cart)/cart'
 import { Route as LocalecatalogPublisherSlugRouteImport } from './routes/$locale/(catalog)/$publisherSlug'
+import { Route as LocalecatalogShopRouteImport } from './routes/$locale/(catalog)/shop'
 import { Route as LocalecheckoutCheckoutRouteImport } from './routes/$locale/(checkout)/checkout'
 import { Route as LocalecheckoutOrderConfirmationRouteImport } from './routes/$locale/(checkout)/order-confirmation'
 import { Route as LocaleaccountAccountOrdersRouteImport } from './routes/$locale/(account)/account.orders'
@@ -116,6 +117,13 @@ const LocalecatalogPublisherSlugRoute =
       (d) => d.Route,
     ),
   )
+const LocalecatalogShopRoute = LocalecatalogShopRouteImport.update({
+  id: '/(catalog)/shop',
+  path: '/shop',
+  getParentRoute: () => LocaleRoute,
+} as any).lazy(() =>
+  import('./routes/$locale/(catalog)/shop.lazy').then((d) => d.Route),
+)
 const LocalecheckoutCheckoutRoute = LocalecheckoutCheckoutRouteImport.update({
   id: '/(checkout)/checkout',
   path: '/checkout',
@@ -273,6 +281,7 @@ export interface FileRoutesByFullPath {
   '/$locale/verify-email': typeof LocaleauthVerifyEmailRoute
   '/$locale/cart': typeof LocalecartCartRoute
   '/$locale/$publisherSlug': typeof LocalecatalogPublisherSlugRouteWithChildren
+  '/$locale/shop': typeof LocalecatalogShopRoute
   '/$locale/checkout': typeof LocalecheckoutCheckoutRoute
   '/$locale/order-confirmation': typeof LocalecheckoutOrderConfirmationRoute
   '/$locale/account/orders': typeof LocaleaccountAccountOrdersRouteWithChildren
@@ -301,6 +310,7 @@ export interface FileRoutesByTo {
   '/$locale/sign-up': typeof LocaleauthSignUpRoute
   '/$locale/verify-email': typeof LocaleauthVerifyEmailRoute
   '/$locale/cart': typeof LocalecartCartRoute
+  '/$locale/shop': typeof LocalecatalogShopRoute
   '/$locale/checkout': typeof LocalecheckoutCheckoutRoute
   '/$locale/order-confirmation': typeof LocalecheckoutOrderConfirmationRoute
   '/$locale/admin/characters': typeof LocaleadminAdminCharactersRoute
@@ -330,6 +340,7 @@ export interface FileRoutesById {
   '/$locale/(auth)/verify-email': typeof LocaleauthVerifyEmailRoute
   '/$locale/(cart)/cart': typeof LocalecartCartRoute
   '/$locale/(catalog)/$publisherSlug': typeof LocalecatalogPublisherSlugRouteWithChildren
+  '/$locale/(catalog)/shop': typeof LocalecatalogShopRoute
   '/$locale/(checkout)/checkout': typeof LocalecheckoutCheckoutRoute
   '/$locale/(checkout)/order-confirmation': typeof LocalecheckoutOrderConfirmationRoute
   '/$locale/(account)/account/orders': typeof LocaleaccountAccountOrdersRouteWithChildren
@@ -362,6 +373,7 @@ export interface FileRouteTypes {
     | '/$locale/verify-email'
     | '/$locale/cart'
     | '/$locale/$publisherSlug'
+    | '/$locale/shop'
     | '/$locale/checkout'
     | '/$locale/order-confirmation'
     | '/$locale/account/orders'
@@ -390,6 +402,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/verify-email'
     | '/$locale/cart'
+    | '/$locale/shop'
     | '/$locale/checkout'
     | '/$locale/order-confirmation'
     | '/$locale/admin/characters'
@@ -418,6 +431,7 @@ export interface FileRouteTypes {
     | '/$locale/(auth)/verify-email'
     | '/$locale/(cart)/cart'
     | '/$locale/(catalog)/$publisherSlug'
+    | '/$locale/(catalog)/shop'
     | '/$locale/(checkout)/checkout'
     | '/$locale/(checkout)/order-confirmation'
     | '/$locale/(account)/account/orders'
@@ -526,6 +540,13 @@ declare module '@tanstack/react-router' {
       path: '/$publisherSlug'
       fullPath: '/$locale/$publisherSlug'
       preLoaderRoute: typeof LocalecatalogPublisherSlugRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/(catalog)/shop': {
+      id: '/$locale/(catalog)/shop'
+      path: '/shop'
+      fullPath: '/$locale/shop'
+      preLoaderRoute: typeof LocalecatalogShopRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/(checkout)/checkout': {
@@ -728,6 +749,7 @@ interface LocaleRouteChildren {
   LocaleauthVerifyEmailRoute: typeof LocaleauthVerifyEmailRoute
   LocalecartCartRoute: typeof LocalecartCartRoute
   LocalecatalogPublisherSlugRoute: typeof LocalecatalogPublisherSlugRouteWithChildren
+  LocalecatalogShopRoute: typeof LocalecatalogShopRoute
   LocalecheckoutCheckoutRoute: typeof LocalecheckoutCheckoutRoute
   LocalecheckoutOrderConfirmationRoute: typeof LocalecheckoutOrderConfirmationRoute
   LocaleaccountAccountOrdersRoute: typeof LocaleaccountAccountOrdersRouteWithChildren
@@ -743,6 +765,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleauthVerifyEmailRoute: LocaleauthVerifyEmailRoute,
   LocalecartCartRoute: LocalecartCartRoute,
   LocalecatalogPublisherSlugRoute: LocalecatalogPublisherSlugRouteWithChildren,
+  LocalecatalogShopRoute: LocalecatalogShopRoute,
   LocalecheckoutCheckoutRoute: LocalecheckoutCheckoutRoute,
   LocalecheckoutOrderConfirmationRoute: LocalecheckoutOrderConfirmationRoute,
   LocaleaccountAccountOrdersRoute: LocaleaccountAccountOrdersRouteWithChildren,

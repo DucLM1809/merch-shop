@@ -1,7 +1,7 @@
 import { createSystem, defaultConfig, defineConfig, defineRecipe } from "@chakra-ui/react";
 
 // Design identity: a licensed esports-merch storefront. Dark is the default mode, but a
-// visitor can switch to light or follow their OS live (see `src/colorMode/`) — the class
+// visitor can switch to light or follow their OS live (see `./useColorMode.ts`) — the class
 // Chakra reads to pick a branch is set in `__root.tsx`. Both `_light` and `_dark` values
 // below are real, deliberately authored palettes, not filler.
 

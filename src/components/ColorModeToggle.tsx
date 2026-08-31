@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Flex, NativeSelect } from "@chakra-ui/react";
-import { useStore } from "@tanstack/react-store";
+import { useSelector } from "@tanstack/react-store";
 import { Monitor, Moon, Sun } from "lucide-react";
 
 import { colorModeStore, setPreferredColorMode, setSystemColorMode } from "../store/colorMode";
 
 import type { ChangeEvent, JSX } from "react";
-import type { ColorMode } from "../colorMode/resolveColorMode";
+import type { ColorMode } from "../theme/resolveColorMode";
 
 type ColorModeOption = "system" | ColorMode;
 
@@ -33,7 +33,7 @@ type ColorModeToggleProps = {
  * override so the page goes back to following the OS live (see `useColorMode`).
  */
 export function ColorModeToggle({ label, options }: ColorModeToggleProps): JSX.Element {
-  const preferred = useStore(colorModeStore, (state) => state.preferred);
+  const preferred = useSelector(colorModeStore, (state) => state.preferred);
 
   // The cookie lives in the request the server already has, but `colorModeStore` is a
   // plain module-level singleton with no per-request access to it (unlike the root

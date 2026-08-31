@@ -3,7 +3,7 @@ import type { Preview } from "@storybook/tanstack-react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import { I18nextProvider } from "react-i18next";
-import { system } from "../src/theme";
+import { system } from "../src/theme/system";
 import { getI18n } from "../src/i18n/i18n";
 import { DEFAULT_LOCALE } from "../src/i18n/locales";
 import { handlers } from "../src/mocks/handlers";

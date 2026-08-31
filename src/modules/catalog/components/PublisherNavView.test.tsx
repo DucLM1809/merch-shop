@@ -3,7 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { describe, it, expect } from "vitest";
 import { PublisherNavView } from "./PublisherNavView";
 import { mockPublishers as publishers } from "@/mocks/handlers";
-import { system } from "@/theme";
+import { system } from "@/theme/system";
 function renderView(props: Partial<React.ComponentProps<typeof PublisherNavView>> = {}) {
   const defaultProps: React.ComponentProps<typeof PublisherNavView> = {
     publishers: publishers,

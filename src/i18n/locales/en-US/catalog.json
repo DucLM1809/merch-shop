@@ -1,8 +1,37 @@
 {
-  "home": {
+  "shop": {
     "title": "All Products",
     "eyebrow": "Official Merch",
     "subtitle": "Gear from your favorite games and teams"
+  },
+  "home": {
+    "hero": {
+      "headline": "Wear what the pros wear.",
+      "subtitle": "Officially licensed jerseys and hoodies from League of Legends, Valorant, and CS2, worn by the teams you follow.",
+      "primaryCta": "Shop All Gear",
+      "secondaryCta": "Browse by Game",
+      "spotlightCta": "Shop this piece"
+    },
+    "games": {
+      "title": "Shop by Game",
+      "imageAlt": "{{game}} apparel"
+    },
+    "value": {
+      "licensedTitle": "Officially Licensed",
+      "licensedBody": "Every product here is authorized by the publisher that owns the game.",
+      "shippingTitle": "Ships Direct to You",
+      "shippingBody": "No warehouse holds your order. It ships straight from an official supplier to your door.",
+      "checkoutTitle": "Secure Checkout",
+      "checkoutBody": "Payments are processed securely through Stripe. Your card details never touch our servers."
+    },
+    "featured": {
+      "title": "Featured Drops",
+      "subtitle": "A rotating pick from every team and title we carry."
+    },
+    "manifesto": {
+      "body": "No knockoffs. Every jersey and hoodie here is signed off by the publisher and team it represents.",
+      "imageAlt": "Close-up of officially licensed team apparel"
+    }
   },
   "filters": {
     "game": "Game",

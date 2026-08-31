@@ -15,19 +15,19 @@ const FAKER_JERSEY_PRICE = 59.99;
 const PRODUCT_ROUTE = "/riot/league-of-legends/products/1";
 
 describe("Catalog chrome across locales", () => {
-  it("renders the home chrome in French under the fr-FR prefix", async () => {
-    renderRoute("/fr-FR");
+  it("renders the shop chrome in French under the fr-FR prefix", async () => {
+    renderRoute("/fr-FR/shop");
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: frFRCatalog.home.title })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: frFRCatalog.shop.title })).toBeInTheDocument();
     });
 
-    expect(screen.getByText(frFRCatalog.home.subtitle)).toBeInTheDocument();
-    expect(screen.queryByText(enUSCatalog.home.subtitle)).not.toBeInTheDocument();
+    expect(screen.getByText(frFRCatalog.shop.subtitle)).toBeInTheDocument();
+    expect(screen.queryByText(enUSCatalog.shop.subtitle)).not.toBeInTheDocument();
   });
 
   it("translates the facet filter group labels", async () => {
-    renderRoute("/fr-FR");
+    renderRoute("/fr-FR/shop");
 
     await waitFor(() => {
       expect(screen.getByText(frFRCatalog.filters.game)).toBeInTheDocument();
@@ -38,7 +38,7 @@ describe("Catalog chrome across locales", () => {
   });
 
   it("leaves product, team, and character names untranslated", async () => {
-    renderRoute("/fr-FR");
+    renderRoute("/fr-FR/shop");
 
     await waitFor(() => {
       expect(screen.getByText("Faker Jersey")).toBeInTheDocument();
@@ -49,14 +49,14 @@ describe("Catalog chrome across locales", () => {
   });
 
   it("uses en-GB's own spelling of the catalog chrome", async () => {
-    renderRoute("/en-GB");
+    renderRoute("/en-GB/shop");
 
     await waitFor(() => {
-      expect(screen.getByText(enGBCatalog.home.subtitle)).toBeInTheDocument();
+      expect(screen.getByText(enGBCatalog.shop.subtitle)).toBeInTheDocument();
     });
 
     // The one word that differs between the two English locales.
-    expect(enGBCatalog.home.subtitle).not.toBe(enUSCatalog.home.subtitle);
+    expect(enGBCatalog.shop.subtitle).not.toBe(enUSCatalog.shop.subtitle);
   });
 });
 
@@ -106,7 +106,7 @@ describe("Catalog prices across locales", () => {
   });
 
   it("formats catalog grid prices for the active locale", async () => {
-    renderRoute("/fr-FR");
+    renderRoute("/fr-FR/shop");
 
     await waitFor(() => {
       expect(screen.getByText("Faker Jersey")).toBeInTheDocument();

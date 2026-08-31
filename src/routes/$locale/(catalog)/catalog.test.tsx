@@ -7,16 +7,16 @@ import { BASE_URL } from "@/api/client";
 import { renderRoute } from "@/test-utils";
 
 describe("Catalog route loading/error states", () => {
-  describe("home / product catalog", () => {
+  describe("shop / product catalog", () => {
     it("shows skeleton while products are loading", () => {
       server.use(http.get(`${BASE_URL}/products`, () => new Promise(() => {})));
-      renderRoute("/");
+      renderRoute("/shop");
       expect(screen.queryByText("Faker Jersey")).not.toBeInTheDocument();
     });
 
     it("shows retry button when products API returns 500", async () => {
       server.use(http.get(`${BASE_URL}/products`, () => new HttpResponse(null, { status: 500 })));
-      renderRoute("/");
+      renderRoute("/shop");
       await waitFor(() =>
         expect(screen.getByRole("button", { name: /try again/i })).toBeInTheDocument()
       );

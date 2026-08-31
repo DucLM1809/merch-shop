@@ -15,7 +15,7 @@ import { DEFAULT_LOCALE } from "./i18n/locales";
 import { formatPrice } from "./i18n/formatPrice";
 import { getI18n } from "./i18n/i18n";
 import { routeTree } from "./routeTree.gen";
-import { system } from "./theme";
+import { system } from "./theme/system";
 
 import type { SupportedLocale } from "./i18n/locales";
 

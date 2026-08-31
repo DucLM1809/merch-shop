@@ -3,6 +3,7 @@
   "nav": {
     "openMenu": "Open navigation",
     "menuLabel": "Navigation menu",
+    "shop": "Shop",
     "cart": "Basket",
     "cartItems_one": "Basket, {{count}} item",
     "cartItems_other": "Basket, {{count}} items",

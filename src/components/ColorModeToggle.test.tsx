@@ -3,7 +3,7 @@ import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import enUS from "../i18n/locales/en-US/common.json";
-import { COLOR_MODE_COOKIE_NAME } from "../colorMode/colorModeCookie";
+import { COLOR_MODE_COOKIE_NAME } from "../theme/colorModeCookie";
 import { colorModeStore } from "../store/colorMode";
 import { renderRoute } from "../test-utils";
 

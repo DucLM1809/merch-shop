@@ -1,8 +1,10 @@
 import { type Locator, type Page } from "@playwright/test";
 
 // Product cards render identically (LinkOverlay over the card, accessible name =
-// product name) on the homepage, publisher page, and game page, so one page object
-// covers all three instead of duplicating card locators per route.
+// product name) on the shop page, publisher page, and game page, so one page object
+// covers all three instead of duplicating card locators per route. The homepage's
+// "Featured Drops" rail uses the same card markup too, but its "Shop by Game" tiles
+// don't — those are plain Cards, not `role="article"`, so they never match here.
 export class CatalogPage {
   readonly page: Page;
   readonly productCards: Locator;

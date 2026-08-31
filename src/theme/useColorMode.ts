@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useStore } from "@tanstack/react-store";
+import { useSelector } from "@tanstack/react-store";
 
 import { colorModeStore, setPreferredColorMode, setSystemColorMode } from "../store/colorMode";
 
@@ -24,7 +24,7 @@ type UseColorModeResult = {
  * not a one-time check, per this app's System toggle behavior.
  */
 export function useColorMode(ssrColorMode: ColorMode): UseColorModeResult {
-  const preferred = useStore(colorModeStore, (state) => state.preferred);
+  const preferred = useSelector(colorModeStore, (state) => state.preferred);
   const [osColorMode, setOsColorMode] = useState<ColorMode>(ssrColorMode);
 
   useEffect(() => {

@@ -85,6 +85,7 @@ function ProductCard({ product, renderLink }: ProductCardProps) {
             src={product.imageUrl}
             width={CARD_IMAGE_WIDTH}
             alt={product.name}
+            fallbackLabel={t("product.noImage")}
             h="full"
             w="full"
             objectFit="cover"

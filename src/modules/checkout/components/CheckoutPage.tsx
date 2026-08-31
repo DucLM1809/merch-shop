@@ -5,7 +5,7 @@ import { Box } from "@chakra-ui/react";
 import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "@tanstack/react-router";
-import { useStore } from "@tanstack/react-store";
+import { useSelector } from "@tanstack/react-store";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +27,7 @@ function CheckoutForm() {
   const locale = useLocale();
   const stripe = useStripe();
   const elements = useElements();
-  const items = useStore(cartStore, (s) => s.items);
+  const items = useSelector(cartStore, (s) => s.items);
   const [paymentError, setPaymentError] = useState<string | null>(null);
 
   const {

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query";
-import { useStore } from "@tanstack/react-store";
+import { useSelector } from "@tanstack/react-store";
 
 import { client, refreshAccessToken } from "@/api/client";
 import type {
@@ -37,8 +37,8 @@ export function useDeleteAccount() {
 }
 
 export function useAuth() {
-  const isLoaded = useStore(authStore, (s) => s.isLoaded);
-  const isSignedIn = useStore(authStore, (s) => s.isSignedIn);
+  const isLoaded = useSelector(authStore, (s) => s.isLoaded);
+  const isSignedIn = useSelector(authStore, (s) => s.isSignedIn);
   return { isLoaded, isSignedIn };
 }
 

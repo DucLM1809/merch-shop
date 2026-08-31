@@ -96,6 +96,7 @@ function ProductGallery({ images, name }: { images: string[]; name: string }) {
           width={HERO_IMAGE_WIDTH}
           eager
           alt={name}
+          fallbackLabel={t("product.noImage")}
           h="full"
           w="full"
           objectFit="cover"

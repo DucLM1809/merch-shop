@@ -14,7 +14,7 @@ import frFR from "../i18n/locales/fr-FR/common.json";
 import { routeTree } from "../routeTree.gen";
 import { clearCart, setItems } from "../store/cart";
 import { renderRoute, expectNoA11yViolations } from "../test-utils";
-import { system } from "../theme";
+import { system } from "../theme/system";
 import { GlobalNav } from "./GlobalNav";
 
 const seededItem = {

@@ -135,6 +135,18 @@ export function NavDrawerContent({
         </Flex>
 
         <Flex direction="column" gap={6} pt={6} px={4} pb={4} flex={1} overflowY="auto">
+          <Link to="/$locale/shop" params={{ locale }} onClick={onClose}>
+            <Text
+              fontSize="sm"
+              fontWeight="600"
+              color="fg.muted"
+              _hover={{ color: "fg" }}
+              transition="color 0.15s"
+            >
+              {t("nav.shop")}
+            </Text>
+          </Link>
+
           <Link to="/$locale/cart" params={{ locale }} onClick={onClose}>
             <Flex
               align="center"

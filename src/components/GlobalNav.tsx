@@ -1,7 +1,7 @@
 import { useEffect, useState, type JSX } from "react";
 import { Box, Flex, IconButton, Portal, Separator, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
-import { useStore } from "@tanstack/react-store";
+import { useSelector } from "@tanstack/react-store";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "../i18n/useLocale";
 import { useAccount, useAuth, useLogout } from "../modules/account";
@@ -16,7 +16,7 @@ const UTILITY_DIVIDER_HEIGHT = "18px";
 
 export function GlobalNav(): JSX.Element {
   const { t } = useTranslation();
-  const itemCount = useStore(cartStore, (s) => s.items.reduce((n, i) => n + i.quantity, 0));
+  const itemCount = useSelector(cartStore, (s) => s.items.reduce((n, i) => n + i.quantity, 0));
   const { isSignedIn, isLoaded } = useAuth();
   const { data: account } = useAccount(isSignedIn);
   const logout = useLogout();
@@ -83,6 +83,18 @@ export function GlobalNav(): JSX.Element {
           </Link>
 
           <Flex align="center" gap={5} hideBelow="lg">
+            <Link to="/$locale/shop" params={{ locale }}>
+              <Text
+                fontSize="sm"
+                fontWeight="600"
+                color="fg.muted"
+                _hover={{ color: "fg" }}
+                transition="color 0.15s"
+              >
+                {t("nav.shop")}
+              </Text>
+            </Link>
+
             <Flex align="center" gap={3}>
               <ColorModeToggle
                 label={t("colorModeToggle.label")}

@@ -1,27 +1,33 @@
 import type { JSX } from "react";
 
-import { useNavigate, useSearch } from "@tanstack/react-router";
-
 import { FacetFilterView } from "./FacetFilterView";
 
 import { usePublishers, useTeams, useCharacters } from "../hooks";
 
-export function FacetFilter(): JSX.Element {
-  const search = useSearch({ from: "/$locale/" });
-  const navigate = useNavigate({ from: "/$locale/" });
+export type FacetFilterSearch = {
+  game: string | undefined;
+  team: string | undefined;
+  character: string | undefined;
+};
 
+type FacetFilterProps = {
+  search: FacetFilterSearch;
+  onFilterChange: (key: "game" | "team" | "character", value: string | undefined) => void;
+};
+
+// Takes the shop route's search state and setter as props rather than reading `useSearch`/
+// `useNavigate` itself: this route lives inside the `(catalog)` pathless group, and the
+// group-nested route's static `fullPath` type doesn't line up with its runtime `fullPath`
+// in this TanStack Router/router-plugin version combo (the admin route shows the same
+// mismatch), so a string-keyed `from` here can't type-check. The owning route already
+// calls `Route.useSearch()`/`Route.useNavigate()` against its own bound `Route` object,
+// which sidesteps the mismatch entirely.
+export function FacetFilter({ search, onFilterChange }: FacetFilterProps): JSX.Element {
   const { data: publishers = [] } = usePublishers();
   const { data: teams = [] } = useTeams();
   const { data: characters = [] } = useCharacters();
 
   const games = publishers.flatMap((p) => p.games);
-
-  function setParam(key: "game" | "team" | "character", value: string | undefined): void {
-    navigate({
-      search: (prev) => ({ ...prev, [key]: value }),
-      replace: true,
-    });
-  }
 
   return (
     <FacetFilterView
@@ -31,9 +37,9 @@ export function FacetFilter(): JSX.Element {
       selectedGame={search.game}
       selectedTeam={search.team}
       selectedCharacter={search.character}
-      onGameChange={(v) => setParam("game", v)}
-      onTeamChange={(v) => setParam("team", v)}
-      onCharacterChange={(v) => setParam("character", v)}
+      onGameChange={(v) => onFilterChange("game", v)}
+      onTeamChange={(v) => onFilterChange("team", v)}
+      onCharacterChange={(v) => onFilterChange("character", v)}
     />
   );
 }

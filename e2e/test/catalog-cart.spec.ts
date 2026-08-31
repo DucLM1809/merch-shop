@@ -18,13 +18,15 @@ test("browsing the catalog and adding an item to the cart", async ({
   // This is a multi-step journey, so each leg below is its own Act/Assert pair,
   // chained off the state the previous leg's Assert just confirmed.
 
-  // Arrange: homepage renders the catalog without errors.
-  await page.goto("/en-US/");
-  const homepageProductLink = catalog.firstProductLink();
-  await expect(homepageProductLink).toBeVisible();
+  // Arrange: the shop page renders the catalog without errors. (The homepage is now a
+  // marketing landing page — its "Shop by Game" tiles aren't product cards, and its
+  // "Featured Drops" rail is a curated subset, not the full catalog this journey needs.)
+  await page.goto("/en-US/shop");
+  const shopProductLink = catalog.firstProductLink();
+  await expect(shopProductLink).toBeVisible();
 
-  const productHref = await homepageProductLink.getAttribute("href");
-  if (!productHref) throw new Error("Homepage product card has no link.");
+  const productHref = await shopProductLink.getAttribute("href");
+  if (!productHref) throw new Error("Shop page product card has no link.");
   const { publisherSlug, gameSlug } = parsePublisherAndGameSlug(productHref);
 
   // Act: publisher page → game page, via the sidebar nav (real clicks, not deep-linking).

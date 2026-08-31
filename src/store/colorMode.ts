@@ -4,10 +4,10 @@ import {
   clearColorModeCookie,
   readColorModeCookie,
   writeColorModeCookie,
-} from "../colorMode/colorModeCookie";
-import { isColorMode } from "../colorMode/resolveColorMode";
+} from "../theme/colorModeCookie";
+import { isColorMode } from "../theme/resolveColorMode";
 
-import type { ColorMode } from "../colorMode/resolveColorMode";
+import type { ColorMode } from "../theme/resolveColorMode";
 
 type ColorModeState = {
   /** A mode the visitor explicitly chose, or `undefined` to follow the OS live ("System"). */
