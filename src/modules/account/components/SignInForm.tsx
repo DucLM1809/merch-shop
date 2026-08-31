@@ -37,7 +37,7 @@ export function SignInForm(): JSX.Element {
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} w="full" maxW="360px">
       <VStack gap={4} align="stretch">
-        <Heading size="lg" color="fg" fontWeight="800">
+        <Heading as="h1" textStyle="h1" color="fg">
           {t("signIn.title")}
         </Heading>
 
@@ -80,6 +80,26 @@ export function SignInForm(): JSX.Element {
               {t("signIn.forgotPassword")}
             </Text>
           </Link>
+        </Flex>
+
+        {/* The page hides the global nav, so without this the only route to registration
+            from a sign-in page is the browser's back button. Underline rather than a color
+            marks the link: `fg` on `bg` is the one pairing that clears AA in both modes. */}
+        <Flex justify="center" pt={2} borderTopWidth="1px" borderColor="border.muted">
+          <Text fontSize="sm" color="fg.muted">
+            {t("signIn.noAccount")}{" "}
+            <Link to="/$locale/sign-up" params={{ locale }}>
+              <Text
+                as="span"
+                color="fg"
+                fontWeight="600"
+                textDecoration="underline"
+                textUnderlineOffset="3px"
+              >
+                {t("signIn.signUpLink")}
+              </Text>
+            </Link>
+          </Text>
         </Flex>
       </VStack>
     </Box>

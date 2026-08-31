@@ -42,7 +42,7 @@ export function ResetPasswordForm({ token }: Props): JSX.Element {
   if (resetPassword.isSuccess) {
     return (
       <Box w="full" maxW="360px" textAlign="center">
-        <Heading size="lg" color="fg" fontWeight="800" mb={3}>
+        <Heading as="h1" textStyle="h1" color="fg" mb={3}>
           {t("resetPassword.doneTitle")}
         </Heading>
         <Text color="fg.muted" mb={4} data-testid="reset-password-success">
@@ -58,7 +58,7 @@ export function ResetPasswordForm({ token }: Props): JSX.Element {
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} w="full" maxW="360px">
       <VStack gap={4} align="stretch">
-        <Heading size="lg" color="fg" fontWeight="800">
+        <Heading as="h1" textStyle="h1" color="fg">
           {t("resetPassword.title")}
         </Heading>
 

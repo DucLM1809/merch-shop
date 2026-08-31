@@ -1,15 +1,14 @@
 import { useEffect, useState, type JSX } from "react";
 import { Box, Button, Flex, IconButton, Portal, Separator, Text } from "@chakra-ui/react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useSelector } from "@tanstack/react-store";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "../i18n/useLocale";
 import { useAccount, useAuth, useLogout } from "../modules/account";
 import { cartStore } from "../store/cart";
 import { Badge } from "./Badge";
-import { ColorModeToggle } from "./ColorModeToggle";
-import { LocaleSwitcher } from "./LocaleSwitcher";
 import { NavDrawerContent } from "./NavDrawerContent";
+import { UtilityShelf } from "./UtilityShelf";
 import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart } from "lucide-react";
 
 const UTILITY_DIVIDER_HEIGHT = "18px";
@@ -23,7 +22,7 @@ const NAV_HEIGHT = "64px";
 // elsewhere, at 16/18/20px) was a large part of why the row read as lumpy.
 const ICON_STROKE = 1.75;
 
-export function GlobalNav(): JSX.Element {
+export function GlobalNav(): JSX.Element | null {
   const { t } = useTranslation();
   const itemCount = useSelector(cartStore, (s) => s.items.reduce((n, i) => n + i.quantity, 0));
   const { isSignedIn, isLoaded } = useAuth();
@@ -32,12 +31,25 @@ export function GlobalNav(): JSX.Element {
   const locale = useLocale();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // The (auth) routes render a full-viewport takeover (see `AuthPageView`): a brand panel
+  // beside the form, carrying its own mark back to the shop and its own preferences shelf.
+  // A second bar of storefront chrome above that competes with the single action those pages
+  // have. Matching the route group rather than listing paths keeps every current and future
+  // (auth) route covered from one place.
+  const isAuthRoute = useRouterState({
+    select: (state) => state.matches.some((match) => match.routeId.includes("/(auth)/")),
+  });
+
   // The guest cart lives in sessionStorage, which the server can't see — it always
   // renders a count of 0. The client's first paint must match that, or React discards
   // and regenerates the tree on hydration; the real count only appears once mounted.
   const [hasMounted, setHasMounted] = useState(false);
   useEffect(() => setHasMounted(true), []);
   const displayItemCount = hasMounted ? itemCount : 0;
+
+  // After every hook above, so the bar mounting and unmounting across a navigation into or
+  // out of the auth takeover never reorders them.
+  if (isAuthRoute) return null;
 
   const handleSignOut = () => logout.mutate();
   const handleOpenDrawer = () => setDrawerOpen(true);
@@ -112,22 +124,7 @@ export function GlobalNav(): JSX.Element {
                 them synchronously), so instead of hiding them they're grouped into one
                 recessed shelf that reads as a single settings object rather than as two
                 more peers of the cart and account controls beside them. */}
-            <Flex align="center" gap={2} px={2.5} py={1} borderRadius="lg" bg="bg.muted">
-              <ColorModeToggle
-                label={t("colorModeToggle.label")}
-                options={{
-                  system: t("colorModeToggle.options.system"),
-                  light: t("colorModeToggle.options.light"),
-                  dark: t("colorModeToggle.options.dark"),
-                }}
-              />
-              <Separator
-                orientation="vertical"
-                h={UTILITY_DIVIDER_HEIGHT}
-                borderColor="border.emphasized"
-              />
-              <LocaleSwitcher />
-            </Flex>
+            <UtilityShelf />
 
             {/* Commerce. The badge digit renders inside the link, so its computed name would
                 otherwise read "1 Cart" — spell the count out instead. */}

@@ -15,6 +15,19 @@ describe("/sign-up route", () => {
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   });
 
+  // Mirrors the sign-up link on /sign-in: the takeover hides the global nav, so each auth
+  // page has to carry the route to the other one itself.
+  it("offers a route back to sign-in, which the hidden nav no longer provides", async () => {
+    renderRoute("/sign-up");
+
+    await screen.findByRole("heading", { name: /sign up/i });
+
+    expect(screen.getByRole("link", { name: enUSAccount.signUp.signInLink })).toHaveAttribute(
+      "href",
+      "/en-US/sign-in"
+    );
+  });
+
   it("registers, auto-signs-in, and redirects to / on valid input", async () => {
     const user = userEvent.setup();
     const { router } = renderRoute("/sign-up");

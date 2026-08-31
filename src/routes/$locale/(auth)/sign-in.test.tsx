@@ -46,6 +46,29 @@ describe("/sign-in route", () => {
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   });
 
+  // The auth pages are a full-viewport takeover: the brand panel beside the form carries
+  // its own mark back to the shop and its own preferences shelf, so the storefront bar
+  // would be a second set of chrome competing with the page's one action.
+  it("hides the global nav so the takeover owns the viewport", async () => {
+    renderRoute("/sign-in");
+
+    await screen.findByRole("heading", { name: /sign in/i });
+
+    expect(screen.queryByTestId("nav-guest-links")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("mobile-menu-button")).not.toBeInTheDocument();
+  });
+
+  it("offers a route to registration, which the hidden nav no longer provides", async () => {
+    renderRoute("/sign-in");
+
+    await screen.findByRole("heading", { name: /sign in/i });
+
+    expect(screen.getByRole("link", { name: enUSAccount.signIn.signUpLink })).toHaveAttribute(
+      "href",
+      "/en-US/sign-up"
+    );
+  });
+
   it("signs in and redirects to / on valid credentials", async () => {
     const user = userEvent.setup();
     const { router } = renderRoute("/sign-in");

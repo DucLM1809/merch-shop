@@ -8,15 +8,23 @@ export interface GeneratedResources {
       password: "Password";
       passwordPlaceholder: "Password (min. {{min}} characters)";
     };
+    panel: {
+      headline: "One account. Every drop.";
+      body: "Track your orders, save your sizes, and get first access to limited team kits.";
+    };
     signIn: {
       title: "Sign in";
       submit: "Sign in";
       forgotPassword: "Forgot password?";
+      noAccount: "No account yet?";
+      signUpLink: "Sign up";
       failed: "Invalid email or password";
     };
     signUp: {
       title: "Sign up";
       submit: "Sign up";
+      haveAccount: "Already have an account?";
+      signInLink: "Sign in";
       failed: "Could not create account. The email may already be in use.";
     };
     forgotPassword: {
