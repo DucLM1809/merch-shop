@@ -91,6 +91,7 @@ export type Game = {
   slug: string;
   name: string;
   publisherId: string;
+  imageUrl?: string;
 };
 
 export type CreateGameDto = {

@@ -56,6 +56,25 @@ describe("Landing page", () => {
     );
   });
 
+  it("paints a shop-by-game tile with the game's own imageUrl from the API", async () => {
+    renderRoute("/");
+
+    const tile = await screen.findByRole("link", { name: "League of Legends" });
+
+    expect(tile.querySelector("img")).toHaveAttribute(
+      "src",
+      "https://images.unsplash.com/photo-lol-cover?w=480&q=75"
+    );
+  });
+
+  it("renders a shop-by-game tile with no image when the game has no imageUrl", async () => {
+    renderRoute("/");
+
+    const tile = await screen.findByRole("link", { name: "CS2" });
+
+    expect(tile.querySelector("img")).toBeNull();
+  });
+
   it("renders the value proposition strip", async () => {
     renderRoute("/");
 

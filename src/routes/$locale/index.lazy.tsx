@@ -27,13 +27,14 @@ export const Route = createLazyFileRoute("/$locale/")({
   component: HomePage,
 });
 
-const GAME_TILE_SEED: Record<string, string> = {
-  "league-of-legends": "merch-league-of-legends",
-  valorant: "merch-valorant",
-  cs2: "merch-cs2",
-};
+// Flagship titles float to the front of the rail; `cs2` is the mock slug, `counter-strike-2`
+// the real backend's. Any title not listed here still renders, just after these.
+const GAME_ORDER = ["league-of-legends", "valorant", "counter-strike-2", "cs2"];
 
-const GAME_ORDER = ["league-of-legends", "valorant", "cs2"];
+// Site-wide editorial photo for the manifesto band — no catalog entity backs it, so it is
+// pinned here rather than synthesized. Hosted on the same CDN as the catalog imagery.
+const MANIFESTO_IMAGE_URL =
+  "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1600&q=75&auto=format&fit=crop";
 
 type FeaturedGame = Game & { publisherName: string; accentColor: string | undefined };
 
@@ -352,17 +353,20 @@ function GameChip({ game, locale }: { game: FeaturedGame; locale: string }): JSX
         {/* Decorative texture behind the name, not a subject in its own right, so it is
             hidden from the accessibility tree and the link is named by its label alone.
             Inset past the edges because un-skewing inside a skewed frame would otherwise
-            leave the two acute corners uncovered. */}
-        <Box position="absolute" inset="-14% -20%" transform={CHIP_UNSKEW} aria-hidden>
-          <OptimizedImage
-            src={`https://picsum.photos/seed/${GAME_TILE_SEED[game.slug] ?? game.slug}/480/280`}
-            alt=""
-            width={480}
-            h="full"
-            w="full"
-            objectFit="cover"
-          />
-        </Box>
+            leave the two acute corners uncovered. Absent for a game with no imageUrl —
+            the inked `bg` and scrim already carry the chip on their own. */}
+        {game.imageUrl && (
+          <Box position="absolute" inset="-14% -20%" transform={CHIP_UNSKEW} aria-hidden>
+            <OptimizedImage
+              src={game.imageUrl}
+              alt=""
+              width={480}
+              h="full"
+              w="full"
+              objectFit="cover"
+            />
+          </Box>
+        )}
 
         <Box position="absolute" inset={0} bgImage={CHIP_SCRIM} aria-hidden />
 
@@ -555,7 +559,7 @@ function ManifestoBand(): JSX.Element {
     >
       <Box position="absolute" inset={0} aria-hidden>
         <OptimizedImage
-          src="https://picsum.photos/seed/merch-shop-stitch/1600/720"
+          src={MANIFESTO_IMAGE_URL}
           alt=""
           width={1600}
           h="full"

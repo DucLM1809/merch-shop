@@ -53,12 +53,14 @@
   "51": "ColorModeToggle.tsx",
   "52": "CartView.tsx",
   "53": "SignInForm.tsx",
+  "54": "Route",
   "55": "cart/hooks/index.ts",
   "56": "AdminGamesView.tsx",
   "57": "AdminGamesView.tsx",
+  "58": "Route",
+  "59": "Route",
+  "60": "Route",
   "62": "EmptyState.tsx",
-  "69": "SignInForm.tsx",
   "75": "client",
-  "79": "Route",
-  "80": "Route"
+  "79": "Route"
 }

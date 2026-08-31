@@ -97,8 +97,21 @@ export function envelope<T>(data: T) {
 }
 
 const games: Game[] = [
-  { id: "lol", slug: "league-of-legends", name: "League of Legends", publisherId: "riot" },
-  { id: "val", slug: "valorant", name: "Valorant", publisherId: "riot" },
+  {
+    id: "lol",
+    slug: "league-of-legends",
+    name: "League of Legends",
+    publisherId: "riot",
+    imageUrl: "https://images.unsplash.com/photo-lol-cover?w=480&q=75",
+  },
+  {
+    id: "val",
+    slug: "valorant",
+    name: "Valorant",
+    publisherId: "riot",
+    imageUrl: "https://images.unsplash.com/photo-valorant-cover?w=480&q=75",
+  },
+  // CS2 intentionally has no imageUrl — exercises the tile's no-image fallback.
   { id: "cs2", slug: "cs2", name: "CS2", publisherId: "valve" },
 ];
 
