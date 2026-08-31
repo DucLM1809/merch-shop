@@ -53,7 +53,9 @@ export function LocaleSwitcher({ onChanged }: LocaleSwitcherProps): JSX.Element 
           aria-label={t("localeSwitcher.label")}
           color="fg.muted"
           fontSize="sm"
-          fontWeight="600"
+          // Matches `ColorModeToggle` — see the note there on why preferences sit a weight
+          // below the nav's destinations.
+          fontWeight="500"
           cursor="pointer"
           _hover={{ color: "fg" }}
           focusVisibleRing="none"

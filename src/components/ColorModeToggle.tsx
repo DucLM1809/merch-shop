@@ -79,7 +79,9 @@ export function ColorModeToggle({ label, options }: ColorModeToggleProps): JSX.E
           aria-label={label}
           color="fg.muted"
           fontSize="sm"
-          fontWeight="600"
+          // A step below the 600 the nav's destinations carry: a preference the visitor sets
+          // once should not read as a peer of the links they navigate with.
+          fontWeight="500"
           cursor="pointer"
           _hover={{ color: "fg" }}
           focusVisibleRing="none"

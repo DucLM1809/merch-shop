@@ -4,15 +4,23 @@
     "password": "Mot de passe",
     "passwordPlaceholder": "Mot de passe ({{min}} caractères min.)"
   },
+  "panel": {
+    "headline": "Un compte. Tous les drops.",
+    "body": "Suivez vos commandes, enregistrez vos tailles et accédez en avant-première aux kits en série limitée."
+  },
   "signIn": {
     "title": "Connexion",
     "submit": "Se connecter",
     "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Pas encore de compte ?",
+    "signUpLink": "Créer un compte",
     "failed": "E-mail ou mot de passe incorrect"
   },
   "signUp": {
     "title": "Créer un compte",
     "submit": "Créer un compte",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "signInLink": "Se connecter",
     "failed": "Impossible de créer le compte. Cette adresse e-mail est peut-être déjà utilisée."
   },
   "forgotPassword": {

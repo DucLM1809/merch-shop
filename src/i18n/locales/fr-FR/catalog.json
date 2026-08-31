@@ -13,24 +13,19 @@
       "spotlightCta": "Acheter ce produit"
     },
     "games": {
-      "title": "Acheter par jeu",
-      "imageAlt": "Articles {{game}}"
+      "title": "Acheter par jeu"
     },
     "value": {
       "licensedTitle": "Sous licence officielle",
-      "licensedBody": "Chaque produit est autorisé par l'éditeur propriétaire du jeu.",
       "shippingTitle": "Livré directement chez vous",
-      "shippingBody": "Aucun entrepôt ne stocke votre commande. Elle est expédiée directement par un fournisseur officiel jusqu'à votre porte.",
-      "checkoutTitle": "Paiement sécurisé",
-      "checkoutBody": "Les paiements sont traités en toute sécurité via Stripe. Vos coordonnées bancaires ne transitent jamais par nos serveurs."
+      "checkoutTitle": "Paiement sécurisé"
     },
-    "featured": {
-      "title": "Nouveautés en vedette",
-      "subtitle": "Une sélection tournante parmi toutes les équipes et tous les jeux disponibles."
+    "catalog": {
+      "title": "Toute la gamme",
+      "subtitle": "Tous nos articles, classés par jeu."
     },
     "manifesto": {
-      "body": "Pas de contrefaçons. Chaque maillot et sweat à capuche est validé par l'éditeur et l'équipe qu'il représente.",
-      "imageAlt": "Gros plan sur un vêtement d'équipe sous licence officielle"
+      "body": "Pas de contrefaçons. Chaque maillot et sweat à capuche est validé par l'éditeur et l'équipe qu'il représente."
     }
   },
   "filters": {

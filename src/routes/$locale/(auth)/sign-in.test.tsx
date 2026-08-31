@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { screen, waitFor } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import enUSAccount from "@/i18n/locales/en-US/account.json";
@@ -24,8 +24,15 @@ describe("GlobalNav auth state", () => {
 
     renderRoute("/");
 
-    expect(await screen.findByTestId("nav-account-menu")).toBeInTheDocument();
-    expect(screen.getByText(buyerAccount.email)).toBeInTheDocument();
+    const accountMenu = await screen.findByTestId("nav-account-menu");
+
+    // The bar shows the address's local part, not the whole thing — at nav width the full
+    // address truncated mid-domain ("admin.test@merch…"), which identified nobody. The
+    // complete address stays on the chip itself, and the drawer still prints it in full.
+    const [handle = buyerAccount.email] = buyerAccount.email.split("@");
+    expect(within(accountMenu).getByText(handle)).toBeInTheDocument();
+    expect(accountMenu).toHaveAttribute("title", buyerAccount.email);
+
     expect(screen.queryByTestId("nav-guest-links")).not.toBeInTheDocument();
   });
 });
@@ -37,6 +44,29 @@ describe("/sign-in route", () => {
     expect(await screen.findByRole("heading", { name: /sign in/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+  });
+
+  // The auth pages are a full-viewport takeover: the brand panel beside the form carries
+  // its own mark back to the shop and its own preferences shelf, so the storefront bar
+  // would be a second set of chrome competing with the page's one action.
+  it("hides the global nav so the takeover owns the viewport", async () => {
+    renderRoute("/sign-in");
+
+    await screen.findByRole("heading", { name: /sign in/i });
+
+    expect(screen.queryByTestId("nav-guest-links")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("mobile-menu-button")).not.toBeInTheDocument();
+  });
+
+  it("offers a route to registration, which the hidden nav no longer provides", async () => {
+    renderRoute("/sign-in");
+
+    await screen.findByRole("heading", { name: /sign in/i });
+
+    expect(screen.getByRole("link", { name: enUSAccount.signIn.signUpLink })).toHaveAttribute(
+      "href",
+      "/en-US/sign-up"
+    );
   });
 
   it("signs in and redirects to / on valid credentials", async () => {

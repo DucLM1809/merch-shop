@@ -1,5 +1,6 @@
 export { FacetFilter } from "./components/FacetFilter";
 export { GamePage } from "./components/GamePage";
+export { ProductCard } from "./components/ProductCard";
 export { ProductCatalog } from "./components/ProductCatalog";
 export { ProductDetail } from "./components/ProductDetail";
 export { PublisherNav } from "./components/PublisherNav";

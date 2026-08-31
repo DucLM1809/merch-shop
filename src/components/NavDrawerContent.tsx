@@ -114,7 +114,9 @@ export function NavDrawerContent({
           borderBottomWidth="1px"
           borderColor="border.muted"
         >
-          <Link to="/$locale" params={{ locale }} onClick={onClose}>
+          {/* Same destination as the desktop bar's mark — the logo is one element and must
+              not resolve to a different page depending on viewport width. */}
+          <Link to="/$locale/shop" params={{ locale }} onClick={onClose}>
             <Flex align="center" gap={2.5}>
               <Box color="blue.400" display="flex" alignItems="center">
                 <Gamepad2 size={18} strokeWidth={2} />
@@ -135,18 +137,6 @@ export function NavDrawerContent({
         </Flex>
 
         <Flex direction="column" gap={6} pt={6} px={4} pb={4} flex={1} overflowY="auto">
-          <Link to="/$locale/shop" params={{ locale }} onClick={onClose}>
-            <Text
-              fontSize="sm"
-              fontWeight="600"
-              color="fg.muted"
-              _hover={{ color: "fg" }}
-              transition="color 0.15s"
-            >
-              {t("nav.shop")}
-            </Text>
-          </Link>
-
           <Link to="/$locale/cart" params={{ locale }} onClick={onClose}>
             <Flex
               align="center"
