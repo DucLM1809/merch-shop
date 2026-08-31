@@ -89,23 +89,18 @@ export interface GeneratedResources {
       };
       games: {
         title: "Shop by Game";
-        imageAlt: "{{game}} apparel";
       };
       value: {
         licensedTitle: "Officially Licensed";
-        licensedBody: "Every product here is authorized by the publisher that owns the game.";
         shippingTitle: "Ships Direct to You";
-        shippingBody: "No warehouse holds your order. It ships straight from an official supplier to your door.";
         checkoutTitle: "Secure Checkout";
-        checkoutBody: "Payments are processed securely through Stripe. Your card details never touch our servers.";
       };
-      featured: {
-        title: "Featured Drops";
-        subtitle: "A rotating pick from every team and title we carry.";
+      catalog: {
+        title: "The full lineup";
+        subtitle: "Every piece we carry, grouped by game.";
       };
       manifesto: {
         body: "No knockoffs. Every jersey and hoodie here is signed off by the publisher and team it represents.";
-        imageAlt: "Close-up of officially licensed team apparel";
       };
     };
     filters: {
