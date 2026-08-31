@@ -1,17 +1,25 @@
 import { describe, it, expect } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "@/test-utils";
-import { buildOptimizedImageUrl, OptimizedImage } from "./OptimizedImage";
+import { buildOptimizedImageUrl, buildVercelImageUrl, OptimizedImage } from "./OptimizedImage";
 
-describe("buildOptimizedImageUrl", () => {
+describe("buildVercelImageUrl", () => {
   it("builds a Vercel image optimization URL with width and default quality", () => {
-    const url = buildOptimizedImageUrl("https://cdn.example.com/jersey.png", 400);
+    const url = buildVercelImageUrl("https://cdn.example.com/jersey.png", 400);
     expect(url).toBe("/_vercel/image?url=https%3A%2F%2Fcdn.example.com%2Fjersey.png&w=400&q=75");
   });
 
   it("accepts a custom quality", () => {
-    const url = buildOptimizedImageUrl("https://cdn.example.com/jersey.png", 400, 50);
+    const url = buildVercelImageUrl("https://cdn.example.com/jersey.png", 400, 50);
     expect(url).toContain("q=50");
+  });
+});
+
+describe("buildOptimizedImageUrl", () => {
+  it("leaves the URL untouched off Vercel, where /_vercel/image does not exist", () => {
+    expect(buildOptimizedImageUrl("https://cdn.example.com/jersey.png", 400)).toBe(
+      "https://cdn.example.com/jersey.png"
+    );
   });
 });
 

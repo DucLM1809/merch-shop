@@ -4,10 +4,23 @@ import { ImageOff } from "lucide-react";
 
 import { EmptyState } from "./EmptyState";
 
+/**
+ * `/_vercel/image` exists only inside Vercel's own edge runtime. Anywhere else — `vite dev`,
+ * `vite preview`, a static Storybook build — the path falls through to the locale redirect and
+ * resolves to the SPA HTML shell with a 200, so the `<img>` gets markup instead of image bytes
+ * and fails to decode. Gate the rewrite so every non-Vercel environment renders the raw URL.
+ */
+const OPTIMIZATION_ENABLED = import.meta.env.PROD;
+
 /** Build a Vercel Image Optimization URL for a raw backend image URL. */
-export function buildOptimizedImageUrl(rawUrl: string, width: number, quality = 75): string {
+export function buildVercelImageUrl(rawUrl: string, width: number, quality = 75): string {
   const params = new URLSearchParams({ url: rawUrl, w: String(width), q: String(quality) });
   return `/_vercel/image?${params.toString()}`;
+}
+
+/** The `src` to actually render: optimized on Vercel, the untouched URL everywhere else. */
+export function buildOptimizedImageUrl(rawUrl: string, width: number, quality = 75): string {
+  return OPTIMIZATION_ENABLED ? buildVercelImageUrl(rawUrl, width, quality) : rawUrl;
 }
 
 type OptimizedImageProps = Omit<ImageProps, "src" | "loading" | "alt"> & {
