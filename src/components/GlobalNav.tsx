@@ -1,5 +1,5 @@
 import { useEffect, useState, type JSX } from "react";
-import { Box, Flex, IconButton, Portal, Separator, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, IconButton, Portal, Separator, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useSelector } from "@tanstack/react-store";
 import { useTranslation } from "react-i18next";
@@ -10,9 +10,18 @@ import { Badge } from "./Badge";
 import { ColorModeToggle } from "./ColorModeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { NavDrawerContent } from "./NavDrawerContent";
-import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart, User, UserPlus } from "lucide-react";
+import { Gamepad2, LogIn, LogOut, Menu, ShoppingCart } from "lucide-react";
 
 const UTILITY_DIVIDER_HEIGHT = "18px";
+
+// Fixed rather than padding-derived: the bar's contents change height between the signed-in
+// chip and the guest sign-up button, and a sticky header that resizes under the user is the
+// jitter this redesign exists to remove.
+const NAV_HEIGHT = "64px";
+
+// One stroke weight for every glyph in the bar. The previous mix (2 on the logo, 1.5
+// elsewhere, at 16/18/20px) was a large part of why the row read as lumpy.
+const ICON_STROKE = 1.75;
 
 export function GlobalNav(): JSX.Element {
   const { t } = useTranslation();
@@ -33,7 +42,13 @@ export function GlobalNav(): JSX.Element {
   const handleSignOut = () => logout.mutate();
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
+
   const userDisplayName = account?.email;
+  // The bar showed the raw address truncated mid-domain ("admin.test@merch…"), which is
+  // both ugly and uninformative. The local part identifies the signed-in user on its own;
+  // the full address stays reachable as the chip's title and lives in full in the drawer.
+  const accountHandle = userDisplayName?.split("@")[0] ?? userDisplayName;
+  const accountInitial = userDisplayName?.[0]?.toUpperCase() ?? "";
 
   const cartBadge = displayItemCount > 0 && (
     <Box position="absolute" top="-8px" right="-10px">
@@ -46,7 +61,7 @@ export function GlobalNav(): JSX.Element {
   const logo = (
     <Flex align="center" gap={2.5}>
       <Box color="blue.400" display="flex" alignItems="center">
-        <Gamepad2 size={18} strokeWidth={2} />
+        <Gamepad2 size={18} strokeWidth={ICON_STROKE} />
       </Box>
       <Text
         color="fg"
@@ -68,34 +83,52 @@ export function GlobalNav(): JSX.Element {
         position="sticky"
         top={0}
         zIndex={10}
-        borderBottomWidth="2px"
-        borderBottomColor="signal.solid"
-        px={6}
-        py={3.5}
-        bg="bg/95"
-        backdropFilter="blur(12px)"
+        h={NAV_HEIGHT}
+        // A 2px full-bleed signal-orange rule used to sit here. `signal` is documented in
+        // `theme/system.ts` as the narrow live-indicator accent and explicitly "never a
+        // competing primary brand color" — at full width it was the loudest thing on the
+        // page and read as a warning bar. The accent now appears only where it means
+        // something: the cart count badge. Separation comes from surface + hairline.
+        borderBottomWidth="1px"
+        borderBottomColor="border"
+        px={{ base: 4, md: 6 }}
+        bg="bg/90"
+        backdropFilter="blur(12px) saturate(180%)"
       >
-        <Flex align="center" justify="space-between" maxW="7xl" mx="auto">
+        <Flex h="full" align="center" gap={8} maxW="7xl" mx="auto">
           <Link to="/$locale" params={{ locale }}>
             <Box _hover={{ opacity: 0.75 }} transition="opacity 0.15s">
               {logo}
             </Box>
           </Link>
 
-          <Flex align="center" gap={5} hideBelow="lg">
+          {/* Zone 2: destinations. Previously the "Shop" link was the first item of the
+              utility blob and rendered at the same weight as the settings selects, so
+              nothing marked it as the one place in the bar you can actually go. */}
+          <Flex align="center" gap={6} hideBelow="lg">
             <Link to="/$locale/shop" params={{ locale }}>
               <Text
                 fontSize="sm"
                 fontWeight="600"
-                color="fg.muted"
-                _hover={{ color: "fg" }}
+                color="fg"
+                _hover={{ color: "blue.400" }}
                 transition="color 0.15s"
               >
                 {t("nav.shop")}
               </Text>
             </Link>
+          </Flex>
 
-            <Flex align="center" gap={3}>
+          {/* The gulf belongs between navigation and utilities, not between the brand and
+              a single right-crushed cluster. */}
+          <Box flex="1" />
+
+          <Flex align="center" gap={4} hideBelow="lg">
+            {/* Zone 3a: preferences. Both controls have to stay mounted in the nav (their
+                tests query them synchronously), so instead of hiding them they're grouped
+                into one recessed shelf that reads as a single settings object rather than
+                two floating peers of the navigation. */}
+            <Flex align="center" gap={2} px={2.5} py={1} borderRadius="lg" bg="bg.muted">
               <ColorModeToggle
                 label={t("colorModeToggle.label")}
                 options={{
@@ -104,17 +137,16 @@ export function GlobalNav(): JSX.Element {
                   dark: t("colorModeToggle.options.dark"),
                 }}
               />
+              <Separator
+                orientation="vertical"
+                h={UTILITY_DIVIDER_HEIGHT}
+                borderColor="border.emphasized"
+              />
               <LocaleSwitcher />
             </Flex>
 
-            <Separator
-              orientation="vertical"
-              h={UTILITY_DIVIDER_HEIGHT}
-              borderColor="border.muted"
-            />
-
-            {/* The badge digit renders inside the link, so its computed name would
-                otherwise read "1 Cart" — spell the count out instead. */}
+            {/* Zone 3b: commerce. The badge digit renders inside the link, so its computed
+                name would otherwise read "1 Cart" — spell the count out instead. */}
             <Link
               to="/$locale/cart"
               params={{ locale }}
@@ -122,13 +154,13 @@ export function GlobalNav(): JSX.Element {
             >
               <Flex
                 align="center"
-                gap={2.5}
-                color={displayItemCount > 0 ? "fg" : "fg.subtle"}
-                _hover={{ color: "fg" }}
+                gap={2}
+                color={displayItemCount > 0 ? "fg" : "fg.muted"}
+                _hover={{ color: "blue.400" }}
                 transition="color 0.15s"
               >
                 <Box position="relative" display="flex" alignItems="center">
-                  <ShoppingCart size={20} strokeWidth={1.5} />
+                  <ShoppingCart size={18} strokeWidth={ICON_STROKE} />
                   {cartBadge}
                 </Box>
                 <Text fontSize="sm" fontWeight="600">
@@ -137,18 +169,44 @@ export function GlobalNav(): JSX.Element {
               </Flex>
             </Link>
 
+            {/* Zone 3c: identity. The divider is inside the guard — auth resolves a beat
+                after first paint, and hanging a hairline off the end of the bar with
+                nothing behind it is the exact kind of stray mark this pass is removing. */}
+            {isLoaded && (
+              <Separator
+                orientation="vertical"
+                h={UTILITY_DIVIDER_HEIGHT}
+                borderColor="border.emphasized"
+              />
+            )}
+
             {isLoaded && isSignedIn ? (
               <Flex align="center" gap={2}>
                 <Flex
                   align="center"
-                  gap={2}
-                  color="fg.muted"
-                  maxW="10rem"
+                  gap={2.5}
+                  maxW="11rem"
+                  title={userDisplayName}
                   data-testid="nav-account-menu"
                 >
-                  <User size={16} strokeWidth={1.5} />
-                  <Text fontSize="sm" fontWeight="600" truncate>
-                    {userDisplayName}
+                  <Flex
+                    align="center"
+                    justify="center"
+                    flexShrink={0}
+                    boxSize="26px"
+                    borderRadius="full"
+                    bg="bg.subtle"
+                    borderWidth="1px"
+                    borderColor="border.emphasized"
+                    color="fg"
+                    fontSize="11px"
+                    fontWeight="700"
+                    aria-hidden
+                  >
+                    {accountInitial}
+                  </Flex>
+                  <Text fontSize="sm" fontWeight="600" color="fg.muted" truncate>
+                    {accountHandle}
                   </Text>
                 </Flex>
                 <IconButton
@@ -157,13 +215,16 @@ export function GlobalNav(): JSX.Element {
                   variant="ghost"
                   size="sm"
                   color="fg.subtle"
-                  _hover={{ color: "fg" }}
+                  _hover={{ color: "fg", bg: "bg.muted" }}
                   data-testid="nav-sign-out"
                 >
-                  <LogOut size={16} strokeWidth={1.5} />
+                  <LogOut size={16} strokeWidth={ICON_STROKE} />
                 </IconButton>
               </Flex>
             ) : isLoaded ? (
+              // Sign in and sign up used to be two text links differing only in color, so
+              // the bar ended on no anchor at all. Sign-up is the conversion action, so it
+              // takes the solid treatment and terminates the row.
               <Flex align="center" gap={3} data-testid="nav-guest-links">
                 <Link to="/$locale/sign-in" params={{ locale }}>
                   <Flex
@@ -173,26 +234,17 @@ export function GlobalNav(): JSX.Element {
                     _hover={{ color: "fg" }}
                     transition="color 0.15s"
                   >
-                    <LogIn size={16} strokeWidth={1.5} />
+                    <LogIn size={16} strokeWidth={ICON_STROKE} />
                     <Text fontSize="sm" fontWeight="600">
                       {t("nav.signIn")}
                     </Text>
                   </Flex>
                 </Link>
-                <Link to="/$locale/sign-up" params={{ locale }}>
-                  <Flex
-                    align="center"
-                    gap={1.5}
-                    color="blue.400"
-                    _hover={{ color: "blue.300" }}
-                    transition="color 0.15s"
-                  >
-                    <UserPlus size={16} strokeWidth={1.5} />
-                    <Text fontSize="sm" fontWeight="600">
-                      {t("nav.signUp")}
-                    </Text>
-                  </Flex>
-                </Link>
+                <Button asChild size="sm" colorPalette="blue">
+                  <Link to="/$locale/sign-up" params={{ locale }}>
+                    {t("nav.signUp")}
+                  </Link>
+                </Button>
               </Flex>
             ) : null}
           </Flex>
@@ -205,7 +257,7 @@ export function GlobalNav(): JSX.Element {
             onClick={handleOpenDrawer}
             data-testid="mobile-menu-button"
           >
-            <Menu size={22} strokeWidth={1.5} />
+            <Menu size={22} strokeWidth={ICON_STROKE} />
           </IconButton>
         </Flex>
       </Box>
