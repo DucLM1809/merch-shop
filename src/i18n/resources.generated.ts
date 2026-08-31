@@ -184,7 +184,6 @@ export interface GeneratedResources {
     nav: {
       openMenu: "Open navigation";
       menuLabel: "Navigation menu";
-      shop: "Shop";
       cart: "Cart";
       cartItems_one: "Cart, {{count}} item";
       cartItems_other: "Cart, {{count}} items";

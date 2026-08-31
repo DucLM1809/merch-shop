@@ -96,38 +96,22 @@ export function GlobalNav(): JSX.Element {
         backdropFilter="blur(12px) saturate(180%)"
       >
         <Flex h="full" align="center" gap={8} maxW="7xl" mx="auto">
-          <Link to="/$locale" params={{ locale }}>
+          {/* The brand mark is the storefront's entry point: it carries the one navigational
+              destination the bar has, so a standalone "Shop" link next to it would be a
+              second control pointing at the same page. */}
+          <Link to="/$locale/shop" params={{ locale }}>
             <Box _hover={{ opacity: 0.75 }} transition="opacity 0.15s">
               {logo}
             </Box>
           </Link>
 
-          {/* Zone 2: destinations. Previously the "Shop" link was the first item of the
-              utility blob and rendered at the same weight as the settings selects, so
-              nothing marked it as the one place in the bar you can actually go. */}
-          <Flex align="center" gap={6} hideBelow="lg">
-            <Link to="/$locale/shop" params={{ locale }}>
-              <Text
-                fontSize="sm"
-                fontWeight="600"
-                color="fg"
-                _hover={{ color: "blue.400" }}
-                transition="color 0.15s"
-              >
-                {t("nav.shop")}
-              </Text>
-            </Link>
-          </Flex>
-
-          {/* The gulf belongs between navigation and utilities, not between the brand and
-              a single right-crushed cluster. */}
           <Box flex="1" />
 
           <Flex align="center" gap={4} hideBelow="lg">
-            {/* Zone 3a: preferences. Both controls have to stay mounted in the nav (their
-                tests query them synchronously), so instead of hiding them they're grouped
-                into one recessed shelf that reads as a single settings object rather than
-                two floating peers of the navigation. */}
+            {/* Preferences. Both controls have to stay mounted in the nav (their tests query
+                them synchronously), so instead of hiding them they're grouped into one
+                recessed shelf that reads as a single settings object rather than as two
+                more peers of the cart and account controls beside them. */}
             <Flex align="center" gap={2} px={2.5} py={1} borderRadius="lg" bg="bg.muted">
               <ColorModeToggle
                 label={t("colorModeToggle.label")}
@@ -145,8 +129,8 @@ export function GlobalNav(): JSX.Element {
               <LocaleSwitcher />
             </Flex>
 
-            {/* Zone 3b: commerce. The badge digit renders inside the link, so its computed
-                name would otherwise read "1 Cart" — spell the count out instead. */}
+            {/* Commerce. The badge digit renders inside the link, so its computed name would
+                otherwise read "1 Cart" — spell the count out instead. */}
             <Link
               to="/$locale/cart"
               params={{ locale }}
@@ -169,7 +153,7 @@ export function GlobalNav(): JSX.Element {
               </Flex>
             </Link>
 
-            {/* Zone 3c: identity. The divider is inside the guard — auth resolves a beat
+            {/* Identity. The divider is inside the guard — auth resolves a beat
                 after first paint, and hanging a hairline off the end of the bar with
                 nothing behind it is the exact kind of stray mark this pass is removing. */}
             {isLoaded && (
